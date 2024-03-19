@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "210720504820",
+    "project_id": "find-me-744f4",
+    "storage_bucket": "find-me-744f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210720504820:android:8a4bcca34215e1574c57a1",
+        "android_client_info": {
+          "package_name": "com.pets.find_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuFGY4owOBfwzw_ER0hBW9NNgdBuacOlE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

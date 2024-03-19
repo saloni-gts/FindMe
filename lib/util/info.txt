@@ -1,0 +1,8 @@
+accept = 1
+decline = 2
+delete = 3 
+cancel = 4 
+
+
+isPremium= 1 for premium user
+isJotJoint=1 for joint for 0 for not joint
