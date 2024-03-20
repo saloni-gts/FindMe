@@ -13,7 +13,6 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../components/appbarComp.dart';
 import '../../components/bottomBorderComp.dart';
 import '../../components/camraOption.dart';
@@ -40,7 +39,7 @@ import '../reUseClass/dropdown.dart';
 import '../reUseClass/mytextfield.dart';
 
 class OwnerProfile extends StatefulWidget {
-   OwnerProfile({Key? key}) : super(key: key);
+  const OwnerProfile({Key? key}) : super(key: key);
 
   @override
   State<OwnerProfile> createState() => _OwnerProfileState();
@@ -58,72 +57,57 @@ class _OwnerProfileState extends State<OwnerProfile> {
 
   UserModel user = HiveHandler.getUserHiveRefresher().value.values.first;
 
-
-
+  @override
   void initState() {
+    AuthProvider auth = Provider.of(context, listen: false);
 
-    AuthProvider auth= Provider.of(context, listen: false);
+    print("user country===${user.country}");
+    print("user short code country===${user.shortCode}");
+    print("user gender===${user.gender}>>====");
+    print("user phoneCode===${user.phoneCode}>>====");
+    print("user phoneCode===${user.mobileNumber}>>====");
 
-print("user country===${user.country}");
-print("user short code country===${user.shortCode}");
-print("user gender===${user.gender}>>====");
-print("user phoneCode===${user.phoneCode}>>====");
-print("user phoneCode===${user.mobileNumber}>>====");
+    print("gender===${user.gender}>>====");
 
-
-
-print("gender===${user.gender}>>====");
-
-if(user.phoneCode!.isEmpty){
-  user.phoneCode="44";
-}
+    if (user.phoneCode!.isEmpty) {
+      user.phoneCode = "44";
+    }
 
 // print("user phoneCode===${int.parse(user.phoneCode!)}>>====");
 
-String gendr;
-    gendr=user.gender??"";
-    if(user.gender==""){
-
-    }
+    String gendr;
+    gendr = user.gender ?? "";
+    if (user.gender == "") {}
 
     // if (gendr.isNotEmpty) {
     //   auth.selectedUserGender = auth.userGenderList.firstWhere((element) => element.typeId == user.gender);
     // }
 
+    auth.usrCode = user.phoneCode;
 
-    auth.usrCode=user.phoneCode;
-
-    print(" auth.selectedUserGender${ auth.selectedUserGender}");
-print("please show edited country code${user.phoneCode}");
-    auth.cntrycodeOnr=user?.phoneCode??"44";
+    print(" auth.selectedUserGender${auth.selectedUserGender}");
+    print("please show edited country code${user.phoneCode}");
+    auth.cntrycodeOnr = user.phoneCode ?? "44";
     // auth.onselectUserGender(auth.selectedUserGender!);
 
     auth.getContryFlag(auth.usrCode);
     // auth.getContryFlag("44");
 
+    AddressController.text = user.address ?? "";
 
+    String countryCode = user.shortCode ?? "";
 
-    AddressController.text=user?.address??"";
-
-    String countryCode = user.shortCode??"";
-
-
-
- //    String flagIcon = user.shortCode?.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
- //            (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397))??"";
- // print("flag icon printingggggg");
- //    print(flagIcon);
- //
+    //    String flagIcon = user.shortCode?.toUpperCase().replaceAllMapped(RegExp(r'[A-Z]'),
+    //            (match) => String.fromCharCode(match.group(0)!.codeUnitAt(0) + 127397))??"";
+    // print("flag icon printingggggg");
+    //    print(flagIcon);
+    //
 
     AuthProvider authProvider = Provider.of(context, listen: false);
 
-
-
     emailController.text = user.email ?? "";
 
-
-
-print("objectcheck printinggggg");
+    print("objectcheck printinggggg");
     print("phone code from provider${authProvider.phncode}");
 
     phNoController.text = user.mobileNumber.toString();
@@ -146,15 +130,13 @@ print("objectcheck printinggggg");
     // print("user.genderuser.gender ====${user.gender}");
     // else {
 
-
-    if(user.gender!.isNotEmpty){
+    if (user.gender!.isNotEmpty) {
       for (var item in authProvider.userGenderList) {
         if (item.typeId == user.gender) {
           authProvider.selectedUserGender = item;
         }
       }
     }
-
 
     print("user gender===${authProvider.selectedUserGender?.title}");
     super.initState();
@@ -181,8 +163,8 @@ print("objectcheck printinggggg");
               onTap: () {
                 FocusScope.of(context).unfocus();
               },
-              child: Consumer3<AuthProvider, Myprovider,PetProvider>(
-                  builder: (context, authProvider, myprovider, petProvider,child) {
+              child: Consumer3<AuthProvider, Myprovider, PetProvider>(
+                  builder: (context, authProvider, myprovider, petProvider, child) {
                 String userGenderbool = authProvider.selectedUserGender?.title ?? "";
 
                 return SingleChildScrollView(
@@ -192,7 +174,7 @@ print("objectcheck printinggggg");
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
                               Center(
@@ -204,134 +186,112 @@ print("objectcheck printinggggg");
                                           width: 125,
                                           height: 125,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(65),
+                                            borderRadius: BorderRadius.circular(65),
                                             color: AppColor.textFieldGrey,
                                           ),
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(65),
+                                            borderRadius: BorderRadius.circular(65),
                                             // radius: 50,
-                                            child: authProvider.userImage !=
-                                                    null
+                                            child: authProvider.userImage != null
                                                 ? Image.file(
-                                                    File(authProvider
-                                                            .userImage?.path ??
-                                                        ""),
+                                                    File(authProvider.userImage?.path ?? ""),
                                                     height: 122,
                                                     width: 122,
                                                     fit: BoxFit.cover,
                                                   )
                                                 : CachedNetworkImage(
-                                                    imageUrl:
-                                                        user.profileImage ??
-                                                            "",
+                                                    imageUrl: user.profileImage ?? "",
                                                     fit: BoxFit.cover,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Image.asset(
+                                                    placeholder: (context, url) => Image.asset(
                                                       AppImage.jamesImage,
                                                       fit: BoxFit.fill,
                                                     ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Image.asset(
+                                                    errorWidget: (context, url, error) => Image.asset(
                                                       AppImage.jamesImage,
                                                       fit: BoxFit.fill,
                                                     ),
                                                   ),
                                           ),
                                         );
-                                      
-                                      
                                       },
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(left: 100),
                                       child: InkWell(
-                                        onTap: () {
-                                          showAlertForImage(
-                                            headText: tr(LocaleKeys.additionText_petName),
-                                            callBack: (val) {
-                                              Navigator.pop(context);
-                                              if (val) {
-                                                getImage(ImageSource.camera)
-                                                    .then((value) {
-                                                  print("value==${value}");
-                                                  if(value.toString()=="File: ''"){
-                                                    print("value like this===");
-                                                    value=null;
+                                          onTap: () {
+                                            showAlertForImage(
+                                              headText: tr(LocaleKeys.additionText_petName),
+                                              callBack: (val) {
+                                                Navigator.pop(context);
+                                                if (val) {
+                                                  getImage(ImageSource.camera).then((value) {
+                                                    print("value==$value");
+                                                    if (value.toString() == "File: ''") {
+                                                      print("value like this===");
+                                                      value = null;
+                                                    }
+                                                    if (value != null) {
+                                                      authProvider.updateUserImage(value);
+                                                    }
+                                                  });
+                                                } else {
+                                                  getImage(ImageSource.gallery).then((value) {
+                                                    print("value==$value");
+                                                    if (value.toString() == "File: ''") {
+                                                      print("value like this===");
+                                                      value = null;
+                                                    }
 
-                                                  }
-                                                  if (value != null) {
-                                                    authProvider
-                                                        .updateUserImage(value);
-                                                  }
-                                                });
-                                              }
-                                              else {
-                                                getImage(ImageSource.gallery)
-                                                    .then((value) {
-
-                                                  print("value==${value}");
-                                                  if(value.toString()=="File: ''"){
-                                                    print("value like this===");
-                                                    value=null;
-
-                                                  }
-
-
-                                                  if (value != null) {
-                                                    authProvider
-                                                        .updateUserImage(value);
-                                                  }
-                                                });
-                                              }
-                                            },
-                                            context: context,
-                                          );
-                                        },
-                                        child: CircleAvatar(
-                                            radius: 12,
-                                            backgroundColor:
-                                                AppColor.textLightBlueBlack,
-                                            child: Image.asset(
-                                                AppImage.cameraIcon)),
-                                      ),
+                                                    if (value != null) {
+                                                      authProvider.updateUserImage(value);
+                                                    }
+                                                  });
+                                                }
+                                              },
+                                              context: context,
+                                            );
+                                          },
+                                          child: Image.asset(AppImage.pencil)
+                                          // CircleAvatar(
+                                          //     radius: 12,
+                                          //     backgroundColor:
+                                          //         AppColor.textLightBlueBlack,
+                                          //     child: Image.asset(
+                                          //         AppImage.cameraIcon)),
+                                          ),
                                     )
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
-
                               Text(
                                 tr(LocaleKeys.ownerProfile_generalInformation),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsBold),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 17,
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20,
                                   ),
                                   Text(
                                     tr(LocaleKeys.additionText_name),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
 
@@ -350,18 +310,18 @@ print("objectcheck printinggggg");
                                     textInputType: TextInputType.text,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 22,
                                   ),
 
                                   Text(
-                                   tr(LocaleKeys.additionText_lastName),
-                                    style: TextStyle(
+                                    tr(LocaleKeys.additionText_lastName),
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsRegular,
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
 
@@ -370,13 +330,13 @@ print("objectcheck printinggggg");
                                     textInputType: TextInputType.text,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 17,
                                   ),
 
                                   Text(
                                     tr(LocaleKeys.addPet_sex),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsRegular,
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack),
@@ -386,48 +346,44 @@ print("objectcheck printinggggg");
                                     //  width: 328.0,
                                     fontfamily: AppFont.poppinsMedium,
                                     color: AppColor.textLightBlueBlack,
-                                    selecttextcolor:
-                                        AppColor.textLightBlueBlack,
+                                    selecttextcolor: AppColor.textLightBlueBlack,
                                     isGrey: userGenderbool.isEmpty,
-                                    selectText: authProvider.selectedUserGender?.title ?? tr(LocaleKeys.additionText_select),
+                                    selectText:
+                                        authProvider.selectedUserGender?.title ?? tr(LocaleKeys.additionText_select),
                                     itemList: authProvider.userGenderList,
                                     isEnable: true,
                                     onChange: (val) {
-                                      print("on gender changed ${val}");
+                                      print("on gender changed $val");
                                       authProvider.onselectUserGender(val);
                                     },
                                     title: "",
                                     value: null,
-
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 17,
                                   ),
-
-
-
 
                                   //Text(flagIcon),
 
                                   Text(
                                     tr(LocaleKeys.addPet_contact),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 17,
                                   ),
                                   Text(
                                     tr(LocaleKeys.additionText_email),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
 
@@ -437,163 +393,150 @@ print("objectcheck printinggggg");
                                     isEnabled: false,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 18,
                                   ),
 
                                   Text(
-                                   tr(LocaleKeys.additionText_phNum),
-                                    style: TextStyle(
+                                    tr(LocaleKeys.additionText_phNum),
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsRegular,
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
-
 
                                   //
                                   // CntrePikr(phoneNumController: phNoController),
 
-                                // CntrePikrProfilepage(phoneNumController: phNoController,),
+                                  // CntrePikrProfilepage(phoneNumController: phNoController,),
 
-                              //    SizedBox(height: 15,),
+                                  //    SizedBox(height: 15,),
 
-                                 CntrePikrOwner(
-                                     phoneNumController: phNoController,
-                                     countryCode:authProvider.usrCode??"44",
-                                     // user?.phoneCode??"44" ,
-                                     // countryFlag: authProvider.getContryFlag(user?.phoneCode??"44")
-                                     countryFlag: authProvider.getContryFlag(authProvider.usrCode??"44")
-                                 ),
+                                  CntrePikrOwner(
+                                      phoneNumController: phNoController,
+                                      countryCode: authProvider.usrCode ?? "44",
+                                      // user?.phoneCode??"44" ,
+                                      // countryFlag: authProvider.getContryFlag(user?.phoneCode??"44")
+                                      countryFlag: authProvider.getContryFlag(authProvider.usrCode ?? "44")),
 
-
-
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 17,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 23,
                                   ),
                                   Text(
                                     tr(LocaleKeys.ownerProfile_smsNotification),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 17,
                                   ),
                                   customBlueButton(
                                       context: context,
-                                      text1: petProvider.isUserPremium==1?
-                                      tr(LocaleKeys.additionText_ACTIVATED):tr(LocaleKeys.ownerProfile_getAccess),
+                                      text1: petProvider.isUserPremium == 1
+                                          ? tr(LocaleKeys.additionText_ACTIVATED)
+                                          : tr(LocaleKeys.ownerProfile_getAccess),
                                       onTap1: () {
-                                        petProvider.isUserPremium==1?
-                                            {}  : commingSoonDialog(context) ;
+                                        petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour: petProvider.isUserPremium==1? AppColor.neon : AppColor.textRed),
-                                  SizedBox(
+                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                  const SizedBox(
                                     height: 17,
                                   ),
 
                                   Text(
-                                      tr(LocaleKeys.additionText_mltiplEmergcyContct),
-                                    style: TextStyle(
+                                    tr(LocaleKeys.additionText_mltiplEmergcyContct),
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
                                   customBlueButton(
                                       context: context,
-                                      text1: petProvider.isUserPremium==1?
-                                      tr(LocaleKeys.additionText_ACTIVATED):
-                                          tr(LocaleKeys.ownerProfile_getAccess),
+                                      text1: petProvider.isUserPremium == 1
+                                          ? tr(LocaleKeys.additionText_ACTIVATED)
+                                          : tr(LocaleKeys.ownerProfile_getAccess),
                                       onTap1: () {
-                                        petProvider.isUserPremium==1?
-                                        {}:
-                                        commingSoonDialog(context);
+                                        petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour:petProvider.isUserPremium==1? AppColor.neon : AppColor.textRed),
-                                  SizedBox(
+                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                  const SizedBox(
                                     height: 10,
                                   ),
 
                                   Text(
                                     tr(LocaleKeys.ownerProfile_headline1),
-                                    style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                    style: const TextStyle(
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
                                   Text(
                                     tr(LocaleKeys.ownerProfile_messegngersContact),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
                                   customBlueButton(
                                       context: context,
-                                      text1: petProvider.isUserPremium==1?
-                                      tr(LocaleKeys.additionText_ACTIVATED):
-                                          tr(LocaleKeys.ownerProfile_getAccess),
+                                      text1: petProvider.isUserPremium == 1
+                                          ? tr(LocaleKeys.additionText_ACTIVATED)
+                                          : tr(LocaleKeys.ownerProfile_getAccess),
                                       onTap1: () {
-                                        petProvider.isUserPremium==1?
-                                        {}:
-
-                                        commingSoonDialog(context);
+                                        petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour:petProvider.isUserPremium==1? AppColor.neon : AppColor.textRed),
-                                  SizedBox(
+                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                  const SizedBox(
                                     height: 6,
                                   ),
                                   Text(
-                                      tr(LocaleKeys.ownerProfile_headline2),
-                                    style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                    tr(LocaleKeys.ownerProfile_headline2),
+                                    style: const TextStyle(
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
                                   Text(
                                     tr(LocaleKeys.ownerProfile_address),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
 
                                   Text(
                                     tr(LocaleKeys.ownerProfile_country),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
 
@@ -602,19 +545,19 @@ print("objectcheck printinggggg");
                                     textInputType: TextInputType.text,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
 
                                   Text(
                                     tr(LocaleKeys.addPet_city),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsRegular,
                                         fontSize: 12,
                                         color: AppColor.textLightBlueBlack),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 7,
                                   ),
 
@@ -623,77 +566,63 @@ print("objectcheck printinggggg");
                                     textInputType: TextInputType.text,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
 
                                   Text(
                                     tr(LocaleKeys.ownerProfile_address),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontFamily: AppFont.poppinsBold,
                                         fontSize: 16,
                                         color: AppColor.textLightBlueBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 12,
                                   ),
 
+                                  petProvider.isUserPremium == 1
+                                      ? CustomTextFeild(
+                                          textController: AddressController,
+                                          textInputType: TextInputType.text,
+                                          hintText: tr(LocaleKeys.additionText_addYrAdrs))
+                                      : customBlueButton(
+                                          context: context,
+                                          text1: tr(LocaleKeys.ownerProfile_getAccess),
+                                          onTap1: () {
+                                            commingSoonDialog(context);
+                                          },
+                                          colour: AppColor.newGrey),
 
-                                  petProvider.isUserPremium==1?
-                                  CustomTextFeild(
-                                    textController: AddressController,
-                                    textInputType: TextInputType.text,
-                                    hintText: tr(LocaleKeys.additionText_addYrAdrs)
-
-                                  ) :
-
-                                  customBlueButton(
-                                      context: context,
-                                      text1:
-                                          tr(LocaleKeys.ownerProfile_getAccess),
-                                      onTap1: () {
-                                        commingSoonDialog(context);
-                                      },
-                                      colour: AppColor.textRed),
-
-
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   Text(
-                                      tr(LocaleKeys.ownerProfile_headline3),
-                                    style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                    tr(LocaleKeys.ownerProfile_headline3),
+                                    style: const TextStyle(
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15,
                                   ),
 
-                                  Text(
+                                  const Text(
                                     "",
                                     style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
 
-                                  Text(
+                                  const Text(
                                     "",
                                     style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
 
-                                  Text(
+                                  const Text(
                                     "",
                                     style: TextStyle(
-                                        fontFamily: AppFont.poppinsLight,
-                                        fontSize: 10,
-                                        color: Color(0xff777777)),
+                                        fontFamily: AppFont.poppinsLight, fontSize: 10, color: Color(0xff777777)),
                                   ),
 
                                   // customBlueButton(
@@ -712,15 +641,12 @@ print("objectcheck printinggggg");
                                   //     },
                                   //
                                   //     colour: AppColor.textLightBlueBlack),
-
-
                                 ],
                               ),
                             ])));
               }),
             );
-          }
-          ),
+          }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 35.0),
@@ -728,58 +654,46 @@ print("objectcheck printinggggg");
             context: context,
             text1: tr(LocaleKeys.ownerProfile_update),
             onTap1: () {
-              if (phNoController.text.isEmpty &&
-                  nameController.text.trim().isEmpty) {
+              if (phNoController.text.isEmpty && nameController.text.trim().isEmpty) {
                 CoolAlert.show(
-                    context: context,
-                    type: CoolAlertType.warning,
-                    text: tr(LocaleKeys.additionText_entrNameNum));
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
               } else if (phNoController.text.isEmpty) {
                 CoolAlert.show(
-                    context: context,
-                    type: CoolAlertType.warning,
-                    text: tr(LocaleKeys.additionText_entrMobNum));
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrMobNum));
               } else if (nameController.text.trim().isEmpty) {
                 CoolAlert.show(
-                    context: context,
-                    type: CoolAlertType.warning,
-                    text: tr(LocaleKeys.additionText_entrNameNum));
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
               } else {
-                if (phNoController.text.isNotEmpty &&
-                    !phNoController.text.ismobile(phNoController.text)) {
+                if (phNoController.text.isNotEmpty && !phNoController.text.ismobile(phNoController.text)) {
                   CoolAlert.show(
-                      context: context,
-                      type: CoolAlertType.warning,
-                      text:  tr(LocaleKeys.additionText_entrValidMobNum));
+                      context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrValidMobNum));
                 } else {
                   AuthProvider auth = Provider.of(context, listen: false);
                   print("auth.phonecode${auth.cntrycodeOnr}");
                   print("auth.countryy${countryController.text}");
                   print("auth.AddressController${AddressController.text}");
-                  if(countryController.text.isEmpty){
-                    countryController.text=" ";
+                  if (countryController.text.isEmpty) {
+                    countryController.text = " ";
                   }
-                  if(AddressController.text.isEmpty){
-                       AddressController.text=" ";
+                  if (AddressController.text.isEmpty) {
+                    AddressController.text = " ";
                   }
 
                   auth.updateUserProfileApi(
-                      context: context,
-                      nameee: nameController.text.trim(),
-                      lastNameee: lastNameController.text.trim(),
-                      countryy: countryController.text.trim(),
-                      cityy: cityController.text.trim(),
-                      phonenum:phNoController.text,
-                      phoneCodee:auth.cntrycodeOnr,
-                      cntreShortCodee: auth.cntrycode,
-                      onrAddress:AddressController.text.trim(),
-                      // phoneCodee:auth.phncodeOnr,
-                      // cntreShortCodee: auth.cntrycodeOnr
-
+                    context: context,
+                    nameee: nameController.text.trim(),
+                    lastNameee: lastNameController.text.trim(),
+                    countryy: countryController.text.trim(),
+                    cityy: cityController.text.trim(),
+                    phonenum: phNoController.text,
+                    phoneCodee: auth.cntrycodeOnr,
+                    cntreShortCodee: auth.cntrycode,
+                    onrAddress: AddressController.text.trim(),
+                    // phoneCodee:auth.phncodeOnr,
+                    // cntreShortCodee: auth.cntrycodeOnr
                   );
                 }
               }
-
 
               // else{
               //   AuthProvider auth = Provider.of(context, listen: false);
@@ -798,12 +712,9 @@ print("objectcheck printinggggg");
               //   );
               //
               // }
-
             },
             colour: AppColor.newBlueGrey),
-
       ),
-
     );
   }
 }

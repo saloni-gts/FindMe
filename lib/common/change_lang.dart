@@ -16,15 +16,15 @@ import '../util/app_images.dart';
 Future changeLanguage(Locale locale,{required BuildContext context,bool isFromStart=false}) async {
 print("local is  >>>> ${locale.toString()}");
 
-  bool isSelected(BuildContext context) => locale == context.locale;
+  bool isSelected(BuildContext context) => locale == context.locale; 
 
-  await GlobalVariable.navState.currentContext!.setLocale(locale);
-   HiveHandler.updateIsLanguageSelected(true);
+  await GlobalVariable.navState.currentContext!.setLocale(locale); 
+   HiveHandler.updateIsLanguageSelected(true); 
    if(!isFromStart){
-    await CoolAlert.show(context: context, type: CoolAlertType.success,
-                  text: "Language Changed Successfully",);
+    await CoolAlert.show(context: context, type: CoolAlertType.success, 
+                  text: "Language Changed Successfully",); 
 
-    PurChaseProvider purChaseProvider=Provider.of(context, listen: false);
+    PurChaseProvider purChaseProvider=Provider.of(context, listen: false); 
     List<Choice> c1= [
       Choice(
           title: tr(LocaleKeys.additionText_premiumSubscription),
@@ -32,8 +32,8 @@ print("local is  >>>> ${locale.toString()}");
           type: 13),
 
       Choice(
-          title:tr(LocaleKeys.additionText_AddFamMember),
-          image: AssetImage(AppImage.familyplanIcon),
+          title:tr(LocaleKeys.additionText_AddFamMember), 
+          image: AssetImage(AppImage.familyplanIcon), 
           type: 1),
 
 
@@ -49,16 +49,16 @@ print("local is  >>>> ${locale.toString()}");
           type: 20),
 
       Choice(
-          title: tr(LocaleKeys.moreFeatures_aboutUs),
-          image: AssetImage(AppImage.aboutus),
+          title: tr(LocaleKeys.moreFeatures_aboutUs), 
+          image: AssetImage(AppImage.aboutus), 
           type: 2),
       Choice(
-          title:tr(LocaleKeys.additionText_howitWrks),
-          image: AssetImage(AppImage.howItWoks),
+          title:tr(LocaleKeys.additionText_howitWrks), 
+          image: AssetImage(AppImage.howItWoks), 
           type: 9),
       Choice(
-          title: tr(LocaleKeys.moreFeatures_faq),
-          image: AssetImage(AppImage.faqicon),
+          title: tr(LocaleKeys.moreFeatures_faq), 
+          image: AssetImage(AppImage.faqicon), 
           type: 3),
 
       Choice(

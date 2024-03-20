@@ -397,7 +397,7 @@ class _FamilyPlanState extends State<FamilyPlan> {
                             onTap1: () {
                               Navigator.pop(context);
                             },
-                            colour: Color(0xff2A3C6A)),
+                            colour: AppColor.newGrey),
                       ),
                       SizedBox(
                         width: 10,
@@ -419,7 +419,7 @@ class _FamilyPlanState extends State<FamilyPlan> {
                                  
                                   });
                             },
-                            colour: Color(0xff941C1B)),
+                            colour: AppColor.newGrey),
                       ),
                     ],
                   ),

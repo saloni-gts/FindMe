@@ -64,7 +64,7 @@ class _AddPetState extends State<AddPet> with SingleTickerProviderStateMixin {
                       controller: _tabController,
                       unselectedLabelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium),
                       labelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium),
-                      unselectedLabelColor: AppColor.textLightBlueBlack,
+                      unselectedLabelColor: const Color(0xffCBC4A9),
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
                         color: AppColor.newBlueGrey,

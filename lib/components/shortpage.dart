@@ -48,7 +48,7 @@ int z = 0;
 Future<File?> getImage(ImageSource source, {bool circleCropStyle = true, bool isCropped = true}) async {
 // PetProvider petProvider=Provider.of(GlobalVariable.navState.currentContext!,listen: false);
 // petProvider.updateLoader(true);
-
+try{
   print("isCropped===$isCropped");
   print("TEST!!1");
   final ImagePicker picker = ImagePicker();
@@ -58,6 +58,7 @@ Future<File?> getImage(ImageSource source, {bool circleCropStyle = true, bool is
     source: source,
   )
       .onError((error, stackTrace) async {
+    print("error>>>  $error,  stackTrace>>>>  $stackTrace ");
     var status3 = await Permission.camera.status;
     var status4 = await Permission.photos.status;
 
@@ -94,7 +95,9 @@ Future<File?> getImage(ImageSource source, {bool circleCropStyle = true, bool is
     return File(pickedFile?.path ?? "");
   }
 
-  return null;
+  return null;}catch(error,stackTrace){
+    print("print---- ${error}   stack  ${stackTrace}");
+  }
 }
 
 int i = 0;
@@ -800,7 +803,7 @@ class _PetShortPageState extends State<PetShortPage> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 22.0),
+        padding: const EdgeInsets.only(left: 22.0, bottom: 20),
         child: Consumer<PetProvider>(builder: (context, petProvider, child) {
           return customBlueButton(
               context: context,

@@ -14,8 +14,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-
-
 import '../../components/appbarComp.dart';
 import '../../components/bottomBorderComp.dart';
 import '../../components/deleteAlert.dart';
@@ -70,16 +68,16 @@ class _SettingScreenState extends State<SettingScreen> {
       // bottomNavigationBar: BotttomBorder(context),
       body: Consumer<Myprovider>(builder: (context, myprovider, child) {
         return Padding(
-          padding: EdgeInsets.only(top: 13
+          padding: const EdgeInsets.only(top: 13
               // , left: 22, right: 21
-          ),
+              ),
           child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Container(
                   height: 280,
-                  color: AppColor.textFieldGrey,
+                  color: AppColor.newGrey,
                   child: Column(
                     children: [
                       // Expanded(
@@ -140,7 +138,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       //   ),
                       // ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 
@@ -153,13 +151,13 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Row(
                             children: [
                               Image.asset(AppImage.change_icon),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
                               Text(
                                 tr(LocaleKeys.additionText_chngPass),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
@@ -169,7 +167,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
 
-                      SizedBox(
+                      const SizedBox(
                         height: 27,
                       ),
 
@@ -181,16 +179,14 @@ class _SettingScreenState extends State<SettingScreen> {
                           },
                           child: Row(
                             children: [
-                              Container(
-                                  height: 20,
-                                  child: Image.asset(AppImage.deleteblue)),
-                              SizedBox(
+                              SizedBox(height: 20, child: Image.asset(AppImage.deleteblue)),
+                              const SizedBox(
                                 width: 15,
                               ),
                               Text(
-                                 tr(LocaleKeys.additionText_deleteOwnrProfile),
+                                tr(LocaleKeys.additionText_deleteOwnrProfile),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
@@ -199,7 +195,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 27,
                       ),
                       Padding(
@@ -209,24 +205,21 @@ class _SettingScreenState extends State<SettingScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LangPicker(),
+                                  builder: (context) => const LangPicker(),
                                 ));
                           },
                           child: Row(
                             children: [
-                              Container(
-                                  height: 20,
-                                  child:
-                                  Image.asset(AppImage.languageIcon)
-                                // Icon(Icons.c)
-                              ),
-                              SizedBox(
+                              SizedBox(height: 20, child: Image.asset(AppImage.languageIcon)
+                                  // Icon(Icons.c)
+                                  ),
+                              const SizedBox(
                                 width: 15,
                               ),
                               Text(
                                 tr(LocaleKeys.additionText_changeLanguage),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
@@ -235,7 +228,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Padding(
@@ -243,26 +236,24 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Row(
                           children: [
                             Image.asset(AppImage.notificIcon),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Container(
+                            SizedBox(
                               width: 240,
                               child: Text(
-                                 tr(LocaleKeys.additionText_notiOther),
+                                tr(LocaleKeys.additionText_notiOther),
                                 textAlign: TextAlign.left,
-                                overflow:TextOverflow.ellipsis ,
-                                style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
                               ),
                             ),
-                            new Spacer(),
-                            Consumer<Myprovider>(
-                                builder: (context, myprovider, child) {
+                            const Spacer(),
+                            Consumer<Myprovider>(builder: (context, myprovider, child) {
                               return Radio(
-
                                   activeColor: AppColor.textLightBlueBlack,
                                   toggleable: true,
                                   value: true,
@@ -278,35 +269,30 @@ class _SettingScreenState extends State<SettingScreen> {
                                             builder: (context1) {
                                               return AlertDialog(
                                                 title: Text(
-                                                     tr(LocaleKeys.additionText_wanaStpOthrNoti),),
+                                                  tr(LocaleKeys.additionText_wanaStpOthrNoti),
+                                                ),
                                                 actions: <Widget>[
                                                   InkWell(
                                                     child: Text(
                                                       tr(LocaleKeys.additionText_cancel),
-                                                      style: TextStyle(
-                                                          fontSize: 17.0,
-                                                          fontFamily:
-                                                              AppFont.poppinsMedium),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                     ),
                                                     onTap: () {
                                                       Navigator.pop(context1);
                                                     },
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5.0,
                                                   ),
                                                   InkWell(
                                                     child: Text(
                                                       tr(LocaleKeys.additionText_yes),
-                                                      style: TextStyle(
-                                                          fontSize: 17.0,
-                                                          fontFamily:
-                                                              AppFont.poppinsMedium),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                     ),
                                                     onTap: () async {
-                                                      myprovider
-                                                          .callsendNotificationApi(
-                                                              iddd: 2, status: 0);
+                                                      myprovider.callsendNotificationApi(iddd: 2, status: 0);
                                                       Navigator.pop(context1);
                                                       myprovider.onRadioChange();
                                                     },
@@ -319,8 +305,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                             context: context,
                                             builder: (context1) {
                                               return AlertDialog(
-                                                title: Text(
-                                                     tr(LocaleKeys.additionText_thnksFrAlowNoti)),
+                                                title: Text(tr(LocaleKeys.additionText_thnksFrAlowNoti)),
                                                 actions: <Widget>[
                                                   InkWell(
                                                     child: Text(
@@ -328,16 +313,12 @@ class _SettingScreenState extends State<SettingScreen> {
                                                       // tr(LocaleKeys.additionText_cancel)
 
                                                       ,
-                                                      style: TextStyle(
-                                                          fontSize: 17.0,
-                                                          fontFamily:
-                                                              AppFont.poppinsMedium),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                     ),
                                                     onTap: () {
                                                       Navigator.pop(context1);
-                                                      myprovider
-                                                          .callsendNotificationApi(
-                                                              iddd: 1, status: 0);
+                                                      myprovider.callsendNotificationApi(iddd: 1, status: 0);
                                                       myprovider.onRadioChange();
                                                     },
                                                   ),
@@ -363,28 +344,25 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Row(
                             children: [
                               Image.asset(AppImage.notificIcon),
-                              SizedBox(
+                              const SizedBox(
                                 width: 15,
                               ),
-                              Container(
-
+                              SizedBox(
                                 width: 240,
                                 child: Text(
-                                    tr(LocaleKeys.additionText_notiFrHlpLstPet),
+                                  tr(LocaleKeys.additionText_notiFrHlpLstPet),
                                   textAlign: TextAlign.left,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12.0,
-
                                       color: AppColor.textLightBlueBlack,
                                       fontFamily: AppFont.poppinsRegular),
                                 ),
                               ),
 
-                              new Spacer(),
+                              const Spacer(),
 
-                              Consumer<Myprovider>(
-                                  builder: (context, myprovider, child) {
+                              Consumer<Myprovider>(builder: (context, myprovider, child) {
                                 return Radio(
                                   activeColor: AppColor.textLightBlueBlack,
                                   toggleable: true,
@@ -432,39 +410,33 @@ class _SettingScreenState extends State<SettingScreen> {
                                             context: context,
                                             builder: (context1) {
                                               return AlertDialog(
-                                                title: Text(
-                                                     tr(LocaleKeys.additionText_wnaStpNotiHlpLstPet)),
+                                                title: Text(tr(LocaleKeys.additionText_wnaStpNotiHlpLstPet)),
                                                 actions: [
                                                   InkWell(
                                                     child: Text(
-                                                      tr(LocaleKeys
-                                                          .additionText_cancel),
-                                                      style: TextStyle(
-                                                          fontSize: 17.0,
-                                                          fontFamily:
-                                                              AppFont.poppinsMedium),
+                                                      tr(LocaleKeys.additionText_cancel),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                     ),
                                                     onTap: () {
                                                       Navigator.pop(context1);
                                                     },
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5.0,
                                                   ),
                                                   InkWell(
                                                     child: Text(
                                                       tr(LocaleKeys.additionText_yes),
-                                                      style: TextStyle(
-                                                          fontSize: 17.0,
-                                                          fontFamily:
-                                                              AppFont.poppinsMedium),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                     ),
                                                     onTap: () async {
                                                       myprovider.chngSetButton();
                                                       myprovider.callsendNotificationApi(iddd: 2, status: 1);
                                                       HiveHandler.updateNotiButton(false);
-                                                      var v1=HiveHandler.isChekLostNoti();
-                                                      print("value of v1====${v1}");
+                                                      var v1 = HiveHandler.isChekLostNoti();
+                                                      print("value of v1====$v1");
                                                       Navigator.pop(context1);
                                                     },
                                                   )
@@ -500,12 +472,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
-
-              new Spacer(),
-
+              const Spacer(),
               BotttomBorder(context),
-
-
             ],
           ),
         );
@@ -515,14 +483,13 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> checkPermission() async {
-    var status3;
-    var status4;
+    PermissionStatus status3;
+    LocationPermission status4;
 
     if (Platform.isIOS) {
       status4 = await Geolocator.checkPermission();
-      print("location status ios===>>${status4}");
-      if (status4 == LocationPermission.denied ||
-          status4 == LocationPermission.deniedForever) {
+      print("location status ios===>>$status4");
+      if (status4 == LocationPermission.denied || status4 == LocationPermission.deniedForever) {
         Future.delayed(const Duration(seconds: 2), () {
           homLocPermiDialog(context, 0);
         });
@@ -532,7 +499,7 @@ class _SettingScreenState extends State<SettingScreen> {
     if (Platform.isAndroid) {
       status3 = await Permission.location.status;
 
-      print("location status android===>>${status3}");
+      print("location status android===>>$status3");
       // if (!status3.isGranted)
       if (status3 != PermissionStatus.granted) {
         Future.delayed(const Duration(seconds: 2), () {
@@ -547,16 +514,14 @@ class _SettingScreenState extends State<SettingScreen> {
 
     if (Platform.isIOS) {
       var status4 = await Geolocator.checkPermission();
-      print("help pet lost noti status=>${status4}");
-      if (status4 == LocationPermission.whileInUse ||
-          status4 == LocationPermission.always) {
+      print("help pet lost noti status=>$status4");
+      if (status4 == LocationPermission.whileInUse || status4 == LocationPermission.always) {
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context1) {
               return AlertDialog(
-                title: Text(
-                     tr(LocaleKeys.additionText_thnksFrAlNotiHlpLstPt)),
+                title: Text(tr(LocaleKeys.additionText_thnksFrAlNotiHlpLstPt)),
                 actions: <Widget>[
                   InkWell(
                     child: Text(
@@ -564,15 +529,14 @@ class _SettingScreenState extends State<SettingScreen> {
                       // tr(LocaleKeys.additionText_cancel)
 
                       ,
-                      style: TextStyle(
-                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                      style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                     ),
                     onTap: () {
                       myProvider.chngSetButton();
                       myProvider.callsendNotificationApi(iddd: 1, status: 1);
                       HiveHandler.updateNotiButton(true);
-                      var v1=HiveHandler.isChekLostNoti();
-                      print("value of v1====${v1}");
+                      var v1 = HiveHandler.isChekLostNoti();
+                      print("value of v1====$v1");
                       Navigator.pop(context1);
                     },
                   ),
@@ -586,31 +550,29 @@ class _SettingScreenState extends State<SettingScreen> {
 
     if (Platform.isAndroid) {
       var status3 = await Permission.location.status;
-      print("help pet lost noti status=>${status3}");
+      print("help pet lost noti status=>$status3");
       if (status3 == PermissionStatus.granted) {
         showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context1) {
               return AlertDialog(
-                title: Text(
-                tr(LocaleKeys.additionText_thnksFrAlNotiHlpLstPt)),
+                title: Text(tr(LocaleKeys.additionText_thnksFrAlNotiHlpLstPt)),
                 actions: <Widget>[
                   InkWell(
                     child: Text(
-                       tr(LocaleKeys.additionText_okay)
+                      tr(LocaleKeys.additionText_okay)
                       // tr(LocaleKeys.additionText_cancel)
 
                       ,
-                      style: TextStyle(
-                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                      style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                     ),
                     onTap: () {
                       myProvider.chngSetButton();
                       myProvider.callsendNotificationApi(iddd: 1, status: 1);
                       HiveHandler.updateNotiButton(true);
-                      var v1=HiveHandler.isChekLostNoti();
-                      print("value of v1====${v1}");
+                      var v1 = HiveHandler.isChekLostNoti();
+                      print("value of v1====$v1");
                       Navigator.pop(context1);
                     },
                   ),
@@ -624,16 +586,14 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> chkButtonStaus() async {
-    Myprovider myProvider =
-        Provider.of(GlobalVariable.navState.currentContext!, listen: false);
-    PetProvider petProvider =
-        Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+    Myprovider myProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+    PetProvider petProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
 
     petProvider.updateLoader(true);
 
     if (Platform.isAndroid) {
       var status3 = await Permission.location.status;
-      print("help pet lost noti status andr=>${status3}");
+      print("help pet lost noti status andr=>$status3");
       if (status3 == PermissionStatus.granted) {
         myProvider.setButtonOn = true;
         print("setButtonOn status android=>${myProvider.setButtonOn}");
@@ -642,9 +602,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
     if (Platform.isIOS) {
       var status4 = await Geolocator.checkPermission();
-      print("help pet lost noti status ios=>${status4}");
-      if (status4 == LocationPermission.whileInUse ||
-          status4 == LocationPermission.always) {
+      print("help pet lost noti status ios=>$status4");
+      if (status4 == LocationPermission.whileInUse || status4 == LocationPermission.always) {
         myProvider.setButtonOn = true;
         print("setButtonOn status ios=>${myProvider.setButtonOn}");
       }

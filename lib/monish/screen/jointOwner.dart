@@ -67,7 +67,7 @@ class _JointOwnerState extends State<JointOwner> {
                 );
               }
             },
-            colour: AppColor.buttonRedColor),
+            colour: AppColor.newGrey),
       ),
       appBar: customAppbar(
           isbackbutton: true, titlename: tr(LocaleKeys.additionText_jntOnr)),

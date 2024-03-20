@@ -23,7 +23,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/commingSoonAlert.dart';
 import '../components/greyContinerWidCircle.dart';
 import '../components/iosLocPerm.dart';
@@ -40,7 +39,7 @@ import '../util/color.dart';
 import 'achievements.dart';
 
 class PetDashboard extends StatefulWidget {
-  PetDashboard({Key? key}) : super(key: key);
+  const PetDashboard({Key? key}) : super(key: key);
 
   @override
   State<PetDashboard> createState() => _PetDashboardState();
@@ -52,6 +51,7 @@ class _PetDashboardState extends State<PetDashboard> {
   late PermissionStatus _permissionStatus;
 
   UserModel user = HiveHandler.getUserHiveRefresher().value.values.first;
+  @override
   void initState() {
     PetProvider petProvider1 = Provider.of(context, listen: false);
     petProvider1.openOnce = 0;
@@ -64,7 +64,7 @@ class _PetDashboardState extends State<PetDashboard> {
     if (purChaseProvider.plan.isNotEmpty) {
       isShowPetWeight = purChaseProvider.plan[0];
 
-      print("isShowPetWeight==${isShowPetWeight}");
+      print("isShowPetWeight==$isShowPetWeight");
     }
     petProvider1.callGetQrTag();
     petProvider1.x = 0.0;
@@ -79,7 +79,7 @@ class _PetDashboardState extends State<PetDashboard> {
 
   void onLayoutDone(Duration timeStamp) async {
     _permissionStatus = await Permission.camera.status;
-    print("__permissionStatus${_permissionStatus}");
+    print("__permissionStatus$_permissionStatus");
     setState(() {});
   }
 
@@ -107,7 +107,7 @@ class _PetDashboardState extends State<PetDashboard> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               // petDetail?.isPetQrCount == 0?SizedBox(height: 20,):SizedBox(),
@@ -136,9 +136,9 @@ class _PetDashboardState extends State<PetDashboard> {
                                     if (petDetail?.isPetQrCount == 0) {
                                       var status3 = await Permission.camera.status;
 
-                                      print("value of status===>>> ${status3}");
+                                      print("value of status===>>> $status3");
                                       if (!status3.isGranted) {
-                                        print("iiiiii==>${i}");
+                                        print("iiiiii==>$i");
                                         i = i + 1;
 
                                         if (i > 1) {
@@ -154,7 +154,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                         // await Permission.camera.request();
                                       }
                                       var status4 = await Permission.camera.status;
-                                      print("status 4 value-=====${status4}");
+                                      print("status 4 value-=====$status4");
                                       if (status4.isGranted) {
                                         Navigator.push(
                                             context,
@@ -172,7 +172,8 @@ class _PetDashboardState extends State<PetDashboard> {
                                         PurChaseProvider pur = Provider.of(context, listen: false);
                                         await pur.getSubScriptionDetails();
                                         petProvider1.callGetQrTag();
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => TagList()));
+                                        Navigator.push(
+                                            context, MaterialPageRoute(builder: (context) => const TagList()));
                                       }
                                     }
 
@@ -186,7 +187,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                     ? Text(
                                         tr(LocaleKeys.additionText_qrTgActivated),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 10.0,
                                           color: Colors.black,
                                           fontFamily: AppFont.poppinsMedium,
@@ -195,7 +196,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                     : Text(
                                         tr(LocaleKeys.additionText_qrTgNotActivated),
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 10.0,
                                           color: Colors.black,
                                           fontFamily: AppFont.poppinsMedium,
@@ -286,9 +287,9 @@ class _PetDashboardState extends State<PetDashboard> {
                                         onTap: () async {
                                           await petProvider1.callGetQrTag();
 
-                                          Future.delayed(Duration(milliseconds: 100), () {
+                                          Future.delayed(const Duration(milliseconds: 100), () {
                                             Navigator.push(
-                                                context, MaterialPageRoute(builder: (context) => PetProfile()));
+                                                context, MaterialPageRoute(builder: (context) => const PetProfile()));
                                           });
 
                                           // Navigator.push(
@@ -319,14 +320,14 @@ class _PetDashboardState extends State<PetDashboard> {
                                           text: tr(LocaleKeys.additionText_qrTgNotActivated),
                                         );
                                       } else {
-                                        var status3;
-                                        var status4;
+                                        PermissionStatus status3;
+                                        LocationPermission status4;
 
                                         print("location locIocPer===>>${petProvider.locIocPer}");
 
                                         if (Platform.isAndroid) {
                                           status3 = await Permission.location.status;
-                                          print("location status===>>${status3}");
+                                          print("location status===>>$status3");
 
                                           // if(status3.isGranted)
                                           if (status3 == PermissionStatus.granted) {
@@ -350,7 +351,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                               petProvider.updateLoader(false);
                                               // EasyLoading.showToast(
                                               //     "Something went wrong! \nTry Again Later");
-                                              print("error========${e}");
+                                              print("error========$e");
 
                                               // petProvider.updateLoader(false);
                                             }
@@ -366,18 +367,18 @@ class _PetDashboardState extends State<PetDashboard> {
                                                           InkWell(
                                                             child: Text(
                                                               tr(LocaleKeys.additionText_cancel),
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                             ),
                                                             onTap: () {
                                                               Navigator.pop(context);
                                                             },
                                                           ),
-                                                          SizedBox(width: 5),
+                                                          const SizedBox(width: 5),
                                                           InkWell(
                                                             child: Text(
                                                               tr(LocaleKeys.additionText_yes),
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                             ),
                                                             onTap: () async {
@@ -403,7 +404,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                           print(
                                               "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
 
-                                          print("location status ios===>>${status4}");
+                                          print("location status ios===>>$status4");
 
                                           if (status4 == LocationPermission.whileInUse ||
                                               status4 == LocationPermission.always) {
@@ -428,7 +429,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                               petProvider.updateLoader(false);
 
                                               EasyLoading.showToast("Something went wrong! \nTry Again Later");
-                                              print("error========${e}");
+                                              print("error========$e");
 
                                               // petProvider.updateLoader(false);
                                             }
@@ -444,18 +445,18 @@ class _PetDashboardState extends State<PetDashboard> {
                                                           InkWell(
                                                             child: Text(
                                                               tr(LocaleKeys.additionText_cancel),
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                             ),
                                                             onTap: () {
                                                               Navigator.pop(context);
                                                             },
                                                           ),
-                                                          SizedBox(width: 5),
+                                                          const SizedBox(width: 5),
                                                           InkWell(
                                                             child: Text(
                                                               tr(LocaleKeys.additionText_yes),
-                                                              style: TextStyle(
+                                                              style: const TextStyle(
                                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                                             ),
                                                             onTap: () async {
@@ -661,10 +662,10 @@ class _PetDashboardState extends State<PetDashboard> {
                                         ? tr(LocaleKeys.additionText_petIsLost)
                                         : tr(LocaleKeys.additionText_markAsLost),
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 10.0, color: Colors.black, fontFamily: AppFont.poppinsMedium),
                                   ),
-                                  petDetail?.isPetQrCount != 0 ? Text("") : SizedBox()
+                                  petDetail?.isPetQrCount != 0 ? const Text("") : const SizedBox()
                                 ],
                               );
                             })
@@ -673,7 +674,7 @@ class _PetDashboardState extends State<PetDashboard> {
                       );
                     },
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
 
@@ -685,12 +686,12 @@ class _PetDashboardState extends State<PetDashboard> {
 
                           print("print");
                           var status3 = await Permission.camera.status;
-                          print("value of status===>>> ${status3}");
+                          print("value of status===>>> $status3");
 
                           if (status3 != PermissionStatus.granted) {
                             // print("iiiiii==>${i}");
                             i = i + 1;
-                            print("iiiiii==>${i}");
+                            print("iiiiii==>$i");
                             if (i > 2) {
                               scannerPermissionDialog(context);
                               // await Permission.camera.request();
@@ -701,7 +702,7 @@ class _PetDashboardState extends State<PetDashboard> {
                             }
                           }
                           var status4 = await Permission.camera.status;
-                          print("value of status===>>> ${status4}");
+                          print("value of status===>>> $status4");
 
                           if (status4 == PermissionStatus.granted) {
                             Navigator.push(
@@ -715,8 +716,8 @@ class _PetDashboardState extends State<PetDashboard> {
                         child: Container(
                           height: 40,
                           width: MediaQuery.of(context).size.width * .55,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28), color: AppColor.textLightBlueBlack),
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(28), color: AppColor.newBlueGrey),
                           child: Center(
                             child:
                                 // Text(
@@ -734,25 +735,27 @@ class _PetDashboardState extends State<PetDashboard> {
                               text: TextSpan(children: <TextSpan>[
                                 TextSpan(
                                   text: tr(LocaleKeys.additionText_addMoreQR),
-                                  style: TextStyle(color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w800),
+                                  style:
+                                      const TextStyle(color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w800),
                                 ),
                               ]),
                             ),
                           ),
                         ),
                       )
-                    : SizedBox(height: 40),
+                    : const SizedBox(height: 40),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0),
-                child: Text(
-                  tr(LocaleKeys.petProfile_protection),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                ),
-              ),
-              SizedBox(
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15.0),
+              //   child: Text(
+              //     tr(LocaleKeys.petProfile_protection),
+              //     textAlign: TextAlign.center,
+              //     style: const TextStyle(
+              //         fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+              //   ),
+              // ),
+              const SizedBox(
                 height: 12.0,
               ),
               Padding(
@@ -761,8 +764,9 @@ class _PetDashboardState extends State<PetDashboard> {
                   children: [
                     GreyContainerWidCircle(
                         context: context,
+                        crl: AppColor.newLightBlue,
                         text1: tr(LocaleKeys.home_careDiary),
-                        image1: AppImage.careDiary,
+                        image1: AppImage.newCal,
                         onTap1: () {
                           provider.mySelectedEvents = {};
                           print("is map empty==>>${provider.mySelectedEvents}");
@@ -774,26 +778,27 @@ class _PetDashboardState extends State<PetDashboard> {
 
                           //   Navigator.push(context, MaterialPageRoute(builder: (context)=>NewEvent()));
                         }),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     GreyContainerWidCircle(
                         context: context,
                         text1: tr(LocaleKeys.petProfile_documents),
-                        image1: AppImage.googleDocs,
+                        image1: AppImage.newDocs,
+                        crl: AppColor.newLightBlue,
                         onTap1: () {
                           // Navigator.pushNamed(context, AppScreen.documentList);
                           PetProvider petProvider = Provider.of(context, listen: false);
                           petProvider.cateId = "";
                           petProvider.GetDocV2();
-                          Future.delayed(Duration(milliseconds: 1000), () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => Categories()));
+                          Future.delayed(const Duration(milliseconds: 1000), () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Categories()));
                           });
                         })
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12.0,
               ),
               Padding(
@@ -802,18 +807,20 @@ class _PetDashboardState extends State<PetDashboard> {
                   children: [
                     GreyContainerWidCircle(
                         context: context,
+                        crl: AppColor.newLightBlue,
                         text1: tr(LocaleKeys.petProfile_photos),
-                        image1: AppImage.photos,
+                        image1: AppImage.newPics,
                         onTap1: () {
                           provider.getPetPhotoCall(context: context, isNavigate: true);
                         }),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     GreyContainerWidCircle(
                         context: context,
                         text1: tr(LocaleKeys.petProfile_weightTraker),
-                        image1: AppImage.scales,
+                        crl: AppColor.newLightBlue,
+                        image1: AppImage.newWeight,
                         onTap1: () {
                           PetProvider petProvider = Provider.of(context, listen: false);
 
@@ -824,13 +831,13 @@ class _PetDashboardState extends State<PetDashboard> {
                           if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
                               (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
                             PetProvider petProvider = Provider.of(context, listen: false);
-                            petProvider.graphSpotData.clear();
+                            petProvider.graphSpotData.clear();   
                             petProvider.callGetWeight();
 
-                            Future.delayed(Duration(milliseconds: 1000), () {
+                            Future.delayed(const Duration(milliseconds: 1000), () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => WeightTrkrMain()));
                             }).onError((error, stackTrace) {
-                              print("eroorroror===>>> ${error}");
+                              print("eroorroror===>>> $error");
                             });
                           } else if (petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 0) {
                             makePetPremDialog(context);
@@ -843,43 +850,45 @@ class _PetDashboardState extends State<PetDashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: Text(
-                  tr(LocaleKeys.petProfile_moreOption),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: AppColor.textLightBlueBlack,
-                    fontFamily: AppFont.poppinsBold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15.0),
+              //   child: Text(
+              //     tr(LocaleKeys.petProfile_moreOption),
+              //     textAlign: TextAlign.center,
+              //     style: const TextStyle(
+              //       fontSize: 16.0,
+              //       color: AppColor.textLightBlueBlack,
+              //       fontFamily: AppFont.poppinsBold,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10.0,
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Row(
                   children: [
                     GreyContainerWidCircle(
                         context: context,
+                        crl: AppColor.newLightBlue,
                         text1: tr(LocaleKeys.petProfile_qrScanned),
-                        image1: AppImage.sandClock,
+                        image1: AppImage.newQR,
                         onTap1: () {
                           Navigator.pushNamed(context, AppScreen.googlemap);
                         }),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     Consumer<PetProvider>(builder: (context, petProvider, child) {
                       return GreyContainerWidCircle(
                           context: context,
                           text1: tr(LocaleKeys.petProfile_downloadpetProfile),
-                          image1: AppImage.downloadPet,
+                          crl: AppColor.newLightBlue,
+                          image1: AppImage.newDown,
                           onTap1: () async {
                             if (Platform.isIOS) {
                               showDialog(
@@ -894,22 +903,22 @@ class _PetDashboardState extends State<PetDashboard> {
                                           },
                                           child: Text(
                                             tr(LocaleKeys.additionText_no),
-                                            style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         InkWell(
                                           onTap: () async {
                                             Navigator.pop(context1);
                                             EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
-                                                duration: Duration(seconds: 7));
+                                                duration: const Duration(seconds: 7));
 
                                             PetProvider petProvider = Provider.of(context, listen: false);
 
                                             petProvider.updateLoader(true);
-                                            CallAPi apiii = new CallAPi();
+                                            CallAPi apiii = CallAPi();
                                             String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
 
                                             petProvider.updateLoader(false);
@@ -935,7 +944,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                           },
                                           child: Text(
                                             tr(LocaleKeys.additionText_yes),
-                                            style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                           ),
                                         )
                                       ],
@@ -944,7 +953,7 @@ class _PetDashboardState extends State<PetDashboard> {
                             }
                             if (Platform.isAndroid) {
                               var status = await Permission.manageExternalStorage.request();
-                              print("storage statur====${status}");
+                              print("storage statur====$status");
                               // if (status==PermissionStatus.denied) {
                               //   Permission.manageExternalStorage.request();
                               // } else if (status.isPermanentlyDenied || status.isRestricted) {
@@ -964,22 +973,22 @@ class _PetDashboardState extends State<PetDashboard> {
                                             },
                                             child: Text(
                                               tr(LocaleKeys.additionText_no),
-                                              style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                              style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                             ),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           InkWell(
                                             onTap: () async {
                                               Navigator.pop(context1);
                                               EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
-                                                  duration: Duration(seconds: 7));
+                                                  duration: const Duration(seconds: 7));
 
                                               PetProvider petProvider = Provider.of(context, listen: false);
 
                                               petProvider.updateLoader(true);
-                                              CallAPi apiii = new CallAPi();
+                                              CallAPi apiii = CallAPi();
                                               String pdfurlfinal =
                                                   await apiii.login(petId: petProvider.setselectedPetId);
 
@@ -1001,7 +1010,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                             },
                                             child: Text(
                                               tr(LocaleKeys.additionText_yes),
-                                              style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                              style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                             ),
                                           )
                                         ],
@@ -1014,7 +1023,7 @@ class _PetDashboardState extends State<PetDashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               Padding(
@@ -1023,20 +1032,22 @@ class _PetDashboardState extends State<PetDashboard> {
                   children: [
                     GreyContainerWidCircle(
                         context: context,
+                        crl: AppColor.newLightBlue,
                         text1: tr(LocaleKeys.additionText_hlthCard),
                         // tr(LocaleKeys.petProfile_healthCare),
-                        image1: AppImage.healthcare,
+                        image1: AppImage.newHCard,
                         onTap1: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => HealthCard()));
                           // commingSoonDialog(context);
                         }),
-                    SizedBox(
+                    const SizedBox(
                       width: 12.0,
                     ),
                     GreyContainerWidCircle(
                         context: context,
+                        crl: AppColor.newLightBlue,
                         text1: tr(LocaleKeys.additionText_achievements),
-                        image1: AppImage.achievements,
+                        image1: AppImage.newAchi,
                         onTap1: () {
                           Navigator.push(
                               context,
@@ -1049,9 +1060,54 @@ class _PetDashboardState extends State<PetDashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  height: 15,
+                  width: double.infinity,
+                  color: AppColor.newGrey,
+                ),
+              ),
+
+              const SizedBox(
+                height: 10.0,
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(children: [
+                      Image.asset(AppImage.bigRibbon, height: 80, width: 40),
+                      const Expanded(
+                        child: Text(
+                          "Tap Now To Unlock All The \nPREMIUM BENIFITS",
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color(0xff585357),
+                            fontFamily: AppFont.poppinsBold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      )
+                    ]),
+                  ),
+                ),
+              ),
+
+              const SizedBox(
+                height: 20.0,
+              ),
+
               // Padding(
               //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
               //   child: Row(
@@ -1089,7 +1145,7 @@ class _PetDashboardState extends State<PetDashboard> {
   void _askCameraPermission() async {
     if (await Permission.camera.request().isGranted) {
       print("granted");
-      var _permissionStatus = await Permission.camera.status;
+      var permissionStatus = await Permission.camera.status;
       setState(() {});
     }
   }
@@ -1127,24 +1183,24 @@ class _PetDashboardState extends State<PetDashboard> {
 
     if (Platform.isAndroid) {
       var status3 = await Permission.location.status;
-      print("help pet lost noti status=>${status3}");
+      print("help pet lost noti status=>$status3");
       if (status3 == PermissionStatus.granted) {
         myProvider.callsendNotificationApi(iddd: 1, status: 1);
         HiveHandler.updateNotiButton(true);
         var v1 = HiveHandler.isChekLostNoti();
-        print("value of v1====${v1}");
+        print("value of v1====$v1");
         myProvider.chngSetButton();
       }
     }
 
     if (Platform.isIOS) {
       var status4 = await Geolocator.checkPermission();
-      print("help pet lost noti status=>${status4}");
+      print("help pet lost noti status=>$status4");
       if (status4 == LocationPermission.whileInUse || status4 == LocationPermission.always) {
         myProvider.callsendNotificationApi(iddd: 1, status: 1);
         HiveHandler.updateNotiButton(true);
         var v1 = HiveHandler.isChekLostNoti();
-        print("value of v1====${v1}");
+        print("value of v1====$v1");
         myProvider.chngSetButton();
       }
     }

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cool_alert/cool_alert.dart';
@@ -12,7 +11,6 @@ import 'package:find_me/util/app_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 import '../components/bottomBorderComp.dart';
 import '../components/cntryyPikrrComp.dart';
@@ -54,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -63,34 +61,34 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 10.0),
+                  const SizedBox(height: 10.0),
                   Text(
                     tr(LocaleKeys.loginScreen_hi),
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22.0,
-                      color: AppColor.textRed,
+                      color: AppColor.newBlueGrey,
                       fontFamily: AppFont.poppinsBold,
                     ),
                   ),
                   Text(
-                    "${tr(LocaleKeys.loginScreen_headline1)}unique tags",
+                    "${tr(LocaleKeys.loginScreen_headline1)}FIND-ME",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12.0,
                       color: AppColor.textBlueBlack,
                       fontFamily: AppFont.poppinsLight,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
-                  Container(
+                  SizedBox(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.playstore),
+                    child: Image.asset(AppImage.findMeLogo),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Align(
@@ -98,21 +96,21 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       tr(LocaleKeys.loginScreen_email),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   CustomTextFeild(
                     textController: emailllController,
                     textInputType: TextInputType.emailAddress,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Align(
@@ -120,14 +118,14 @@ class _SignInPageState extends State<SignInPage> {
                     child: Text(
                       tr(LocaleKeys.loginScreen_password),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   CustomTextFieldWithLeading(
@@ -135,7 +133,7 @@ class _SignInPageState extends State<SignInPage> {
                     onChanged: (v) {},
                     isPassword: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
                   Padding(
@@ -149,7 +147,7 @@ class _SignInPageState extends State<SignInPage> {
                         child: Text(
                           tr(LocaleKeys.loginScreen_fogetPassword),
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12.0,
                             color: AppColor.textLightBlueBlack,
                             fontFamily: AppFont.poppinsRegular,
@@ -160,19 +158,17 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   customBlueButton(
                       context: context,
                       text1: tr(LocaleKeys.loginScreen_signIn),
                       onTap1: () {
-                        PetProvider petProvider =
-                            Provider.of(context, listen: false);
+                        PetProvider petProvider = Provider.of(context, listen: false);
                         petProvider.petDetailList.clear();
 
-                        if (emailllController.text.isEmpty ||
-                            passwordddController.text.isEmpty) {
+                        if (emailllController.text.isEmpty || passwordddController.text.isEmpty) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
@@ -190,11 +186,11 @@ class _SignInPageState extends State<SignInPage> {
                         }
                       },
                       colour: AppColor.newBlueGrey),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   signwithSocialMedia(),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   Row(
@@ -210,10 +206,10 @@ class _SignInPageState extends State<SignInPage> {
                           ? _socialIcon(AppImage.appleIcon, () {
                               authProvider.appleLogin(context);
                             })
-                          : SizedBox()
+                          : const SizedBox()
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   newUserCreateProfileTexr(),
@@ -238,34 +234,26 @@ class _SignInPageState extends State<SignInPage> {
             color: AppColor.textLightBlueBlack,
           )),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child:
-
-
-            Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * .45,
               child: Center(
-                child: RichText (
-                    overflow:TextOverflow.ellipsis,
+                child: RichText(
+                    overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     textAlign: TextAlign.center,
-                    text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text:   tr(LocaleKeys.loginScreen_socialAccountSignIn),
-                            style: TextStyle(
-                              color: AppColor.textLightBlueBlack,
-                              fontSize: 12,
-
-                              fontFamily: AppFont.poppinsRegular,
-
-                            ),
-                          ),
-                        ])),
+                    text: TextSpan(children: <TextSpan>[
+                      TextSpan(
+                        text: tr(LocaleKeys.loginScreen_socialAccountSignIn),
+                        style: const TextStyle(
+                          color: AppColor.textLightBlueBlack,
+                          fontSize: 12,
+                          fontFamily: AppFont.poppinsRegular,
+                        ),
+                      ),
+                    ])),
               ),
             ),
-
-
           ),
           Expanded(
               child: Container(
@@ -282,11 +270,9 @@ class _SignInPageState extends State<SignInPage> {
     return InkWell(
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 3),
+          padding: const EdgeInsets.symmetric(horizontal: 3),
           child: Container(
-              decoration: BoxDecoration(
-                  color: AppColor.textFieldGrey,
-                  borderRadius: BorderRadius.circular(28)),
+              decoration: BoxDecoration(color: AppColor.textFieldGrey, borderRadius: BorderRadius.circular(28)),
               height: 56,
               width: 104,
               child: Image.asset(icon)),
@@ -379,22 +365,16 @@ class _SignInPageState extends State<SignInPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
-
-
-        RichText(text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text:  tr(LocaleKeys.loginScreen_newUsers),
-                  style: TextStyle(
-                    color: AppColor.textLightBlueBlack,
-                    fontSize: 14,
-                    fontFamily: AppFont.poppinsRegular,
-                  )
-              )
-
-            ]
-        )),
+        RichText(
+            text: TextSpan(children: <TextSpan>[
+          TextSpan(
+              text: tr(LocaleKeys.loginScreen_newUsers),
+              style: const TextStyle(
+                color: AppColor.newBlueGrey,
+                fontSize: 14,
+                fontFamily: AppFont.poppinsRegular,
+              ))
+        ])),
 
         // Text(
         //   tr(LocaleKeys.loginScreen_newUsers)+" ",
@@ -406,35 +386,25 @@ class _SignInPageState extends State<SignInPage> {
         //   ),
         // ),
 
-
-
         GestureDetector(
-          child:
-
-          RichText(text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                    text:  " "+tr(LocaleKeys.loginScreen_createProfile).toUpperCase(),
-                    style: TextStyle(
-                      color: AppColor.textRed,
-                      fontSize: 14,
-                      fontFamily: AppFont.poppinsMedium,
-
-                    ),
-                  // recognizer: TapGestureRecognizer()
-                  //   ..onTap = () {
-                  //     Navigator.pushNamedAndRemoveUntil(
-                  //         context, AppScreen.signUpScreen, (r) => false);
-                  //   }
-
-                )
-
-              ]
-          )),
-
+          child: RichText(
+              text: TextSpan(children: <TextSpan>[
+            TextSpan(
+              text: " ${tr(LocaleKeys.loginScreen_createProfile).toUpperCase()}",
+              style: const TextStyle(
+                color: AppColor.newBlueGrey,
+                fontSize: 14,
+                fontFamily: AppFont.poppinsMedium,
+              ),
+              // recognizer: TapGestureRecognizer()
+              //   ..onTap = () {
+              //     Navigator.pushNamedAndRemoveUntil(
+              //         context, AppScreen.signUpScreen, (r) => false);
+              //   }
+            )
+          ])),
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, AppScreen.signUpScreen, (r) => false);
+            Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
           },
         ),
       ],

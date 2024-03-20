@@ -11,7 +11,6 @@ import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/commingSoonAlert.dart';
 import '../components/makePetprem.dart';
 import '../generated/locale_keys.g.dart';
@@ -53,7 +52,7 @@ class _CategoriesState extends State<Categories> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
                   Row(
@@ -64,14 +63,11 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(2);
                             petprovider.setDocCateName(1);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_vetVisits),
-                          image1: AppImage.vetvisit),
-                      SizedBox(
+                          image1: AppImage.healthCheck),
+                      const SizedBox(
                         width: 8.0,
                       ),
                       GreyContainerWidCircle(
@@ -80,16 +76,13 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(3);
                             petprovider.setDocCateName(2);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_invoices),
-                          image1: AppImage.invoice),
+                          image1: AppImage.newInvoice),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Row(
@@ -101,14 +94,11 @@ class _CategoriesState extends State<Categories> {
                             print("doc cate===>>> ${petprovider.cateId}");
                             petprovider.setDocCateName(3);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_vaccinations),
-                          image1: AppImage.vaccine),
-                      SizedBox(
+                          image1: AppImage.syringe),
+                      const SizedBox(
                         width: 8.0,
                       ),
                       GreyContainerWidCircle(
@@ -117,16 +107,13 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(5);
                             petprovider.setDocCateName(4);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_labTests),
-                          image1: AppImage.labtest),
+                          image1: AppImage.microscope),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Row(
@@ -137,14 +124,11 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(6);
                             petprovider.setDocCateName(5);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_businessCards),
-                          image1: AppImage.businessCard),
-                      SizedBox(
+                          image1: AppImage.newBusCard),
+                      const SizedBox(
                         width: 8.0,
                       ),
                       GreyContainerWidCircle(
@@ -153,16 +137,13 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(7);
                             petprovider.setDocCateName(6);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_agreements),
-                          image1: AppImage.agreement),
+                          image1: AppImage.newAgreement),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Row(
@@ -173,14 +154,11 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(8);
                             petprovider.setDocCateName(7);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_certificates),
-                          image1: AppImage.certificate),
-                      SizedBox(
+                          image1: AppImage.newCertificate),
+                      const SizedBox(
                         width: 8.0,
                       ),
                       GreyContainerWidCircle(
@@ -189,17 +167,13 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(9);
                             petprovider.setDocCateName(8);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_passport),
-                          image1: AppImage.passport
-                      ),
+                          image1: AppImage.boardingPass),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Row(
@@ -210,14 +184,11 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(10);
                             petprovider.setDocCateName(9);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: AppStrings.pedigree,
-                          image1: AppImage.goldenRetriever),
-                      SizedBox(
+                          image1: AppImage.newGoldDog),
+                      const SizedBox(
                         width: 8.0,
                       ),
                       GreyContainerWidCircle(
@@ -226,16 +197,13 @@ class _CategoriesState extends State<Categories> {
                             petprovider.setDocCateId(1);
                             petprovider.setDocCateName(10);
                             petprovider.GetDocV2();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => DocumentCategory()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const DocumentCategory()));
                           },
                           text1: tr(LocaleKeys.additionText_others),
-                          image1: AppImage.othersIcon),
+                          image1: AppImage.newMore),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                 ],
@@ -251,47 +219,51 @@ class _CategoriesState extends State<Categories> {
               children: [
                 Consumer<PetProvider>(builder: (context, petProvider, child) {
                   // return petProvider.documentList.length>=2 && petProvider.isUserPremium==0? SizedBox():
-                return  Row(
+                  return Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      FloatingActionButton(
-                          child: const Icon(Icons.add),
-                          backgroundColor: AppColor.textLightBlueBlack,
-                          onPressed: () {
-                            print("*****");
-                            print(petProvider.documentList.length);
-                            print(petProvider.isUserPremium);
-                            print("******");
-                            if (petProvider.documentList.length >= 2 &&
-                                petProvider.isUserPremium == 0   ) {
-                              commingSoonDialog(context, isFullAccess: 1);
-                            }
-                            else if(petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium==0 &&
-                                petProvider.documentList.length >= 2){
-                              makePetPremDialog(context);
-                            }
-                            else if((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium==1)
-                            || (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))
-                            ){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NewDocument(
-                                            isNewDoc: true,
-                                          )));
-                            }else{
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => NewDocument(
-                                        isNewDoc: true,
-                                      )));
-                            }
-                          }),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: FloatingActionButton(
+                            backgroundColor: AppColor.newBlueGrey,
+                            onPressed: () {
+                              print("*****");
+                              print(petProvider.documentList.length);
+                              print(petProvider.isUserPremium);
+                              print("******");
+                              if (petProvider.documentList.length >= 2 && petProvider.isUserPremium == 0) {
+                                commingSoonDialog(context, isFullAccess: 1);
+                              } else if (petProvider.isUserPremium == 1 &&
+                                  petProvider.selectedPetDetail?.isPremium == 0 &&
+                                  petProvider.documentList.length >= 2) {
+                                makePetPremDialog(context);
+                              } else if ((petProvider.isUserPremium == 1 &&
+                                      petProvider.selectedPetDetail?.isPremium == 1) ||
+                                  (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NewDocument(
+                                              isNewDoc: true,
+                                            )));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NewDocument(
+                                              isNewDoc: true,
+                                            )));
+                              }
+                            },
+                            child: const Icon(
+                              Icons.add,
+                              size: 40,
+                            )),
+                      ),
                     ],
                   );
                 }),
-                SizedBox(
+                const SizedBox(
                   height: 0,
                 ),
                 BotttomBorder(context)

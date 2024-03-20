@@ -119,10 +119,13 @@ class _NewNoteState extends State<NewNote> {
                     colour: noteTitleController.text.isEmpty
                         ?
                         // Color(0xff2A3C6A).withOpacity(0.5)
-                        Color(0xffAEB4C6)
+                        const Color(0xffAEB4C6)
                         : AppColor.newBlueGrey),
               ),
-              BotttomBorder(context)
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0),
+                child: BotttomBorder(context),
+              )
             ],
           ),
         ),
@@ -145,14 +148,14 @@ class _NewNoteState extends State<NewNote> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 5.0,
                                 ),
                                 widget.isFromPet
                                     ? Center(
                                         child: Stack(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: 100,
                                               height: 100,
                                               child: ClipRRect(
@@ -180,7 +183,7 @@ class _NewNoteState extends State<NewNote> {
                                       )
                                     : Padding(
                                         padding: const EdgeInsets.only(top: 8.0),
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 110.0,
                                           child: ListView.builder(
                                               scrollDirection: Axis.horizontal,
@@ -240,7 +243,7 @@ class _NewNoteState extends State<NewNote> {
                                                                       ),
                                                                     ),
                                                                   )
-                                                                : SizedBox()
+                                                                : const SizedBox()
                                                           ],
                                                         ),
                                                       ),
@@ -251,7 +254,7 @@ class _NewNoteState extends State<NewNote> {
                                                         child: Text(
                                                           petList[index].petName ?? "",
                                                           textAlign: TextAlign.left,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 15.0,
                                                               color: Colors.black,
                                                               fontFamily: AppFont.poppinSemibold),
@@ -263,7 +266,7 @@ class _NewNoteState extends State<NewNote> {
                                               }),
                                         ),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5.0,
                                 ),
                                 widget.isFromPet
@@ -271,14 +274,14 @@ class _NewNoteState extends State<NewNote> {
                                         child: Text(
                                           petProvider.selectedPetDetail?.petName ?? "",
                                           textAlign: TextAlign.left,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15.0,
                                               color: AppColor.textLightBlueBlack,
                                               fontFamily: AppFont.poppinSemibold),
                                         ),
                                       )
-                                    : SizedBox(),
-                                SizedBox(
+                                    : const SizedBox(),
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Column(
@@ -304,7 +307,7 @@ class _NewNoteState extends State<NewNote> {
                                                       backgroundColor: MaterialStateProperty.all<Color>(
                                                           petProvider.masterDetailList[i] ==
                                                                   petProvider.selectedMasterCategory
-                                                              ? Color(0xff2A3C6A)
+                                                              ? AppColor.newBlueGrey
                                                               : AppColor.textFieldGrey)),
                                                   onPressed: () {
                                                     petProvider.updateSelectedCategory(petProvider.masterDetailList[i]);
@@ -344,16 +347,16 @@ class _NewNoteState extends State<NewNote> {
                                         ],
                                       );
                                     }),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
                                     Consumer<PetProvider>(builder: (context, petProvider, child) {
                                       var handle = petProvider.selectedMasterCategory?.catagoryList ?? [];
                                       return handle.isEmpty
-                                          ? SizedBox()
+                                          ? const SizedBox()
                                           : Text(
                                               tr(LocaleKeys.additionText_type),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 13,
                                                   color: AppColor.textLightBlueBlack,
                                                   fontFamily: AppFont.poppinsBold),
@@ -363,7 +366,7 @@ class _NewNoteState extends State<NewNote> {
                                       builder: (context, value, child) {
                                         var handle = petProvider.selectedMasterCategory?.catagoryList ?? [];
                                         return handle.isEmpty
-                                            ? SizedBox()
+                                            ? const SizedBox()
                                             : CustomDropDown<CatagoryList>(
                                                 // isGrey: pettypebool.isEmpty,
                                                 selectText: petProvider.selectedSubCategory?.name ??
@@ -378,26 +381,26 @@ class _NewNoteState extends State<NewNote> {
                                               );
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 19,
                                     ),
                                     Row(
                                       children: [
                                         Text(
                                           tr(LocaleKeys.additionText_noteTitle),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               color: AppColor.textLightBlueBlack,
                                               fontFamily: AppFont.poppinsBold),
                                         ),
-                                        Text("(" + tr(LocaleKeys.newEvent_required) + ")",
-                                            style: TextStyle(
+                                        Text("(${tr(LocaleKeys.newEvent_required)})",
+                                            style: const TextStyle(
                                                 fontFamily: AppFont.poppinsRegular,
                                                 fontSize: 12,
                                                 color: Color(0xffFF0000)))
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 7,
                                     ),
                                     CustomTextFeild(
@@ -405,17 +408,17 @@ class _NewNoteState extends State<NewNote> {
                                       textInputType: TextInputType.text,
                                       hintText: tr(LocaleKeys.additionText_descComnt),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 22,
                                     ),
                                     Text(
                                       tr(LocaleKeys.additionText_Drug),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 13,
                                           color: AppColor.textLightBlueBlack,
                                           fontFamily: AppFont.poppinsBold),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 7,
                                     ),
                                     CustomTextFeild(
@@ -423,17 +426,17 @@ class _NewNoteState extends State<NewNote> {
                                       textInputType: TextInputType.text,
                                       hintText: tr(LocaleKeys.additionText_entrDName),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 22,
                                     ),
                                     Text(
                                       tr(LocaleKeys.additionText_reaction),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: AppFont.poppinsBold,
                                           fontSize: 16,
                                           color: AppColor.textLightBlueBlack),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 18,
                                     ),
                                     Consumer<Myprovider>(builder: (context, myprovider, child) {
@@ -455,19 +458,19 @@ class _NewNoteState extends State<NewNote> {
                                                       )),
                                                       backgroundColor: MaterialStateProperty.all<Color>(
                                                           myprovider.reactionbutton[i].buttonisSelected
-                                                              ? Color(0xff941C1B)
+                                                              ? AppColor.newBlueGrey
                                                               : AppColor.textFieldGrey)),
                                                   onPressed: () {
                                                     myprovider.upodateSelectedbutton2(i);
                                                     reaction = i + 1;
-                                                    print("reaction value=== ${reaction}");
+                                                    print("reaction value=== $reaction");
                                                   },
                                                   child: Text(
                                                     reactionbutton[i].name,
                                                     style: TextStyle(
                                                         color: myprovider.reactionbutton[i].buttonisSelected
                                                             ? Colors.white
-                                                            : Color(0xff2A3C6A),
+                                                            : const Color(0xff2A3C6A),
                                                         fontFamily: AppFont.poppinsMedium,
                                                         fontSize: 9),
                                                   ),
@@ -477,21 +480,21 @@ class _NewNoteState extends State<NewNote> {
                                         ],
                                       );
                                     }),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 23,
                                     ),
                                     Text(
                                       tr(LocaleKeys.additionText_uploadDocPic),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: AppFont.poppinsBold,
                                           fontSize: 16,
                                           color: AppColor.textLightBlueBlack),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 22,
                                     ),
                                     Consumer<PetProvider>(builder: (context, petProvider, child) {
-                                      return Container(
+                                      return SizedBox(
                                         height: 160,
                                         child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
@@ -500,18 +503,18 @@ class _NewNoteState extends State<NewNote> {
                                               return index == petProvider.notesFile.length
                                                   ? Padding(
                                                       padding: const EdgeInsets.only(left: 8.0, top: 5, bottom: 6),
-                                                      child: Container(
+                                                      child: SizedBox(
                                                         height: 140,
                                                         width: MediaQuery.of(context).size.width * .30,
                                                         child: DottedBorder(
                                                             color: AppColor.textLightBlueBlack,
                                                             strokeWidth: 1,
-                                                            dashPattern: [10, 4],
+                                                            dashPattern: const [10, 4],
                                                             borderType: BorderType.RRect,
-                                                            radius: Radius.circular(15.0),
+                                                            radius: const Radius.circular(15.0),
                                                             child: Center(
                                                               child: InkWell(
-                                                                  child: CircleAvatar(
+                                                                  child: const CircleAvatar(
                                                                       backgroundColor: AppColor.textFieldGrey,
                                                                       child: Icon(
                                                                         Icons.add,
@@ -536,7 +539,7 @@ class _NewNoteState extends State<NewNote> {
                                                                           var status = await Permission
                                                                               .manageExternalStorage
                                                                               .request();
-                                                                          print("storage statur====${status}");
+                                                                          print("storage statur====$status");
                                                                           if (status.isDenied) {
                                                                             Permission.manageExternalStorage.request();
                                                                           } else if (status.isPermanentlyDenied ||
@@ -570,7 +573,7 @@ class _NewNoteState extends State<NewNote> {
                                                                         }
                                                                       }
                                                                       if (fil != null) {
-                                                                        print("value==${fil}");
+                                                                        print("value==$fil");
                                                                         if (fil.toString() == "File: ''") {
                                                                           print("value like this===");
                                                                           fil = null;
@@ -604,15 +607,15 @@ class _NewNoteState extends State<NewNote> {
                                                               child:
 
                                                                   //index==petProvider.notesFile.length ? () :
-                                                                  Container(
+                                                                  SizedBox(
                                                                 height: 170,
                                                                 width: MediaQuery.of(context).size.width * .9,
                                                                 child: DottedBorder(
                                                                   color: AppColor.textLightBlueBlack,
                                                                   strokeWidth: 1,
-                                                                  dashPattern: [10, 4],
+                                                                  dashPattern: const [10, 4],
                                                                   borderType: BorderType.RRect,
-                                                                  radius: Radius.circular(15.0),
+                                                                  radius: const Radius.circular(15.0),
                                                                   child: Center(
                                                                     child: InkWell(
                                                                       onTap: () async {
@@ -626,7 +629,7 @@ class _NewNoteState extends State<NewNote> {
                                                                                   .contains("pdf")
                                                                               ? Column(
                                                                                   children: [
-                                                                                    SizedBox(
+                                                                                    const SizedBox(
                                                                                       height: 5,
                                                                                     ),
                                                                                     Padding(
@@ -637,7 +640,7 @@ class _NewNoteState extends State<NewNote> {
                                                                                         height: 60,
                                                                                       ),
                                                                                     ),
-                                                                                    SizedBox(
+                                                                                    const SizedBox(
                                                                                       height: 5,
                                                                                     ),
                                                                                     Text(petProvider.notesFile[index]
@@ -669,7 +672,7 @@ class _NewNoteState extends State<NewNote> {
                                                                               : ClipRRect(
                                                                                   borderRadius:
                                                                                       BorderRadius.circular(15),
-                                                                                  child: Container(
+                                                                                  child: SizedBox(
                                                                                       // color: Colors.blue,
                                                                                       height: 170,
                                                                                       width: MediaQuery.of(context)
@@ -696,7 +699,7 @@ class _NewNoteState extends State<NewNote> {
                                                               onTap: () {
                                                                 petProvider.deleteNotesFile(index);
                                                               },
-                                                              child: Icon(
+                                                              child: const Icon(
                                                                 Icons.cancel_outlined,
                                                                 color: AppColor.textLightBlueBlack,
                                                               ),
@@ -706,7 +709,7 @@ class _NewNoteState extends State<NewNote> {
                                             }),
                                       );
                                     }),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 50.0,
                                     )
                                   ],

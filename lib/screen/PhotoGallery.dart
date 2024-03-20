@@ -56,7 +56,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 0.0, left: 20),
                       child: FloatingActionButton(
-                          backgroundColor: const Color.fromARGB(255, 12, 30, 78),
+                          backgroundColor: AppColor.newBlueGrey,
                           onPressed: () {
                             print("petProvider.isUserPremium:: ${petProvider.isUserPremium}");
                             print(
@@ -111,14 +111,14 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                   Navigator.pop(context);
                                   if (val) {
                                     getImage(ImageSource.camera, circleCropStyle: false).then((value) {
-                                      print("value==$value");  
+                                      print("value==$value");
                                       if (value.toString() == "File: ''") {
-                                        print("value like this===");   
-                                        value = null;   
+                                        print("value like this===");
+                                        value = null;
                                       }
 
                                       if (value != null) {
-                                        petProvider.uploadImagePet(f1: value, contxt: context);  
+                                        petProvider.uploadImagePet(f1: value, contxt: context);
                                       }
                                       print("********$val********-------+++++");
                                     });
@@ -126,17 +126,17 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                                     getImage(ImageSource.gallery, circleCropStyle: false).then((value) {
                                       print("value==$value");
                                       if (value.toString() == "File: ''") {
-                                        print("value like this===");  
-                                        value = null;
-                                      }
+                                        print("value like this===");   
+                                        value = null;  
+                                      }   
 
-                                      if (value != null) {
+                                      if (value != null) {    
                                         petProvider.uploadImagePet(f1: value, contxt: context);  
-                                      }
-                                    });
+                                      }  
+                                    });  
                                   }
                                 },
-                                context: context, 
+                                context: context,
                               );
                             }
                             //callUploadPetImage()
@@ -161,7 +161,7 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                       tr(LocaleKeys.additionText_galleryisEmpty),
                       // tr(LocaleKeys.additionText_editNote),
                       style: const TextStyle(
-                          fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
+                          fontSize: 18.0, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinSemibold),
                     ),
                   )
                 : Padding(
@@ -169,10 +169,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                     child: GridView.builder(
                         itemCount: imgList.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisExtent: 160,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 9,
+                          crossAxisCount: 2,  
+                          mainAxisExtent: 160,   
+                          crossAxisSpacing: 0,    
+                          mainAxisSpacing: 9,  
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(

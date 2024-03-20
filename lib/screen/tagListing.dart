@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/camPermissionAlert.dart';
 import '../components/commingSoonAlert.dart';
 import '../components/scannerPermission.dart';
@@ -34,7 +33,7 @@ class _TagListState extends State<TagList> {
   void initState() {
     PurChaseProvider purChaseProvider = Provider.of(context, listen: false);
     PetProvider petProvider = Provider.of(context, listen: false);
-    petProvider.openOnce=0;
+    petProvider.openOnce = 0;
     if (purChaseProvider.plan.isNotEmpty) {
       print("purChaseProvider.plan[0]====${purChaseProvider.plan[0]}");
       isAddMoreTag = purChaseProvider.plan[0];
@@ -56,55 +55,51 @@ class _TagListState extends State<TagList> {
           backgroundColor: Colors.white,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton:
-          // loginUser.isPremium == 1 &&
-          //         (isAddMoreTag == 1 || isAddMoreTag == 2)
-          //     ?
-          Padding(
+              // loginUser.isPremium == 1 &&
+              //         (isAddMoreTag == 1 || isAddMoreTag == 2)
+              //     ?
+              Padding(
                   padding: const EdgeInsets.only(bottom: 35.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FloatingActionButton(
-                          child: Icon(Icons.add),
-                          backgroundColor: AppColor.textLightBlueBlack,
+                          backgroundColor: AppColor.newBlueGrey,
                           onPressed: () async {
-                            PetProvider petProvider =
-                                Provider.of(context, listen: false);
+                            PetProvider petProvider = Provider.of(context, listen: false);
 
+                            var status3 = await Permission.camera.status;
 
+                            print("value of status===>>> $status3");
 
-                              var status3 = await Permission.camera.status;
-
-                              print("value of status===>>> ${status3}");
-
-                              if (!status3.isGranted) {
-                                print("iiiiii==>${i}");
-                                i = i + 1;
-                                if (i > 1) {
-                                  scannerPermissionDialog(context);
-                                }
-
-                                if (i <= 1) {
-                                  await Permission.camera.request();
-                                }
+                            if (!status3.isGranted) {
+                              print("iiiiii==>$i");
+                              i = i + 1;
+                              if (i > 1) {
+                                scannerPermissionDialog(context);
                               }
+
+                              if (i <= 1) {
+                                await Permission.camera.request();
+                              }
+                            }
                             var status4 = await Permission.camera.status;
 
-                            print("value of status  4 is===>>> ${status4}");
-                              if(status4.isGranted) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ScannerScreen(
-                                              isNewTag: 1,
-                                            )));
-                              }
-
+                            print("value of status  4 is===>>> $status4");
+                            if (status4.isGranted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ScannerScreen(
+                                            isNewTag: 1,
+                                          )));
+                            }
 
                             // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen(isNewTag: 1,)));
-                          }),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
+                          },
+                          child: const Icon(Icons.add)),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Text(
                           "Add More\n QR Tags",
                           textAlign: TextAlign.center,
@@ -113,7 +108,7 @@ class _TagListState extends State<TagList> {
                       )
                     ],
                   )),
-              // : SizedBox(),
+          // : SizedBox(),
           body: Consumer<PetProvider>(builder: (context, petProvider, child) {
             List<TagDetails> QrTagList = petProvider.qrTagList;
             return Padding(
@@ -123,8 +118,7 @@ class _TagListState extends State<TagList> {
                   itemCount: QrTagList.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10.0, right: 10.0, bottom: 15.0),
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 15.0),
                       child: InkWell(
                           onTap: () {
                             petProvider.setSelectedQrTag(QrTagList[index]);

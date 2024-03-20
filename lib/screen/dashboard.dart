@@ -1,4 +1,3 @@
-
 // import 'package:custom_line_indicator_bottom_navbar/custom_line_indicator_bottom_navbar.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/src/foundation/key.dart';
@@ -160,12 +159,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   AppApi api = AppApi();
   late PurChaseProvider purchaseProvider;
   final List<Widget> mainScreens = [
-    Home(),
-    EventCalender(
-        isShowBackIcon: false, isBottomBorder: false, isFromPet: false),
+    const Home(),
+    EventCalender(isShowBackIcon: false, isBottomBorder: false, isFromPet: false),
     // CalenderPage(),
     //   LogoutPage()
-    MoreFeature()
+    const MoreFeature()
   ];
 
   @override
@@ -178,8 +176,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
     print("call init state");
     if (widget.type == 2) {
-      Navigator.push(GlobalVariable.navState.currentContext!,
-          MaterialPageRoute(builder: (context) => Googlemap()));
+      Navigator.push(
+          GlobalVariable.navState.currentContext!, MaterialPageRoute(builder: (context) => const Googlemap()));
     }
 
     PetProvider petProvider = Provider.of(context, listen: false);
@@ -201,15 +199,14 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   Future getinAppPurchaseDetails() async {
     await purchaseProvider.getSubScriptionDetails().then((value) async {
-      print(
-          "purchaseProvider.plan.isNotEmpty ${purchaseProvider.planList.isNotEmpty}");
+      print("purchaseProvider.plan.isNotEmpty ${purchaseProvider.planList.isNotEmpty}");
       if (purchaseProvider.planList.isNotEmpty) {
         bool isNenewd = false;
         bool isExpire = false;
         isExpire = purchaseProvider.planList[0].isExpire == 1;
         isNenewd = purchaseProvider.planList[0].isRenewed == 1;
 
-        print("getting information isExpire ${isExpire} isNenewd $isNenewd");
+        print("getting information isExpire $isExpire isNenewd $isNenewd");
         if (isExpire && isNenewd) {
           int osType = purchaseProvider.planList[0].osType ?? 1;
           await api.updateSubscription(
@@ -274,7 +271,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ));
@@ -286,48 +283,43 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body:
-
-          UpgradeAlert(
-          upgrader: Upgrader(
-              shouldPopScope: () => auth.isDispose,
-              showIgnore: true,
-              showLater: true,
-              onUpdate: () {
-                print("work on not");
-                // Future.delayed(D)
-                Future.delayed(Duration(seconds: 1), () {
-                  setState(() {
-                    print("set state done");
-                  });
+      body: UpgradeAlert(
+        upgrader: Upgrader(
+            shouldPopScope: () => auth.isDispose,
+            showIgnore: true,
+            showLater: true,
+            onUpdate: () {
+              print("work on not");
+              // Future.delayed(D)
+              Future.delayed(const Duration(seconds: 1), () {
+                setState(() {
+                  print("set state done");
                 });
+              });
 
-                return true;
-              },
-              canDismissDialog: auth.isDispose,
-              durationUntilAlertAgain: Duration(seconds: 2),
-              dialogStyle: Platform.isIOS
-                  ? UpgradeDialogStyle.cupertino
-                  : UpgradeDialogStyle.material),
-          child:
-
-          SafeArea(
-        bottom: true,
-        top: true,
-        child: PageStorage(
-          child: TabBarView(
-            controller: tabController,
-            physics: NeverScrollableScrollPhysics(),
-            children: mainScreens,
+              return true;
+            },
+            canDismissDialog: auth.isDispose,
+            durationUntilAlertAgain: const Duration(seconds: 2),
+            dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material),
+        child: SafeArea(
+          bottom: true,
+          top: true,
+          child: PageStorage(
+            bucket: bucket,
+            child: TabBarView(
+              controller: tabController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: mainScreens,
+            ),
           ),
-          bucket: bucket,
         ),
-      ),
       ),
       bottomNavigationBar: Material(
         color: Colors.transparent,
         elevation: 0,
         child: BottomAppBar(
+          // height: 80,
           // notchMargin: 8,
           //shape: CircularNotchedRectangle(),
           child: Padding(
@@ -335,41 +327,53 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             child: TabBar(
               tabs: [
                 Tab(
-                    icon: ImageIcon(
-                      AssetImage(
-                        // tabController.index == 1 ?
-                        "assets/images/t_home_icon.png",
-                      ),
+                    icon: Image.asset(
+                      AppImage.homeDash,
+                      height: 40,
                     ),
+                    // const ImageIcon(
+                    //   AssetImage(AppImage.homeDash
+                    //       // tabController.index == 1 ?
+                    //       // "assets/images/t_home_icon.png",
+                    //       ),
+                    // ),
                     text: tr(LocaleKeys.home_homeText)),
                 Tab(
-                  icon: ImageIcon(
-                    AssetImage(
-                      AppImage.petcareIcon,
-                    ),
+                  icon: Image.asset(
+                    AppImage.newCal,
+                    height: 35,
                   ),
+                  // const ImageIcon(
+                  //   AssetImage(
+                  //     AppImage.newCal,
+                  //   ),
+                  // ),
                   text: tr(LocaleKeys.home_petCare),
                 ),
                 Tab(
-                  icon: ImageIcon(
-                    AssetImage(
-                      AppImage.moreIcon,
-                    ),
+                  icon: Image.asset(
+                    AppImage.moreDash,
+                    height: 40,
                   ),
+                  //  const ImageIcon(
+                  //   AssetImage(
+                  //       // AppImage.moreIcon,
+                  //       AppImage.moreDash),
+                  // ),
                   text: tr(LocaleKeys.home_more),
                 ),
               ],
-              labelStyle: TextStyle(fontSize: 10),
-              labelPadding: EdgeInsets.symmetric(horizontal: 8),
+              labelStyle: const TextStyle(fontSize: 10),
+              labelPadding: const EdgeInsets.symmetric(horizontal: 8),
               labelColor: AppColor.textLightBlueBlack,
 
               unselectedLabelColor: Colors.grey,
               isScrollable: false,
               indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: EdgeInsets.all(5.0),
+              indicatorPadding: const EdgeInsets.all(5.0),
               // indicatorColor: AppColor.textLightBlueBlack,
               controller: tabController,
-              indicator: UnderlineTabIndicator(
+              indicator: const UnderlineTabIndicator(
                 insets: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 65.0),
                 borderSide: BorderSide(color: AppColor.textRed, width: 3),
               ),

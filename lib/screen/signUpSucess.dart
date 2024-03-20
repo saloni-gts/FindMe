@@ -77,7 +77,7 @@ AuthProvider auth=Provider.of(context,listen: false);
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 36.0,
-                color: AppColor.textRed,
+                color: AppColor.newBlueGrey,
                 fontFamily: AppFont.poppinsBold,
               ),
             ),

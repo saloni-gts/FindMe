@@ -2,7 +2,6 @@ import 'package:find_me/util/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 import '../util/app_font.dart';
 import '../util/color.dart';
 
@@ -19,7 +18,7 @@ class CustomTextFeild extends StatefulWidget {
       this.textController,
       this.textInputType = TextInputType.text,
       this.hintText = "",
-        // this.onTap1=(){},
+      // this.onTap1=(){},
       this.isEnabled = true})
       : super(key: key);
 
@@ -34,44 +33,37 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: TextField(
         maxLines: 1,
-      onTap: (){
-
-      },
+        onTap: () {},
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
         autofocus: false,
         // scrollPadding: EdgeInsets.all(20.0),
         enabled: widget.isEnabled,
         keyboardType: widget.textInputType,
-        showCursor:widget.textInputType==TextInputType.none? false:true,
-        style: TextStyle(
+        showCursor: widget.textInputType == TextInputType.none ? false : true,
+        style: const TextStyle(
           color: AppColor.textLightBlueBlack,
           fontFamily: AppFont.poppinsMedium,
           fontSize: 18.0,
         ),
         controller: widget.textController,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           hintText: widget.hintText,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
           fillColor: AppColor.textFieldGrey,
           filled: true,
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
-          hintStyle: TextStyle(
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
+          hintStyle: const TextStyle(
             color: AppColor.textGreyColor,
             fontFamily: AppFont.poppinsMedium,
             fontSize: 15.0,
           ),
-
         ),
       ),
     );
@@ -79,22 +71,18 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
 }
 
 class CustomTextFieldWithLeading extends StatefulWidget {
-
   final TextEditingController? textController;
   final bool isPassword;
   final Function(String onChanged)? onChanged;
 
-  const CustomTextFieldWithLeading(
-      {Key? key, this.textController, this.isPassword = false, this.onChanged})
+  const CustomTextFieldWithLeading({Key? key, this.textController, this.isPassword = false, this.onChanged})
       : super(key: key);
 
   @override
-  State<CustomTextFieldWithLeading> createState() =>
-      _CustomTextFieldWithLeadingState();
+  State<CustomTextFieldWithLeading> createState() => _CustomTextFieldWithLeadingState();
 }
 
-class _CustomTextFieldWithLeadingState
-    extends State<CustomTextFieldWithLeading> {
+class _CustomTextFieldWithLeadingState extends State<CustomTextFieldWithLeading> {
   bool isShowPassowrd = false;
 
   @override
@@ -112,13 +100,12 @@ class _CustomTextFieldWithLeadingState
         obscureText: isShowPassowrd,
         onChanged: widget.onChanged,
 
-
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
         autofocus: false,
         // scrollPadding: EdgeInsets.all(20.0),
         // enabled: widget.isEnabled,
         // keyboardType: widget.textInputType,
-        style: TextStyle(
+        style: const TextStyle(
           color: AppColor.textLightBlueBlack,
           fontFamily: AppFont.poppinsMedium,
           fontSize: 18.0,
@@ -126,38 +113,30 @@ class _CustomTextFieldWithLeadingState
         controller: widget.textController,
 
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
 
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
-           filled: true,
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
+          filled: true,
           fillColor: AppColor.textFieldGrey,
 
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
           suffixIcon: IconButton(
               onPressed: () {
                 isShowPassowrd = !isShowPassowrd;
                 setState(() {});
               },
-              icon: Image.asset(
-                  isShowPassowrd ? AppImage.closeeyeIcon : AppImage.eyeIcon)),
+              icon: Image.asset(isShowPassowrd ? AppImage.closeeyeIcon : AppImage.eyeIcon)),
 
           // border: InputBorder.none,
           // focusedBorder: InputBorder.none,
         ),
-
-
-
 
         // decoration: InputDecoration(
         //   contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -182,11 +161,6 @@ class _CustomTextFieldWithLeadingState
         //     fontSize: 15.0,
         //   ),
         // ),
-
-
-
-
-
       ),
     );
   }

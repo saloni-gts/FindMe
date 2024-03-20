@@ -84,7 +84,7 @@ class customAppbar extends StatelessWidget implements PreferredSizeWidget {
                     titlename,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      color: AppColor.textLightBlueBlack,
+                      color: AppColor.newBlueGrey,
                       fontFamily: AppFont.poppinsMedium,
                       fontSize: 16,
                     ),

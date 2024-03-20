@@ -205,7 +205,8 @@ class _HomeState extends State<Home> {
                                   // print("final user code====${loginUser.phoneCode}");
                                   Future.delayed(const Duration(milliseconds: 200), () {
                                     petProvider.updateLoader(false);
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   });
 
                                   // Navigator.push(
@@ -255,26 +256,27 @@ class _HomeState extends State<Home> {
                           Positioned(
                             left: 55,
                             top: 2,
-                            child: Container(
-                              height: 20,
-                              width: 20,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                ),
-                                color: AppColor.newBlueGrey,
-                              ),
+                            child: SizedBox(
+                              height: 30,
+                              width: 30,
+                              // decoration: BoxDecoration(
+                              //   shape: BoxShape.circle,
+                              //   border: Border.all(
+                              //     color: Colors.white,
+                              //   ),
+                              //   color: AppColor.newBlueGrey,
+                              // ),
                               child: InkWell(
                                 onTap: () {
                                   switchonNotification();
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                  Navigator.push(
+                                      context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                 },
                                 child: ClipRRect(
                                   child: Image.asset(
                                     AppImage.pencil,
-                                    height: 20,
-                                    width: 20,
+                                    height: 30,
+                                    width: 30,
                                   ),
                                 ),
                               ),
@@ -366,7 +368,7 @@ class _HomeState extends State<Home> {
                       Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: CircleAvatar(
-                          radius: 20.0,
+                          radius: 30.0,
                           backgroundColor: AppColor.textFieldGrey,
                           child: Consumer<PetProvider>(builder: (context, petProvider, child) {
                             return InkWell(
@@ -399,7 +401,11 @@ class _HomeState extends State<Home> {
                                   }
                                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyPremium()));
                                 },
-                                child: Image.asset(AppImage.trophyIcon));
+                                child: Image.asset(
+                                  AppImage.checkPetProf,
+                                  height: 60,
+                                  width: 60,
+                                ));
                           }),
                         ),
                       )
@@ -475,7 +481,7 @@ class _HomeState extends State<Home> {
                                               height: 80,
                                               width: 80,
                                               child: InkWell(
-                                                child: Image.asset(AppImage.bigPlus),
+                                                child: Image.asset(AppImage.addIcon),
                                                 onTap: () {
                                                   // petProvider.callPetPremDetails();
                                                   petProvider.callPetPremDetailsAddPet();
@@ -577,195 +583,242 @@ class _HomeState extends State<Home> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                petProvider.isUserPremium == 1
-                    ? const SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Align(
-                          alignment: Alignment.topLeft,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Container(
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: AppColor.newGrey,
+                    ),
+                    child: Row(children: [
+                      Image.asset(AppImage.redSheild),
+                      const Expanded(
                           child: Text(
-                            tr(LocaleKeys.home_premium),
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                                fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                          ),
-                        ),
-                      ),
-                petProvider.isUserPremium == 1
-                    ? const SizedBox()
-                    : const SizedBox(
-                        height: 10.0,
-                      ),
-                petProvider.isUserPremium == 1
-                    ? const SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                        child: InkWell(
-                          onTap: () {
-                            switchonNotification();
-                            commingSoonDialog(context);
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                            ),
-                            width: double.infinity,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: Image.asset(AppImage.banner1, fit: BoxFit.cover)),
-                          ),
-                        ),
-                      ),
-                petProvider.isUserPremium == 1
-                    ? const SizedBox()
-                    : const SizedBox(
-                        height: 15.0,
-                      ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      tr(LocaleKeys.home_visiWebSite),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                    ),
+                        "Check pets additional information or update here",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
+                      )),
+                    ]),
                   ),
                 ),
                 const SizedBox(
-                  height: 10.0,
+                  height: 20,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: InkWell(
-                    onTap: () async {
-                      switchonNotification();
-                      //
-                      // String urll = "https://unique-tags.com/password";
-                      // if (await canLaunch(urll)) {
-                      //   await launch(
-                      //     urll,
-                      //   );
-                      // }
-                      // else{
-                      //   print("0000****0000");
-                      // }
-                      //
-
-                      if (Platform.isIOS) {
-                        print("/---------/");
-                        String Iosurll = "https://unique-tags.com/password";
-
-                        if (await canLaunchUrlString(Iosurll)) {
-                          await launchUrlString(Iosurll, mode: LaunchMode.externalApplication);
-                        }
-                      } else if (Platform.isAndroid) {
-                        String urll = "https://unique-tags.com/password";
-                        if (await canLaunch(urll)) {
-                          await launch(
-                            urll,
-                          );
-                        }
-                      } else {
-                        print("0000****0000");
-                      }
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                      ),
-                      width: double.infinity,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.asset(AppImage.banner2, fit: BoxFit.cover)),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Container(
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: AppColor.newGrey,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(children: [
+                        Image.asset(AppImage.bigRibbon),
+                        const Expanded(
+                            child: Text(
+                          "Check pets additional information or update here",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
+                        )),
+                      ]),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // GreyContainer(
-                    //     context: context,
-                    //     onTap1: () async{
+                )
 
-                    //       if(Platform.isIOS){
-                    //         print("/---------/");
-                    //         String Iosurll="https://unique-tags.com/password";
+                // petProvider.isUserPremium == 1
+                //     ? const SizedBox()
+                //     : Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                //         child: Align(
+                //           alignment: Alignment.topLeft,
+                //           child: Text(
+                //             tr(LocaleKeys.home_premium),
+                //             textAlign: TextAlign.left,
+                //             style: const TextStyle(
+                //                 fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                //           ),
+                //         ),
+                //       ),
+                // petProvider.isUserPremium == 1
+                //     ? const SizedBox()
+                //     : const SizedBox(
+                //         height: 10.0,
+                //       ),
+                // petProvider.isUserPremium == 1
+                //     ? const SizedBox()
+                //     : Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                //         child: InkWell(
+                //           onTap: () {
+                //             switchonNotification();
+                //             commingSoonDialog(context);
+                //           },
+                //           child: Container(
+                //             decoration: const BoxDecoration(
+                //               borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                //             ),
+                //             width: double.infinity,
+                //             child: ClipRRect(
+                //                 borderRadius: BorderRadius.circular(4),
+                //                 child: Image.asset(AppImage.banner1, fit: BoxFit.cover)),
+                //           ),
+                //         ),
+                //       ),
+                // petProvider.isUserPremium == 1
+                //     ? const SizedBox()
+                //     : const SizedBox(
+                //         height: 15.0,
+                //       ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                //   child: Align(
+                //     alignment: Alignment.topLeft,
+                //     child: Text(
+                //       tr(LocaleKeys.home_visiWebSite),
+                //       textAlign: TextAlign.left,
+                //       style: const TextStyle(
+                //           fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                //   child: InkWell(
+                //     onTap: () async {
+                //       switchonNotification();
+                //       //
+                //       // String urll = "https://unique-tags.com/password";
+                //       // if (await canLaunch(urll)) {
+                //       //   await launch(
+                //       //     urll,
+                //       //   );
+                //       // }
+                //       // else{
+                //       //   print("0000****0000");
+                //       // }
+                //       //
 
-                    //         if (await canLaunchUrlString(Iosurll)){
-                    //       await launchUrlString(Iosurll,mode:LaunchMode.externalApplication);
-                    //       }
-                    //       }
+                //       if (Platform.isIOS) {
+                //         print("/---------/");
+                //         String Iosurll = "https://unique-tags.com/password";
 
-                    //       else if(Platform.isAndroid) {
-                    //       String urll = "https://unique-tags.com/password";
-                    //       if (await canLaunch(urll)) {
-                    //       await launch(
-                    //       urll,
-                    //       );
-                    //       }
-                    //       }
-                    //       else{
-                    //       print("0000****0000");
-                    //       }
+                //         if (await canLaunchUrlString(Iosurll)) {
+                //           await launchUrlString(Iosurll, mode: LaunchMode.externalApplication);
+                //         }
+                //       } else if (Platform.isAndroid) {
+                //         String urll = "https://unique-tags.com/password";
+                //         if (await canLaunch(urll)) {
+                //           await launch(
+                //             urll,
+                //           );
+                //         }
+                //       } else {
+                //         print("0000****0000");
+                //       }
+                //     },
+                //     child: Container(
+                //       decoration: const BoxDecoration(
+                //         borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                //       ),
+                //       width: double.infinity,
+                //       child: ClipRRect(
+                //           borderRadius: BorderRadius.circular(4),
+                //           child: Image.asset(AppImage.banner2, fit: BoxFit.cover)),
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 15.0,
+                // ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.start,
+                //   children: [
+                //     // GreyContainer(
+                //     //     context: context,
+                //     //     onTap1: () async{
 
-                    //     },
-                    //     image1: AppImage.qrIcon,
-                    //     text1: tr(LocaleKeys.home_buyQrPetTag)),
+                //     //       if(Platform.isIOS){
+                //     //         print("/---------/");
+                //     //         String Iosurll="https://unique-tags.com/password";
 
-                    const SizedBox(
-                      width: 8.0,
-                    ),
+                //     //         if (await canLaunchUrlString(Iosurll)){
+                //     //       await launchUrlString(Iosurll,mode:LaunchMode.externalApplication);
+                //     //       }
+                //     //       }
 
-                    Consumer<PetProvider>(builder: (context, petProvider, child) {
-                      return petProvider.isUserPremium == 1
-                          ? GreyContainer(
-                              context: context,
-                              onTap1: () {
-                                switchonNotification();
+                //     //       else if(Platform.isAndroid) {
+                //     //       String urll = "https://unique-tags.com/password";
+                //     //       if (await canLaunch(urll)) {
+                //     //       await launch(
+                //     //       urll,
+                //     //       );
+                //     //       }
+                //     //       }
+                //     //       else{
+                //     //       print("0000****0000");
+                //     //       }
 
-                                PetProvider petProvider = Provider.of(context, listen: false);
+                //     //     },
+                //     //     image1: AppImage.qrIcon,
+                //     //     text1: tr(LocaleKeys.home_buyQrPetTag)),
 
-                                if (petProvider.petDetailList.isEmpty) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context1) {
-                                        return AlertDialog(
-                                          title: Text(tr(LocaleKeys.home_noPetFound)),
-                                          actions: [
-                                            InkWell(
-                                              child: Text(
-                                                tr(LocaleKeys.additionText_dismiss),
-                                                style:
-                                                    const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                              ),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CheckProtection(
-                                                UsrData: user,
-                                              )));
-                                }
-                              },
-                              image1: AppImage.secureIcon,
-                              text1: tr(LocaleKeys.home_checkProtection))
-                          : const SizedBox();
-                    })
-                  ],
-                ),
-                const SizedBox(height: 20.0),
+                //     const SizedBox(
+                //       width: 8.0,
+                //     ),
+
+                //     Consumer<PetProvider>(builder: (context, petProvider, child) {
+                //       return petProvider.isUserPremium == 1
+                //           ? GreyContainer(
+                //               context: context,
+                //               onTap1: () {
+                //                 switchonNotification();
+
+                //                 PetProvider petProvider = Provider.of(context, listen: false);
+
+                //                 if (petProvider.petDetailList.isEmpty) {
+                //                   showDialog(
+                //                       context: context,
+                //                       builder: (context1) {
+                //                         return AlertDialog(
+                //                           title: Text(tr(LocaleKeys.home_noPetFound)),
+                //                           actions: [
+                //                             InkWell(
+                //                               child: Text(
+                //                                 tr(LocaleKeys.additionText_dismiss),
+                //                                 style:
+                //                                     const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                               ),
+                //                               onTap: () {
+                //                                 Navigator.pop(context);
+                //                               },
+                //                             ),
+                //                           ],
+                //                         );
+                //                       });
+                //                 } else {
+                //                   Navigator.push(
+                //                       context,
+                //                       MaterialPageRoute(
+                //                           builder: (context) => CheckProtection(
+                //                                 UsrData: user,
+                //                               )));
+                //                 }
+                //               },
+                //               image1: AppImage.secureIcon,
+                //               text1: tr(LocaleKeys.home_checkProtection))
+                //           : const SizedBox();
+                //     })
+                //   ],
+                // ),
+                // const SizedBox(height: 20.0),
+
+                ,
               ],
             ),
           );

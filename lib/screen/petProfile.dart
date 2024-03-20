@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -61,12 +60,12 @@ class _PetProfileState extends State<PetProfile> {
   @override
   void initState() {
     petProvider = Provider.of(context, listen: false);
-petProvider.valChange=0;
+    petProvider.valChange = 0;
     print("pet petProvider.valChange===${petProvider.valChange}");
-    if(petProvider.selectedPetDetail?.isPremium==1){
-      petProvider.petPreVal=true;
-    }else{
-      petProvider.petPreVal=false;
+    if (petProvider.selectedPetDetail?.isPremium == 1) {
+      petProvider.petPreVal = true;
+    } else {
+      petProvider.petPreVal = false;
     }
 
     petProvider.clearContent();
@@ -115,11 +114,10 @@ petProvider.valChange=0;
     serialize = detail.sterilization ?? "";
     petSizee = detail.size ?? "";
 
-    print("gendr pet========${gendr}");
+    print("gendr pet========$gendr");
 
     if (type.isNotEmpty) {
-      petProvider.selectedPetType =
-          petTypeList.firstWhere((element) => element.typeId == detail.petType);
+      petProvider.selectedPetType = petTypeList.firstWhere((element) => element.typeId == detail.petType);
     }
 
     //    if (type.isNotEmpty) {
@@ -130,13 +128,12 @@ petProvider.valChange=0;
     //
 
     if (gendr.isNotEmpty) {
-      petProvider.selectedPetGender = petGenderList
-          .firstWhere((element) => element.typeId == detail.gender);
+      petProvider.selectedPetGender = petGenderList.firstWhere((element) => element.typeId == detail.gender);
     }
 
     if (serialize.isNotEmpty) {
-      petProvider.selectedSerialization = petserializationList
-          .firstWhere((element) => element.typeId == detail.sterilization);
+      petProvider.selectedSerialization =
+          petserializationList.firstWhere((element) => element.typeId == detail.sterilization);
     }
 
     // if (serialize.isNotEmpty) {
@@ -144,8 +141,7 @@ petProvider.valChange=0;
     //       .firstWhere((element) => element.typeId == detail.sterilization);
     // }
     if (petSizee.isNotEmpty) {
-      petProvider.selectedPetSize =
-          petSizeList.firstWhere((element) => element.typeId == detail.size);
+      petProvider.selectedPetSize = petSizeList.firstWhere((element) => element.typeId == detail.size);
     }
     petNameController.text = detail.petName ?? "";
 
@@ -153,16 +149,13 @@ petProvider.valChange=0;
     String bdate = detail.birthDate ?? "";
 
     if (bdate.isNotEmpty) {
-      petbirthController.text =
-          dateConverter(int.parse(detail.birthDate ?? ""));
+      petbirthController.text = dateConverter(int.parse(detail.birthDate ?? ""));
     }
 
     petbreedController.text = detail.breedName ?? "";
     petcolorController.text = detail.color ?? "";
     petdescpController.text = detail.shortDescription ?? "";
     mobileController.text = detail.contact ?? "";
-
-
 
     cityController.text = detail.city ?? "";
     percent = detail.profilePercantage ?? 0.0;
@@ -178,13 +171,10 @@ petProvider.valChange=0;
 
     if (petProvider.tagNumLst.isNotEmpty) {
       print("set value in controller===>>> ${qrTagNumberController.text}");
-      print("set height value of controller===>>> ${setHeight}");
+      print("set height value of controller===>>> $setHeight");
       qrTagNumberController.clear();
 
-      qrTagNumberController.text = petProvider.tagNumLst
-          .toString()
-          .replaceAll("]", "")
-          .replaceAll("[", "");
+      qrTagNumberController.text = petProvider.tagNumLst.toString().replaceAll("]", "").replaceAll("[", "");
       print("set value in controller===>>> ${qrTagNumberController.text}");
     }
 
@@ -204,60 +194,50 @@ petProvider.valChange=0;
         bottomNavigationBar: BotttomBorder(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         //extendBody: true,
-        floatingActionButton: Container(
+        floatingActionButton: SizedBox(
           // color: Colors.yellowAccent,
           height: 92,
           child: Padding(
-            padding: EdgeInsets.only(left: 8.0, bottom: 35.0),
+            padding: const EdgeInsets.only(left: 8.0, bottom: 35.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: SizedBox(),
+                const Expanded(
                   flex: 4,
+                  child: SizedBox(),
                 ),
                 Expanded(
                     flex: 40,
                     child: customSmallBlueButton(
-                        colour: AppColor.textRed,
+                        colour: AppColor.newGrey,
                         context: context,
                         onTap1: () {
                           showDialog(
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text(tr(LocaleKeys
-                                      .additionText_uSureUwannaDelPet)),
+                                  title: Text(tr(LocaleKeys.additionText_uSureUwannaDelPet)),
                                   actions: <Widget>[
                                     InkWell(
                                       child: Text(
                                         tr(LocaleKeys.additionText_cancel),
-                                        style: TextStyle(
-                                            fontSize: 17.0,
-                                            fontFamily:
-                                                AppFont.poppinsMedium),
+                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                       ),
                                       onTap: () {
                                         Navigator.pop(context);
                                       },
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5.0,
                                     ),
                                     InkWell(
                                       child: Text(
                                         tr(LocaleKeys.additionText_yes),
-                                        style: TextStyle(
-                                            fontSize: 17.0,
-                                            fontFamily:
-                                                AppFont.poppinsMedium),
+                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                       ),
                                       onTap: () {
-                                        Map<String, dynamic> body = {
-                                          "petId": petDetails?.id ?? 0
-                                        };
-                                        petProvider.deletePet(
-                                            context, body);
+                                        Map<String, dynamic> body = {"petId": petDetails?.id ?? 0};
+                                        petProvider.deletePet(context, body);
                                       },
                                     )
                                   ],
@@ -265,32 +245,28 @@ petProvider.valChange=0;
                               });
                         },
                         text1: tr(LocaleKeys.additionText_Delete))),
-                Expanded(
-                  child: SizedBox(),
+                const Expanded(
                   flex: 4,
+                  child: SizedBox(),
                 ),
                 Expanded(
                     flex: 40,
                     child: customSmallBlueButton(
-                        colour: AppColor.textLightBlueBlack,
+                        colour: AppColor.newBlueGrey,
                         context: context,
                         onTap1: () {
                           print("petProvider.permPetCountAddPet:::::${petProvider.permPetCountAddPet}");
                           print("petProvider.isUserPremium::::::${petProvider.isUserPremium}");
                           print("petProvider.petPreVal::::${petProvider.petPreVal}");
 
-
                           {
                             petProvider.petNameController = petNameController;
 
-                            if (petNameController.text
-                                .trim()
-                                .isEmpty) {
+                            if (petNameController.text.trim().isEmpty) {
                               CoolAlert.show(
                                   context: context,
                                   type: CoolAlertType.warning,
-                                  text:
-                                  tr(LocaleKeys.additionText_entrDName));
+                                  text: tr(LocaleKeys.additionText_entrDName));
                             }
 
                             // if(mobileController.text.isEmpty){
@@ -308,26 +284,15 @@ petProvider.valChange=0;
                             //       text: "Enter Valid Mobile Number");
                             // }
 
-                            if (!mobileController.text
-                                .ismobile(mobileController.text) &&
+                            if (!mobileController.text.ismobile(mobileController.text) &&
                                 mobileController.text.isNotEmpty) {
                               CoolAlert.show(
                                   context: context,
                                   type: CoolAlertType.warning,
-                                  text: tr(LocaleKeys
-                                      .additionText_entrValidMobNum));
+                                  text: tr(LocaleKeys.additionText_entrValidMobNum));
                             } else {
-                              if (petProvider.petNameController.text
-                                  .trim()
-                                  .isNotEmpty) {
-                                String petnm,
-                                    petchip,
-                                    petbdate,
-                                    petbred,
-                                    petcolor,
-                                    petdesc,
-                                    petmob,
-                                    petcity;
+                              if (petProvider.petNameController.text.trim().isNotEmpty) {
+                                String petnm, petchip, petbdate, petbred, petcolor, petdesc, petmob, petcity;
                                 petnm = petNameController.text.trim();
                                 petchip = petmicrochipController.text.trim();
                                 petbdate = petbirthController.text;
@@ -337,9 +302,7 @@ petProvider.valChange=0;
                                 petmob = mobileController.text.trim();
                                 petcity = cityController.text.trim();
 
-                                if (petNameController.text
-                                    .trim()
-                                    .isEmpty) {
+                                if (petNameController.text.trim().isEmpty) {
                                   petnm = " ";
                                 }
                                 if (petmicrochipController.text.isEmpty) {
@@ -376,16 +339,15 @@ petProvider.valChange=0;
                                     contxt: context);
                               }
                             }
-                          } },
+                          }
+                        },
                         text1: tr(LocaleKeys.ownerProfile_update)))
               ],
             ),
           ),
         ),
         backgroundColor: Colors.white,
-        appBar: customAppbar(
-            titlename: tr(LocaleKeys.additionText_petProfile),
-            isbackbutton: true),
+        appBar: customAppbar(titlename: tr(LocaleKeys.additionText_petProfile), isbackbutton: true),
         body: DraggableScrollableSheet(
             expand: false,
             initialChildSize: 0.87,
@@ -398,14 +360,10 @@ petProvider.valChange=0;
                 },
                 child: Consumer<PetProvider>(
                   builder: (context, petProvider, child) {
-                    String pettypebool =
-                        petProvider.selectedPetType?.title ?? "";
-                    String petGenderbool =
-                        petProvider.selectedPetGender?.title ?? "";
-                    String petSerializationbool =
-                        petProvider.selectedSerialization?.title ?? "";
-                    String petSizeBool =
-                        petProvider.selectedPetSize?.title ?? "";
+                    String pettypebool = petProvider.selectedPetType?.title ?? "";
+                    String petGenderbool = petProvider.selectedPetGender?.title ?? "";
+                    String petSerializationbool = petProvider.selectedSerialization?.title ?? "";
+                    String petSizeBool = petProvider.selectedPetSize?.title ?? "";
                     return Padding(
                       padding: const EdgeInsets.only(left: 15, right: 15),
                       child: SingleChildScrollView(
@@ -415,7 +373,7 @@ petProvider.valChange=0;
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Center(
@@ -427,48 +385,32 @@ petProvider.valChange=0;
                                           height: 125,
                                           width: 125,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(65),
+                                            borderRadius: BorderRadius.circular(65),
                                             color: AppColor.textFieldGrey,
                                           ),
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(65),
+                                            borderRadius: BorderRadius.circular(65),
                                             child: petProvider.petImage != null
                                                 ? Image.file(
-                                                    File(petProvider
-                                                            .petImage?.path ??
-                                                        ""),
+                                                    File(petProvider.petImage?.path ?? ""),
                                                     height: 122,
                                                     width: 122,
                                                     fit: BoxFit.cover,
                                                   )
                                                 : CachedNetworkImage(
-                                                    imageUrl:
-                                                        petDetails?.petPhoto ??
-                                                            "",
+                                                    imageUrl: petDetails?.petPhoto ?? "",
                                                     fit: BoxFit.cover,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              18.0),
+                                                    placeholder: (context, url) => Padding(
+                                                      padding: const EdgeInsets.all(18.0),
                                                       child: Image.asset(
-                                                        AppImage
-                                                            .placeholderIcon,
+                                                        AppImage.placeholderIcon,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              18.0),
+                                                    errorWidget: (context, url, error) => Padding(
+                                                      padding: const EdgeInsets.all(18.0),
                                                       child: Image.asset(
-                                                        AppImage
-                                                            .placeholderIcon,
+                                                        AppImage.placeholderIcon,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     ),
@@ -478,49 +420,41 @@ petProvider.valChange=0;
                                       },
                                     ),
                                     Positioned(
-                                      left: 90,
+                                      left: 93,
                                       child: GestureDetector(
                                         onTap: () {
                                           showAlertForImage(
-                                            headText: tr(LocaleKeys
-                                                .additionText_petName),
+                                            headText: tr(LocaleKeys.additionText_petName),
                                             callBack: (val) {
-                                              print("TTST ${val}");
+                                              print("TTST $val");
                                               Navigator.pop(context);
                                               if (val) {
-                                                print("TTST ${val}");
-                                                getImage(ImageSource.camera)
-                                                    .then((value) {
-
-                                                      print("value==${value}");
-                                                      if(value.toString()=="File: ''"){
-                                                        print("value like this===");
-                                                        value=null;
-
-                                                      }
+                                                print("TTST $val");
+                                                getImage(ImageSource.camera).then((value) {
+                                                  print("value==$value");
+                                                  if (value.toString() == "File: ''") {
+                                                    print("value like this===");
+                                                    value = null;
+                                                  }
 
                                                   if (value != null) {
-                                                    petProvider
-                                                        .updateImage(value);
+                                                    petProvider.updateImage(value);
                                                   }
                                                 });
                                               } else {
-                                                getImage(ImageSource.gallery)
-                                                    .then((value) {
+                                                getImage(ImageSource.gallery).then((value) {
                                                   if (value == null) {
-                                                    print("value==${value}");
+                                                    print("value==$value");
                                                   } else {
-                                                    print("value not null==${value}");
+                                                    print("value not null==$value");
                                                   }
-                                                  if(value.toString()=="File: ''"){
+                                                  if (value.toString() == "File: ''") {
                                                     print("value like this===");
-                                                    value=null;
-
+                                                    value = null;
                                                   }
 
                                                   if (value != null) {
-                                                    petProvider
-                                                        .updateImage(value);
+                                                    petProvider.updateImage(value);
                                                   }
                                                 });
                                               }
@@ -529,19 +463,23 @@ petProvider.valChange=0;
                                           );
                                         },
                                         child: Container(
-                                          height: 30,
-                                          width: 30,
+                                          height: 35,
+                                          width: 35,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             border: Border.all(
-                                              color: Colors.white,
+                                              color: Colors.transparent,
                                             ),
-                                            color: AppColor.textLightBlueBlack,
+                                            color: Colors.transparent,
                                           ),
                                           child: InkWell(
                                             child: ClipRRect(
                                               child: Image.asset(
-                                                  AppImage.cameraIcon),
+                                                AppImage.pencil,
+                                                height: 30,
+                                                width: 30,
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -550,11 +488,10 @@ petProvider.valChange=0;
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 20.0),
+                              const SizedBox(height: 20.0),
 
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
                                 child: LinearPercentIndicator(
                                   // width:MediaQuery.of(context).size.width*.85,
                                   progressColor: AppColor.progressneonColor,
@@ -565,91 +502,78 @@ petProvider.valChange=0;
                                 ),
                               ),
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
 
                               Center(
                                 child: Text(
                                   // tr(LocaleKeys.additionText_yes)
-                                  "${tr(LocaleKeys.additionText_completedBy)} " +
-                                      "${(percent * 100).toStringAsFixed(0)}%",
+                                  "${tr(LocaleKeys.additionText_completedBy)} "
+                                  "${(percent * 100).toStringAsFixed(0)}%",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 10.0,
-                                      color: Colors.black,
-                                      fontFamily: AppFont.poppinsMedium),
+                                  style: const TextStyle(
+                                      fontSize: 10.0, color: Colors.black, fontFamily: AppFont.poppinsMedium),
                                 ),
                               ),
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
 
+                              petProvider.isUserPremium == 1
+                                  ? Row(
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * .65,
+                                          child: Text(
+                                            // "Activate premium feature",
+                                            tr(LocaleKeys.additionText_actiPreFetr),
+                                            maxLines: 2,
+                                            textAlign: TextAlign.left,
+                                            style: const TextStyle(
+                                                fontSize: 16.0,
+                                                color: AppColor.textLightBlueBlack,
+                                                fontFamily: AppFont.poppinsBold),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Consumer<PetProvider>(builder: (context, petProvider, child) {
+                                          return Checkbox(
+                                              activeColor: AppColor.textLightBlueBlack,
+                                              value: petProvider.petPreVal,
+                                              // groupValue: ,
+                                              onChanged: (value) async {
+                                                print(
+                                                    "petProvider.permPetCountAddPet${petProvider.permPetCountAddPet}");
 
-                              petProvider.isUserPremium==1?
-                              Row(
-                                children: [
+                                                print("petProvider.petPreVal${petProvider.petPreVal}");
 
-                                  Container(
-                                    width: MediaQuery.of(context).size.width*.65,
+                                                petProvider.changePetPremVal();
+                                                petProvider.setPetStatusVal();
+                                              });
+                                        })
+                                      ],
+                                    )
+                                  : const SizedBox(),
 
-                                    child: Text(
-                                      // "Activate premium feature",
-                                         tr(LocaleKeys.additionText_actiPreFetr),
-                                      maxLines: 2,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: AppColor.textLightBlueBlack,
-                                          fontFamily: AppFont.poppinsBold),
-                                    ),
-                                  ),
-                                  new Spacer(),
-
-
-                                  Consumer<PetProvider>(
-                                    builder: (context,petProvider,child) {
-                                      return Checkbox(
-                                      activeColor: AppColor.textLightBlueBlack,
-                                      value:  petProvider.petPreVal,
-                                      // groupValue: ,
-                                      onChanged: (value) async {
-                                        print("petProvider.permPetCountAddPet${petProvider.permPetCountAddPet}");
-
-                                        print("petProvider.petPreVal${petProvider.petPreVal}");
-
-
-                                          petProvider.changePetPremVal();
-                                          petProvider.setPetStatusVal();
-
-                                      }
-                                      );
-                                    }
-                                  )
-
-                                ],
-                              )
-                              :SizedBox(),
-
-
-
-                               SizedBox(height: 15,),
-
+                              const SizedBox(
+                                height: 15,
+                              ),
 
                               Text(
                                 tr(LocaleKeys.additionText_identifier),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsBold),
                               ),
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
-                              Text(
+                              const Text(
                                 AppStrings.microchip,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -657,16 +581,14 @@ petProvider.valChange=0;
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               CustomTextFeild(
                                   textInputType:
-                                      petmicrochipController.text.isEmpty
-                                          ? TextInputType.text
-                                          : TextInputType.none,
+                                      petmicrochipController.text.isEmpty ? TextInputType.text : TextInputType.none,
                                   textController: petmicrochipController),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Text(
@@ -674,12 +596,12 @@ petProvider.valChange=0;
                                     ? tr(LocaleKeys.additionText_qrPetTg)
                                     : tr(LocaleKeys.additionText_qrPetTgs),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               // CustomTextFeild(
@@ -713,28 +635,26 @@ petProvider.valChange=0;
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(28.0),
                                     color: AppColor.textFieldGrey,
-                                    border:
-                                        Border.all(color: Colors.transparent)),
+                                    border: Border.all(color: Colors.transparent)),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
                                     left: 15.0,
                                   ),
-                                  child: Container(
+                                  child: SizedBox(
                                     height: 60,
                                     child: TextField(
-                                      maxLengthEnforcement:
-                                          MaxLengthEnforcement.enforced,
+                                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                       autofocus: false,
                                       enabled: false,
-                                      scrollPadding: EdgeInsets.all(20.0),
+                                      scrollPadding: const EdgeInsets.all(20.0),
                                       controller: qrTagNumberController,
                                       minLines: 1,
                                       maxLines: 5,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: AppColor.textLightBlueBlack,
                                           fontFamily: AppFont.poppinsMedium,
                                           fontSize: 18.0),
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           // hintText: AppStrings.descWhatAfctPet,
                                           hintStyle: TextStyle(
                                               color: AppColor.textGreyColor,
@@ -743,9 +663,8 @@ petProvider.valChange=0;
                                           focusedBorder: InputBorder.none,
                                           border: InputBorder.none,
                                           // border: OutlineInputBorder()
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.transparent))),
+                                          enabledBorder:
+                                              OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent))),
                                     ),
                                   ),
                                 ),
@@ -753,19 +672,19 @@ petProvider.valChange=0;
 
                               //
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
 
                               Text(
                                 tr(LocaleKeys.additionText_petInfo),
                                 textAlign: TextAlign.left,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsBold),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
                               Align(
@@ -773,14 +692,14 @@ petProvider.valChange=0;
                                 child: Text(
                                   tr(LocaleKeys.addPet_name),
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular,
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 12.0,
                               ),
                               CustomTextFeild(
@@ -788,7 +707,7 @@ petProvider.valChange=0;
                                 textInputType: TextInputType.text,
                                 hintText: tr(LocaleKeys.additionText_entrDName),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
                               Align(
@@ -796,21 +715,19 @@ petProvider.valChange=0;
                                 child: Text(
                                   tr(LocaleKeys.additionText_petType),
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12.0,
                                     color: AppColor.textLightBlueBlack,
                                     fontFamily: AppFont.poppinsRegular,
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 0.0,
                               ),
                               CustomDropDown<PetTypeModl>(
                                 isGrey: pettypebool.isEmpty,
-                                selectText:
-                                    petProvider.selectedPetType?.title ??
-                                        tr(LocaleKeys.additionText_select),
+                                selectText: petProvider.selectedPetType?.title ?? tr(LocaleKeys.additionText_select),
                                 itemList: petTypeList,
                                 isEnable: true,
                                 onChange: (val) {
@@ -820,13 +737,13 @@ petProvider.valChange=0;
                                 value: null,
                               ),
 
-                              SizedBox(
+                              const SizedBox(
                                 height: 5.0,
                               ),
 
                               Column(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
                                   Align(
@@ -834,14 +751,14 @@ petProvider.valChange=0;
                                     child: Text(
                                       tr(LocaleKeys.additionText_birthDate),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
                                   InkWell(
@@ -853,35 +770,24 @@ petProvider.valChange=0;
                                               lastDate: DateTime.now())
                                           .then((value) {
                                         //  print("/////******/////${value}");
-                                        var date =
-                                            DateTime.parse(value.toString());
-                                        petbirthController.text =
-                                            date.day.toString() +
-                                                " " +
-                                                date.month.toString() +
-                                                " " +
-                                                date.year.toString();
-                                        date = date.add(
-                                            Duration(hours: 5, minutes: 30));
-                                        timestampGmt = date
-                                            .millisecondsSinceEpoch
-                                            .toString();
-                                        print("TIMESTAMPP ${timestampGmt}");
+                                        var date = DateTime.parse(value.toString());
+                                        petbirthController.text = "${date.day} ${date.month} ${date.year}";
+                                        date = date.add(const Duration(hours: 5, minutes: 30));
+                                        timestampGmt = date.millisecondsSinceEpoch.toString();
+                                        print("TIMESTAMPP $timestampGmt");
 
-                                        petbirthController.text = dateConverter(
-                                            int.parse(timestampGmt));
+                                        petbirthController.text = dateConverter(int.parse(timestampGmt));
                                       });
                                     },
                                     child: CustomTextFeild(
                                       isEnabled: false,
                                       textController: petbirthController,
                                       textInputType: TextInputType.text,
-                                      hintText:
-                                          tr(LocaleKeys.additionText_select),
+                                      hintText: tr(LocaleKeys.additionText_select),
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20.0,
                                   ),
 
@@ -890,7 +796,7 @@ petProvider.valChange=0;
                                     child: Text(
                                       tr(LocaleKeys.additionText_breed),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
@@ -898,17 +804,16 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
 
                                   CustomTextFeild(
                                       textController: petbreedController,
                                       textInputType: TextInputType.text,
-                                      hintText: tr(
-                                          LocaleKeys.additionText_entrBreed)),
+                                      hintText: tr(LocaleKeys.additionText_entrBreed)),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
                                   Row(
@@ -922,12 +827,10 @@ petProvider.valChange=0;
                                               child: Text(
                                                 tr(LocaleKeys.addPet_sex),
                                                 textAlign: TextAlign.left,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 12.0,
-                                                  color: AppColor
-                                                      .textLightBlueBlack,
-                                                  fontFamily:
-                                                      AppFont.poppinsRegular,
+                                                  color: AppColor.textLightBlueBlack,
+                                                  fontFamily: AppFont.poppinsRegular,
                                                 ),
                                               ),
                                             ),
@@ -937,16 +840,12 @@ petProvider.valChange=0;
 
                                             CustomDropDown<PetTypeModl>(
                                               isGrey: petGenderbool.isEmpty,
-                                              selectText: petProvider
-                                                      .selectedPetGender
-                                                      ?.title ??
-                                                  tr(LocaleKeys
-                                                      .additionText_select),
+                                              selectText: petProvider.selectedPetGender?.title ??
+                                                  tr(LocaleKeys.additionText_select),
                                               itemList: petGenderList,
                                               isEnable: true,
                                               onChange: (val) {
-                                                petProvider
-                                                    .onselectPetGender(val);
+                                                petProvider.onselectPetGender(val);
                                               },
                                               title: "",
                                               value: null,
@@ -954,27 +853,23 @@ petProvider.valChange=0;
                                           ],
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 15.0,
                                       ),
                                       Expanded(
                                         child: Column(
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 15.0),
+                                              padding: const EdgeInsets.only(left: 15.0),
                                               child: Align(
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
-                                                  tr(LocaleKeys
-                                                      .addPet_sterilization),
+                                                  tr(LocaleKeys.addPet_sterilization),
                                                   textAlign: TextAlign.left,
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 12.0,
-                                                    color: AppColor
-                                                        .textLightBlueBlack,
-                                                    fontFamily:
-                                                        AppFont.poppinsRegular,
+                                                    color: AppColor.textLightBlueBlack,
+                                                    fontFamily: AppFont.poppinsRegular,
                                                   ),
                                                 ),
                                               ),
@@ -983,18 +878,13 @@ petProvider.valChange=0;
                                             //   height: 10.0,
                                             // ),
                                             CustomDropDown<PetTypeModl>(
-                                              isGrey:
-                                                  petSerializationbool.isEmpty,
-                                              selectText: petProvider
-                                                      .selectedSerialization
-                                                      ?.title ??
-                                                  tr(LocaleKeys
-                                                      .additionText_select),
+                                              isGrey: petSerializationbool.isEmpty,
+                                              selectText: petProvider.selectedSerialization?.title ??
+                                                  tr(LocaleKeys.additionText_select),
                                               itemList: petserializationList,
                                               isEnable: true,
                                               onChange: (val) {
-                                                petProvider
-                                                    .onSerializationSelect(val);
+                                                petProvider.onSerializationSelect(val);
                                               },
                                               title: "",
                                               value: null,
@@ -1005,7 +895,7 @@ petProvider.valChange=0;
                                     ],
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 18.0,
                                   ),
 
@@ -1014,7 +904,7 @@ petProvider.valChange=0;
                                     child: Text(
                                       tr(LocaleKeys.additionText_entrPetColor),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
@@ -1022,17 +912,16 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
 
                                   CustomTextFeild(
                                       textController: petcolorController,
                                       textInputType: TextInputType.text,
-                                      hintText: tr(LocaleKeys
-                                          .additionText_entrPetColor)),
+                                      hintText: tr(LocaleKeys.additionText_entrPetColor)),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10.0,
                                   ),
 
@@ -1041,7 +930,7 @@ petProvider.valChange=0;
                                     child: Text(
                                       tr(LocaleKeys.additionText_size),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
@@ -1054,8 +943,7 @@ petProvider.valChange=0;
                                   CustomDropDown<PetTypeModl>(
                                     isGrey: petSerializationbool.isEmpty,
                                     selectText:
-                                        petProvider.selectedPetSize?.title ??
-                                            tr(LocaleKeys.additionText_select),
+                                        petProvider.selectedPetSize?.title ?? tr(LocaleKeys.additionText_select),
                                     itemList: petSizeList,
                                     isEnable: true,
                                     onChange: (val) {
@@ -1065,7 +953,7 @@ petProvider.valChange=0;
                                     value: null,
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20.0,
                                   ),
 
@@ -1074,7 +962,7 @@ petProvider.valChange=0;
                                     child: Text(
                                       tr(LocaleKeys.additionText_shortDesc),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
@@ -1082,7 +970,7 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
 
@@ -1097,34 +985,30 @@ petProvider.valChange=0;
                                   Container(
                                     height: 100,
                                     decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(28.0),
+                                        borderRadius: BorderRadius.circular(28.0),
                                         color: AppColor.textFieldGrey,
-                                        border: Border.all(
-                                            color: Colors.transparent)),
+                                        border: Border.all(color: Colors.transparent)),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 12.0, right: 12.0),
+                                      padding: const EdgeInsets.only(left: 12.0, right: 12.0),
                                       child: TextField(
                                         maxLines: 3,
                                         controller: petdescpController,
                                         //maxLengthEnforcement: MaxLengthEnforcement.enforced,
                                         autofocus: false,
-                                        scrollPadding: EdgeInsets.all(20.0),
+                                        scrollPadding: const EdgeInsets.all(20.0),
 
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: AppColor.textLightBlueBlack,
                                           fontFamily: AppFont.poppinsMedium,
                                           fontSize: 18.0,
                                         ),
                                         decoration: InputDecoration(
-                                          hintStyle: TextStyle(
+                                          hintStyle: const TextStyle(
                                             color: AppColor.textGreyColor,
                                             fontFamily: AppFont.poppinsMedium,
                                             fontSize: 15.0,
                                           ),
-                                          hintText: tr(LocaleKeys
-                                              .additionText_descYrPet),
+                                          hintText: tr(LocaleKeys.additionText_descYrPet),
                                           border: InputBorder.none,
                                           focusedBorder: InputBorder.none,
                                         ),
@@ -1132,7 +1016,7 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20.0,
                                   ),
 
@@ -1142,12 +1026,12 @@ petProvider.valChange=0;
                                       text: TextSpan(
                                           text: tr(LocaleKeys.addPet_contact),
                                           // textAlign: TextAlign.left,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12.0,
                                             color: AppColor.textLightBlueBlack,
                                             fontFamily: AppFont.poppinsRegular,
                                           ),
-                                          children: [
+                                          children: const [
                                             TextSpan(
                                                 text: '',
                                                 style: TextStyle(
@@ -1157,18 +1041,16 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
 
                                   CustomTextFeild(
                                       hintText: tr(LocaleKeys.addPet_contact),
                                       textController: mobileController,
-                                      textInputType:
-                                          TextInputType.numberWithOptions(
-                                              signed: true)),
+                                      textInputType: const TextInputType.numberWithOptions(signed: true)),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 20.0,
                                   ),
 
@@ -1178,7 +1060,7 @@ petProvider.valChange=0;
                                       // tr(LocaleKeys.additionText_city),
                                       tr(LocaleKeys.addPet_city),
                                       textAlign: TextAlign.left,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppColor.textLightBlueBlack,
                                         fontFamily: AppFont.poppinsRegular,
@@ -1186,17 +1068,16 @@ petProvider.valChange=0;
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 15.0,
                                   ),
 
                                   CustomTextFeild(
                                       textController: cityController,
                                       textInputType: TextInputType.text,
-                                      hintText:
-                                          tr(LocaleKeys.additionText_entrCity)),
+                                      hintText: tr(LocaleKeys.additionText_entrCity)),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 45.0,
                                   ),
                                 ],
@@ -1214,5 +1095,5 @@ petProvider.valChange=0;
 String dateConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
 
-  return "${Jiffy(d).format("dd MMM yyyy ")}".toUpperCase();
+  return Jiffy(d).format("dd MMM yyyy ").toUpperCase();
 }

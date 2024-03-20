@@ -5,7 +5,6 @@ import 'package:find_me/provider/authprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../components/customSmallBlueButton.dart';
 import '../../components/customTextFeild.dart';
 import '../../screen/blur_background.dart';
@@ -30,7 +29,7 @@ void deleteUserDialog({required BuildContext context}) {
                   width: 296,
                   // width: MediaQuery.of(context).size.width*.95,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColor.newGrey,
                     borderRadius: BorderRadius.circular(8),
                   ),
 
@@ -40,52 +39,52 @@ void deleteUserDialog({required BuildContext context}) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10.0,
                         ),
-                        Container(
+                        SizedBox(
                           height: 104,
                           width: 104,
                           child: Image.asset(AppImage.largedelete),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 9,
                         ),
                         Text(
                           tr(LocaleKeys.additionText_deletealert),
                           textAlign: TextAlign.left,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18.0,
                             color: AppColor.textLightBlueBlack,
                             fontFamily: AppFont.poppinsBold,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 9,
                         ),
                         Text(
                           tr(LocaleKeys.additionText_deletesub),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10.0,
                             color: Colors.black,
                             fontFamily: AppFont.poppinsRegular,
                           ),
                         ),
-                        SizedBox(height: 21),
+                        const SizedBox(height: 21),
                         customBlueButton(
                           context: context,
-                          text1:  tr(LocaleKeys.additionText_Delete),
+                          text1: tr(LocaleKeys.additionText_Delete),
                           onTap1: () {
-                            AuthProvider authProvider=Provider.of(context,listen: false);
-                           authProvider.deleteAccountApi(context);
+                            AuthProvider authProvider = Provider.of(context, listen: false);
+                            authProvider.deleteAccountApi(context);
                           },
                           colour: AppColor.newBlueGrey,
                           // height: true,
                           // putheight: 48,
                           // width:236 ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         customBlueButton(
@@ -94,7 +93,7 @@ void deleteUserDialog({required BuildContext context}) {
                           onTap1: () {
                             Navigator.pop(context);
                           },
-                          colour: AppColor.textRed,
+                          colour: AppColor.newGrey,
                           //   height: true,putheight: 48,width:236
                         )
                       ],

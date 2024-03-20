@@ -73,7 +73,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Container(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.playstore,fit: BoxFit.cover,),
+                    child: Image.asset(AppImage.findMeLogo,fit: BoxFit.cover,),
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,

@@ -118,7 +118,7 @@ Future<void> homLocPermiDialog(BuildContext context, int isFromHome) async {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal:38.0,vertical: 15),
                     child: customBlueButton(
-                        colour: Color(0xff2A3C6A),
+                        colour: AppColor.newGrey,
                         context: context,
                         text1: tr(LocaleKeys.additionText_ok),
                         onTap1: () async {

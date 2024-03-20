@@ -52,10 +52,10 @@ class _CustomerCareState extends State<CustomerCare> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_cntactUs),
+        titlename: tr(LocaleKeys.additionText_cntactUs), 
       ),
-      bottomNavigationBar: BotttomBorder(context),
-      body: Container(
+      bottomNavigationBar: BotttomBorder(context), 
+      body: Container( 
         // color: Colors.amber,
         height: MediaQuery.of(context).size.height * .42,
         child: SingleChildScrollView(
@@ -69,7 +69,7 @@ class _CustomerCareState extends State<CustomerCare> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
-                            AppImage.newDog,
+                            AppImage.dogcat,
                           ),
                           fit: BoxFit.cover)),
                 ),
@@ -77,17 +77,17 @@ class _CustomerCareState extends State<CustomerCare> {
               SizedBox(
                 height: 32,
               ),
-              Center(
-                child: Container(
-                  height: 90,
-                  width: 336,
-                  child: Text(
-                    tr(LocaleKeys.additionText_customerchatfeedbaxk),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: AppFont.poppinsRegular, color: Colors.black, fontSize: 12),
-                  ),
-                ),
-              ),
+              Center( 
+                child: Container( 
+                  height: 90, 
+                  width: 336, 
+                  child: Text( 
+                    tr(LocaleKeys.additionText_customerchatfeedbaxk), 
+                    textAlign: TextAlign.center, 
+                    style: TextStyle(fontFamily: AppFont.poppinsRegular, color: Colors.black, fontSize: 12), 
+                  ), 
+                ), 
+              ), 
               SizedBox(
                 height: 15,
               ),
@@ -281,7 +281,7 @@ class _CustomerCareState extends State<CustomerCare> {
       builder: (context) {
         return AlertDialog(
           title: Text("Open Mail App"),
-          content: Text("No mail apps installed"),
+          content: Text("No mail apps installed"),  
           actions: <Widget>[
             InkWell(
               child: Text(

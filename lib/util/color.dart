@@ -16,7 +16,7 @@ class AppColor {
   static const Color textYello = Color(0xffF1C93E);
   static const Color newBlueGrey=Color(0xff585357); 
   static const Color newGrey=Color(0xffCBC4A9);
-  // static const Color =Color(0xffF7F7F7);
+  static const Color newLightBlue=Color(0xffF2F2F2);
 
-  //#585357
+  //#585357  #CBC4A9  #CBC4A9  #585357  #CBC4A9 #CBC4A9
 }

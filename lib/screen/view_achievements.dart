@@ -169,7 +169,7 @@ class _ViewAchievementsState extends State<ViewAchievements> {
                               onTap1: () async {
                                 await urlFileShare(imgUrl, description);
                               },
-                              colour: const Color(0xff2A3C6A)),
+                              colour: AppColor.newGrey),
                         ),
                         const SizedBox(
                           height: 20,

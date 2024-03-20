@@ -332,7 +332,7 @@ class _NewEventState extends State<NewEvent> {
                                                         backgroundColor: MaterialStateProperty.all<Color>(
                                                             petProvider.masterEventlList[i] ==
                                                                     petProvider.seletedMaterEvnt
-                                                                ? const Color(0xff2A3C6A)
+                                                                ? AppColor.newBlueGrey
                                                                 : AppColor.textFieldGrey)),
                                                     onPressed: () {
                                                       petProvider

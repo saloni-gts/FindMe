@@ -7,7 +7,6 @@ import 'package:find_me/screen/signUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/appbarComp.dart';
 import '../components/customBlueButton.dart';
 import '../components/customTextFeild.dart';
@@ -36,7 +35,7 @@ class _CreatePasswordState extends State<CreatePassword> {
       resizeToAvoidBottomInset: false,
       appBar: customAppbar(),
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Stack(
@@ -47,17 +46,16 @@ class _CreatePasswordState extends State<CreatePassword> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
                   Text(
                     tr(LocaleKeys.additionText_createnewPassword),
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22.0,
-                      color: AppColor.textRed,
+                      color: AppColor.newBlueGrey,
                       fontFamily: AppFont.poppinsBold,
                     ),
                   ),
@@ -67,7 +65,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     child: Text(
                       tr(LocaleKeys.additionText_chooseStrongPass),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: AppColor.textBlueBlack,
                         fontFamily: AppFont.poppinsLight,
@@ -75,14 +73,14 @@ class _CreatePasswordState extends State<CreatePassword> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
-                  Container(
+                  SizedBox(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.playstore),
+                    child: Image.asset(AppImage.findMeLogo),
                   ),
 
                   Align(
@@ -90,7 +88,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     child: Text(
                       tr(LocaleKeys.additionText_otpCode),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
@@ -98,7 +96,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
 
@@ -107,7 +105,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     textInputType: TextInputType.number,
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
@@ -116,7 +114,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     child: Text(
                       tr(LocaleKeys.additionText_password),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
@@ -124,17 +122,13 @@ class _CreatePasswordState extends State<CreatePassword> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
 
-                  CustomTextFieldWithLeading(
-                      textController: password,
-                      isPassword: true,
-                      onChanged: (v) {}
-                  ),
+                  CustomTextFieldWithLeading(textController: password, isPassword: true, onChanged: (v) {}),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
@@ -143,7 +137,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                     child: Text(
                       tr(LocaleKeys.additionText_repeatpass),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
@@ -151,26 +145,21 @@ class _CreatePasswordState extends State<CreatePassword> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
 
-                  CustomTextFieldWithLeading(
-                      textController: repeatPassword,
-                      isPassword: true,
-                      onChanged: (v) {}),
+                  CustomTextFieldWithLeading(textController: repeatPassword, isPassword: true, onChanged: (v) {}),
                   //CustomTextFeild(textController: repeatPassword),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 30.0,
                   ),
 
                   customBlueButton(
                       context: context,
                       onTap1: () {
-                        if (password.text.isEmpty ||
-                            repeatPassword.text.isEmpty ||
-                            otpcode.text.isEmpty) {
+                        if (password.text.isEmpty || repeatPassword.text.isEmpty || otpcode.text.isEmpty) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
@@ -179,33 +168,32 @@ class _CreatePasswordState extends State<CreatePassword> {
                         // if(repeatPassword.text.isEmpty){
                         //   print("enter password again...");
                         // }
-                          else if(!password.text.isValidPassword() || !repeatPassword.text.isValidPassword()){
-                            CoolAlert.show(context: context, type: CoolAlertType.warning,text: tr(LocaleKeys.additionText_passShouldContain));
-                          }
-                        else if (password.text != repeatPassword.text) {
+                        else if (!password.text.isValidPassword() || !repeatPassword.text.isValidPassword()) {
+                          CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.warning,
+                              text: tr(LocaleKeys.additionText_passShouldContain));
+                        } else if (password.text != repeatPassword.text) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
                               text: tr(LocaleKeys.additionText_passRepPassNoMatch));
                         } else {
                           AuthProvider auth = Provider.of(context, listen: false);
-                          auth.callChangePassword({
-                            "otp": otpcode.text.trim(),
-                            "password": password.text.trim(),
-                            "email": widget.emailsend
-                          }, context);
+                          auth.callChangePassword(
+                              {"otp": otpcode.text.trim(), "password": password.text.trim(), "email": widget.emailsend},
+                              context);
                         }
                         //  if(!password.text.trim().isValidPassword()){
                         //    print("enter valid pasword");
                         //  }
                       },
-                      text1:   tr(LocaleKeys.newPassword_continue),
-                      colour: AppColor.newBlueGrey
-                  )
+                      text1: tr(LocaleKeys.newPassword_continue),
+                      colour: AppColor.newBlueGrey)
                 ],
               ),
             ),
-           bottomPic(context)
+            bottomPic(context)
           ],
         ),
       ),

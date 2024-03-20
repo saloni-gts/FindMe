@@ -18,7 +18,6 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   MycustomAppbar(
       {Key? key,
       this.seticon,
-
       this.isbackbutton = true,
       this.icon = true,
       required this.tap2,
@@ -27,7 +26,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       this.titlename = ""})
       : super(key: key);
   @override
-  Size get preferredSize => Size.fromHeight(55);
+  Size get preferredSize => const Size.fromHeight(55);
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -39,21 +38,46 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(vertical: 5.0),
+          //   child: Container(
+          //     width: MediaQuery.of(context).size.width,
+          //     child:
+          //      Image.asset(
+          //       AppImage.topBorder,
+          //       fit: BoxFit.cover,
+          //     ),
+          //     decoration: BoxDecoration(
+          //         image: DecorationImage(
+          //       image: AssetImage(
+          //         AppImage.topBorder,
+          //       ),
+          //       fit: BoxFit.cover,
+          //     )),
+          //   ),
+          // ),
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                AppImage.topBorder,
-                fit: BoxFit.cover,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0, right: 30),
+              child: Container(
+                height: 12,
+                width: double.infinity,
+                color: const Color(0xffCBC4A9),
+                // width: MediaQuery.of(context).size.width,
+                // child: Image.asset(
+                //   AppImage.topBorder,
+                //   fit: BoxFit.cover,
+                // ),
+                // decoration: BoxDecoration(
+                //     image: DecorationImage(
+                //   image: AssetImage(
+                //     AppImage.topBorder,
+                //   ),
+                //   fit: BoxFit.cover,
+                // )),
               ),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage(
-                  AppImage.topBorder,
-                ),
-                fit: BoxFit.cover,
-              )),
             ),
           ),
           Container(
@@ -63,7 +87,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   isbackbutton
                       ? InkWell(
-                          child: Container(
+                          child: SizedBox(
                             height: 16,
                             width: 22,
                             child: Image.asset(
@@ -78,7 +102,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                               customBack!();
                             }
                           })
-                      : Expanded(flex: 2, child: SizedBox()),
+                      : const Expanded(flex: 2, child: SizedBox()),
                   Expanded(
                     flex: 24,
                     child: Padding(
@@ -87,7 +111,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                         child: Text(
                           titlename,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColor.textLightBlueBlack,
                             fontFamily: AppFont.poppinsMedium,
                             fontSize: 14,
@@ -96,7 +120,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     flex: 4,
                     child: SizedBox(
                       width: 120,
@@ -115,7 +139,7 @@ class MycustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                             tap2();
                           },
                         )
-                      : Expanded(
+                      : const Expanded(
                           flex: 2,
                           child: SizedBox(
                             height: 0,

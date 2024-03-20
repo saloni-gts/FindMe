@@ -63,7 +63,7 @@ Future<void> commingSoonDialog(BuildContext context,
                           },
                         ));
                   },
-                  colour: Color(0xff2A3C6A)
+                  colour: AppColor.newGrey
               ),
 
             ],

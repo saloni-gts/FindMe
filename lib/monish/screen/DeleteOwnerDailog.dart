@@ -87,7 +87,7 @@ void deleteDialog({required BuildContext context}) {
                         ),
                         customBlueButton(context: context, text1: tr(LocaleKeys.additionText_cancel), onTap1: (){
                           Navigator.pop(context);
-                        }, colour: AppColor.textRed, )
+                        }, colour: AppColor.newGrey, )
                       ],
                     ),
                   ),

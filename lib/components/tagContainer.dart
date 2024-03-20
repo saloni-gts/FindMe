@@ -8,10 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
 
-
 import '../generated/locale_keys.g.dart';
 
-Widget TagContainer(BuildContext context,TagDetails tagData) {
+Widget TagContainer(BuildContext context, TagDetails tagData) {
   return Container(
     decoration: BoxDecoration(
       // color: AppColor.textLightBlueBlack,
@@ -26,55 +25,41 @@ Widget TagContainer(BuildContext context,TagDetails tagData) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Image(image: AssetImage(AppImage.tagIcon)),
+          const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: Image(image: AssetImage(AppImage.tagIcon), color: AppColor.newBlueGrey),
           ),
-
-          SizedBox(
+          const SizedBox(
             width: 10.0,
           ),
-
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
-
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-
               Text(
                 // "T5822",
-                tagData.qrTagNumber??"",
+                tagData.qrTagNumber ?? "",
                 // tagData.qrActivationCode??"",
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 14.0,
-                    color: Colors.black,
-                    fontFamily: AppFont.poppinsRegular),
+                style: const TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
               ),
               Text(
-                "${tr(LocaleKeys.additionText_addedOn)} : ${dateConverter(int.parse(tagData?.updateDate??""))}",
+                "${tr(LocaleKeys.additionText_addedOn)} : ${dateConverter(int.parse(tagData.updateDate ?? ""))}",
                 // "Added on : 26/12/22",
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 10.0,
-                    color: AppColor.textGreyColor,
-                    fontFamily: AppFont.poppinsRegular),
+                style:
+                    const TextStyle(fontSize: 10.0, color: AppColor.textGreyColor, fontFamily: AppFont.poppinsRegular),
               ),
             ],
           ),
-
-          new Spacer(),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0),
-            child: Image(image: AssetImage(AppImage.nextArrow)),
+          const Spacer(),
+          const Padding(
+            padding: EdgeInsets.only(right: 12.0),
+            child: Image(image: AssetImage(AppImage.nextArrow), color: AppColor.newBlueGrey),
           ),
-
-
         ],
       ),
     ),
@@ -83,5 +68,5 @@ Widget TagContainer(BuildContext context,TagDetails tagData) {
 
 String dateConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
-  return "${Jiffy(d).format("dd/MM/yy ")}".toUpperCase();
+  return Jiffy(d).format("dd/MM/yy ").toUpperCase();
 }

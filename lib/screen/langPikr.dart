@@ -34,7 +34,7 @@ class _LangPickerState extends State<LangPicker> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 15.0,
             ),
 
@@ -42,24 +42,24 @@ class _LangPickerState extends State<LangPicker> {
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Center(
                 child: widget.isFromStart
-                    ? Text("PLEASE CHOOSE YOUR APP LANGUAGE",
+                    ? const Text("PLEASE CHOOSE YOUR APP LANGUAGE",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, color: AppColor.textRed, fontFamily: AppFont.poppinsBold))
-                    : Text("You Can Change Your App Language",
+                        style: TextStyle(fontSize: 22, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinsBold))
+                    : const Text("You Can Change Your App Language",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, color: AppColor.textRed, fontFamily: AppFont.poppinsBold)),
+                        style: TextStyle(fontSize: 22, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinsBold)),
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 15.0,
             ),
 
             Center(
-              child: Container(
+              child: SizedBox(
                 height: 250,
                 child: Image.asset(
-                  AppImage.newDog,
+                  AppImage.dogcat,
                   fit: BoxFit.cover,
                 ),
               ),

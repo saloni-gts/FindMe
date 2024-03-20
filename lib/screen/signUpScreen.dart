@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 import '../api/call_api.dart';
 import '../components/bottomBorderComp.dart';
 import '../components/cntryyPikrrComp.dart';
@@ -59,7 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -72,9 +71,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   Text(
                     tr(LocaleKeys.signUp_createAccount),
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22.0,
-                      color: AppColor.textRed,
+                      color: AppColor.newBlueGrey,
                       fontFamily: AppFont.poppinsBold,
                     ),
                   ),
@@ -93,14 +92,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     tr(LocaleKeys
                         .additionText_entrYrRegData), //entrYrRegData      tr(LocaleKeys.additionText_entrYrRegData),
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12.0,
                       color: AppColor.textBlueBlack,
                       fontFamily: AppFont.poppinsLight,
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   Padding(
@@ -110,7 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Text(
                         tr(LocaleKeys.additionText_email),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12.0,
                           color: AppColor.textLightBlueBlack,
                           fontFamily: AppFont.poppinsRegular,
@@ -118,14 +117,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   CustomTextFeild(
                     textController: emailController,
                     textInputType: TextInputType.emailAddress,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   Padding(
@@ -135,7 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Text(
                         tr(LocaleKeys.signUp_mobileNumber),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12.0,
                           color: AppColor.textLightBlueBlack,
                           fontFamily: AppFont.poppinsRegular,
@@ -143,11 +142,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   CntrePikr(phoneNumController: phoneController),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   Padding(
@@ -157,7 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Text(
                         tr(LocaleKeys.signUp_password),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12.0,
                           color: AppColor.textLightBlueBlack,
                           fontFamily: AppFont.poppinsRegular,
@@ -165,7 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
                   CustomTextFieldWithLeading(
@@ -173,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     onChanged: (v) {},
                     isPassword: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30.0,
                   ),
 
@@ -198,41 +197,31 @@ class _SignUpPageState extends State<SignUpPage> {
                             CoolAlert.show(
                                 context: context,
                                 type: CoolAlertType.warning,
-                                text:
-                                    tr(LocaleKeys.additionText_passwordError));
+                                text: tr(LocaleKeys.additionText_passwordError));
                           } else if (emailController.text.isEmpty &&
                               phoneController.text.isEmpty &&
                               passwordController.text.isEmpty) {
                             CoolAlert.show(
                                 context: context,
                                 type: CoolAlertType.warning,
-                                text:
-                                    tr(LocaleKeys.additionText_entrAllFeilds));
+                                text: tr(LocaleKeys.additionText_entrAllFeilds));
                           }
 
                           // else if(){
                           //
                           // }
-                        } else if (!emailController.text
-                            .trim()
-                            .isValidEmail()) {
+                        } else if (!emailController.text.trim().isValidEmail()) {
+                          CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
+                        } else if (!phoneController.text.ismobile(phoneController.text)) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
-                              text: "Invalid Email Address");
-                        } else if (!phoneController.text
-                            .ismobile(phoneController.text)) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text:
-                                  tr(LocaleKeys.additionText_entrValidMobNum));
+                              text: tr(LocaleKeys.additionText_entrValidMobNum));
                         } else if (!passwordController.text.isValidPassword()) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
-                              text: tr(
-                                  LocaleKeys.additionText_passShouldContain));
+                              text: tr(LocaleKeys.additionText_passShouldContain));
                         } else {
                           authProvider.normalLogin({
                             "phoneCode": authProvider.phncode1,
@@ -247,12 +236,12 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
                       },
                       colour: AppColor.newBlueGrey),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
                   _linktoWebsiteText(context),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -268,10 +257,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           ? _socialIcon(AppImage.appleIcon, () {
                               authProvider.appleLogin(context);
                             })
-                          : SizedBox()
+                          : const SizedBox()
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
@@ -284,8 +273,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           Text(
                             tr(LocaleKeys.signUp_alreadyHaveAcc),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColor.textLightBlueBlack,
+                            style: const TextStyle(
+                              color: AppColor.newBlueGrey,
                               fontSize: 14,
                               fontFamily: AppFont.poppinsRegular,
                             ),
@@ -295,10 +284,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               Navigator.pushNamed(context, AppScreen.signIn);
                             },
                             child: Text(
-                              " " + tr(LocaleKeys.signUp_signIn),
+                              " ${tr(LocaleKeys.signUp_signIn)}",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AppColor.textRed,
+                              style: const TextStyle(
+                                color: AppColor.newBlueGrey,
                                 fontSize: 14,
                                 fontFamily: AppFont.poppinsRegular,
                               ),
@@ -308,24 +297,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                   Container(
+                  Container(
                     child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(children: <TextSpan>[
                           TextSpan(
                               text: tr(LocaleKeys.signUp_termsHint),
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {}),
+                              style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
+                              recognizer: TapGestureRecognizer()..onTap = () {}),
                           TextSpan(
-                              text: "" + tr(LocaleKeys.signUp_privacyPolicy),
-                              style: TextStyle(
+                              text: tr(LocaleKeys.signUp_privacyPolicy),
+                              style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Colors.black,
                                   fontSize: 12,
@@ -340,8 +325,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                               )));
                                 }),
                           TextSpan(
-                              text: "" + tr(LocaleKeys.signUp_terms),
-                              style: TextStyle(
+                              text: tr(LocaleKeys.signUp_terms),
+                              style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   color: Colors.black,
                                   fontSize: 12,
@@ -357,7 +342,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 }),
                         ])),
                   ),
-                    
+
                   // Container(
                   //   // color: Colors.blue,
                   //   child: Padding(
@@ -434,19 +419,24 @@ class _SignUpPageState extends State<SignUpPage> {
 bottomPic(BuildContext context) {
   return Positioned(
     bottom: 20.0,
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      child: Image.asset(
-        AppImage.topBorder,
-        fit: BoxFit.cover,
+    child: Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 40),
+      child: Container(
+        width: MediaQuery.of(context).size.width * .9,
+        height: 15,
+        color: const Color(0xffCBC4A9),
+        // decoration: const BoxDecoration(
+        //     image: DecorationImage(
+        //   image: AssetImage(
+        //     AppImage.topBorder,
+        //   ),
+        //   fit: BoxFit.fill,
+        // )),
+        // child: Image.asset(
+        //   AppImage.topBorder,
+        //   fit: BoxFit.cover,
+        // ),
       ),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage(
-          AppImage.topBorder,
-        ),
-        fit: BoxFit.fill,
-      )),
     ),
   );
 }
@@ -454,7 +444,7 @@ bottomPic(BuildContext context) {
 _linktoWebsiteText(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12),
-    child: Container(
+    child: SizedBox(
       // width: MediaQuery.of(context).size.width * .90,
       width: double.infinity,
       child: Column(
@@ -468,8 +458,8 @@ _linktoWebsiteText(BuildContext context) {
                 color: Colors.black,
               )),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width * .60,
                     child: Center(
                       child: RichText(
@@ -479,7 +469,7 @@ _linktoWebsiteText(BuildContext context) {
                           text: TextSpan(children: <TextSpan>[
                             TextSpan(
                               text: tr(LocaleKeys.signUp_socialAccount),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppColor.textBlueBlack,
                                 fontSize: 13,
                                 fontWeight: FontWeight.normal,
@@ -518,19 +508,16 @@ _socialIcon(String icon, VoidCallback onTap) {
   return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
-            decoration: BoxDecoration(
-                color: AppColor.textFieldGrey,
-                borderRadius: BorderRadius.circular(28)),
+            decoration: BoxDecoration(color: AppColor.textFieldGrey, borderRadius: BorderRadius.circular(28)),
             height: 56,
             width: 92,
             child: Image.asset(icon)),
       ));
 }
 
-final Uri privacypolicy =
-    Uri.parse('http://3.92.109.164/unique-tags/privacy-policy.html');
+final Uri privacypolicy = Uri.parse('http://3.92.109.164/unique-tags/privacy-policy.html');
 Future<void> _launchUrl(url) async {
   if (!await launch("http://3.92.109.164/unique-tags/privacy-policy.html")) {
     throw 'Could not launch $privacypolicy';

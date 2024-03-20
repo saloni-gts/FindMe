@@ -245,7 +245,7 @@ if(petProvider.petHealtweightCntrolr.text!=null) {
                                                     style: TextStyle(
                                                         fontSize: 18.0,
                                                         color: AppColor
-                                                            .textLightBlueBlack,
+                                                            .newBlueGrey,
                                                         fontFamily: AppFont
                                                             .poppinSemibold),
                                                   ),
@@ -513,7 +513,7 @@ if(petProvider.petHealtweightCntrolr.text!=null) {
                                                                   show: true,
                                                                   isCurved: false,
                                                                   color:
-                                                                      AppColor.textRed,
+                                                                      AppColor.newBlueGrey,
                                                                   barWidth: 5,
                                                                   dotData: FlDotData(
                                                                       show: true,
@@ -563,7 +563,7 @@ if(petProvider.petHealtweightCntrolr.text!=null) {
                                                             petProvider.weightList.length>1?
                                                               LineChartBarData(
 
-                                                                color: AppColor.textLightBlueBlack,
+                                                                color: AppColor.newBlueGrey,
                                                                 barWidth: 2,
                                                                 spots: petProvider.healthyGraphData,
 
@@ -600,7 +600,7 @@ if(petProvider.petHealtweightCntrolr.text!=null) {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: 12.0,
-                                      color: AppColor.textLightBlueBlack,
+                                      color: AppColor.newBlueGrey,
                                       fontFamily: AppFont.poppinsRegular),
                                 ):SizedBox(),
                                 SizedBox(
@@ -652,7 +652,7 @@ if(petProvider.petHealtweightCntrolr.text!=null) {
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       fontSize: 12.0,
-                                      color: AppColor.textLightBlueBlack,
+                                      color: AppColor.newBlueGrey,
                                       fontFamily: AppFont.poppinsRegular),
                                 ),
                                 SizedBox(

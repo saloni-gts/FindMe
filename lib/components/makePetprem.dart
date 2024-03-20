@@ -63,7 +63,7 @@ Future<void> makePetPremDialog(BuildContext context,
                   },
                 ));
               },
-              colour: Color(0xff2A3C6A)
+              colour: AppColor.newGrey
           ),
 
         ],

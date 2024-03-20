@@ -21,10 +21,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-
-
-
-
 import '../../common/change_lang.dart';
 import '../../components/customBlueButton.dart';
 import '../../components/deleteAlert.dart';
@@ -74,48 +70,41 @@ class _MoreFeatureState extends State<MoreFeature> {
 
   // var isChoice;
   @override
-
   UserModel user = HiveHandler.getUserHiveRefresher().value.values.first;
+  @override
   void initState() {
-
-    PurChaseProvider purchaseProvider=Provider.of(context,listen: false);
-    PetProvider petProvider=Provider.of(context,listen: false);
+    PurChaseProvider purchaseProvider = Provider.of(context, listen: false);
+    PetProvider petProvider = Provider.of(context, listen: false);
     purchaseProvider.loadPurchase();
-    choices= purchaseProvider.isChoice==2? choices1:choices2;
+    choices = purchaseProvider.isChoice == 2 ? choices1 : choices2;
 
-
-    petProvider.callContactApi=0;
+    petProvider.callContactApi = 0;
     petProvider.contactUsApiCall(context);
     print("CheckPurchased========>${purchaseProvider.CheckPurchased}");
-     print("");
-
+    print("");
 
     // purchaseProvider.userIsPremium?
     PurChaseProvider purChaseProvider = Provider.of(context, listen: false);
 
     // petProvider.isUserPremium==1?choices1:choices2;
     // print("purChaseProvider.plan[0]====${purChaseProvider.plan[0]}");
-    if(purChaseProvider.plan.isNotEmpty) {
-
+    if (purChaseProvider.plan.isNotEmpty) {
       purchaseProvider.isChoice = purChaseProvider.plan[0];
       print("(purChaseProvider.isUsrJoint) ${purChaseProvider.isUsrJoint}");
-     if(purChaseProvider.isUsrJoint==1){
-       purchaseProvider.isChoice =1;
-     }
+      if (purChaseProvider.isUsrJoint == 1) {
+        purchaseProvider.isChoice = 1;
+      }
     }
-        // choices= user.isPremium==1 && isChoice==2? choices1:choices2;
-    choices= purchaseProvider.isChoice==2? choices1:choices2;
+    // choices= user.isPremium==1 && isChoice==2? choices1:choices2;
+    choices = purchaseProvider.isChoice == 2 ? choices1 : choices2;
 
+    // choices= purchaseProvider.CheckPurchased==3? choices1:choices2;
 
-        // choices= purchaseProvider.CheckPurchased==3? choices1:choices2;
-
-
-        super.initState();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     PetProvider provider = Provider.of(context, listen: false);
     AuthProvider authprovider = Provider.of(context, listen: false);
     var petDetail = provider.selectedPetDetail;
@@ -153,8 +142,8 @@ class _MoreFeatureState extends State<MoreFeature> {
                 border1: false,
                 putheight: 56.0,
                 width: 220.0,
-                colour: AppColor.buttonRedColor),
-            SizedBox(
+                colour: AppColor.newBlueGrey),
+            const SizedBox(
               height: 10,
             )
           ],
@@ -173,8 +162,8 @@ class _MoreFeatureState extends State<MoreFeature> {
       //
 
       // bottomNavigationBar: BotttomBorder(context),
-      body: Consumer3<PetProvider, Myprovider,PurChaseProvider>(
-          builder: (context, petProvider, myprovider,purc ,child) {
+      body: Consumer3<PetProvider, Myprovider, PurChaseProvider>(
+          builder: (context, petProvider, myprovider, purc, child) {
         print("choices choices.length ${choices.length}");
         return SingleChildScrollView(
           child: Column(
@@ -184,10 +173,10 @@ class _MoreFeatureState extends State<MoreFeature> {
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.62,
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Color(0xffF7F7F7),
-                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  decoration: const BoxDecoration(
+                      // color: Color(0xffF7F7F7),
+                      color: AppColor.newGrey),
                   child: ListView.builder(
                     itemCount: purc.choices.length,
                     itemBuilder: (context, index) {
@@ -198,9 +187,8 @@ class _MoreFeatureState extends State<MoreFeature> {
                             print("type is ${item.type}");
 
                             if (item.type == 13) {
-                              PurChaseProvider purChaseProvider=Provider.of(context,  listen: false);
+                              PurChaseProvider purChaseProvider = Provider.of(context, listen: false);
                               purChaseProvider.getSubScriptionDetails();
-
 
                               // Navigator.push(context, MaterialPageRoute(
                               //   builder: (context) {
@@ -210,24 +198,17 @@ class _MoreFeatureState extends State<MoreFeature> {
 
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (context) {
-                                  return ViewPremium();
+                                  return const ViewPremium();
                                 },
                               ));
-
-
-
-
 
                               // showPurchasePlanBottomSheet(context);
                             }
 
                             if (item.type == 1) {
-                               print("family member ====");  
+                              print("family member ====");
 
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                builder: (context) => FamilyPlan()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const FamilyPlan()));
                             }
 
                             //else
@@ -258,39 +239,35 @@ class _MoreFeatureState extends State<MoreFeature> {
                             }
 
                             if (item.type == 4) {
-                              if(petProvider.petDetailList2.isEmpty){
-                                showDialog(context: context, builder:(context1){
-                                  return AlertDialog(
-                                    title: Text(tr(LocaleKeys.home_noPetFound)),
-                                    actions: [
-
-                                      InkWell(
-                                        child:  Text(tr(LocaleKeys.additionText_dismiss)
-                                          ,style: TextStyle(
-                                              fontSize: 17.0,
-                                              fontFamily: AppFont.poppinsMedium
+                              if (petProvider.petDetailList2.isEmpty) {
+                                showDialog(
+                                    context: context,
+                                    builder: (context1) {
+                                      return AlertDialog(
+                                        title: Text(tr(LocaleKeys.home_noPetFound)),
+                                        actions: [
+                                          InkWell(
+                                            child: Text(
+                                              tr(LocaleKeys.additionText_dismiss),
+                                              style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                            ),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
                                           ),
-                                        ),
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
-                              }  else{
+                                        ],
+                                      );
+                                    });
+                              } else {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return AddJoinManagement();
+                                    return const AddJoinManagement();
                                   },
                                 ));
                               }
                             }
                             if (item.type == 20) {
-                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => JoinManagement()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => JoinManagement()));
                             }
 
                             if (item.type == 5) {
@@ -299,22 +276,17 @@ class _MoreFeatureState extends State<MoreFeature> {
                                 petProvider.callContactApi = 1;
                                 print("petProvider.callContactApi=${petProvider.callContactApi}");
                                 petProvider.contactUsApiCall(context);
-                                Future.delayed(Duration(seconds: 2), () {
-                                  Navigator.pushNamed(
-                                      context, AppScreen.customercare);
+                                Future.delayed(const Duration(seconds: 2), () {
+                                  Navigator.pushNamed(context, AppScreen.customercare);
                                 });
-
-
                               }
                             }
                             if (item.type == 6) {
-                              final InAppReview inAppReview =
-                                  InAppReview.instance;
+                              final InAppReview inAppReview = InAppReview.instance;
 
                               ///android
 
-                              inAppReview.openStoreListing(
-                                  appStoreId: "6444847271");
+                              inAppReview.openStoreListing(appStoreId: "6444847271");
 
                               ///ios
                               // Platform.isIOS ? inAppReview.requestReview():  inAppReview.openStoreListing(
@@ -340,14 +312,13 @@ class _MoreFeatureState extends State<MoreFeature> {
                             }
 
                             if (item.type == 8) {
-                              Myprovider myProvider =Provider.of(context,listen: false);
+                              Myprovider myProvider = Provider.of(context, listen: false);
 
                               myProvider.setButtonOn = HiveHandler.isChekLostNoti();
                               print("======${myProvider.setButtonOn}");
                               // chkButtonStaus();
 
-                              Future.delayed(const Duration(microseconds: 800),
-                                  () {
+                              Future.delayed(const Duration(microseconds: 800), () {
                                 Navigator.pushNamed(context, AppScreen.setting);
                               });
                               // Navigator.pushNamed(context, AppScreen.setting);
@@ -358,9 +329,9 @@ class _MoreFeatureState extends State<MoreFeature> {
 
                               print("loginUser==${loginUser.phoneCode}");
 
-                              if(loginUser.phoneCode!.isNotEmpty){
-                               print("not empty=====");
-                              }else{
+                              if (loginUser.phoneCode!.isNotEmpty) {
+                                print("not empty=====");
+                              } else {
                                 print(" empty=====");
                               }
 
@@ -386,7 +357,7 @@ class _MoreFeatureState extends State<MoreFeature> {
                           },
                           child: ListTile(
                             horizontalTitleGap: -5,
-                            leading: Container(
+                            leading: SizedBox(
                                 height: 18,
                                 width: 18,
                                 child: Image(
@@ -397,7 +368,7 @@ class _MoreFeatureState extends State<MoreFeature> {
                             title: Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(item.title.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12,
                                       fontFamily: AppFont.poppinsRegular,
                                       color: AppColor.textLightBlueBlack)),
@@ -409,7 +380,7 @@ class _MoreFeatureState extends State<MoreFeature> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               )
             ],
@@ -444,8 +415,8 @@ class _MoreFeatureState extends State<MoreFeature> {
                       // manageSubScripion(context, planTypeEnum.premiumPlan);
                       showPlanAccoringToProduct(context);
                     },
-                    colour: Color(0xff2A3C6A)),
-                SizedBox(
+                    colour: AppColor.newGrey),
+                const SizedBox(
                   height: 20,
                 ),
                 customBlueButton(
@@ -454,7 +425,7 @@ class _MoreFeatureState extends State<MoreFeature> {
                     onTap1: () {
                       manageSubScripion(context, planTypeEnum.family);
                     },
-                    colour: Color(0xff2A3C6A)),
+                    colour: AppColor.newGrey),
               ],
             ),
           );
@@ -475,8 +446,8 @@ class _MoreFeatureState extends State<MoreFeature> {
                     onTap1: () {
                       manageSubScripion(context, planTypeEnum.month);
                     },
-                    colour: Color(0xff2A3C6A)),
-                SizedBox(
+                    colour: AppColor.newGrey),
+                const SizedBox(
                   height: 20,
                 ),
                 customBlueButton(
@@ -485,7 +456,7 @@ class _MoreFeatureState extends State<MoreFeature> {
                     onTap1: () {
                       manageSubScripion(context, planTypeEnum.year);
                     },
-                    colour: Color(0xff2A3C6A)),
+                    colour: AppColor.newGrey),
               ],
             ),
           );
@@ -493,7 +464,6 @@ class _MoreFeatureState extends State<MoreFeature> {
         context: context);
   }
 
-  
   Future<void> chkButtonStaus() async {
     Myprovider myProvider = Provider.of(context, listen: false);
     // Provider.of(GlobalVariable.navState.currentContext!, listen: false);
@@ -503,7 +473,7 @@ class _MoreFeatureState extends State<MoreFeature> {
 
     if (Platform.isAndroid) {
       var status3 = await Permission.location.status;
-      print("help pet lost noti status andr=>${status3}");
+      print("help pet lost noti status andr=>$status3");
       if (status3 == PermissionStatus.granted) {
         myProvider.setButtonOn = true;
         print("setButtonOn status android=>${myProvider.setButtonOn}");
@@ -512,9 +482,8 @@ class _MoreFeatureState extends State<MoreFeature> {
 
     if (Platform.isIOS) {
       var status4 = await Geolocator.checkPermission();
-      print("help pet lost noti status ios=>${status4}");
-      if (status4 == LocationPermission.whileInUse ||
-          status4 == LocationPermission.always) {
+      print("help pet lost noti status ios=>$status4");
+      if (status4 == LocationPermission.whileInUse || status4 == LocationPermission.always) {
         myProvider.setButtonOn = true;
         print("setButtonOn status ios=>${myProvider.setButtonOn}");
       }
@@ -525,123 +494,116 @@ class _MoreFeatureState extends State<MoreFeature> {
 }
 
 manageSubScripion(BuildContext context, planTypeEnum type) async {
-    PurChaseProvider purchaseProvider = Provider.of(context, listen: false);
-    EasyLoading.show();
-    await purchaseProvider.initPurchaseData().onError((error, stackTrace) {
-      //  EasyLoading.dismiss();
-    });
-    
-    if (purchaseProvider.products.isEmpty) {
-      EasyLoading.dismiss();
-      return;
-    }
-    print("type is $type");
-    switch (type) {
-      case planTypeEnum.month:
-        for (var item in purchaseProvider.products) {
-          print("my id ${monthySubscriptionAndroid} list id ${item.id} ");
-          if (item.id == monthySubscriptionAndroid) {
-            purchaseProvider.buy(item).onError((error, stackTrace) {
-              EasyLoading.dismiss();
-            }).whenComplete(() {
-                // EasyLoading.dismiss();
-            });
-          }
-        }
-        break;
-      case planTypeEnum.year:
-     
-        for (var item in purchaseProvider.products) {
-           print("var item in purchaseProvider.products ${item.id}");
-           print("var item in purchaseProvider.products ${yearlySubscriptionAndroid}");
-           
-          if (item.id == yearlySubscriptionAndroid || item.id=="popular_yearly") {
-            purchaseProvider.buy(item).onError((error, stackTrace) {
-              EasyLoading.dismiss();
-            }).whenComplete(() {
-                // EasyLoading.dismiss();
-            });
-          }
-        }
-        break;
-      case planTypeEnum.family:
-        for (var item in purchaseProvider.products) {
-          // print("item is is ${item.id} and ${familyPlan}");
-          // print("cindtion value ${item.id ==familyPlan}");
-          if (item.id == familyPlan || item.id=="family_premium") {
-            purchaseProvider.buy(item).onError((error, stackTrace) {
-              EasyLoading.dismiss();
-            }).whenComplete(() {
-                // EasyLoading.dismiss();
-            });
-          }
-        }
+  PurChaseProvider purchaseProvider = Provider.of(context, listen: false);
+  EasyLoading.show();
+  await purchaseProvider.initPurchaseData().onError((error, stackTrace) {
+    //  EasyLoading.dismiss();
+  });
 
-        break;
-        case planTypeEnum.restore:
-        
-        default:
-        // EasyLoading.dismiss();
-    }
+  if (purchaseProvider.products.isEmpty) {
+    EasyLoading.dismiss();
+    return;
+  }
+  print("type is $type");
+  switch (type) {
+    case planTypeEnum.month:
+      for (var item in purchaseProvider.products) {
+        print("my id $monthySubscriptionAndroid list id ${item.id} ");
+        if (item.id == monthySubscriptionAndroid) {
+          purchaseProvider.buy(item).onError((error, stackTrace) {
+            EasyLoading.dismiss();
+          }).whenComplete(() {
+            // EasyLoading.dismiss();
+          });
+        }
+      }
+      break;
+    case planTypeEnum.year:
+      for (var item in purchaseProvider.products) {
+        print("var item in purchaseProvider.products ${item.id}");
+        print("var item in purchaseProvider.products $yearlySubscriptionAndroid");
+
+        if (item.id == yearlySubscriptionAndroid || item.id == "popular_yearly") {
+          purchaseProvider.buy(item).onError((error, stackTrace) {
+            EasyLoading.dismiss();
+          }).whenComplete(() {
+            // EasyLoading.dismiss();
+          });
+        }
+      }
+      break;
+    case planTypeEnum.family:
+      for (var item in purchaseProvider.products) {
+        // print("item is is ${item.id} and ${familyPlan}");
+        // print("cindtion value ${item.id ==familyPlan}");
+        if (item.id == familyPlan || item.id == "family_premium") {
+          purchaseProvider.buy(item).onError((error, stackTrace) {
+            EasyLoading.dismiss();
+          }).whenComplete(() {
+            // EasyLoading.dismiss();
+          });
+        }
+      }
+
+      break;
+    case planTypeEnum.restore:
+    default:
+    // EasyLoading.dismiss();
+  }
 }
 
-  // Future<void> chkButtonStaus() async {
-  //   Myprovider myProvider =Provider.of(context,listen: false);
-  //   // Provider.of(GlobalVariable.navState.currentContext!, listen: false);
-  //   PetProvider petProvider = Provider.of(context,listen: false);
-  //
-  //   petProvider.updateLoader(true);
-  //
-  //   if (Platform.isAndroid) {
-  //     var status3 = await Permission.location.status;
-  //     print("help pet lost noti status andr=>${status3}");
-  //     if (status3 == PermissionStatus.granted) {
-  //       myProvider.setButtonOn = true;
-  //       print("setButtonOn status android=>${myProvider.setButtonOn}");
-  //     }
-  //   }
-  //
-  //   if (Platform.isIOS) {
-  //     var status4 = await Geolocator.checkPermission();
-  //     print("help pet lost noti status ios=>${status4}");
-  //     if (status4 == LocationPermission.whileInUse ||
-  //         status4 == LocationPermission.always) {
-  //       myProvider.setButtonOn = true;
-  //       print("setButtonOn status ios=>${myProvider.setButtonOn}");
-  //     }
-  //   }
-  //
-  //   petProvider.updateLoader(false);
-  // }
-  // }
+// Future<void> chkButtonStaus() async {
+//   Myprovider myProvider =Provider.of(context,listen: false);
+//   // Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+//   PetProvider petProvider = Provider.of(context,listen: false);
+//
+//   petProvider.updateLoader(true);
+//
+//   if (Platform.isAndroid) {
+//     var status3 = await Permission.location.status;
+//     print("help pet lost noti status andr=>${status3}");
+//     if (status3 == PermissionStatus.granted) {
+//       myProvider.setButtonOn = true;
+//       print("setButtonOn status android=>${myProvider.setButtonOn}");
+//     }
+//   }
+//
+//   if (Platform.isIOS) {
+//     var status4 = await Geolocator.checkPermission();
+//     print("help pet lost noti status ios=>${status4}");
+//     if (status4 == LocationPermission.whileInUse ||
+//         status4 == LocationPermission.always) {
+//       myProvider.setButtonOn = true;
+//       print("setButtonOn status ios=>${myProvider.setButtonOn}");
+//     }
+//   }
+//
+//   petProvider.updateLoader(false);
+// }
+// }
 
-  Future<void> chkButtonStaus() async {
-    Myprovider myProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
-    // Provider.of(GlobalVariable.navState.currentContext!, listen: false);
-    PetProvider petProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+Future<void> chkButtonStaus() async {
+  Myprovider myProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+  // Provider.of(GlobalVariable.navState.currentContext!, listen: false);
+  PetProvider petProvider = Provider.of(GlobalVariable.navState.currentContext!, listen: false);
 
-    petProvider.updateLoader(true);
+  petProvider.updateLoader(true);
 
-    if (Platform.isAndroid) {
-      var status3 = await Permission.location.status;
-      print("help pet lost noti status andr=>${status3}");
-      if (status3 == PermissionStatus.granted) {
-        myProvider.setButtonOn = true;
-        print("setButtonOn status android=>${myProvider.setButtonOn}");
-      }
+  if (Platform.isAndroid) {
+    var status3 = await Permission.location.status;
+    print("help pet lost noti status andr=>$status3");
+    if (status3 == PermissionStatus.granted) {
+      myProvider.setButtonOn = true;
+      print("setButtonOn status android=>${myProvider.setButtonOn}");
     }
-
-    if (Platform.isIOS) {
-      var status4 = await Geolocator.checkPermission();
-      print("help pet lost noti status ios=>${status4}");
-      if (status4 == LocationPermission.whileInUse ||
-          status4 == LocationPermission.always) {
-        myProvider.setButtonOn = true;
-        print("setButtonOn status ios=>${myProvider.setButtonOn}");
-      }
-    }
-
-
   }
-  
 
+  if (Platform.isIOS) {
+    var status4 = await Geolocator.checkPermission();
+    print("help pet lost noti status ios=>$status4");
+    if (status4 == LocationPermission.whileInUse || status4 == LocationPermission.always) {
+      myProvider.setButtonOn = true;
+      print("setButtonOn status ios=>${myProvider.setButtonOn}");
+    }
+  }
+}

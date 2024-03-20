@@ -74,7 +74,7 @@ class _AddAchievenState extends State<AddAchieven> {
                               widget.achievementModel?.id ?? 0,
                               context);
                     },
-                    colour: Color(0xff941C1B)),
+                    colour: AppColor.newGrey),
               )
               : SizedBox(),
           SizedBox(
@@ -124,7 +124,7 @@ class _AddAchievenState extends State<AddAchieven> {
                     }
                   }
                 },
-                colour: Color(0xff2A3C6A)),
+                colour: AppColor.newGrey),
           ),
           
           BotttomBorder(context),
