@@ -80,7 +80,7 @@ class _CreatePasswordState extends State<CreatePassword> {
                   SizedBox(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.findMeLogo),
+                    child: Image.asset(AppImage.findMePinkLogo),
                   ),
 
                   Align(

@@ -86,7 +86,7 @@ class _SignInPageState extends State<SignInPage> {
                   SizedBox(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.findMeLogo),
+                    child: Image.asset(AppImage.findMePinkLogo),
                   ),
                   const SizedBox(
                     height: 10.0,

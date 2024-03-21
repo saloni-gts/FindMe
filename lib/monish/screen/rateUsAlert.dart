@@ -163,7 +163,7 @@ void rateDialog({required BuildContext context}) {
                             context: context,
                             onTap1: () {},
                             text1: tr(LocaleKeys.additionText_confirm),
-                            colour: AppColor.textLightBlueBlack),
+                            colour: AppColor.newBlueGrey),
                         SizedBox(
                           height: 10,
                         ),

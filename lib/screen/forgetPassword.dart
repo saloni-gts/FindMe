@@ -9,7 +9,6 @@ import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/appbarComp.dart';
 import '../components/bottomBorderComp.dart';
 import '../components/customBlueButton.dart';
@@ -30,12 +29,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar:BotttomBorder(context),
-      backgroundColor: Colors.white,
+        bottomNavigationBar: BotttomBorder(context),
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: customAppbar(),
         body: GestureDetector(
-          onTap: (){
+          onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: SingleChildScrollView(
@@ -49,7 +48,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Text(
                     tr(LocaleKeys.additionText_forgotPassword),
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 22.0,
                       color: AppColor.textRed,
                       fontFamily: AppFont.poppinsBold,
@@ -60,44 +59,43 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     child: Text(
                       tr(LocaleKeys.additionText_enterEmailReset),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: AppColor.textBlueBlack,
                         fontFamily: AppFont.poppinsLight,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  Container(
+                  SizedBox(
                     height: 90.0,
                     width: 90.0,
-                    child: Image.asset(AppImage.findMeLogo,fit: BoxFit.cover,),
+                    child: Image.asset(
+                      AppImage.findMePinkLogo,
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Text(
                       tr(LocaleKeys.additionText_email),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: AppColor.textLightBlueBlack,
                         fontFamily: AppFont.poppinsRegular,
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 7.0,
                   ),
-                  CustomTextFeild(
-                      textController: emaillController,
-                      textInputType: TextInputType.emailAddress),
-
-                  SizedBox(
+                  CustomTextFeild(textController: emaillController, textInputType: TextInputType.emailAddress),
+                  const SizedBox(
                     height: 25,
                   ),
-
                   customBlueButton(
                       context: context,
                       onTap1: () {
@@ -111,12 +109,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
-                              text:tr(LocaleKeys.additionText_invalidEmain));
+                              text: tr(LocaleKeys.additionText_invalidEmain));
                         } else {
-                          AuthProvider authProvider =
-                              Provider.of(context, listen: false);
+                          AuthProvider authProvider = Provider.of(context, listen: false);
                           authProvider.updateForgotPassword(
-                              {"email": emaillController.text.trim()}, context,emaillController.text.trim());
+                              {"email": emaillController.text.trim()}, context, emaillController.text.trim());
                         }
                       },
                       text1: tr(LocaleKeys.forgotPassword_submit),

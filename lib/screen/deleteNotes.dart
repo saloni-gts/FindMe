@@ -85,7 +85,7 @@ class _DeleteNotesState extends State<DeleteNotes> {
             Expanded(
                 flex: 40,
                 child: customSmallBlueButton(
-                    colour: AppColor.textRed,
+                    colour: AppColor.newGrey,
                     context: context,
                     onTap1: () {
                       showDialog(
@@ -140,7 +140,7 @@ class _DeleteNotesState extends State<DeleteNotes> {
             Expanded(
                 flex: 40,
                 child: customSmallBlueButton(
-                    colour: AppColor.textLightBlueBlack,
+                    colour: AppColor.newBlueGrey,
                     context: context,
                     onTap1: ()
                     {

@@ -441,7 +441,7 @@ class _DeleteEventState extends State<DeleteEvent> {
             Expanded(
                 flex: 40,
                 child: customSmallBlueButton(
-                    colour: AppColor.textRed,
+                    colour: AppColor.newGrey,
                     context: context,
                     onTap1: () {
                       showDialog(
@@ -493,7 +493,7 @@ class _DeleteEventState extends State<DeleteEvent> {
             Expanded(
                 flex: 40,
                 child: customSmallBlueButton(
-                    colour: AppColor.textLightBlueBlack,
+                    colour: AppColor.newBlueGrey,
                     context: context,
                     onTap1: () {
                       Navigator.push(

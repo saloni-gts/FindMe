@@ -35,7 +35,7 @@ class _LogoutPageState extends State<LogoutPage> {
           HiveHandler.clearUser();
         Navigator.pushNamedAndRemoveUntil(
             context, AppScreen.signIn, (r) => false);
-         }, colour: AppColor.buttonRedColor,isShowBorder: false),
+         }, colour: AppColor.newGrey,isShowBorder: false),
       ),
       // appBar: customAppbar(titlename: "Settings"),
       body:Column(
