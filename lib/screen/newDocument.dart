@@ -50,7 +50,7 @@ class _NewDocumentState extends State<NewDocument> {
   TextEditingController documentTitle = TextEditingController();
   TextEditingController issueDate = TextEditingController();
   late var Switchcontroller = ValueNotifier<bool>(false);
-  bool _checked = false;
+  final bool _checked = false;
 
   var v1 = 1;
 
@@ -143,11 +143,11 @@ class _NewDocumentState extends State<NewDocument> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
@@ -156,9 +156,9 @@ class _NewDocumentState extends State<NewDocument> {
                   Text(
                     tr(LocaleKeys.additionText_choseCate),
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   //
@@ -199,17 +199,17 @@ class _NewDocumentState extends State<NewDocument> {
 
                   ///*****
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
                   Text(
                     tr(LocaleKeys.additionText_newDocumentTitle),
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
@@ -219,17 +219,17 @@ class _NewDocumentState extends State<NewDocument> {
                     hintText: tr(LocaleKeys.additionText_ntrDocTitle),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
                   Text(
                     tr(LocaleKeys.additionText_addDocs),
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
@@ -266,14 +266,16 @@ class _NewDocumentState extends State<NewDocument> {
                                 }
 
                                 if (Platform.isAndroid) {
-                                  var status = await Permission.manageExternalStorage.request();
-                                  print("storage statur====${status}");
-                                  if (status.isDenied) {
-                                    Permission.manageExternalStorage.request();
-                                  } else if (status.isPermanentlyDenied || status.isRestricted) {
-                                    Permission.manageExternalStorage.request();
-                                    //  openAppSettings();
-                                  } else if (status.isGranted) {
+                                  var status = await Permission.manageExternalStorage.request();  
+                                  print("storage statur====$status");
+                                  // if (status.isDenied) {
+                                  //   Permission.manageExternalStorage.request();
+                                  // } else if (status.isPermanentlyDenied || status.isRestricted) {
+                                  //   Permission.manageExternalStorage.request();
+                                  //   //  openAppSettings();
+                                  // } else if (status.isGranted)
+                                   {
+
                                     fil = await getFile().then((value) {
                                       if (value != null) {
                                         return File(value.files.single.path ?? "");
@@ -286,7 +288,7 @@ class _NewDocumentState extends State<NewDocument> {
                                 }
                               }
                               if (fil != null) {
-                                print("value==${fil}");
+                                print("value==$fil");
                                 if (fil.toString() == "File: ''") {
                                   print("value like this===");
                                   fil = null;
@@ -363,15 +365,15 @@ class _NewDocumentState extends State<NewDocument> {
                               // }
                               // },
 
-                              Container(
+                              SizedBox(
                             height: 112,
                             width: MediaQuery.of(context).size.width * .9,
                             child: DottedBorder(
                                 color: AppColor.textLightBlueBlack,
                                 strokeWidth: 1,
-                                dashPattern: [10, 4],
+                                dashPattern: const [10, 4],
                                 borderType: BorderType.RRect,
-                                radius: Radius.circular(15.0),
+                                radius: const Radius.circular(15.0),
                                 child: !widget.isNewDoc
                                     ? docUrll.split(".").last == "pdf"
                                         ? Container(
@@ -382,17 +384,17 @@ class _NewDocumentState extends State<NewDocument> {
                                             ),
                                             child: Column(
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Image.asset(
                                                   "assets/images/upload-file.png",
                                                   height: 70,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 10,
                                                 ),
-                                                Text("${docUrll.split('/').last}")
+                                                Text(docUrll.split('/').last)
                                               ],
                                             ))
 
@@ -434,14 +436,14 @@ class _NewDocumentState extends State<NewDocument> {
                                                   ? petProvider.docFileType == 3
                                                       ? Column(
                                                           children: [
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             Image.asset(
                                                               "assets/images/upload-file.png",
                                                               height: 60,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 5,
                                                             ),
                                                             Text("${petProvider.docFile?.path.split('/').last}")
@@ -449,7 +451,7 @@ class _NewDocumentState extends State<NewDocument> {
                                                         )
                                                       : ClipRRect(
                                                           borderRadius: BorderRadius.circular(15),
-                                                          child: Container(
+                                                          child: SizedBox(
                                                             height: 112,
                                                             width: MediaQuery.of(context).size.width * .9,
                                                             child: Image.file(petProvider.docFile!, fit: BoxFit.cover),
@@ -466,8 +468,8 @@ class _NewDocumentState extends State<NewDocument> {
                                                       onTap: () {
                                                         petProvider.removedocFile();
                                                       },
-                                                      child: Icon(Icons.close)))
-                                              : SizedBox()
+                                                      child: const Icon(Icons.close)))
+                                              : const SizedBox()
                                         ],
                                       )),
                           ),
@@ -475,16 +477,16 @@ class _NewDocumentState extends State<NewDocument> {
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25.0,
                   ),
 
                   Text(
                     tr(LocaleKeys.additionText_issued),
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
 
@@ -496,13 +498,13 @@ class _NewDocumentState extends State<NewDocument> {
                                 firstDate: DateTime(1950),
                                 lastDate: DateTime.now())
                             .then((value) {
-                          print("******------${value}-----******");
+                          print("******------$value-----******");
                           //issueDate.text =dateConverter(int.parse(value.toString()));
                           var date = DateTime.parse(value.toString());
 
-                          date = date.add(Duration(hours: 5, minutes: 30));
+                          date = date.add(const Duration(hours: 5, minutes: 30));
                           timestampGmt = date.millisecondsSinceEpoch.toString();
-                          print("TIMESTAMPP ${timestampGmt}");
+                          print("TIMESTAMPP $timestampGmt");
                           print("GMTGMT ${DateTime.now().millisecondsSinceEpoch}");
                           issueDate.text = dateConverter(int.parse(timestampGmt));
                           //Timestamp myTimeStamp = Timestamp.fromDate(currentPhoneDate); /
@@ -515,32 +517,32 @@ class _NewDocumentState extends State<NewDocument> {
                         hintText: tr(LocaleKeys.additionText_selDocIssueDate),
                       )),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
 
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 265,
                         // color: Colors.blue,
                         child: Text(
                           tr(LocaleKeys.additionText_displayPetPublic),
                           textAlign: TextAlign.left,
                           maxLines: 2,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                         ),
                       ),
                       Container(
-                        decoration: BoxDecoration(),
+                        decoration: const BoxDecoration(),
                       ),
-                      new Spacer(),
+                      const Spacer(),
                       AdvancedSwitch(
                         controller: Switchcontroller,
                         activeColor: AppColor.textRed,
                         inactiveColor: Colors.black12,
-                        borderRadius: BorderRadius.all(const Radius.circular(4)),
+                        borderRadius: const BorderRadius.all(Radius.circular(4)),
                         width: 38.0,
                         height: 16.0,
                         enabled: true,
@@ -549,7 +551,7 @@ class _NewDocumentState extends State<NewDocument> {
                     ],
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 100.0,
                   ),
                 ],
@@ -575,7 +577,7 @@ class _NewDocumentState extends State<NewDocument> {
                     print("switch output========${Switchcontroller.value}");
                     Switchcontroller.value ? print("value is 1  ") : print("value is 0");
                     Switchcontroller.value ? v1 = 1 : v1 = 2;
-                    print("vale of v1========= ${v1}");
+                    print("vale of v1========= $v1");
                     print("print to check");
                     if (!widget.isNewDoc) {
                       if (timestampGmt.isEmpty) {
@@ -621,20 +623,20 @@ Future bottomSheetFile(
   return showModalBottomSheet<void>(
     context: context,
     builder: (BuildContext context) {
-      return Container(
+      return SizedBox(
           height: 250,
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 tr(LocaleKeys.additionText_chooseDocumentFile),
                 textAlign: TextAlign.left,
                 style:
-                    TextStyle(fontSize: 20.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
+                    const TextStyle(fontSize: 20.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GestureDetector(
@@ -646,24 +648,24 @@ Future bottomSheetFile(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 42,
                         child: Image.asset(AppImage.cameraImg),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Text(
                         tr(LocaleKeys.additionText_camera),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GestureDetector(
@@ -675,24 +677,24 @@ Future bottomSheetFile(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 45,
                         child: Image.asset(AppImage.galleryImg),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Text(
                         tr(LocaleKeys.additionText_gellery),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GestureDetector(
@@ -704,17 +706,17 @@ Future bottomSheetFile(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 42,
                         child: Image.asset(AppImage.fileicon),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 15,
                       ),
                       Text(
                         tr(LocaleKeys.additionText_file),
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
                       ),
                     ],
@@ -730,7 +732,7 @@ Future bottomSheetFile(
 String dateConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
 
-  return "${Jiffy(d).format("dd MMM yyyy ")}".toUpperCase();
+  return Jiffy(d).format("dd MMM yyyy ").toUpperCase();
   // +
   //    "${Jiffy(d).jm}";
 }

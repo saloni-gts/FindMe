@@ -263,7 +263,7 @@
     "entrWetDate": "Saisir la date de pesée",
     "entrEvntName": "Entrez le nom de l'événement",
     "addEvntDate": "Ajouter la date de l'événement",
-    "uTgOnAppStr": "Découvrez l'application Unique Tags en magasin",
+    "uTgOnAppStr": "Découvrez l'application Find Me en magasin",
     "events": "Événements",
     "notes": "Remarques",
     "upcoming": "A venir",
@@ -565,7 +565,7 @@
     "addYrAdrs": "Ajouter votre adresse",
     "mltiplEmergcyContct": "Contacts d'urgence multiples",
     "ACTIVATED": "ACTIVÉ",
-    "locPopup":"Unique Tags a besoin de votre autorisation de localisation pour retrouver votre animal de compagnie perdu et aider les gens à retrouver leur animal de compagnie disparu. Nous ne partageons votre position avec personne",
+    "locPopup":"Find Me a besoin de votre autorisation de localisation pour retrouver votre animal de compagnie perdu et aider les gens à retrouver leur animal de compagnie disparu. Nous ne partageons votre position avec personne",
 
     "yrCurrentPln": "Votre plan actuel",
     "cntactUs": "Nous contacter",

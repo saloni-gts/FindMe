@@ -255,7 +255,7 @@
     "entrWetDate": "Enter date of weighing",
     "entrEvntName": "Enter Event Name",
     "addEvntDate": "Add Event Date",
-    "uTgOnAppStr": "Check out the Unique Tags app on store",
+    "uTgOnAppStr": "Check out the Find Me app on store",
     "events": "Events",
     "notes": "Notes",
     "upcoming": "Upcoming",
@@ -538,7 +538,7 @@
     "uSureWannaDownlod": "Are you sure you want to download pet profile",
     "disPerMngYrPet" :"This person can manage your pets",
     "wntToAddAsFamMeb" :"Do you want to add as family member",
-    "thisMobAlrdyReg": "This Mobile must be already registered with unique tag before you invite them ",
+    "thisMobAlrdyReg": "This Mobile must be already registered with Find Me before you invite them ",
     "UMngTrPetAddAsFamMem": "You manage their pets and you are added as a family member",
     "remark": "Remark",
 
@@ -558,7 +558,7 @@
     "mltiplEmergcyContct": "Multiple Emergency Contacts",
     "ACTIVATED": "ACTIVATED",
 
-    "locPopup": "Unique Tags needs your location permission to find your lost pet and helping to people for finding their missing pet. We do not share your location with anyone.",
+    "locPopup": "Find Me needs your location permission to find your lost pet and helping to people for finding their missing pet. We do not share your location with anyone.",
 
     "yrCurrentPln":"Your current Plan",
     "cntactUs": "Contact Us",

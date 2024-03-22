@@ -119,67 +119,72 @@ class _NewEventState extends State<NewEvent> {
                 context: context,
                 text1: tr(LocaleKeys.addPet_save),
                 onTap1: () {
-                  print("eventDateController.text====${eventNameController.text}");
-                  print("eventDateController.text====${eventDateController.text}");
-                  if (eventNameController.text.trim().isEmpty || eventDateController.text.isEmpty) {
-                  } else {
-                    PetProvider petProvider = Provider.of(context, listen: false);
-
-                    if (petProvider.repeatType == 0) {
-                      timestampGmt2 = "";
-                    }
-                    if (petProvider.repeatType != 0 && timestampGmt2.isEmpty) {
-                      CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.warning,
-                        text: tr(LocaleKeys.additionText_recrinTimeReq),
-                      );
-                    }
-
-                    if (petProvider.repeatType != 0 && int.parse(timestampGmt) >= int.parse(timestampGmt2)) {
-                      CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.warning,
-                        text: tr(LocaleKeys.additionText_recTimGrtrRemindr),
-                      );
+                  try {
+                    print("whwew");
+                    print("eventDateController.text====${eventNameController.text}");
+                    print("eventDateController.text====${eventDateController.text}");
+                    if (eventNameController.text.trim().isEmpty || eventDateController.text.isEmpty) {
                     } else {
-                      if (eventNameController.text.trim().isNotEmpty && eventDateController.text.isNotEmpty) {
-                        print("repeatType=====>>>${petProvider.repeatType}");
-                        print("timestampGmt2=====>>>$timestampGmt2");
-                        print("timestampGmt=====>>>$timestampGmt");
+                      PetProvider petProvider = Provider.of(context, listen: false);
 
-                        // if (petProvider.repeatType != 0 && timestampGmt2.isEmpty) {
-                        //   // CoolAlert.show(
-                        //   //     context: context,
-                        //   //     type: CoolAlertType.warning,
-                        //   //     text: "Recurring Time is required");
-                        // }
-                        // else {
-                        provider.addEventP2ApiCall(
-                            context: context,
-                            pettidd: petProvider.selectedPetIdForEvent ?? 0,
-                            name: eventNameController.text.trim(),
-                            start: timestampGmt,
-                            end: timestampGmt2,
-                            evntCateid: petProvider.selectedSubEvnt?.EventCatgoriesId ?? 1,
-                            evntCateType: petProvider.selectedSubEvnt?.id ?? 18,
-                            fromPet: widget.frmPet);
-                        // }
+                      if (petProvider.repeatType == 0) {
+                        timestampGmt2 = "";
+                      }
+                      if (petProvider.repeatType != 0 && timestampGmt2.isEmpty) {
+                        CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.warning,
+                          text: tr(LocaleKeys.additionText_recrinTimeReq),
+                        );
+                      }
+
+                      if (petProvider.repeatType != 0 && int.parse(timestampGmt) >= int.parse(timestampGmt2)) {
+                        CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.warning,
+                          text: tr(LocaleKeys.additionText_recTimGrtrRemindr),
+                        );
                       } else {
-                        if (eventNameController.text.trim().isEmpty) {
-                          CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.warning,
-                            text: tr(LocaleKeys.additionText_plaseenternameofevent),
-                          );
-                        } else if (eventDateController.text.isEmpty) {
-                          CoolAlert.show(
+                        if (eventNameController.text.trim().isNotEmpty && eventDateController.text.isNotEmpty) {
+                          print("repeatType=====>>>${petProvider.repeatType}");
+                          print("timestampGmt2=====>>>$timestampGmt2");
+                          print("timestampGmt=====>>>$timestampGmt");
+
+                          // if (petProvider.repeatType != 0 && timestampGmt2.isEmpty) {
+                          //   // CoolAlert.show(
+                          //   //     context: context,
+                          //   //     type: CoolAlertType.warning,
+                          //   //     text: "Recurring Time is required");
+                          // }
+                          // else {
+                          provider.addEventP2ApiCall(
+                              context: context,
+                              pettidd: petProvider.selectedPetIdForEvent ?? 0,
+                              name: eventNameController.text.trim(),
+                              start: timestampGmt,
+                              end: timestampGmt2,
+                              evntCateid: petProvider.selectedSubEvnt?.EventCatgoriesId ?? 1,
+                              evntCateType: petProvider.selectedSubEvnt?.id ?? 18,
+                              fromPet: widget.frmPet);
+                          // }
+                        } else {
+                          if (eventNameController.text.trim().isEmpty) {
+                            CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_plsSlectEvtDate));
+                              text: tr(LocaleKeys.additionText_plaseenternameofevent),
+                            );
+                          } else if (eventDateController.text.isEmpty) {
+                            CoolAlert.show(
+                                context: context,
+                                type: CoolAlertType.warning,
+                                text: tr(LocaleKeys.additionText_plsSlectEvtDate));
+                          }
                         }
                       }
                     }
+                  } catch (error, stackTrace) {
+                    print("error>>>>   $error   stackTrace---$stackTrace");
                   }
                 },
                 colour: (eventNameController.text.trim().isEmpty || petProvider.eventButton == 0)

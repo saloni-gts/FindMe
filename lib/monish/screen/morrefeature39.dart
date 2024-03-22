@@ -305,8 +305,9 @@ class _MoreFeatureState extends State<MoreFeature> {
                                   Share.share(
                                       " ${AppStrings.uTgOnAppStr} \n https://apps.apple.com/us/app/unique-tags/id6444847271");
                                 } else {
-                                  Share.share(
-                                      " ${AppStrings.uTgOnAppStr} \n https://play.google.com/store/apps/details?id=com.app.uniquetags");
+                                  Share.share(" ${AppStrings.uTgOnAppStr} ");
+                                  // Share.share(
+                                  //     " ${AppStrings.uTgOnAppStr} \n https://play.google.com/store/apps/details?id=com.app.uniquetags");
                                 }
                               });
                             }

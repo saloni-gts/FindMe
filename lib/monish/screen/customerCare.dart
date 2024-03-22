@@ -33,6 +33,7 @@ class _CustomerCareState extends State<CustomerCare> {
   int showinsta = 0;
   int showWhatsapp = 0;
   int showImsg = 0;
+  @override
   void initState() {
     PetProvider petProvider = Provider.of(context, listen: false);
     petProvider.callContactApi = 0;
@@ -42,9 +43,9 @@ class _CustomerCareState extends State<CustomerCare> {
     petProvider.insta.toString().isNotEmpty ? showinsta = 1 : showinsta = 0;
     petProvider.iMsgNo.toString().isNotEmpty ? showImsg = 1 : showImsg = 0;
 
-    print("showImsg====${showImsg}");
+    print("showImsg====$showImsg");
 
-    print("showImsg====${showImsg}");
+    print("showImsg====$showImsg");
     super.initState();
   }
 
@@ -52,10 +53,10 @@ class _CustomerCareState extends State<CustomerCare> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_cntactUs), 
+        titlename: tr(LocaleKeys.additionText_cntactUs),
       ),
-      bottomNavigationBar: BotttomBorder(context), 
-      body: Container( 
+      bottomNavigationBar: BotttomBorder(context),
+      body: SizedBox(
         // color: Colors.amber,
         height: MediaQuery.of(context).size.height * .42,
         child: SingleChildScrollView(
@@ -66,29 +67,29 @@ class _CustomerCareState extends State<CustomerCare> {
                 child: Container(
                   height: 208,
                   width: 179,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage(
                             AppImage.dogcat,
                           ),
-                          fit: BoxFit.cover)),
+                          fit: BoxFit.fitWidth)),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 32,
               ),
-              Center( 
-                child: Container( 
-                  height: 90, 
-                  width: 336, 
-                  child: Text( 
-                    tr(LocaleKeys.additionText_customerchatfeedbaxk), 
-                    textAlign: TextAlign.center, 
-                    style: TextStyle(fontFamily: AppFont.poppinsRegular, color: Colors.black, fontSize: 12), 
-                  ), 
-                ), 
-              ), 
-              SizedBox(
+              Center(
+                child: SizedBox(
+                  height: 90,
+                  width: 336,
+                  child: Text(
+                    tr(LocaleKeys.additionText_customerchatfeedbaxk),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontFamily: AppFont.poppinsRegular, color: Colors.black, fontSize: 12),
+                  ),
+                ),
+              ),
+              const SizedBox(
                 height: 15,
               ),
             ],
@@ -110,7 +111,7 @@ class _CustomerCareState extends State<CustomerCare> {
                       },
                       colour: AppColor.newBlueGrey),
                 )
-              : SizedBox(),
+              : const SizedBox(),
           showWhatsapp == 1
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
@@ -123,7 +124,7 @@ class _CustomerCareState extends State<CustomerCare> {
                       },
                       colour: AppColor.newBlueGrey),
                 )
-              : SizedBox(),
+              : const SizedBox(),
           showinsta == 1
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
@@ -136,14 +137,14 @@ class _CustomerCareState extends State<CustomerCare> {
                       },
                       colour: AppColor.newBlueGrey),
                 )
-              : SizedBox(),
+              : const SizedBox(),
           customBlueButton(
             context: context,
             text1: tr(LocaleKeys.additionText_emailUs),
             onTap1: () {
               print("email button pressed....");
 
-              Platform.isIOS ? sendIosMail() : sendEmail("", "contact@unique-tags.com");
+              Platform.isIOS ? sendIosMail() : sendEmail("", "support@find-me.app");
             },
             colour: AppColor.newBlueGrey,
           ),
@@ -153,11 +154,11 @@ class _CustomerCareState extends State<CustomerCare> {
   }
 
   sendWhatsappMsg(String whtsAppNum) async {
-    print("whtsAppNum${whtsAppNum}");
+    print("whtsAppNum$whtsAppNum");
     whtsAppNum = whtsAppNum.replaceFirst(" ", "");
-    print("=====${whtsAppNum}");
+    print("=====$whtsAppNum");
 
-    var whatsappUrl = "whatsapp://send?phone=${whtsAppNum}";
+    var whatsappUrl = "whatsapp://send?phone=$whtsAppNum";
     var iosUrl = "https://wa.me/$whtsAppNum?text=hi";
 
     // var whatsappUrl = "whatsapp://send?phone=${123456789}";
@@ -178,7 +179,7 @@ class _CustomerCareState extends State<CustomerCare> {
     } catch (e) {
       print("*******");
       EasyLoading.showToast("Try Again!", toastPosition: EasyLoadingToastPosition.bottom);
-      print("========${e}");
+      print("========$e");
       //To handle error and display error message
     }
   }
@@ -208,7 +209,7 @@ class _CustomerCareState extends State<CustomerCare> {
   // }
 
   launchInsta(String InstaUsrName) async {
-    print("InstaUsrName${InstaUsrName}");
+    print("InstaUsrName$InstaUsrName");
     var nativeUrl = InstaUsrName;
     var webUrl = "https://www.instagram.com/youTube";
 
@@ -248,11 +249,11 @@ class _CustomerCareState extends State<CustomerCare> {
     try {
       await FlutterEmailSender.send(email);
       platformResponse = 'success';
-      print("platformResponse======${platformResponse}");
+      print("platformResponse======$platformResponse");
     } catch (error) {
       platformResponse = error.toString();
 
-      print("platformResponse======${platformResponse}");
+      print("platformResponse======$platformResponse");
     }
 
     if (!mounted) return;
@@ -280,11 +281,11 @@ class _CustomerCareState extends State<CustomerCare> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Open Mail App"),
-          content: Text("No mail apps installed"),  
+          title: const Text("Open Mail App"),
+          content: const Text("No mail apps installed"),
           actions: <Widget>[
             InkWell(
-              child: Text(
+              child: const Text(
                 "OK",
                 style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
               ),

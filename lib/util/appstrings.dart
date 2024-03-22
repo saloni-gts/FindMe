@@ -50,7 +50,7 @@ class AppStrings {
 
   ///sign up success
   // static const success ="Success";
-  static const welUTag = " Unique Tags!";
+  static const welUTag = " Find Me!";
   // static const Success ="SUCCESS!";
 
   ///dashboard
@@ -296,7 +296,7 @@ class AppStrings {
   // static const entrEvntName = "Enter Event Name";
   // static const addEvntDate = "Add Event Date";
 
-  static const uTgOnAppStr = "Check out the Unique Tags app on store";
+  static const uTgOnAppStr = "Check out the Find Me app on store";
 
   ///new strings
   ///
@@ -585,7 +585,7 @@ static const family = "Family";
 static const add = "Add";
 static const storgePerAlert = "Please enable your storage permission to continue to download pet profile";
 static const logoutAlert = "Are you sure you want to logout?";
-static const locPer = "Unique Tags needs your location permission to find your lost pet and helping to people for finding their missing pet. We do not share your location with anyone.";
+static const locPer = "Find Me needs your location permission to find your lost pet and helping to people for finding their missing pet. We do not share your location with anyone.";
 static const allergies = "Allergies";
 static const treatment = "nTreatments";
 static const allow = "Allow";

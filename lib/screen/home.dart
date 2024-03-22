@@ -10,6 +10,7 @@ import 'package:find_me/screen/addPet.dart';
 import 'package:find_me/screen/checkProtection.dart';
 import 'package:find_me/screen/protectionSheild.dart';
 import 'package:find_me/screen/splashScreen.dart';
+import 'package:find_me/screen/viewPremium.dart';
 import 'package:find_me/services/hive_handler.dart';
 import 'package:find_me/util/app_font.dart';
 import 'package:find_me/util/app_images.dart';
@@ -607,23 +608,33 @@ class _HomeState extends State<Home> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      color: AppColor.newGrey,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(children: [
-                        Image.asset(AppImage.bigRibbon),
-                        const Expanded(
-                            child: Text(
-                          "Check pets additional information or update here",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
-                        )),
-                      ]),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const ViewPremium();
+                        },
+                      ));
+                    },
+                    child: Container(
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        color: AppColor.newGrey,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(children: [
+                          Image.asset(AppImage.bigRibbon),
+                          const Expanded(
+                              child: Text(
+                            "Tap Now To Unlock All The PREMIUM BENIFITS",
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
+                          )),
+                        ]),
+                      ),
                     ),
                   ),
                 )

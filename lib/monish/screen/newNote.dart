@@ -540,14 +540,15 @@ class _NewNoteState extends State<NewNote> {
                                                                               .manageExternalStorage
                                                                               .request();
                                                                           print("storage statur====$status");
-                                                                          if (status.isDenied) {
-                                                                            Permission.manageExternalStorage.request();
-                                                                          } else if (status.isPermanentlyDenied ||
-                                                                              status.isRestricted) {
-                                                                            // Permission.manageExternalStorage.request();
-                                                                            // openAppSettings();
-                                                                            AppSettings.openAppSettings();
-                                                                          } else if (status.isGranted) {
+                                                                          // if (status.isDenied) {
+                                                                          //   Permission.manageExternalStorage.request();
+                                                                          // } else if (status.isPermanentlyDenied ||
+                                                                          //     status.isRestricted) {
+                                                                          // Permission.manageExternalStorage.request();
+                                                                          // openAppSettings();
+                                                                          //   AppSettings.openAppSettings();
+                                                                          // } else if (status.isGranted)
+                                                                          {
                                                                             Navigator.pop(context);
                                                                             fil = await getFile().then((value) {
                                                                               if (value != null) {

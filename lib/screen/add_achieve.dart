@@ -17,7 +17,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/appbarComp.dart';
 import '../components/bottomBorderComp.dart';
 import '../components/camPermissionAlert.dart';
@@ -57,7 +56,6 @@ class _AddAchievenState extends State<AddAchieven> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       floatingActionButton: Column(
@@ -65,70 +63,62 @@ class _AddAchievenState extends State<AddAchieven> {
         children: [
           widget.achievementModel != null
               ? Padding(
-                padding: const EdgeInsets.only(left: 22.0),
-                child: customBlueButton(
-                    context: context,
-                    text1:    tr(LocaleKeys.additionText_capDel),
-                    onTap1: () {
-                      provider.callDeleteAchievement(
-                              widget.achievementModel?.id ?? 0,
-                              context);
-                    },
-                    colour: AppColor.newGrey),
-              )
-              : SizedBox(),
-          SizedBox(
+                  padding: const EdgeInsets.only(left: 22.0),
+                  child: customBlueButton(
+                      context: context,
+                      text1: tr(LocaleKeys.additionText_capDel),
+                      onTap1: () {
+                        provider.callDeleteAchievement(widget.achievementModel?.id ?? 0, context);
+                      },
+                      colour: AppColor.newGrey),
+                )
+              : const SizedBox(),
+          const SizedBox(
             height: 20,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 22.0),
             child: customBlueButton(
                 context: context,
-                text1: widget.achievementModel != null ? tr(LocaleKeys.additionText_capUpdte) : tr(LocaleKeys.additionText_capSave),
+                text1: widget.achievementModel != null
+                    ? tr(LocaleKeys.additionText_capUpdte)
+                    : tr(LocaleKeys.additionText_capSave),
                 onTap1: () {
                   if (widget.achievementModel != null) {
-                    provider.updateAchieveMent(
-                        widget.achievementModel?.id ?? 0,
-                        nameController.text,
-                        desciptionController.text,
-                        widget.achievementModel?.halfUrl ?? "",
-                        context);
+                    provider.updateAchieveMent(widget.achievementModel?.id ?? 0, nameController.text,
+                        desciptionController.text, widget.achievementModel?.halfUrl ?? "", context);
                   } else {
                     if (nameController.text.trim().isEmpty) {
                       CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          text: tr(LocaleKeys.additionText_plsNtrName));
-
+                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrName));
                     } else if (desciptionController.text.trim().isEmpty) {
                       CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          text: tr(LocaleKeys.additionText_plsNtrDesc));
+                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrDesc));
                     } else if (provider.achievementImage == null) {
                       CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.error,
-                          text: tr(LocaleKeys.additionText_plsAdImg));
+                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsAdImg));
                     } else {
                       provider.callAddAchieve(
                         widget.achievementModel != null
-                              ? widget.achievementModel?.id ?? 0
-                              : petProvider.selectedPetDetail?.id ?? 0,
-                          nameController.text,
-                          desciptionController.text,
-                          context,
-                          isForEdit: widget.achievementModel != null,
-
-                          );
+                            ? widget.achievementModel?.id ?? 0
+                            : petProvider.selectedPetDetail?.id ?? 0,
+                        nameController.text,
+                        desciptionController.text,
+                        context,
+                        isForEdit: widget.achievementModel != null,
+                      );
                     }
                   }
                 },
                 colour: AppColor.newGrey),
           ),
-          
-          BotttomBorder(context),
-          
+          const SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 22.0),
+            child: BotttomBorder(context),
+          ),
         ],
       ),
       // bottomNavigationBar: BotttomBorder(context),
@@ -149,7 +139,7 @@ class _AddAchievenState extends State<AddAchieven> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 InkWell(
@@ -157,14 +147,13 @@ class _AddAchievenState extends State<AddAchieven> {
                     showAlertForImage(
                       headText: tr(LocaleKeys.additionText_petName),
                       callBack: (val) {
-                        print("TTST ${val}");
+                        print("TTST $val");
                         Navigator.pop(context);
                         if (val) {
-                          print("TTST ${val}");
-                          getImage(ImageSource.camera, isCropped: false)
-                              .then((value) {
-                            print("values is >> ${value}");
-                            print("value==${value}");
+                          print("TTST $val");
+                          getImage(ImageSource.camera, isCropped: false).then((value) {
+                            print("values is >> $value");
+                            print("value==$value");
                             if (value.toString() == "File: ''") {
                               print("value like this===");
                               value = null;
@@ -175,10 +164,9 @@ class _AddAchievenState extends State<AddAchieven> {
                             }
                           });
                         } else {
-                          getImage(ImageSource.gallery, isCropped: false)
-                              .then((value) {
-                            print("values is >> ${value}");
-                            print("value==${value}");
+                          getImage(ImageSource.gallery, isCropped: false).then((value) {
+                            print("values is >> $value");
+                            print("value==$value");
                             if (value.toString() == "File: ''") {
                               print("value like this===");
                               value = null;
@@ -214,36 +202,28 @@ class _AddAchievenState extends State<AddAchieven> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
-                                    child: data?.achievementImage != null
+                                    child: data.achievementImage != null
                                         ? Image.file(
-                                            File(data?.achievementImage?.path ??
-                                                ""),
+                                            File(data.achievementImage?.path ?? ""),
                                             height: 170,
                                             width: 240,
                                             fit: BoxFit.cover,
                                           )
                                         : CachedNetworkImage(
-                                            imageUrl: widget
-                                                    .achievementModel?.images ??
-                                                "",
+                                            imageUrl: widget.achievementModel?.images ?? "",
                                             fit: BoxFit.cover,
                                             height: 170,
                                             width: 240,
-                                            placeholder: (context, url) =>
-                                                Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
+                                            placeholder: (context, url) => Padding(
+                                              padding: const EdgeInsets.all(18.0),
                                               child: Image.asset(
                                                 AppImage.achievePlaceholder,
                                                 height: 30,
                                                 width: 30,
                                               ),
                                             ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
+                                            errorWidget: (context, url, error) => Padding(
+                                              padding: const EdgeInsets.all(18.0),
                                               child: Image.asset(
                                                 AppImage.achievePlaceholder,
                                                 // fit: BoxFit.cover,
@@ -282,7 +262,7 @@ class _AddAchievenState extends State<AddAchieven> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
@@ -293,39 +273,31 @@ class _AddAchievenState extends State<AddAchieven> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15, bottom: 10),
                         child: Text(
-                         tr(LocaleKeys.additionText_acheveName),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColor
-                                  .textLightBlueBlack,
-                              fontFamily:
-                              AppFont.poppinsBold),
+                          tr(LocaleKeys.additionText_acheveName),
+                          style: const TextStyle(
+                              fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                         ),
                       ),
                       Container(
                         child: CustomTextFeild(
                           textController: nameController,
-                          hintText:   tr(LocaleKeys.additionText_entrAcheveName),
+                          hintText: tr(LocaleKeys.additionText_entrAcheveName),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 16,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15, bottom: 10),
                         child: Text(
                           tr(LocaleKeys.additionText_acheveDesc),
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: AppColor
-                                  .textLightBlueBlack,
-                              fontFamily:
-                              AppFont.poppinsBold),
+                          style: const TextStyle(
+                              fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                         ),
                       ),
                       CustomTextFeild(
                         textController: desciptionController,
-                        hintText:   tr(LocaleKeys.additionText_entrAcheveDesc),
+                        hintText: tr(LocaleKeys.additionText_entrAcheveDesc),
                       ),
                     ],
                   ),
@@ -337,6 +309,4 @@ class _AddAchievenState extends State<AddAchieven> {
       ),
     );
   }
-
-
 }

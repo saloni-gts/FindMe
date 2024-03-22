@@ -14,8 +14,7 @@ import '../../util/color.dart';
 import '../generated/locale_keys.g.dart';
 import '../provider/petprovider.dart';
 
-void petdeleteDailog(
-    {required BuildContext context, required GetPetPhotos imgData}) {
+void petdeleteDailog({required BuildContext context, required GetPetPhotos imgData}) {
   showDialog(
       context: context,
       builder: (context) => blurView(
@@ -31,20 +30,15 @@ void petdeleteDailog(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4.0),
-                      child: Container(
+                      child: SizedBox(
                         height: 272,
                         width: MediaQuery.of(context).size.width * .9,
                         child: CachedNetworkImage(
-                          imageUrl:imgData.photo ?? "",
-                            fit: BoxFit.cover,
-                          placeholder: (context,url)=>
-                          Image.asset(AppImage.dogPreview),
-
-                          errorWidget:  (context, url, error) =>
-                              Image.asset(AppImage.dogPreview),
+                          imageUrl: imgData.photo ?? "",
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Image.asset(AppImage.dogPreview),
+                          errorWidget: (context, url, error) => Image.asset(AppImage.dogPreview),
                         ),
-
-
                       ),
                     ),
                     Align(
@@ -56,13 +50,12 @@ void petdeleteDailog(
                             backgroundColor: Colors.white,
                             child: InkWell(
                               //  margin: EdgeInsets.all(7),
-                              child: Image.asset(AppImage.largeDeleteIcon),
+                              child: Image.asset(AppImage.delete_doc),
                               onTap: () {
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
-                                          title: Text(
-                                              tr(LocaleKeys.additionText_sureWannaDel)),
+                                          title: Text(tr(LocaleKeys.additionText_sureWannaDel)),
                                           actions: <Widget>[
                                             InkWell(
                                               child: Text(tr(LocaleKeys.additionText_cancel)),
@@ -74,13 +67,8 @@ void petdeleteDailog(
                                               child: Text(tr(LocaleKeys.additionText_yes)),
                                               onTap: () async {
                                                 PetProvider petProvider = Provider.of(context, listen: false);
-                                                Map<String, dynamic> bodyy = {
-                                                  "petId": imgData.petId,
-                                                  "id": imgData.id
-                                                };
-                                                await petProvider
-                                                    .deletePetPhotoCall(bodyy,
-                                                        context: context);
+                                                Map<String, dynamic> bodyy = {"petId": imgData.petId, "id": imgData.id};
+                                                await petProvider.deletePetPhotoCall(bodyy, context: context);
                                                 Navigator.pop(context);
                                               },
                                             )
@@ -92,7 +80,6 @@ void petdeleteDailog(
                     ),
                   ],
                 ),
-
               ],
             ),
           )));

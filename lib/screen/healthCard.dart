@@ -13,14 +13,13 @@ import 'package:easy_localization/easy_localization.dart';
 
 class HealthCard extends StatefulWidget {
   int? selPage;
-   HealthCard({Key? key,this.selPage}) : super(key: key);
+  HealthCard({Key? key, this.selPage}) : super(key: key);
 
   @override
   State<HealthCard> createState() => _HealthCardState();
 }
 
-class _HealthCardState extends State<HealthCard>
-    with SingleTickerProviderStateMixin {
+class _HealthCardState extends State<HealthCard> with SingleTickerProviderStateMixin {
   late final _tabController = TabController(length: 2, vsync: this);
 
   @override
@@ -30,16 +29,15 @@ class _HealthCardState extends State<HealthCard>
 
   @override
   Widget build(BuildContext context) {
-
-    PetProvider petProvider=Provider.of(context,listen: false);
+    PetProvider petProvider = Provider.of(context, listen: false);
     petProvider.setTabController(_tabController);
 
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
 
-floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-floatingActionButton: BotttomBorder(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: BotttomBorder(context),
 
       appBar: customAppbar(
         isbackbutton: true,
@@ -48,52 +46,48 @@ floatingActionButton: BotttomBorder(context),
       // bottomNavigationBar: BotttomBorder(context),Create tr(LocaleKeys.additionText_View)
 
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
           child: DefaultTabController(
             length: 2,
             child: Scaffold(
-
-
               resizeToAvoidBottomInset: true,
               backgroundColor: Colors.white,
-
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(kToolbarHeight),
+                preferredSize: const Size.fromHeight(kToolbarHeight),
                 child: Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Container(
                     height: 120,
+                    decoration: BoxDecoration(color: AppColor.textFieldGrey, borderRadius: BorderRadius.circular(28)),
                     child: TabBar(
                       onTap: (vall) {
                         print("TAB INDEX $vall");
                         print("TAB INDEX Vallll ${_tabController.index}");
                       },
                       controller: _tabController,
-                      unselectedLabelStyle: TextStyle(
-                          fontSize: 16, fontFamily: AppFont.poppinsMedium),
-                      labelStyle: TextStyle(
-                          fontSize: 16, fontFamily: AppFont.poppinsMedium),
+                      unselectedLabelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium),
+                      labelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium),
                       unselectedLabelColor: AppColor.textLightBlueBlack,
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
-                        color: AppColor.textRed,
+                        color: AppColor.newBlueGrey,
                         borderRadius: BorderRadius.circular(28),
                       ),
                       tabs: [
-                                Tab(
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(tr(LocaleKeys.additionText_Create)),
-                                  ),
-                                ),
-                            Tab(
-                              child: Align(
-                              alignment: Alignment.center,
-                              child: Text(tr(LocaleKeys.additionText_View)),
+                        Tab(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(tr(LocaleKeys.additionText_Create)),
+                          ),
+                        ),
+                        Tab(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(tr(LocaleKeys.additionText_View)),
                           ),
                         ),
                       ],
@@ -101,22 +95,17 @@ floatingActionButton: BotttomBorder(context),
                   ),
                 ),
               ),
-
-              body:TabBarView(
+              body: TabBarView(
                 controller: _tabController,
                 children: [
-                  CreateHealthCard(),
+                  const CreateHealthCard(),
                   ViewHealthCard(),
                 ],
-              ) ,
-
+              ),
             ),
           ),
         ),
       ),
-
     );
-
-
   }
 }

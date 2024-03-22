@@ -16,6 +16,7 @@ import 'package:find_me/screen/healthCard.dart';
 import 'package:find_me/screen/petProfile.dart';
 import 'package:find_me/screen/sampleScreen.dart';
 import 'package:find_me/screen/tagListing.dart';
+import 'package:find_me/screen/viewPremium.dart';
 import 'package:find_me/util/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -121,119 +122,50 @@ class _PetDashboardState extends State<PetDashboard> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                InkWell(
-                                  child: CircleAvatar(
-                                    radius: 25.0,
-                                    backgroundColor:
-                                        // petDetail?.isQrAttached == 1
-                                        petDetail?.isPetQrCount != 0 ? Colors.green : AppColor.newRedColor,
-                                    child: Image.asset(AppImage.qrTag_icon),
-                                  ),
-                                  onTap: () async {
-                                    if (petDetail?.isPetQrCount == 0) {
-                                      var status3 = await Permission.camera.status;
+                            InkWell(
+                              child: Image.asset(AppImage.petDash1),
+                              onTap: () async {
+                                if (petDetail?.isPetQrCount == 0) {
+                                  var status3 = await Permission.camera.status;
 
-                                      print("value of status===>>> $status3");
-                                      if (!status3.isGranted) {
-                                        print("iiiiii==>$i");
-                                        i = i + 1;
+                                  print("value of status===>>> $status3");
+                                  if (!status3.isGranted) {
+                                    print("iiiiii==>$i");
+                                    i = i + 1;
 
-                                        if (i > 1) {
-                                          scannerPermissionDialog(context);
-                                        }
-
-                                        if (i <= 1) {
-                                          await Permission.camera.request();
-                                        }
-
-                                        // _askCameraPermission();
-
-                                        // await Permission.camera.request();
-                                      }
-                                      var status4 = await Permission.camera.status;
-                                      print("status 4 value-=====$status4");
-                                      if (status4.isGranted) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => ScannerScreen(
-                                                      isNewTag: 1,
-                                                    )));
-                                      }
-
-                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen(isNewTag: 1,)));
-                                    } else {
-                                      if (petProvider1.openOnce == 0) {
-                                        print("******inside this****");
-                                        petProvider1.openOnce = 1;
-                                        PurChaseProvider pur = Provider.of(context, listen: false);
-                                        await pur.getSubScriptionDetails();
-                                        petProvider1.callGetQrTag();
-                                        Navigator.push(
-                                            context, MaterialPageRoute(builder: (context) => const TagList()));
-                                      }
+                                    if (i > 1) {
+                                      scannerPermissionDialog(context);
                                     }
 
-                                    // petProvider1.callGetQrTag();
-                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => TagList()));
-                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen()));
-                                  },
-                                ),
-                                // petDetail?.isQrAttached == 1
-                                petDetail?.isPetQrCount != 0
-                                    ? Text(
-                                        tr(LocaleKeys.additionText_qrTgActivated),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 10.0,
-                                          color: Colors.black,
-                                          fontFamily: AppFont.poppinsMedium,
-                                        ),
-                                      )
-                                    : Text(
-                                        tr(LocaleKeys.additionText_qrTgNotActivated),
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 10.0,
-                                          color: Colors.black,
-                                          fontFamily: AppFont.poppinsMedium,
-                                        ),
-                                      ),
+                                    if (i <= 1) {
+                                      await Permission.camera.request();
+                                    }
+                                  }
+                                  var status4 = await Permission.camera.status;
+                                  print("status 4 value-=====$status4");
+                                  if (status4.isGranted) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ScannerScreen(
+                                                  isNewTag: 1,
+                                                )));
+                                  }
+                                } else {
+                                  if (petProvider1.openOnce == 0) {
+                                    print("******inside this****");
+                                    petProvider1.openOnce = 1;
+                                    PurChaseProvider pur = Provider.of(context, listen: false);
+                                    await pur.getSubScriptionDetails();
+                                    petProvider1.callGetQrTag();
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const TagList()));
+                                  }
+                                }
 
-                                // petDetail?.isPetQrCount != 0
-                                //     ? InkWell(
-                                //         child: Text(
-                                //           "",
-                                //           textAlign: TextAlign.center,
-                                //           style: TextStyle(
-                                //             fontWeight: FontWeight.w600,
-                                //             decoration:
-                                //                 TextDecoration.underline,
-                                //             shadows: <Shadow>[
-                                //               // Shadow(
-                                //               //   offset: Offset(10.0, 10.0),
-                                //               //   blurRadius: 3.0,
-                                //               //   color: Color.fromARGB(255, 0, 0, 0),
-                                //               // ),
-                                //               Shadow(
-                                //                 offset: Offset(1.0, 1.0),
-                                //                 blurRadius: 5.0,
-                                //                 color: Color.fromARGB(
-                                //                     125, 0, 0, 255),
-                                //               ),
-                                //             ],
-                                //             fontSize: 10.0,
-                                //             color: AppColor.textLightBlueBlack,
-                                //             fontFamily: AppFont.poppinsMedium,
-                                //           ),
-                                //         ),
-                                //         onTap: () async {},
-                                //       )
-                                //     : SizedBox()
-                              ],
+                                // petProvider1.callGetQrTag();
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => TagList()));
+                                // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen()));
+                              },
                             ),
                             Center(
                               child: Stack(
@@ -273,16 +205,9 @@ class _PetDashboardState extends State<PetDashboard> {
                                   ),
                                   Positioned(
                                     left: 95,
-                                    child: Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                        ),
-                                        color: AppColor.textLightBlueBlack,
-                                      ),
+                                    child: SizedBox(
+                                      height: 40,
+                                      width: 40,
                                       child: InkWell(
                                         onTap: () async {
                                           await petProvider1.callGetQrTag();
@@ -299,7 +224,7 @@ class _PetDashboardState extends State<PetDashboard> {
                                           //             PetProfile()));
                                         },
                                         child: ClipRRect(
-                                          child: Image.asset(AppImage.edit_icon),
+                                          child: Image.asset(AppImage.pencil, height: 40),
                                         ),
                                       ),
                                     ),
@@ -308,366 +233,176 @@ class _PetDashboardState extends State<PetDashboard> {
                               ),
                             ),
                             Consumer<PetProvider>(builder: (context, petProvider, child) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      if (petDetail?.isPetQrCount == 0) {
-                                        CoolAlert.show(
-                                          context: context,
-                                          type: CoolAlertType.warning,
-                                          text: tr(LocaleKeys.additionText_qrTgNotActivated),
-                                        );
-                                      } else {
-                                        PermissionStatus status3;
-                                        LocationPermission status4;
+                              return InkWell(
+                                  child: Image.asset(AppImage.petDash2),
+                                  onTap: () async {
+                                    if (petDetail?.isPetQrCount == 0) {
+                                      CoolAlert.show(
+                                        context: context,
+                                        type: CoolAlertType.warning,
+                                        text: tr(LocaleKeys.additionText_qrTgNotActivated),
+                                      );
+                                    } else {
+                                      PermissionStatus status3;
+                                      LocationPermission status4;
 
-                                        print("location locIocPer===>>${petProvider.locIocPer}");
+                                      print("location locIocPer===>>${petProvider.locIocPer}");
 
-                                        if (Platform.isAndroid) {
-                                          status3 = await Permission.location.status;
-                                          print("location status===>>$status3");
+                                      if (Platform.isAndroid) {
+                                        status3 = await Permission.location.status;
+                                        print("location status===>>$status3");
 
-                                          // if(status3.isGranted)
-                                          if (status3 == PermissionStatus.granted) {
-                                            onNotification();
+                                        // if(status3.isGranted)
+                                        if (status3 == PermissionStatus.granted) {
+                                          onNotification();
 
+                                          petProvider.updateLoader(true);
+
+                                          try {
                                             petProvider.updateLoader(true);
+                                            Position posti = await _determineCurPosition();
 
-                                            try {
-                                              petProvider.updateLoader(true);
-                                              Position posti = await _determineCurPosition();
+                                            petProvider1.lati = posti.latitude;
+                                            petProvider1.longi = posti.longitude;
+                                            petProvider.updateLoader(false);
 
-                                              petProvider1.lati = posti.latitude;
-                                              petProvider1.longi = posti.longitude;
-                                              petProvider.updateLoader(false);
+                                            petProvider.updateLoader(false);
 
-                                              petProvider.updateLoader(false);
+                                            petProvider.lati = posti.latitude;
+                                            petProvider.longi = posti.longitude;
+                                          } catch (e) {
+                                            petProvider.updateLoader(false);
+                                            // EasyLoading.showToast(
+                                            //     "Something went wrong! \nTry Again Later");
+                                            print("error========$e");
 
-                                              petProvider.lati = posti.latitude;
-                                              petProvider.longi = posti.longitude;
-                                            } catch (e) {
-                                              petProvider.updateLoader(false);
-                                              // EasyLoading.showToast(
-                                              //     "Something went wrong! \nTry Again Later");
-                                              print("error========$e");
-
-                                              // petProvider.updateLoader(false);
-                                            }
-
-                                            if (petProvider1.selectedPetDetail?.isLost == 1) {
-                                              provider.petMarkAsLostP2(context: context);
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) => AlertDialog(
-                                                        title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
-                                                        actions: <Widget>[
-                                                          InkWell(
-                                                            child: Text(
-                                                              tr(LocaleKeys.additionText_cancel),
-                                                              style: const TextStyle(
-                                                                  fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                            ),
-                                                            onTap: () {
-                                                              Navigator.pop(context);
-                                                            },
-                                                          ),
-                                                          const SizedBox(width: 5),
-                                                          InkWell(
-                                                            child: Text(
-                                                              tr(LocaleKeys.additionText_yes),
-                                                              style: const TextStyle(
-                                                                  fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                            ),
-                                                            onTap: () async {
-                                                              Navigator.pop(context);
-                                                              await petProvider1.petMarkAsLostP2(
-                                                                  context: GlobalVariable.navState.currentContext!);
-                                                              petProvider.calleditProfileP2Api(context: context);
-                                                            },
-                                                          )
-                                                        ],
-                                                      ));
-                                            }
+                                            // petProvider.updateLoader(false);
                                           }
 
-                                          // if(!status3.isGranted)
-                                          if (status3 != PermissionStatus.granted) {
-                                            locPermissionDialog(context);
+                                          if (petProvider1.selectedPetDetail?.isLost == 1) {
+                                            provider.petMarkAsLostP2(context: context);
+                                          } else {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) => AlertDialog(
+                                                      title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                                                      actions: <Widget>[
+                                                        InkWell(
+                                                          child: Text(
+                                                            tr(LocaleKeys.additionText_cancel),
+                                                            style: const TextStyle(
+                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                          ),
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                        ),
+                                                        const SizedBox(width: 5),
+                                                        InkWell(
+                                                          child: Text(
+                                                            tr(LocaleKeys.additionText_yes),
+                                                            style: const TextStyle(
+                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                          ),
+                                                          onTap: () async {
+                                                            Navigator.pop(context);
+                                                            await petProvider1.petMarkAsLostP2(
+                                                                context: GlobalVariable.navState.currentContext!);
+                                                            petProvider.calleditProfileP2Api(context: context);
+                                                          },
+                                                        )
+                                                      ],
+                                                    ));
                                           }
                                         }
 
-                                        if (Platform.isIOS) {
-                                          status4 = await Geolocator.checkPermission();
-                                          print(
-                                              "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
-
-                                          print("location status ios===>>$status4");
-
-                                          if (status4 == LocationPermission.whileInUse ||
-                                              status4 == LocationPermission.always) {
-                                            onNotification();
-
-                                            print("after loc func over");
-                                            petProvider.updateLoader(true);
-
-                                            try {
-                                              petProvider.updateLoader(true);
-                                              Position posti = await _determineCurPosition();
-
-                                              petProvider1.lati = posti.latitude;
-                                              petProvider1.longi = posti.longitude;
-                                              petProvider.updateLoader(false);
-
-                                              petProvider.updateLoader(false);
-
-                                              petProvider.lati = posti.latitude;
-                                              petProvider.longi = posti.longitude;
-                                            } catch (e) {
-                                              petProvider.updateLoader(false);
-
-                                              EasyLoading.showToast("Something went wrong! \nTry Again Later");
-                                              print("error========$e");
-
-                                              // petProvider.updateLoader(false);
-                                            }
-
-                                            if (petProvider1.selectedPetDetail?.isLost == 1) {
-                                              provider.petMarkAsLostP2(context: context);
-                                            } else if (petProvider1.selectedPetDetail?.isLost == 0) {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) => AlertDialog(
-                                                        title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
-                                                        actions: <Widget>[
-                                                          InkWell(
-                                                            child: Text(
-                                                              tr(LocaleKeys.additionText_cancel),
-                                                              style: const TextStyle(
-                                                                  fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                            ),
-                                                            onTap: () {
-                                                              Navigator.pop(context);
-                                                            },
-                                                          ),
-                                                          const SizedBox(width: 5),
-                                                          InkWell(
-                                                            child: Text(
-                                                              tr(LocaleKeys.additionText_yes),
-                                                              style: const TextStyle(
-                                                                  fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                            ),
-                                                            onTap: () async {
-                                                              Navigator.pop(context);
-                                                              await petProvider1.petMarkAsLostP2(
-                                                                  context: GlobalVariable.navState.currentContext!);
-
-                                                              petProvider.calleditProfileP2Api(context: context);
-                                                            },
-                                                          )
-                                                        ],
-                                                      ));
-                                            }
-                                          }
-
-                                          if (status4 == LocationPermission.denied ||
-                                              status4 == LocationPermission.deniedForever) {
-                                            iosLocPermiDialog(context);
-                                            petProvider.locIocPer = 1;
-                                          }
+                                        // if(!status3.isGranted)
+                                        if (status3 != PermissionStatus.granted) {
+                                          locPermissionDialog(context);
                                         }
-
-                                        // if( status3.isGranted  ){
-                                        //   petProvider.updateLoader(true);
-                                        //   Position? posti = await _determineCurPosition();
-                                        //   petProvider1.lati = posti.latitude;
-                                        //   petProvider1.longi = posti.longitude;
-                                        //   petProvider.updateLoader(false);
-                                        //
-                                        //   if (petProvider1
-                                        //       .selectedPetDetail
-                                        //       ?.isLost == 1) {
-                                        //     provider.petMarkAsLostP2(
-                                        //         context: context);
-                                        //   }
-                                        //   else {
-                                        //     showDialog(
-                                        //         context: context,
-                                        //         builder: (context) =>
-                                        //             AlertDialog(
-                                        //               title: Text(tr(
-                                        //                   LocaleKeys
-                                        //                       .additionText_uSurePetLost)),
-                                        //               actions: <
-                                        //                   Widget>[
-                                        //                 InkWell(
-                                        //                   child: Text(
-                                        //                     tr(
-                                        //                         LocaleKeys
-                                        //                             .additionText_cancel),
-                                        //                     style: TextStyle(
-                                        //                         fontSize: 17.0,
-                                        //                         fontFamily: AppFont
-                                        //                             .poppinsMedium),
-                                        //                   ),
-                                        //                   onTap: () {
-                                        //                     Navigator.pop(context);
-                                        //                   },
-                                        //                 ),
-                                        //
-                                        //                 SizedBox(width: 5),
-                                        //
-                                        //                 InkWell(
-                                        //                   child: Text(
-                                        //                     tr(LocaleKeys.additionText_yes),
-                                        //                     style: TextStyle(
-                                        //                         fontSize: 17.0,
-                                        //                         fontFamily: AppFont
-                                        //                             .poppinsMedium),
-                                        //                   ),
-                                        //                   onTap: () async {
-                                        //                     Navigator
-                                        //                         .pop(
-                                        //                         context);
-                                        //                     await petProvider1
-                                        //                         .petMarkAsLostP2(
-                                        //                         context: GlobalVariable
-                                        //                             .navState
-                                        //                             .currentContext!);
-                                        //
-                                        //                     petProvider.calleditProfileP2Api(context: context);
-                                        //
-                                        //                   },
-                                        //                 )
-                                        //               ],
-                                        //             ));
-                                        //   }
-                                        //
-                                        // }
-
-                                        //
-                                        //   if(!status3.isGranted){
-                                        //
-                                        //     // if(Platform.isIOS){
-                                        //     //   print("ios********");
-                                        //     //   iosLocPermiDialog(context);
-                                        //     // }
-                                        // //     else{
-                                        // // locPermissionDialog(context);
-                                        // //     }
-                                        //   }
                                       }
 
-                                      // Position? posti = await _determineCurPosition();
+                                      if (Platform.isIOS) {
+                                        status4 = await Geolocator.checkPermission();
+                                        print(
+                                            "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
 
-                                      // var status4 = await Permission.location.status;
-                                      // print("location status4 ===>>${status4}");
+                                        print("location status ios===>>$status4");
 
-                                      //       if(status4.isGranted) {
-                                      //
-                                      //
-                                      //         print("************");
-                                      //         petProvider.updateLoader(true);
-                                      //
-                                      //         Position? posti = await _determineCurPosition();
-                                      //
-                                      //
-                                      //         // petProvider1.PostiProvidr = await _determineCurPosition();
-                                      //
-                                      //         petProvider1.lati = posti.latitude;
-                                      //         petProvider1.longi = posti.longitude;
-                                      //
-                                      //
-                                      // petProvider.updateLoader(false);
+                                        if (status4 == LocationPermission.whileInUse ||
+                                            status4 == LocationPermission.always) {
+                                          onNotification();
 
-                                      // if (petProvider1
-                                      //     .selectedPetDetail
-                                      //     ?.isLost == 1) {
-                                      //   provider.petMarkAsLostP2(
-                                      //       context: context);
-                                      // }
-                                      // else {
-                                      //   showDialog(
-                                      //       context: context,
-                                      //       builder: (context) =>
-                                      //           AlertDialog(
-                                      //             title: Text(tr(
-                                      //                 LocaleKeys
-                                      //                     .additionText_uSurePetLost)),
-                                      //             actions: <
-                                      //                 Widget>[
-                                      //               InkWell(
-                                      //                 child: Text(
-                                      //                   tr(
-                                      //                       LocaleKeys
-                                      //                           .additionText_cancel),
-                                      //                   style: TextStyle(
-                                      //                       fontSize: 17.0,
-                                      //                       fontFamily: AppFont
-                                      //                           .poppinsMedium),
-                                      //                 ),
-                                      //                 onTap: () {
-                                      //                   Navigator
-                                      //                       .pop(
-                                      //                       context);
-                                      //                 },
-                                      //               ),
-                                      //
-                                      //               SizedBox(width: 5),
-                                      //
-                                      //               InkWell(
-                                      //                 child: Text(
-                                      //                   tr(LocaleKeys.additionText_yes),
-                                      //                   style: TextStyle(
-                                      //                       fontSize: 17.0,
-                                      //                       fontFamily: AppFont
-                                      //                           .poppinsMedium),
-                                      //                 ),
-                                      //                 onTap: () async {
-                                      //                   Navigator
-                                      //                       .pop(
-                                      //                       context);
-                                      //                   await petProvider1
-                                      //                       .petMarkAsLostP2(
-                                      //                       context: GlobalVariable
-                                      //                           .navState
-                                      //                           .currentContext!);
-                                      //
-                                      //                   petProvider.calleditProfileP2Api(context: context);
-                                      //
-                                      //
-                                      //                 },
-                                      //               )
-                                      //             ],
-                                      //           ));
-                                      // }
+                                          print("after loc func over");
+                                          petProvider.updateLoader(true);
 
-                                      // }
-                                    },
-                                    child: CircleAvatar(
-                                      radius: 25.0,
-                                      backgroundColor: AppColor.textFieldGrey,
-                                      child: Image.asset(
-                                        AppImage.alert_icon,
-                                        color: (petProvider1.selectedPetDetail?.isLost == 1)
-                                            ? Colors.green
-                                            : AppColor.newRedColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    (petProvider1.selectedPetDetail?.isLost == 1)
-                                        ? tr(LocaleKeys.additionText_petIsLost)
-                                        : tr(LocaleKeys.additionText_markAsLost),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 10.0, color: Colors.black, fontFamily: AppFont.poppinsMedium),
-                                  ),
-                                  petDetail?.isPetQrCount != 0 ? const Text("") : const SizedBox()
-                                ],
-                              );
+                                          try {
+                                            petProvider.updateLoader(true);
+                                            Position posti = await _determineCurPosition();
+
+                                            petProvider1.lati = posti.latitude;
+                                            petProvider1.longi = posti.longitude;
+                                            petProvider.updateLoader(false);
+
+                                            petProvider.updateLoader(false);
+
+                                            petProvider.lati = posti.latitude;
+                                            petProvider.longi = posti.longitude;
+                                          } catch (e) {
+                                            petProvider.updateLoader(false);
+
+                                            EasyLoading.showToast("Something went wrong! \nTry Again Later");
+                                            print("error========$e");
+
+                                            // petProvider.updateLoader(false);
+                                          }
+
+                                          if (petProvider1.selectedPetDetail?.isLost == 1) {
+                                            provider.petMarkAsLostP2(context: context);
+                                          } else if (petProvider1.selectedPetDetail?.isLost == 0) {
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) => AlertDialog(
+                                                      title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                                                      actions: <Widget>[
+                                                        InkWell(
+                                                          child: Text(
+                                                            tr(LocaleKeys.additionText_cancel),
+                                                            style: const TextStyle(
+                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                          ),
+                                                          onTap: () {
+                                                            Navigator.pop(context);
+                                                          },
+                                                        ),
+                                                        const SizedBox(width: 5),
+                                                        InkWell(
+                                                          child: Text(
+                                                            tr(LocaleKeys.additionText_yes),
+                                                            style: const TextStyle(
+                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                          ),
+                                                          onTap: () async {
+                                                            Navigator.pop(context);
+                                                            await petProvider1.petMarkAsLostP2(
+                                                                context: GlobalVariable.navState.currentContext!);
+
+                                                            petProvider.calleditProfileP2Api(context: context);
+                                                          },
+                                                        )
+                                                      ],
+                                                    ));
+                                          }
+                                        }
+
+                                        if (status4 == LocationPermission.denied ||
+                                            status4 == LocationPermission.deniedForever) {
+                                          iosLocPermiDialog(context);
+                                          petProvider.locIocPer = 1;
+                                        }
+                                      }
+                                    }
+                                  });
                             })
                           ],
                         ),
@@ -831,7 +566,7 @@ class _PetDashboardState extends State<PetDashboard> {
                           if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
                               (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
                             PetProvider petProvider = Provider.of(context, listen: false);
-                            petProvider.graphSpotData.clear();   
+                            petProvider.graphSpotData.clear();
                             petProvider.callGetWeight();
 
                             Future.delayed(const Duration(milliseconds: 1000), () {
@@ -1079,27 +814,36 @@ class _PetDashboardState extends State<PetDashboard> {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(children: [
-                      Image.asset(AppImage.bigRibbon, height: 80, width: 40),
-                      const Expanded(
-                        child: Text(
-                          "Tap Now To Unlock All The \nPREMIUM BENIFITS",
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xff585357),
-                            fontFamily: AppFont.poppinsBold,
-                            fontSize: 16,
+                child: InkWell(
+                  onTap: (){
+                       Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return ViewPremium();
+                },
+              ));
+                  },
+                  child: Container(
+                    height: 100,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(children: [
+                        Image.asset(AppImage.bigRibbon, height: 80, width: 40),
+                        const Expanded(
+                          child: Text(
+                            "Tap Now To Unlock All The \nPREMIUM BENIFITS",
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Color(0xff585357),
+                              fontFamily: AppFont.poppinsBold,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                      )
-                    ]),
+                        )
+                      ]),
+                    ),
                   ),
                 ),
               ),

@@ -203,7 +203,14 @@ class AppImage {
   static const String addIcon = "${base}add_icon.png";
 
   static const String checkPetProf = "${base}checkPetProf.png";
+ 
     static const String findMePinkLogo = "${base}pinkLogo.png";
+
+
+
+  static const String petDash1 = "${base}petDash1.png";
+    static const String petDash2 = "${base}petDash2.png";
+
 }
 
 

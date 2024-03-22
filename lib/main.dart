@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
         locale: context.locale,
 
         builder: EasyLoading.init(),
-        title: 'Unique Tags',
+        title: 'Find Me',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

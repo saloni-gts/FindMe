@@ -40,8 +40,8 @@ class EditNotes extends StatefulWidget {
 class _EditNotesState extends State<EditNotes> {
   var reaction;
 
-  TextEditingController editNotesTitleController = new TextEditingController();
-  TextEditingController editDrugController = new TextEditingController();
+  TextEditingController editNotesTitleController = TextEditingController();
+  TextEditingController editDrugController = TextEditingController();
 
   final Completer<PDFViewController> _controller = Completer<PDFViewController>();
   var catId;
@@ -54,6 +54,7 @@ class _EditNotesState extends State<EditNotes> {
     newButton(name: tr(LocaleKeys.additionText_unknown)),
   ];
 
+  @override
   void initState() {
     PetProvider petProvider = Provider.of(context, listen: false);
     Myprovider myProvider = Provider.of(context, listen: false);
@@ -132,7 +133,7 @@ class _EditNotesState extends State<EditNotes> {
                             title: editNotesTitleController.text);
                       }
                     },
-                    colour: editNotesTitleController.text.isEmpty ? Color(0xffAEB4C6) : AppColor.newBlueGrey),
+                    colour: editNotesTitleController.text.isEmpty ? const Color(0xffAEB4C6) : AppColor.newBlueGrey),
               ),
               BotttomBorder(context)
             ],
@@ -156,7 +157,7 @@ class _EditNotesState extends State<EditNotes> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 5.0,
                                 ),
 
@@ -165,7 +166,7 @@ class _EditNotesState extends State<EditNotes> {
                                 Consumer<PetProvider>(
                                   builder: (context, petProvider, child) {
                                     var petList = petProvider.petDetailList;
-                                    return Container(
+                                    return SizedBox(
                                       height: 110.0,
                                       child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
@@ -229,7 +230,7 @@ class _EditNotesState extends State<EditNotes> {
                                                                   ),
                                                                 ),
                                                               )
-                                                            : SizedBox()
+                                                            : const SizedBox()
                                                       ],
                                                     ),
                                                   ),
@@ -240,7 +241,7 @@ class _EditNotesState extends State<EditNotes> {
                                                     child: Text(
                                                       petList[index].petName ?? "",
                                                       textAlign: TextAlign.left,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 15.0,
                                                           color: Colors.black,
                                                           fontFamily: AppFont.poppinSemibold),
@@ -260,7 +261,7 @@ class _EditNotesState extends State<EditNotes> {
                                 //   height: 5.0,
                                 // ),
 
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
 
@@ -289,7 +290,7 @@ class _EditNotesState extends State<EditNotes> {
                                                         backgroundColor: MaterialStateProperty.all<Color>(
                                                             petProvider.masterDetailList[i].id ==
                                                                     petProvider.selectedMasterCategory?.id
-                                                                ? Color(0xff2A3C6A)
+                                                                ? const Color(0xff2A3C6A)
                                                                 : AppColor.textFieldGrey)),
                                                     onPressed: () {
                                                       petProvider
@@ -329,17 +330,17 @@ class _EditNotesState extends State<EditNotes> {
                                           ],
                                         );
                                       }),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       Consumer<PetProvider>(builder: (context, petProvider, child) {
                                         // return
                                         var handle = petProvider.selectedMasterCategory?.catagoryList ?? [];
                                         return handle.isEmpty
-                                            ? SizedBox()
+                                            ? const SizedBox()
                                             : Text(
                                                 tr(LocaleKeys.additionText_type),
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 13,
                                                     color: AppColor.textLightBlueBlack,
                                                     fontFamily: AppFont.poppinsBold),
@@ -349,7 +350,7 @@ class _EditNotesState extends State<EditNotes> {
                                         builder: (context, value, child) {
                                           var handle = petProvider.selectedMasterCategory?.catagoryList ?? [];
                                           return handle.isEmpty
-                                              ? SizedBox()
+                                              ? const SizedBox()
                                               : CustomDropDown<CatagoryList>(
                                                   // isGrey: pettypebool.isEmpty,
                                                   selectText: petProvider.selectedSubCategory?.name ??
@@ -364,26 +365,26 @@ class _EditNotesState extends State<EditNotes> {
                                                 );
                                         },
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 19,
                                       ),
                                       Row(
                                         children: [
                                           Text(
                                             tr(LocaleKeys.additionText_noteTitle),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 13,
                                                 color: AppColor.textLightBlueBlack,
                                                 fontFamily: AppFont.poppinsBold),
                                           ),
-                                          Text("(" + tr(LocaleKeys.newEvent_required) + ")",
-                                              style: TextStyle(
+                                          Text("(${tr(LocaleKeys.newEvent_required)})",
+                                              style: const TextStyle(
                                                   fontFamily: AppFont.poppinsRegular,
                                                   fontSize: 12,
                                                   color: Color(0xffFF0000)))
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 7,
                                       ),
                                       CustomTextFeild(
@@ -391,17 +392,17 @@ class _EditNotesState extends State<EditNotes> {
                                         textInputType: TextInputType.text,
                                         hintText: tr(LocaleKeys.additionText_descComnt),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 22,
                                       ),
                                       Text(
                                         tr(LocaleKeys.additionText_Drug),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             color: AppColor.textLightBlueBlack,
                                             fontFamily: AppFont.poppinsBold),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 7,
                                       ),
                                       CustomTextFeild(
@@ -409,17 +410,17 @@ class _EditNotesState extends State<EditNotes> {
                                         textInputType: TextInputType.text,
                                         hintText: tr(LocaleKeys.additionText_entrDName),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 22,
                                       ),
                                       Text(
                                         tr(LocaleKeys.additionText_reaction),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: AppFont.poppinsBold,
                                             fontSize: 16,
                                             color: AppColor.textLightBlueBlack),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 18,
                                       ),
                                       Wrap(
@@ -440,21 +441,21 @@ class _EditNotesState extends State<EditNotes> {
                                                       )),
                                                       backgroundColor: MaterialStateProperty.all<Color>(
                                                           myprovider.reactionbutton[i].buttonisSelected
-                                                              ? Color(0xff941C1B)
+                                                              ? const Color(0xff941C1B)
                                                               : AppColor.textFieldGrey)),
                                                   onPressed: () {
-                                                    print("printing the value of i >>>>> ${i}");
+                                                    print("printing the value of i >>>>> $i");
 
                                                     myprovider.upodateSelectedbutton2(i);
                                                     reaction = i + 1;
-                                                    print("reaction value=== ${reaction}");
+                                                    print("reaction value=== $reaction");
                                                   },
                                                   child: Text(
                                                     reactionbutton[i].name,
                                                     style: TextStyle(
                                                         color: myprovider.reactionbutton[i].buttonisSelected
                                                             ? Colors.white
-                                                            : Color(0xff2A3C6A),
+                                                            : const Color(0xff2A3C6A),
                                                         fontFamily: AppFont.poppinsMedium,
                                                         fontSize: 9),
                                                   ),
@@ -463,23 +464,23 @@ class _EditNotesState extends State<EditNotes> {
                                             ),
                                         ],
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 23,
                                       ),
                                       Text(
                                         tr(LocaleKeys.additionText_uploadDocPic),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: AppFont.poppinsBold,
                                             fontSize: 16,
                                             color: AppColor.textLightBlueBlack),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 22,
                                       ),
                                       Consumer<PetProvider>(builder: (context, petProvider, child) {
                                         List<NotesImgEditModel> editImgList = petProvider.editNoteList;
 
-                                        return Container(
+                                        return SizedBox(
                                           height: 160,
                                           child: ListView.builder(
                                               scrollDirection: Axis.horizontal,
@@ -495,19 +496,19 @@ class _EditNotesState extends State<EditNotes> {
                                                 return index == editImgList.length
                                                     ? Padding(
                                                         padding: const EdgeInsets.only(top: 6.0, bottom: 7.0, left: 8),
-                                                        child: Container(
+                                                        child: SizedBox(
                                                           height: 100,
                                                           // color: Colors.green,
                                                           width: MediaQuery.of(context).size.width * .30,
                                                           child: DottedBorder(
                                                               color: AppColor.textLightBlueBlack,
                                                               strokeWidth: 1,
-                                                              dashPattern: [10, 4],
+                                                              dashPattern: const [10, 4],
                                                               borderType: BorderType.RRect,
-                                                              radius: Radius.circular(15.0),
+                                                              radius: const Radius.circular(15.0),
                                                               child: Center(
                                                                 child: InkWell(
-                                                                    child: CircleAvatar(
+                                                                    child: const CircleAvatar(
                                                                         backgroundColor: AppColor.textFieldGrey,
                                                                         child: Icon(
                                                                           Icons.add,
@@ -517,7 +518,7 @@ class _EditNotesState extends State<EditNotes> {
                                                                       File? fil;
                                                                       await bottomSheetFile(context,
                                                                           callBack: ((val) async {
-                                                                        print("valllll${val}");
+                                                                        print("valllll$val");
                                                                         if (val == 1) {
                                                                           Navigator.pop(context);
                                                                           fil = await getImage(ImageSource.camera,
@@ -529,22 +530,34 @@ class _EditNotesState extends State<EditNotes> {
                                                                               circleCropStyle: false);
                                                                           val = 2;
                                                                         } else if (val == 3) {
+                                                                          if (Platform.isAndroid) {
+                                                                            var status = await Permission
+                                                                                .manageExternalStorage
+                                                                                .request();
+                                                                            print("storage statur====$status");
+                                                                            // if (status.isDenied) {
+                                                                            //   Permission.manageExternalStorage.request();
+                                                                            // } else if (status.isPermanentlyDenied ||
+                                                                            //     status.isRestricted) {
+                                                                            //   // Permission.manageExternalStorage.request();
+                                                                            //   // openAppSettings();
+                                                                            //     AppSettings.openAppSettings();
 
-
-                                                                          if(Platform.isAndroid){
-                                                                                                                                 var status = await Permission
-                                                                              .manageExternalStorage
-                                                                              .request();
-                                                                          print("storage statur====${status}");
-                                                                          if (status.isDenied) {
-                                                                            Permission.manageExternalStorage.request();
-                                                                          } else if (status.isPermanentlyDenied ||
-                                                                              status.isRestricted) {
-                                                                            // Permission.manageExternalStorage.request();
-                                                                            // openAppSettings();
-                                                                              AppSettings.openAppSettings();
-
-                                                                          } else if (status.isGranted) {
+                                                                            // } else if (status.isGranted)
+                                                                            {
+                                                                              Navigator.pop(context);
+                                                                              fil = await getFile().then((value) {
+                                                                                if (value != null) {
+                                                                                  return File(
+                                                                                      value.files.single.path ?? "");
+                                                                                } else {
+                                                                                  return null;
+                                                                                }
+                                                                              });
+                                                                              val = 3;
+                                                                            }
+                                                                          }
+                                                                          if (Platform.isIOS) {
                                                                             Navigator.pop(context);
                                                                             fil = await getFile().then((value) {
                                                                               if (value != null) {
@@ -556,24 +569,10 @@ class _EditNotesState extends State<EditNotes> {
                                                                             });
                                                                             val = 3;
                                                                           }
-
-                                                                          }if(Platform.isIOS){
-                                                                             Navigator.pop(context);
-                                                                            fil = await getFile().then((value) {
-                                                                              if (value != null) {
-                                                                                return File(
-                                                                                    value.files.single.path ?? "");
-                                                                              } else {
-                                                                                return null;
-                                                                              }
-                                                                            });
-                                                                            val = 3;
-                                                                          }
-                     
                                                                         }
 
                                                                         if (fil != null) {
-                                                                          print("value==${fil}");
+                                                                          print("value==$fil");
                                                                           if (fil.toString() == "File: ''") {
                                                                             print("value like this===");
                                                                             fil = null;
@@ -615,9 +614,9 @@ class _EditNotesState extends State<EditNotes> {
                                                                   child: DottedBorder(
                                                                     color: AppColor.textLightBlueBlack,
                                                                     strokeWidth: 1,
-                                                                    dashPattern: [10, 4],
+                                                                    dashPattern: const [10, 4],
                                                                     borderType: BorderType.RRect,
-                                                                    radius: Radius.circular(15.0),
+                                                                    radius: const Radius.circular(15.0),
                                                                     child: Center(
                                                                       child: InkWell(
                                                                           onTap: () async {
@@ -636,7 +635,7 @@ class _EditNotesState extends State<EditNotes> {
                                                                                           .contains("pdf"))
                                                                                   ? Column(
                                                                                       children: [
-                                                                                        SizedBox(
+                                                                                        const SizedBox(
                                                                                           height: 5,
                                                                                         ),
                                                                                         Padding(
@@ -648,10 +647,10 @@ class _EditNotesState extends State<EditNotes> {
                                                                                             height: 60,
                                                                                           ),
                                                                                         ),
-                                                                                        SizedBox(
+                                                                                        const SizedBox(
                                                                                           height: 5,
                                                                                         ),
-                                                                                        Center(
+                                                                                        const Center(
                                                                                           child: Text("file"),
                                                                                         )
                                                                                       ],
@@ -713,7 +712,7 @@ class _EditNotesState extends State<EditNotes> {
                                                                                                 ? Image.file(
                                                                                                     editImgList[index]
                                                                                                         .file1!)
-                                                                                                : SizedBox(),
+                                                                                                : const SizedBox(),
                                                                                       ),
                                                                                     )),
                                                                     ),
@@ -729,7 +728,7 @@ class _EditNotesState extends State<EditNotes> {
                                                                 onTap: () {
                                                                   petProvider.deleteEditNotes(index);
                                                                 },
-                                                                child: Icon(
+                                                                child: const Icon(
                                                                   Icons.cancel_outlined,
                                                                   color: AppColor.textLightBlueBlack,
                                                                 ),
@@ -743,7 +742,7 @@ class _EditNotesState extends State<EditNotes> {
                                   ),
                                 ),
 
-                                SizedBox(
+                                const SizedBox(
                                   height: 30.0,
                                 )
                               ])));

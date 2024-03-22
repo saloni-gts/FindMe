@@ -649,18 +649,19 @@ class _QRViewScreenState extends State<QRViewScreen>
       print("resultlength  ${result?.code?.split("/")}");
       int length = result?.code?.split("/").length ?? 0;
       if (length > 4) {
-        var staging = "staging.u-tags.uk";
-        var prod = "u-tags.uk";
+        var staging = "find-me.uk";
+        var prod = "find-me.uk";
         // var prod = "u-tags.uk/pet/:tagNumber";
+
+        //https://find-me.uk/pet/INGT000001/WKF7
         if (
 
-        result?.code?.split("/")[2] == prod  && result?.code?.split("/")[3] == "pet" )
+        result?.code?.split("/")[2] == staging  && result?.code?.split("/")[3] == "pet" )
           // && (result?.code?.split("/")[4]=="missing") && (result?.code?.split("/")[5]=="pet") )
             {
           print("result  ${result?.code ?? ""}");
           print("resultlength  ${result?.code?.split("/")}");
           tagNumberController.text = result?.code?.split("/")[4] ?? "";
-
           activationCodeController.text = result?.code?.split("/")[5] ?? "";
 
 
