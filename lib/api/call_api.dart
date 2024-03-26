@@ -746,6 +746,16 @@ AppApi {
     });
   }
 
+  Future<Resource> privacyUpdateApi(Map body) async {
+    return await resourceApiFun(ApiUrl.privacyUpdate, body, sendToken: true)
+        .then((response) {
+      return response;
+    });
+  }
+
+
+
+
   // Future<Resource> requestManagement(
   //     String phoneCode, String mobileNumber) async {
   //   Map body = {"phoneCode": phoneCode, "mobileNumber": mobileNumber};
@@ -900,7 +910,7 @@ class ApiUrl {
 
   static const getAllPets = baseUrlP2 + "/account/getPetUserId";
   static const baseUrl = "https://api-stage.find-me.app/api/v1/";       // staging
-  // static const baseUrl = "https://api.unique-tags.com/api/v1/";      // Production Url
+  // static const baseUrl = "https://api.find-me.app/api/v1/";      // Production Url
 
   static const normalLogin = baseUrl + "account/signUp";
   static const simplogin = baseUrl + "/account/login";
@@ -934,11 +944,11 @@ class ApiUrl {
   static const locationapi = baseUrl + "/common/sendPetLocationList";
   static const logout = baseUrl + "/account/logout";
   static const forceUpdate = baseUrl + "/account/forceUpdate";
-
+ static const privacyUpdate = baseUrl + "/account/isPrivacyUpdate";
   ///phase 2
 
   static const baseUrlP2 = "https://api-stage.find-me.app/api/v2/"; //staging
-  // static const baseUrlP2 = "https://api.unique-tags.com/api/v2/";          //Production
+  // static const baseUrlP2 = "https://api.find-me.app/api/v2/";          //Production
 
   static const masterList = baseUrlP2 + "/common/masterList";
   static const addNotes = baseUrlP2 + "/account/addNotes";

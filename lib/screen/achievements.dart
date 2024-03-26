@@ -11,7 +11,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/appbarComp.dart';
 import '../components/bottomBorderComp.dart';
 import '../generated/locale_keys.g.dart';
@@ -46,7 +45,7 @@ class _AchievementState extends State<Achievement> {
           Navigator.pop(context);
         }
         Navigator.pop(context);
-        return await true;
+        return true;
       },
       child: Scaffold(
           floatingActionButton: Column(
@@ -56,33 +55,39 @@ class _AchievementState extends State<Achievement> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddAchieven(),
-                          ));
-                    },
-                    child: Container(
-                      height: 56,
-                      width: 56,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xff2A3C6A),
-                      ),
-                      child: Image.asset(
-                        AppImage.plusIcon,
-                        color: Colors.white,
-                        height: 32,
-                        width: 32,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddAchieven(),
+                            ));
+                      },
+                      child: Container(
+                        height: 56,
+                        width: 56,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColor.newBlueGrey,
+                        ),
+                        child: Image.asset(
+                          AppImage.plusIcon,
+                          color: Colors.white,
+                          height: 32,
+                          width: 32,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              
-              BotttomBorder(context)
+
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: BotttomBorder(context),
+              )
               // Text("Add \n Achievement"),
             ],
           ),
@@ -100,7 +105,7 @@ class _AchievementState extends State<Achievement> {
           body: Consumer<AchievementProvider>(builder: (context, value, child) {
             print("list loader ${value.listLoader}");
             return value.listLoader
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : value.list.isNotEmpty
@@ -111,17 +116,11 @@ class _AchievementState extends State<Achievement> {
                         },
                       )
                     : Center(
-                        child:Text(
-                        tr(LocaleKeys.additionText_noAcheveFnd),
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            color: AppColor.textLightBlueBlack,
-                            fontFamily: AppFont.poppinSemibold),
-                      ),
-
-
-
-
+                        child: Text(
+                          tr(LocaleKeys.additionText_noAcheveFnd),
+                          style: const TextStyle(
+                              fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
+                        ),
                       );
           })),
     );
@@ -138,14 +137,12 @@ class _AchievementState extends State<Achievement> {
       },
       child: Container(
           height: 72,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(36),
-              color: Color(0xffF7F7F7)),
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(36), color: const Color(0xffF7F7F7)),
           child: Center(
             child: ListTile(
               horizontalTitleGap: 0.0,
-              visualDensity: VisualDensity(horizontal: 0.0),
+              visualDensity: const VisualDensity(horizontal: 0.0),
               minLeadingWidth: 38,
               leading: Image.asset(
                 AppImage.achievements,
@@ -155,23 +152,16 @@ class _AchievementState extends State<Achievement> {
               title: Text(
                 "${achievement.title}",
                 maxLines: 1,
-                style: TextStyle(
-                    color: Color(0xff2A3C6A),
-                    fontSize: 15,
-                    fontFamily: AppFont.poppinsMedium),
+                style: const TextStyle(color: Color(0xff2A3C6A), fontSize: 15, fontFamily: AppFont.poppinsMedium),
               ),
               subtitle: Text(
                 "${achievement.description}",
                 maxLines: 1,
-                style: TextStyle(
-                    color: Color(0xff777777),
-                    fontSize: 10,
-                    fontFamily: AppFont.poppinsRegular),
+                style: const TextStyle(color: Color(0xff777777), fontSize: 10, fontFamily: AppFont.poppinsRegular),
               ),
               trailing: Image.asset(AppImage.nextArrow),
             ),
-          )
-      ),
+          )),
     );
   }
 }

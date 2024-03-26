@@ -42,7 +42,7 @@ class _EditDocumentState extends State<EditDocument> {
     http.Response responseData = await http.get(Uri.parse(imgUrl));
     Uint8List uint8list = responseData.bodyBytes;
     var dir = (await getApplicationDocumentsDirectory()).path;
-    File imageFile = File("$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + ".png");
+    File imageFile = File("$dir/${DateTime.now().millisecondsSinceEpoch}.png");
     var buffer = uint8list.buffer;
     ByteData byteData = ByteData.view(buffer);
     imageFile.writeAsBytes(buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -51,6 +51,7 @@ class _EditDocumentState extends State<EditDocument> {
     return imageFile;
   }
 
+  @override
   void initState() {}
 
   DocumentDetails? selectedDocument;
@@ -59,7 +60,10 @@ class _EditDocumentState extends State<EditDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: BotttomBorder(context),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left:22.0),
+        child: BotttomBorder(context),
+      ),
 
       // bottomNavigationBar: BotttomBorder(context),
       backgroundColor: Colors.white,
@@ -72,7 +76,7 @@ class _EditDocumentState extends State<EditDocument> {
           print("docUrldocUrl${petProvider.selectedDocument?.fileType}");
           print("docUrldocUrl${petProvider.selectedDocument?.documentCategoryId}");
 
-          print("*******-------${docUrl}");
+          print("*******-------$docUrl");
           var fileType = docUrl.isNotEmpty ? docUrl.split(".").last : "";
           print("FILE TYPE  $fileType");
           return SingleChildScrollView(
@@ -82,7 +86,7 @@ class _EditDocumentState extends State<EditDocument> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
                   Center(
@@ -129,7 +133,7 @@ class _EditDocumentState extends State<EditDocument> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 5.0,
                   ),
 
@@ -138,12 +142,12 @@ class _EditDocumentState extends State<EditDocument> {
                       petProvider.selectedPetDetail?.petName ?? "",
                       softWrap: false,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
@@ -171,23 +175,23 @@ class _EditDocumentState extends State<EditDocument> {
                   //   ),
                   // ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
 
                   RichText(
                       text: TextSpan(children: <TextSpan>[
                     TextSpan(
-                      text: tr(LocaleKeys.additionText_docName) + " : ",
-                      style: TextStyle(
+                      text: "${tr(LocaleKeys.additionText_docName)} : ",
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontFamily: AppFont.poppinSemibold,
                           fontSize: 15,
                           fontWeight: FontWeight.normal),
                     ),
                     TextSpan(
-                      text: "${petProvider.selectedDocument?.title ?? ""}",
-                      style: TextStyle(
+                      text: petProvider.selectedDocument?.title ?? "",
+                      style: const TextStyle(
                           color: AppColor.textLightBlueBlack,
                           fontFamily: AppFont.poppinsMedium,
                           fontSize: 15,
@@ -195,7 +199,7 @@ class _EditDocumentState extends State<EditDocument> {
                     ),
                   ])),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
 
@@ -203,8 +207,8 @@ class _EditDocumentState extends State<EditDocument> {
                     return RichText(
                         text: TextSpan(children: <TextSpan>[
                       TextSpan(
-                        text: tr(LocaleKeys.additionText_docCate) + " : ",
-                        style: TextStyle(
+                        text: "${tr(LocaleKeys.additionText_docCate)} : ",
+                        style: const TextStyle(
                             color: Colors.black87,
                             fontFamily: AppFont.poppinSemibold,
                             fontSize: 15,
@@ -212,7 +216,7 @@ class _EditDocumentState extends State<EditDocument> {
                       ),
                       TextSpan(
                         text: " ${petProvider.docCateName}",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: AppColor.textLightBlueBlack,
                             fontFamily: AppFont.poppinsMedium,
                             fontSize: 15,
@@ -244,12 +248,12 @@ class _EditDocumentState extends State<EditDocument> {
                   //       fontFamily: AppFont.poppinsMedium),
                   // ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
                   Center(
-                    child: Container(
+                    child: SizedBox(
                         height: 168,
                         width: MediaQuery.of(context).size.width * .90,
                         child: Stack(
@@ -263,17 +267,17 @@ class _EditDocumentState extends State<EditDocument> {
                                       width: MediaQuery.of(context).size.width * .90,
                                       child: Column(
                                         children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 5,
                                           ),
                                           Image.asset(
                                             "assets/images/upload-file.png",
                                             height: 70,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
-                                          Text("${docUrl.split('/').last}")
+                                          Text(docUrl.split('/').last)
                                         ],
                                       ))
 
@@ -313,7 +317,7 @@ class _EditDocumentState extends State<EditDocument> {
                                             )));
                                 print("*************++++++++++++");
                               },
-                              child: Container(
+                              child: SizedBox(
                                 height: 167,
                                 width: MediaQuery.of(context).size.width * .84,
                               ),
@@ -324,44 +328,43 @@ class _EditDocumentState extends State<EditDocument> {
                   // Center(
                   //   child: Image(image: AssetImage(AppImage.doctorImg)),
                   // ),
-                  SizedBox(height: 15.0),
+                  const SizedBox(height: 15.0),
 
                   Text(
                     "${tr(LocaleKeys.additionText_issued)} :${dateConverter(int.parse(petProvider.selectedDocument?.issuedDate ?? ""))}",
                     //"Issued :${dateConverter(int.parse(widget.dateIssued))}",
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 10.0, color: AppColor.textGreyColor, fontFamily: AppFont.poppinsRegular),
+                    style: const TextStyle(fontSize: 10.0, color: AppColor.textGreyColor, fontFamily: AppFont.poppinsRegular),
                   ),
 
                   Text(
                     "${tr(LocaleKeys.additionText_downloded)} :${dateConverter(int.parse(petProvider.selectedDocument?.createdDate ?? ""))}",
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 10.0, color: AppColor.textGreyColor, fontFamily: AppFont.poppinsRegular),
+                    style: const TextStyle(fontSize: 10.0, color: AppColor.textGreyColor, fontFamily: AppFont.poppinsRegular),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
                   Consumer<PetProvider>(builder: (context, petProvider, child) {
                     return Row(
                       children: [
-                        Container(
+                        SizedBox(
+                          width: 265,
                           child: Text(
                             tr(LocaleKeys.additionText_displayPetPublic),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 14.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                           ),
-                          // color: Colors.blue,
-                          width: 265,
                         ),
                         Container(
-                          decoration: BoxDecoration(),
+                          decoration: const BoxDecoration(),
                         ),
-                        new Spacer(),
+                        const Spacer(),
 
                         // petProvider.selectedDocument?.fileType==1 ?
                         Consumer<PetProvider>(builder: (context, petProvider, child) {
@@ -418,17 +421,17 @@ class _EditDocumentState extends State<EditDocument> {
                   //   ],
                   // ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
 
                   Text(
                     tr(LocaleKeys.additionText_docUserView),
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
+                    style: const TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 50.0,
                   ),
 
@@ -457,15 +460,15 @@ class _EditDocumentState extends State<EditDocument> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image(image: AssetImage(AppImage.shareIcon)),
-                              SizedBox(
+                              const Image(image: AssetImage(AppImage.shareIcon)),
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Text(
                                 tr(LocaleKeys.additionText_share),
                                 textAlign: TextAlign.left,
                                 style:
-                                    TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
+                                    const TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
                               ),
                             ],
                           ),
@@ -482,15 +485,15 @@ class _EditDocumentState extends State<EditDocument> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image(image: AssetImage(AppImage.doc_edit)),
-                              SizedBox(
+                              const Image(image: AssetImage(AppImage.doc_edit)),
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Text(
                                 tr(LocaleKeys.additionText_edit),
                                 textAlign: TextAlign.left,
                                 style:
-                                    TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
+                                    const TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
                               ),
                             ],
                           ),
@@ -505,19 +508,19 @@ class _EditDocumentState extends State<EditDocument> {
                                         InkWell(
                                           child: Text(
                                             tr(LocaleKeys.additionText_cancel),
-                                            style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                           ),
                                           onTap: () {
                                             Navigator.pop(context1);
                                           },
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5.0,
                                         ),
                                         InkWell(
                                           child: Text(
                                             tr(LocaleKeys.additionText_yes),
-                                            style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
                                           ),
                                           onTap: () async {
                                             PetProvider pet = Provider.of(context1, listen: false);
@@ -531,15 +534,15 @@ class _EditDocumentState extends State<EditDocument> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image(image: AssetImage(AppImage.delete_doc)),
-                              SizedBox(
+                              const Image(image: AssetImage(AppImage.delete_doc)),
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Text(
                                 tr(LocaleKeys.additionText_Delete),
                                 textAlign: TextAlign.left,
                                 style:
-                                    TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
+                                    const TextStyle(fontSize: 14.0, color: Colors.black, fontFamily: AppFont.poppinsRegular),
                               ),
                             ],
                           ),
@@ -548,7 +551,7 @@ class _EditDocumentState extends State<EditDocument> {
                     ),
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   )
                 ],
@@ -564,7 +567,7 @@ class _EditDocumentState extends State<EditDocument> {
 String dateConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
 
-  return "${Jiffy(d).format("dd MMM yyyy ")}".toUpperCase();
+  return Jiffy(d).format("dd MMM yyyy ").toUpperCase();
   // +
   //    "${Jiffy(d).jm}";
 }

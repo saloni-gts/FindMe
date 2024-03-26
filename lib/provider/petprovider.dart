@@ -7004,5 +7004,55 @@ updateLoader(false);
 
 
 
+ callPrivacyUpdateApi(int isPrivacy,BuildContext context) async {
+    print("call callPrivacyUpdateApi");
+  
+    Map<String, dynamic> bodyy = {};
+    bodyy = {
+      "isPrivacy": isPrivacy,
+     
+    };
+    
+
+
+    updateLoader(true);
+    await api.privacyUpdateApi(bodyy).then((value) async {
+      if (value.status == Status.success) {
+        print("value data --${value.data}");
+
+        if(value.data['isPrivacy']==1){
+          print("condition true");
+          privacyRadioVal=true;
+        }else{
+             print("condition false");   
+          privacyRadioVal=false;
+        }
+              await CoolAlert.show(
+            context: context, type: CoolAlertType.success, text: value.message);
+        updateLoader(false);
+      } else {
+         updateLoader(false);
+    
+      }
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      updateLoader(false);
+    });
+  }
+
+
+
+
+  bool privacyRadioVal = true;
+
+  onprivacyRadioValChange() {
+    privacyRadioVal = !privacyRadioVal;
+    notifyListeners();
+  }
+
+
+
+
+
 
 }

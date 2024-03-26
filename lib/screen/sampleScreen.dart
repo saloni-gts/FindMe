@@ -650,19 +650,21 @@ class _QRViewScreenState extends State<QRViewScreen>
       int length = result?.code?.split("/").length ?? 0;
       if (length > 4) {
         var staging = "find-me.uk";
-        var prod = "find-me.uk";
+        var prod = "dashboardstage.find-me.app";
         // var prod = "u-tags.uk/pet/:tagNumber";
-
-        //https://find-me.uk/pet/INGT000001/WKF7
+     //    https://dashboardstage.find-me.app/INGT000007/NXB1
+        //https://find-me.uk/pet/INGT000001/WKF7  
         if (
 
-        result?.code?.split("/")[2] == staging  && result?.code?.split("/")[3] == "pet" )
+        result?.code?.split("/")[2] == staging  
+        // && result?.code?.split("/")[3] == "pet" 
+        )
           // && (result?.code?.split("/")[4]=="missing") && (result?.code?.split("/")[5]=="pet") )
             {
           print("result  ${result?.code ?? ""}");
           print("resultlength  ${result?.code?.split("/")}");
-          tagNumberController.text = result?.code?.split("/")[4] ?? "";
-          activationCodeController.text = result?.code?.split("/")[5] ?? "";
+          tagNumberController.text = result?.code?.split("/")[3] ?? "";
+          activationCodeController.text = result?.code?.split("/")[4] ?? "";
 
 
           if(tagNumberController.text.isEmpty||

@@ -4,35 +4,24 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/screen/langPikr.dart';
 import 'package:find_me/services/hive_handler.dart';
 import 'package:find_me/util/color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:http/http.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../components/appbarComp.dart';
 import '../../components/bottomBorderComp.dart';
 import '../../components/deleteAlert.dart';
 import '../../components/globalnavigatorkey.dart';
 import '../../components/homeLocPrem.dart';
-import '../../components/newPreview.dart';
 import '../../generated/locale_keys.g.dart';
 import '../../provider/petprovider.dart';
 import '../../screen/changePassword.dart';
 import '../../util/app_font.dart';
 import '../../util/app_images.dart';
-import '../../util/app_images.dart';
-import '../../util/app_route.dart';
 
-import '../models/newModel.dart';
 import '../provider/myProvider.dart';
-import '../reUseClass/custombluebutton.dart';
-import '../reUseClass/myappbar.dart';
-import 'DeleteOwnerDailog.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -76,7 +65,7 @@ class _SettingScreenState extends State<SettingScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Container(
-                  height: 280,
+                  // height: 280,
                   color: AppColor.newGrey,
                   child: Column(
                     children: [
@@ -452,6 +441,106 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                          // height: 15,
+                          ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            Image.asset(AppImage.change_icon),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            const Text(
+                              "Privacy Control",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: AppColor.textLightBlueBlack,
+                                  fontFamily: AppFont.poppinsRegular),
+                            ),
+                            const Spacer(),
+                            Consumer<PetProvider>(builder: (context, petprovider, child) {
+                              return Radio(
+                                  activeColor: AppColor.textLightBlueBlack,
+                                  toggleable: true,
+                                  value: true,
+                                  groupValue: petprovider.privacyRadioVal,
+                                  onChanged: (value) {
+                                    // myprovider.onRadioChange();
+                                    print("radioValradioVal${petprovider.privacyRadioVal}");
+
+                                    petprovider.privacyRadioVal == true
+                                        ? showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context1) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                  "Are you sure you want to disable the privacy status",
+                                                ),
+                                                actions: <Widget>[
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_cancel),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context1);
+                                                    },
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5.0,
+                                                  ),
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_yes),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () async {
+                                                      petprovider.callPrivacyUpdateApi(0, context1);
+                                                      Navigator.pop(context1);
+                                                      petprovider.onprivacyRadioValChange();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            })
+                                        : showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            builder: (context1) {
+                                              return AlertDialog(
+                                                title: const Text("Are you sure you want to enable the privacy stauts"),
+                                                actions: <Widget>[
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_okay)
+                                                      // tr(LocaleKeys.additionText_cancel)
+
+                                                      ,
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () {
+                                                      petprovider.callPrivacyUpdateApi(1, context1);
+                                                      Navigator.pop(context1);
+                                                      petprovider.onprivacyRadioValChange();
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
+
+                                    //selected value
+                                  });
+                            }),
+                          ],
+                        ),
+                      )
 
                       //
                       // mycustomBlueButton(

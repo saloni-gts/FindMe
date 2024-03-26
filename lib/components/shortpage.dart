@@ -855,7 +855,7 @@ class _PetShortPageState extends State<PetShortPage> {
           return Container(
             color: Colors.white,
             height: 250,
-            child: const Row(
+            child:  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [],
