@@ -18,11 +18,15 @@ import 'package:flutter/material.dart';
 
 Widget BotttomBorder(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 20.0, left: 30, right: 30),
-    child: Container(
-      height: 10,
+    padding: const EdgeInsets.only(bottom: 0.0, left: 0, right: 0),
+    child: SizedBox(
+      // height: 10,
       width: double.infinity,
-      color: const Color(0xffCBC4A9),
+      child: Image.asset(
+        AppImage.dogsGroup,
+        fit: BoxFit.cover,
+      ),
+      // color: const Color(0xffCBC4A9),
 
       //  color: Colors.white,
 

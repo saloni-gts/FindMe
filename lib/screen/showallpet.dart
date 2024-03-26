@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_font.dart';
@@ -10,12 +8,7 @@ import 'package:find_me/util/app_images.dart';
 import 'package:find_me/util/app_route.dart';
 import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-
-
-import '../components/bottomBorderComp.dart';
 
 class ShowAllPet extends StatefulWidget {
   const ShowAllPet({Key? key}) : super(key: key);
@@ -27,7 +20,6 @@ class ShowAllPet extends StatefulWidget {
 class _ShowAllPetState extends State<ShowAllPet> {
   late PetProvider provider;
   @override
-
   void initState() {
     provider = Provider.of(context, listen: false);
     provider.getAllPet();
@@ -38,26 +30,28 @@ class _ShowAllPetState extends State<ShowAllPet> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.home_myPets),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.home_myPets),
+        isTitleCenter: true,
       ),
-      bottomNavigationBar: BotttomBorder(context),
+      //  customAppbar(
+      //   titlename: tr(LocaleKeys.home_myPets),
+      // ),
+      // bottomNavigationBar: BotttomBorder(context),
       body: Consumer<PetProvider>(builder: (context, data, child) {
         return data.petDetailList.isEmpty
             ? Center(
                 child: Text(
                   tr(LocaleKeys.home_noPetFound),
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: AppColor.textLightBlueBlack,
-                      fontFamily: AppFont.poppinSemibold),
+                  style: const TextStyle(
+                      fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                 ),
               )
             : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: GridView.builder(
                     itemCount: data.petDetailList.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisExtent: 160,
                       crossAxisSpacing: 0,
@@ -70,24 +64,19 @@ class _ShowAllPetState extends State<ShowAllPet> {
                         try {
                           userPets = "${name.split(" ")[0]}'s Pet";
                         } catch (e) {
-                          userPets = data.petDetailList[index].ownerName ??
-                              "" + "Pets";
+                          userPets = data.petDetailList[index].ownerName ?? "" "Pets";
                         }
-                      }else{
-                        userPets="Shared pets";
+                      } else {
+                        userPets = "Shared pets";
                       }
 
-                      bool isSharedPet =
-                          data.petDetailList[index].isJoinPet ?? false;
+                      bool isSharedPet = data.petDetailList[index].isJoinPet ?? false;
                       return Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 10, top: 5, right: 8, left: 8),
+                        padding: const EdgeInsets.only(bottom: 10, top: 5, right: 8, left: 8),
                         child: InkWell(
                           onTap: () {
-                            data.setSelectedPetDetails(
-                                data.petDetailList[index]);
-                            Navigator.pushNamed(
-                                context, AppScreen.petDashboard);
+                            data.setSelectedPetDetails(data.petDetailList[index]);
+                            Navigator.pushNamed(context, AppScreen.petDashboard);
                           },
                           child: Container(
                               height: 130,
@@ -106,33 +95,24 @@ class _ShowAllPetState extends State<ShowAllPet> {
                                       // isSharedPet ?   Text("shared Pet"):SizedBox(),
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(44),
+                                          borderRadius: BorderRadius.circular(44),
                                         ),
                                         height: 88,
                                         width: 88,
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(44),
+                                          borderRadius: BorderRadius.circular(44),
                                           child: CachedNetworkImage(
-                                            imageUrl: data.petDetailList[index]
-                                                    .petPhoto ??
-                                                "",
+                                            imageUrl: data.petDetailList[index].petPhoto ?? "",
                                             fit: BoxFit.cover,
-                                            placeholder: (context, url) =>
-                                                Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
+                                            placeholder: (context, url) => Padding(
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Image.asset(
                                                 AppImage.placeholderIcon,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
+                                            errorWidget: (context, url, error) => Padding(
+                                              padding: const EdgeInsets.all(10.0),
                                               child: Image.asset(
                                                 AppImage.placeholderIcon,
                                                 fit: BoxFit.cover,
@@ -141,36 +121,27 @@ class _ShowAllPetState extends State<ShowAllPet> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       isSharedPet
                                           ? Container(
                                               height: 19,
                                               decoration: BoxDecoration(
-                                                  color: Colors.transparent
-                                                      .withOpacity(0.1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
+                                                  color: Colors.transparent.withOpacity(0.1),
+                                                  borderRadius: BorderRadius.circular(20)),
                                               child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
+                                                padding: const EdgeInsets.symmetric(horizontal: 5),
                                                 child: Text(userPets,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 12,
-                                                        color:
-                                                            Color(0xff2A3C6A),
-                                                        fontFamily: AppFont
-                                                            .poppinsMedium)),
+                                                        color: Color(0xff2A3C6A),
+                                                        fontFamily: AppFont.poppinsMedium)),
                                               ))
-                                          : SizedBox(),
+                                          : const SizedBox(),
                                       Text(
                                         data.petDetailList[index].petName ?? "",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: AppFont.poppinSemibold),
+                                        style: const TextStyle(fontSize: 15, fontFamily: AppFont.poppinSemibold),
                                       )
                                     ],
                                   )),
@@ -184,14 +155,12 @@ class _ShowAllPetState extends State<ShowAllPet> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(11),
+                                            borderRadius: BorderRadius.circular(11),
                                             color: AppColor.textLightBlueBlack,
                                           ),
                                           height: 22,
                                           width: 22,
-                                          child: Image.asset(
-                                              AppImage.home_iconsmall),
+                                          child: Image.asset(AppImage.home_iconsmall),
                                         ),
                                       ))
                                 ],

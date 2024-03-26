@@ -10,22 +10,18 @@ import 'package:find_me/util/appstrings.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../generated/locale_keys.g.dart';
 import '../models/usermodel.dart';
-import '../monish/screen/ownerProfile.dart';
-import '../provider/authprovider.dart';
-import '../screen/checkProtection.dart';
 import '../services/hive_handler.dart';
 import '../util/app_font.dart';
 import '../util/app_images.dart';
 import '../util/color.dart';
 import 'camPermissionAlert.dart';
-import 'customBlueButton.dart';
 import 'customTextFeild.dart';
+import 'custom_button.dart';
 import 'globalnavigatorkey.dart';
 
 Future<FilePickerResult?> getFile() async {
@@ -48,56 +44,58 @@ int z = 0;
 Future<File?> getImage(ImageSource source, {bool circleCropStyle = true, bool isCropped = true}) async {
 // PetProvider petProvider=Provider.of(GlobalVariable.navState.currentContext!,listen: false);
 // petProvider.updateLoader(true);
-try{
-  print("isCropped===$isCropped");
-  print("TEST!!1");
-  final ImagePicker picker = ImagePicker();
+  try {
+    print("isCropped===$isCropped");
+    print("TEST!!1");
+    final ImagePicker picker = ImagePicker();
 // petProvider.updateLoader(false);
-  final pickedFile = await picker
-      .pickImage(
-    source: source,
-  )
-      .onError((error, stackTrace) async {
-    print("error>>>  $error,  stackTrace>>>>  $stackTrace ");
-    var status3 = await Permission.camera.status;
-    var status4 = await Permission.photos.status;
+    final pickedFile = await picker
+        .pickImage(
+      source: source,
+    )
+        .onError((error, stackTrace) async {
+      print("error>>>  $error,  stackTrace>>>>  $stackTrace ");
+      var status3 = await Permission.camera.status;
+      var status4 = await Permission.photos.status;
 
-    print("status4status4$status4");
+      print("status4status4$status4");
 
-    print("value of status===>>> $status3");
-    if (!status3.isGranted) {
-      print("x value is ==>$x");
+      print("value of status===>>> $status3");
+      if (!status3.isGranted) {
+        print("x value is ==>$x");
 
-      if (x >= 1) {
-        camPermissionDialog(GlobalVariable.navState.currentContext!);
+        if (x >= 1) {
+          camPermissionDialog(GlobalVariable.navState.currentContext!);
+        }
+
+        if (x == 0) {
+          await Permission.camera.request();
+        }
+        x = x + 1;
       }
+      return null;
+    });
+    if (isCropped) {
+      if (pickedFile != null) {
+        // Image? image = await cropKey.currentState?.cropImage();
 
-      if (x == 0) {
-        await Permission.camera.request();
+        var cropfile = await ImageCropper.platform.cropImage(
+          cropStyle: (circleCropStyle == true) ? CropStyle.circle : CropStyle.rectangle,
+          sourcePath: pickedFile.path,
+          maxWidth: 1080,
+          maxHeight: 1080,
+        );
+        return File(cropfile?.path ?? "");
       }
-      x = x + 1;
+    } else {
+      return File(pickedFile?.path ?? "");
     }
+
     return null;
-  });
-  if (isCropped) {
-    if (pickedFile != null) {
-      // Image? image = await cropKey.currentState?.cropImage();
-
-      var cropfile = await ImageCropper.platform.cropImage(
-        cropStyle: (circleCropStyle == true) ? CropStyle.circle : CropStyle.rectangle,
-        sourcePath: pickedFile.path,
-        maxWidth: 1080,
-        maxHeight: 1080,
-      );
-      return File(cropfile?.path ?? "");
-    }
-  } else {
-    return File(pickedFile?.path ?? "");
+  } catch (error, stackTrace) {
+    print("print---- $error   stack  $stackTrace");
   }
-
-  return null;}catch(error,stackTrace){
-    print("print---- ${error}   stack  ${stackTrace}");
-  }
+  return null;
 }
 
 int i = 0;
@@ -245,18 +243,22 @@ class _PetShortPageState extends State<PetShortPage> {
                                       ))),
                               Center(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 78.0),
+                                  padding: const EdgeInsets.only(left: 78.0, top: 90),
                                   child: Container(
                                       height: 26,
                                       width: 26,
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: AppColor.newGrey,
+                                          color: Colors.white,
                                           border: Border.all(color: Colors.white)),
                                       child: InkWell(
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
-                                          child: Image.asset(AppImage.cameraIcon, fit: BoxFit.fill),
+                                          child: Image.asset(
+                                            AppImage.cameraIcon,
+                                            fit: BoxFit.fill,
+                                            color: AppColor.buttonPink,
+                                          ),
                                         ),
                                         onTap: () async {
                                           showAlertForImage(
@@ -393,7 +395,7 @@ class _PetShortPageState extends State<PetShortPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Radio(
-                                      activeColor: AppColor.newBlueGrey,
+                                      activeColor: AppColor.buttonPink,
                                       toggleable: true,
                                       value: true,
                                       groupValue: petProvider.radioVal,
@@ -803,46 +805,47 @@ class _PetShortPageState extends State<PetShortPage> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 22.0, bottom: 20),
+        padding: const EdgeInsets.only(left: 33.0, bottom: 20),
         child: Consumer<PetProvider>(builder: (context, petProvider, child) {
-          return customBlueButton(
-              context: context,
-              text1: tr(LocaleKeys.additionText_save),
-              onTap1: () {
-                print("(petProvider1.petNameController.text==${petProvider1.petNameController.text}");
-                print("(petProvider1.petNameController.text==${petProvider1.selectedPetType}");
-                if (petProvider1.petNameController.text.trim().isEmpty || petProvider1.selectedPetType == null) {
+          return CustomButton(
+            // context: context,
+            text: tr(LocaleKeys.additionText_save),
+            onPressed: () {
+              print("(petProvider1.petNameController.text==${petProvider1.petNameController.text}");
+              print("(petProvider1.petNameController.text==${petProvider1.selectedPetType}");
+              if (petProvider1.petNameController.text.trim().isEmpty || petProvider1.selectedPetType == null) {
+              } else {
+                if (petProvider1.petNameController.text.trim().isNotEmpty && petProvider1.selectedPetType != null) {
+                  petProvider1.addPetCalling(
+                      bred: petbreedController.text,
+                      bdate: timestampGmt,
+                      city: cityController.text,
+                      contact: mobileController.text,
+                      microchipp: petProvider1.petmicrochipController.text,
+                      petcolr: petcolorController.text,
+                      petnme: petProvider1.petNameController.text.trim(),
+                      shortdesc: petdescpController.text,
+                      contxt: context);
                 } else {
-                  if (petProvider1.petNameController.text.trim().isNotEmpty && petProvider1.selectedPetType != null) {
-                    petProvider1.addPetCalling(
-                        bred: petbreedController.text,
-                        bdate: timestampGmt,
-                        city: cityController.text,
-                        contact: mobileController.text,
-                        microchipp: petProvider1.petmicrochipController.text,
-                        petcolr: petcolorController.text,
-                        petnme: petProvider1.petNameController.text.trim(),
-                        shortdesc: petdescpController.text,
-                        contxt: context);
-                  } else {
-                    if (petProvider1.petNameController.text.trim().isEmpty && petProvider1.selectedPetType == null) {
-                      CoolAlert.show(
-                          context: context,
-                          type: CoolAlertType.warning,
-                          text: tr(LocaleKeys.additionText_entrPetNameType));
-                    } else if (petProvider1.petNameController.text.trim().isEmpty) {
-                      CoolAlert.show(
-                          context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrPetName));
-                    } else if (petProvider1.selectedPetType == null) {
-                      CoolAlert.show(
-                          context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrPetType));
-                    }
+                  if (petProvider1.petNameController.text.trim().isEmpty && petProvider1.selectedPetType == null) {
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.warning,
+                        text: tr(LocaleKeys.additionText_entrPetNameType));
+                  } else if (petProvider1.petNameController.text.trim().isEmpty) {
+                    CoolAlert.show(
+                        context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrPetName));
+                  } else if (petProvider1.selectedPetType == null) {
+                    CoolAlert.show(
+                        context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrPetType));
                   }
                 }
-              },
-              colour: (petProvider1.petNameController.text.trim().isEmpty || petProvider1.selectedPetType == null)
-                  ? AppColor.disableButton
-                  : AppColor.newBlueGrey);
+              }
+            },
+            // colour: (petProvider1.petNameController.text.trim().isEmpty || petProvider1.selectedPetType == null)
+            //     ? AppColor.disableButton
+            //     : AppColor.newBlueGrey
+          );
         }),
       ),
     );
@@ -855,7 +858,7 @@ class _PetShortPageState extends State<PetShortPage> {
           return Container(
             color: Colors.white,
             height: 250,
-            child:  Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [],

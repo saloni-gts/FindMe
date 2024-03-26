@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,18 +13,14 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../api/call_api.dart';
-import '../components/bottomBorderComp.dart';
 import '../components/cntryyPikrrComp.dart';
-import '../components/customBlueButton.dart';
 import '../components/customTextFeild.dart';
 import '../generated/locale_keys.g.dart';
 import '../provider/authprovider.dart';
 import '../util/app_font.dart';
 import '../util/app_images.dart';
 import '../util/app_route.dart';
-import '../util/appstrings.dart';
 import '../util/color.dart';
-import 'homepage.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -48,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       appBar: customAppbar(
@@ -110,9 +107,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         tr(LocaleKeys.additionText_email),
                         textAlign: TextAlign.left,
                         style: const TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 14.0,
                           color: AppColor.textLightBlueBlack,
-                          fontFamily: AppFont.poppinsRegular,
+                          fontFamily: AppFont.figTreeMedium,
                         ),
                       ),
                     ),
@@ -135,9 +132,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         tr(LocaleKeys.signUp_mobileNumber),
                         textAlign: TextAlign.left,
                         style: const TextStyle(
-                          fontSize: 12.0,
+                          fontSize: 14.0,
                           color: AppColor.textLightBlueBlack,
-                          fontFamily: AppFont.poppinsRegular,
+                          fontFamily: AppFont.figTreeMedium,
                         ),
                       ),
                     ),
@@ -176,66 +173,126 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 30.0,
                   ),
 
-                  customBlueButton(
-                      context: context,
-                      text1: tr(LocaleKeys.signUp_createAccount),
-                      onTap1: () {
-                        if (emailController.text.isEmpty ||
-                            phoneController.text.isEmpty ||
+                  CustomButton(
+                    text: tr(LocaleKeys.signUp_createAccount),
+                    onPressed: () {
+                      if (emailController.text.isEmpty ||
+                          phoneController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        if (emailController.text.isEmpty) {
+                          CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.warning,
+                              text: tr(LocaleKeys.additionText_enterEmail));
+                        } else if (phoneController.text.isEmpty) {
+                          CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.warning,
+                              text: tr(LocaleKeys.additionText_enterMobile));
+                        } else if (passwordController.text.isEmpty) {
+                          CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.warning,
+                              text: tr(LocaleKeys.additionText_passwordError));
+                        } else if (emailController.text.isEmpty &&
+                            phoneController.text.isEmpty &&
                             passwordController.text.isEmpty) {
-                          if (emailController.text.isEmpty) {
-                            CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.warning,
-                                text: tr(LocaleKeys.additionText_enterEmail));
-                          } else if (phoneController.text.isEmpty) {
-                            CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.warning,
-                                text: tr(LocaleKeys.additionText_enterMobile));
-                          } else if (passwordController.text.isEmpty) {
-                            CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.warning,
-                                text: tr(LocaleKeys.additionText_passwordError));
-                          } else if (emailController.text.isEmpty &&
-                              phoneController.text.isEmpty &&
-                              passwordController.text.isEmpty) {
-                            CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.warning,
-                                text: tr(LocaleKeys.additionText_entrAllFeilds));
-                          }
-
-                          // else if(){
-                          //
-                          // }
-                        } else if (!emailController.text.trim().isValidEmail()) {
-                          CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
-                        } else if (!phoneController.text.ismobile(phoneController.text)) {
                           CoolAlert.show(
                               context: context,
                               type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_entrValidMobNum));
-                        } else if (!passwordController.text.isValidPassword()) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_passShouldContain));
-                        } else {
-                          authProvider.normalLogin({
-                            "phoneCode": authProvider.phncode1,
-                            "mobileNumber": phoneController.text.trim(),
-                            "email": emailController.text,
-                            "password": passwordController.text,
-                            "countryCode": authProvider.cntrycode1
-                          }, context);
-                          emailController.clear();
-                          phoneController.clear();
-                          passwordController.clear();
+                              text: tr(LocaleKeys.additionText_entrAllFeilds));
                         }
-                      },
-                      colour: AppColor.newBlueGrey),
+
+                        // else if(){
+                        //
+                        // }
+                      } else if (!emailController.text.trim().isValidEmail()) {
+                        CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
+                      } else if (!phoneController.text.ismobile(phoneController.text)) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_entrValidMobNum));
+                      } else if (!passwordController.text.isValidPassword()) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_passShouldContain));
+                      } else {
+                        authProvider.normalLogin({
+                          "phoneCode": authProvider.phncode1,
+                          "mobileNumber": phoneController.text.trim(),
+                          "email": emailController.text,
+                          "password": passwordController.text,
+                          "countryCode": authProvider.cntrycode1
+                        }, context);
+                        emailController.clear();
+                        phoneController.clear();
+                        passwordController.clear();
+                      }
+                    },
+                  ),
+
+                  // customBlueButton(
+                  //     context: context,
+                  //     text1: tr(LocaleKeys.signUp_createAccount),
+                  //     onTap1: () {
+                  //       if (emailController.text.isEmpty ||
+                  //           phoneController.text.isEmpty ||
+                  //           passwordController.text.isEmpty) {
+                  //         if (emailController.text.isEmpty) {
+                  //           CoolAlert.show(
+                  //               context: context,
+                  //               type: CoolAlertType.warning,
+                  //               text: tr(LocaleKeys.additionText_enterEmail));
+                  //         } else if (phoneController.text.isEmpty) {
+                  //           CoolAlert.show(
+                  //               context: context,
+                  //               type: CoolAlertType.warning,
+                  //               text: tr(LocaleKeys.additionText_enterMobile));
+                  //         } else if (passwordController.text.isEmpty) {
+                  //           CoolAlert.show(
+                  //               context: context,
+                  //               type: CoolAlertType.warning,
+                  //               text: tr(LocaleKeys.additionText_passwordError));
+                  //         } else if (emailController.text.isEmpty &&
+                  //             phoneController.text.isEmpty &&
+                  //             passwordController.text.isEmpty) {
+                  //           CoolAlert.show(
+                  //               context: context,
+                  //               type: CoolAlertType.warning,
+                  //               text: tr(LocaleKeys.additionText_entrAllFeilds));
+                  //         }
+
+                  //         // else if(){
+                  //         //
+                  //         // }
+                  //       } else if (!emailController.text.trim().isValidEmail()) {
+                  //         CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
+                  //       } else if (!phoneController.text.ismobile(phoneController.text)) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_entrValidMobNum));
+                  //       } else if (!passwordController.text.isValidPassword()) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_passShouldContain));
+                  //       } else {
+                  //         authProvider.normalLogin({
+                  //           "phoneCode": authProvider.phncode1,
+                  //           "mobileNumber": phoneController.text.trim(),
+                  //           "email": emailController.text,
+                  //           "password": passwordController.text,
+                  //           "countryCode": authProvider.cntrycode1
+                  //         }, context);
+                  //         emailController.clear();
+                  //         phoneController.clear();
+                  //         passwordController.clear();
+                  //       }
+                  //     },
+                  //     colour: AppColor.newBlueGrey),
                   const SizedBox(
                     height: 20,
                   ),
@@ -287,7 +344,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               " ${tr(LocaleKeys.signUp_signIn)}",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                color: AppColor.newBlueGrey,
+                                color: AppColor.buttonPink,
                                 fontSize: 14,
                                 fontFamily: AppFont.poppinsRegular,
                               ),
@@ -312,7 +369,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               text: tr(LocaleKeys.signUp_privacyPolicy),
                               style: const TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.black,
+                                  color: AppColor.buttonPink,
                                   fontSize: 12,
                                   fontWeight: FontWeight.normal),
                               recognizer: TapGestureRecognizer()
@@ -328,7 +385,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               text: tr(LocaleKeys.signUp_terms),
                               style: const TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.black,
+                                  color: AppColor.buttonPink,
                                   fontSize: 12,
                                   fontWeight: FontWeight.normal),
                               recognizer: TapGestureRecognizer()
@@ -418,13 +475,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
 bottomPic(BuildContext context) {
   return Positioned(
-    bottom: 20.0,
+    bottom: 2.0,
     child: Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 40),
+      padding: const EdgeInsets.only(left: 10.0, right: 40),
       child: Container(
-        width: MediaQuery.of(context).size.width * .9,
-        height: 15,
-        color: const Color(0xffCBC4A9),
+        // width: MediaQuery.of(context).size.width * .9,
+        // color: const Color(0xffCBC4A9),
+        // height: 15,
+        child: Image.asset(AppImage.dogsGroup),
         // decoration: const BoxDecoration(
         //     image: DecorationImage(
         //   image: AssetImage(
@@ -510,7 +568,11 @@ _socialIcon(String icon, VoidCallback onTap) {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
-            decoration: BoxDecoration(color: AppColor.textFieldGrey, borderRadius: BorderRadius.circular(28)),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: const Color(0xffDEDEDE)),
+              borderRadius: BorderRadius.circular(8),
+            ),
             height: 56,
             width: 92,
             child: Image.asset(icon)),

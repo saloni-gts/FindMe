@@ -1,18 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_font.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/bottomBorderComp.dart';
-import '../components/customTextFeild.dart';
-
 import '../components/shortpage.dart';
-import '../components/smallCustomTextfeild.dart';
 import '../generated/locale_keys.g.dart';
 import '../services/hive_handler.dart';
-import '../util/app_images.dart';
 import '../util/color.dart';
 
 class AddPet extends StatefulWidget {
@@ -35,10 +30,14 @@ class _AddPetState extends State<AddPet> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      appBar: customAppbar(titlename: tr(LocaleKeys.addPet_addPet)),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.addPet_addPet),
+        isTitleCenter: true,
+      ),
+      //  customAppbar(titlename: tr(LocaleKeys.addPet_addPet)),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

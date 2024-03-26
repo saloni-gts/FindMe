@@ -12,13 +12,11 @@ import 'package:find_me/services/hive_handler.dart';
 import 'package:find_me/util/app_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
-import 'chat_controller/firebase_provider.dart';
 import 'monish/provider/myProvider.dart';
 
 // final Future<FirebaseApp> initialization = Firebase.initializeApp();
@@ -27,8 +25,7 @@ import 'monish/provider/myProvider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((value) {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform).then((value) {
     print("**************** firebase initialization *************");
   });
   // await Firebase.initializeApp();
@@ -40,17 +37,13 @@ Future<void> main() async {
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-    runApp(EasyLocalization(
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('fr', 'FR'),
-          Locale('es', 'ES'),
-          Locale('de', 'DE'),
-          Locale('uk', 'UA'),
-        ],
-        fallbackLocale: const Locale('en', 'US'),
-        path: 'resources/langs',
-        child: const MyApp()));
+    runApp(EasyLocalization(supportedLocales: const [
+      Locale('en', 'US'),
+      Locale('fr', 'FR'),
+      Locale('es', 'ES'),
+      Locale('de', 'DE'),
+      Locale('uk', 'UA'),
+    ], fallbackLocale: const Locale('en', 'US'), path: 'resources/langs', child: const MyApp()));
   }, (error, stack) {
     print("error is >>> $error");
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
@@ -58,10 +51,8 @@ Future<void> main() async {
 
 // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 //   runApp(const MyApp());
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 }
 
 class MyApp extends StatefulWidget {
@@ -76,7 +67,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     print("calling main building function");
     return MultiProvider(
-      
       providers: [
         ChangeNotifierProvider(
           create: (context) => PurChaseProvider(),
@@ -86,12 +76,12 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => PetProvider(),
         ),
-
         ChangeNotifierProvider(create: (context) => MapProvider()),
         ChangeNotifierProvider(create: (context) => AchievementProvider()),
       ],
       child: MaterialApp(
         onGenerateRoute: RouteGenrator.generateRoute,
+        debugShowCheckedModeBanner: false,
         // home: SizedBox(),
         initialRoute: '/',
         navigatorKey: GlobalVariable.navState,

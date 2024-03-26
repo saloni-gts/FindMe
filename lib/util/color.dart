@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class AppColor {
   static const Color textRed = Color(0xff941C1B);
   static const Color textBlueBlack = Color(0xff282747);
@@ -14,11 +15,14 @@ class AppColor {
   static const Color dateTextGrey = Color(0xff333333);
   static const Color disableButton = Color(0xffAEB4C6);
   static const Color textYello = Color(0xffF1C93E);
-  static const Color newBlueGrey=Color(0xff585357); 
-  static const Color newGrey=Color(0xffCBC4A9);
-  static const Color newLightBlue=Color(0xffF2F2F2);
+  static const Color newBlueGrey = Color(0xff585357);
+  static const Color newGrey = Color(0xffCBC4A9);
+  static const Color newLightBlue = Color(0xffF2F2F2);
 
-  static const Color newTextColor=Color(0xff5A5358);
+  static const Color newTextColor = Color(0xff5A5358);
+
+  static const Color newTextFeildGrey = Color(0xffCCCCCC);
+  static const Color buttonPink = Color(0xffB83446);
 
   //#585357  #CBC4A9  #CBC4A9  #585357  #CBC4A9 #CBC4A9
 }

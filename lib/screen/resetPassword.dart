@@ -1,5 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/authprovider.dart';
@@ -7,12 +9,9 @@ import 'package:find_me/screen/signUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/appbarComp.dart';
-import '../components/customBlueButton.dart';
 import '../components/customTextFeild.dart';
 import '../util/app_font.dart';
 import '../util/app_images.dart';
-import '../util/appstrings.dart';
 import '../util/color.dart';
 
 class CreatePassword extends StatefulWidget {
@@ -33,7 +32,11 @@ class _CreatePasswordState extends State<CreatePassword> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      appBar: customAppbar(),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_createnewPassword),
+        isTitleCenter: true,
+      ),
+      // customAppbar(),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -50,14 +53,28 @@ class _CreatePasswordState extends State<CreatePassword> {
                     height: 10.0,
                   ),
 
-                  Text(
-                    tr(LocaleKeys.additionText_createnewPassword),
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 22.0,
-                      color: AppColor.newBlueGrey,
-                      fontFamily: AppFont.poppinsBold,
-                    ),
+                  // Text(
+                  //   tr(LocaleKeys.additionText_createnewPassword),
+                  //   textAlign: TextAlign.left,
+                  //   style: const TextStyle(
+                  //     fontSize: 22.0,
+                  //     color: AppColor.newBlueGrey,
+                  //     fontFamily: AppFont.poppinsBold,
+                  //   ),
+                  // ),
+
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+
+                  SizedBox(
+                    // height: 90.0,
+                    // width: 90.0,
+                    child: Image.asset(AppImage.pinkSheild),
+                  ),
+
+                  const SizedBox(
+                    height: 10,
                   ),
 
                   Padding(
@@ -68,19 +85,9 @@ class _CreatePasswordState extends State<CreatePassword> {
                       style: const TextStyle(
                         fontSize: 14.0,
                         color: AppColor.textBlueBlack,
-                        fontFamily: AppFont.poppinsLight,
+                        fontFamily: AppFont.figTreeMedium,
                       ),
                     ),
-                  ),
-
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-
-                  SizedBox(
-                    height: 90.0,
-                    width: 90.0,
-                    child: Image.asset(AppImage.findMePinkLogo),
                   ),
 
                   Align(
@@ -156,9 +163,9 @@ class _CreatePasswordState extends State<CreatePassword> {
                     height: 30.0,
                   ),
 
-                  customBlueButton(
-                      context: context,
-                      onTap1: () {
+                  CustomButton(
+                      text: "Submit",
+                      onPressed: () {
                         if (password.text.isEmpty || repeatPassword.text.isEmpty || otpcode.text.isEmpty) {
                           CoolAlert.show(
                               context: context,
@@ -184,12 +191,42 @@ class _CreatePasswordState extends State<CreatePassword> {
                               {"otp": otpcode.text.trim(), "password": password.text.trim(), "email": widget.emailsend},
                               context);
                         }
-                        //  if(!password.text.trim().isValidPassword()){
-                        //    print("enter valid pasword");
-                        //  }
-                      },
-                      text1: tr(LocaleKeys.newPassword_continue),
-                      colour: AppColor.newBlueGrey)
+                      })
+
+                  // customBlueButton(
+                  //     context: context,
+                  //     onTap1: () {
+                  //       if (password.text.isEmpty || repeatPassword.text.isEmpty || otpcode.text.isEmpty) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_entrCodeRepPass));
+                  //       }
+                  //       // if(repeatPassword.text.isEmpty){
+                  //       //   print("enter password again...");
+                  //       // }
+                  //       else if (!password.text.isValidPassword() || !repeatPassword.text.isValidPassword()) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_passShouldContain));
+                  //       } else if (password.text != repeatPassword.text) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_passRepPassNoMatch));
+                  //       } else {
+                  //         AuthProvider auth = Provider.of(context, listen: false);
+                  //         auth.callChangePassword(
+                  //             {"otp": otpcode.text.trim(), "password": password.text.trim(), "email": widget.emailsend},
+                  //             context);
+                  //       }
+                  //       //  if(!password.text.trim().isValidPassword()){
+                  //       //    print("enter valid pasword");
+                  //       //  }
+                  //     },
+                  //     text1: tr(LocaleKeys.newPassword_continue),
+                  //     colour: AppColor.newBlueGrey)
                 ],
               ),
             ),

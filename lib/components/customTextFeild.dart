@@ -50,15 +50,15 @@ class _CustomTextFeildState extends State<CustomTextFeild> {
           contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           hintText: widget.hintText,
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.transparent)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Colors.transparent)),
           fillColor: AppColor.textFieldGrey,
           filled: true,
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xffCCCCCC))),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: Colors.transparent)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xffCCCCCC))),
           hintStyle: const TextStyle(
             color: AppColor.textGreyColor,
             fontFamily: AppFont.poppinsMedium,
@@ -116,17 +116,17 @@ class _CustomTextFieldWithLeadingState extends State<CustomTextFieldWithLeading>
           contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
 
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColor.newTextFeildGrey)),
 
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColor.newTextFeildGrey)),
           filled: true,
           fillColor: AppColor.textFieldGrey,
 
           disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColor.newTextFeildGrey)),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20), borderSide: const BorderSide(color: AppColor.newBlueGrey)),
+              borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColor.newTextFeildGrey)),
           suffixIcon: IconButton(
               onPressed: () {
                 isShowPassowrd = !isShowPassowrd;

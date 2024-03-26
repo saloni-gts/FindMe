@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/extension/email_extension.dart';
@@ -9,13 +7,12 @@ import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/appbarComp.dart';
 import '../components/bottomBorderComp.dart';
-import '../components/customBlueButton.dart';
 import '../components/customTextFeild.dart';
+import '../components/custom_button.dart';
+import '../components/custom_curved_appbar.dart';
 import '../provider/authprovider.dart';
 import '../util/app_images.dart';
-import '../util/appstrings.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({Key? key}) : super(key: key);
@@ -32,7 +29,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         bottomNavigationBar: BotttomBorder(context),
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
-        appBar: customAppbar(),
+        appBar: CustomCurvedAppbar(
+          title: "Forget Password",
+          isTitleCenter: true,
+        ),
+        // customAppbar(),
         body: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -45,37 +46,49 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    tr(LocaleKeys.additionText_forgotPassword),
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 22.0,
-                      color: AppColor.textRed,
-                      fontFamily: AppFont.poppinsBold,
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // Text(
+                  //   tr(LocaleKeys.additionText_forgotPassword),
+                  //   textAlign: TextAlign.left,
+                  //   style: const TextStyle(
+                  //     fontSize: 22.0,
+                  //     color: AppColor.textRed,
+                  //     fontFamily: AppFont.poppinsBold,
+                  //   ),
+                  // ),
+
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    // height: 90.0,
+                    // width: 90.0,
+                    child: Image.asset(
+                      AppImage.pinkLock,
+                      // fit: BoxFit.fitHeight,
                     ),
                   ),
+
+                  const SizedBox(
+                    height: 20,
+                  ),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50.0),
                     child: Text(
                       tr(LocaleKeys.additionText_enterEmailReset),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 18.0,
                         color: AppColor.textBlueBlack,
-                        fontFamily: AppFont.poppinsLight,
+                        fontFamily: AppFont.figTreeMedium,
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 10.0,
-                  ),
-                  SizedBox(
-                    height: 90.0,
-                    width: 90.0,
-                    child: Image.asset(
-                      AppImage.findMePinkLogo,
-                      fit: BoxFit.fitHeight,
-                    ),
+                    height: 15.0,
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
@@ -94,30 +107,50 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                   CustomTextFeild(textController: emaillController, textInputType: TextInputType.emailAddress),
                   const SizedBox(
-                    height: 25,
+                    height: 35,
                   ),
-                  customBlueButton(
-                      context: context,
-                      onTap1: () {
-                        if (emaillController.text.isEmpty) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_entrEmail));
-                          print("enter email....");
-                        } else if (!emaillController.text.trim().isValidEmail()) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_invalidEmain));
-                        } else {
-                          AuthProvider authProvider = Provider.of(context, listen: false);
-                          authProvider.updateForgotPassword(
-                              {"email": emaillController.text.trim()}, context, emaillController.text.trim());
-                        }
-                      },
-                      text1: tr(LocaleKeys.forgotPassword_submit),
-                      colour: AppColor.newBlueGrey)
+
+                  CustomButton(
+                    onPressed: () {
+                      if (emaillController.text.isEmpty) {
+                        CoolAlert.show(
+                            context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrEmail));
+                        print("enter email....");
+                      } else if (!emaillController.text.trim().isValidEmail()) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_invalidEmain));
+                      } else {
+                        AuthProvider authProvider = Provider.of(context, listen: false);
+                        authProvider.updateForgotPassword(
+                            {"email": emaillController.text.trim()}, context, emaillController.text.trim());
+                      }
+                    },
+                    text: tr(LocaleKeys.forgotPassword_submit),
+                  ),
+                  // customBlueButton(
+                  //     context: context,
+                  //     onTap1: () {
+                  //       if (emaillController.text.isEmpty) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_entrEmail));
+                  //         print("enter email....");
+                  //       } else if (!emaillController.text.trim().isValidEmail()) {
+                  //         CoolAlert.show(
+                  //             context: context,
+                  //             type: CoolAlertType.warning,
+                  //             text: tr(LocaleKeys.additionText_invalidEmain));
+                  //       } else {
+                  //         AuthProvider authProvider = Provider.of(context, listen: false);
+                  //         authProvider.updateForgotPassword(
+                  //             {"email": emaillController.text.trim()}, context, emaillController.text.trim());
+                  //       }
+                  //     },
+                  //     text1: tr(LocaleKeys.forgotPassword_submit),
+                  //     colour: AppColor.newBlueGrey)
                 ],
               ),
             ),

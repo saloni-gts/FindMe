@@ -121,7 +121,6 @@ import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/screen/home.dart';
 import 'package:find_me/screen/splashScreen.dart';
 import 'package:find_me/util/color.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -130,19 +129,14 @@ import 'package:upgrader/upgrader.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../api/call_api.dart';
-import '../components/appbarComp.dart';
 import '../components/globalnavigatorkey.dart';
 import '../monish/screen/Map.dart';
 import '../monish/screen/careDiaryNewEvent.dart';
 import '../monish/screen/morrefeature39.dart';
-import '../notification_service/local_notification_service.dart';
 import '../provider/authprovider.dart';
 import '../provider/petprovider.dart';
 import '../provider/purchase_provider.dart';
 import '../util/app_images.dart';
-import '../util/appstrings.dart';
-import 'LogoutPage.dart';
-import 'calenderPage.dart';
 
 class DashBoard extends StatefulWidget {
   int type;
@@ -219,56 +213,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     });
   }
 
-  //
-  //   //notifcation
-  //   // 1. This method call when app in terminated state and you get a notification
-  //   // when you click on notification app open from terminated state and you can get notification data in this method
-  //
-  //   // FirebaseMessaging.instance.getInitialMessage().then(
-  //   //       (message) {
-  //   //     print("FirebaseMessaging.instance.getInitialMessage");
-  //   //     if (message != null) {
-  //   //       print("New Notification");
-  //   //
-  //   //       // if (message.data['_id'] != null) {
-  //   //       //   Navigator.of(context).push(
-  //   //       //     MaterialPageRoute(
-  //   //       //       builder: (context) => DemoScreen(
-  //   //       //         id: message.data['_id'],
-  //   //       //       ),
-  //   //       //     ),
-  //   //       //   );
-  //   //       // }
-  //   //     }
-  //   //   },
-  //   // );
-  //
-  //   // 2. This method only call when App in forground it mean app must be opened
-  //   FirebaseMessaging.onMessage.listen(
-  //         (message) {
-  //       print("FirebaseMessaging.onMessage.listen");
-  //       if (message.notification != null) {
-  //         print(message.notification!.title);
-  //         print(message.notification!.body);
-  //         print("message.data11 ${message.data}");
-  //         LocalNotificationService.createanddisplaynotification(message);
-  //
-  //       }
-  //     },
-  //   );
-  //
-  //   // 3. This method only call when App in background and not terminated(not closed)
-  //   FirebaseMessaging.onMessageOpenedApp.listen(
-  //         (message) {
-  //       print("FirebaseMessaging.onMessageOpenedApp.listen");
-  //       if (message.notification != null) {
-  //         print(message.notification!.title);
-  //         print(message.notification!.body);
-  //         print("message.data22 ${message.data['_id']}");
-  //       }
-  //     },
-  //   );
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -328,7 +272,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
               tabs: [
                 Tab(
                     icon: Image.asset(
-                      AppImage.homeDash,
+                      AppImage.homeIcon,
                       height: 40,
                     ),
                     // const ImageIcon(
@@ -340,7 +284,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     text: tr(LocaleKeys.home_homeText)),
                 Tab(
                   icon: Image.asset(
-                    AppImage.newCal,
+                    AppImage.small_Cal,
                     height: 35,
                   ),
                   // const ImageIcon(
@@ -352,7 +296,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 ),
                 Tab(
                   icon: Image.asset(
-                    AppImage.moreDash,
+                    AppImage.setting1,
                     height: 40,
                   ),
                   //  const ImageIcon(

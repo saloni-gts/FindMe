@@ -210,6 +210,18 @@ class AppImage {
 
   static const String petDash1 = "${base}petDash1.png";
     static const String petDash2 = "${base}petDash2.png";
+   static const String pinkLock = "${base}pinkLock.png";
+      static const String pinkSheild = "${base}pinkSheild.png";
+
+            static const String dogsGroup = "${base}dogsGroup.png";
+
+                       static const String petPaw = "${base}petPaw.png";
+
+
+        static const String small_alert = "${base}small_alert.png";
+            static const String small_Cal = "${base}small_Cal.png";
+
+             static const String topImage = "${base}topImage.png";
 
 }
 

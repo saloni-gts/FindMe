@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:app_settings/app_settings.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:find_me/components/appbarComp.dart';
-import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_images.dart';
@@ -14,15 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-
-import '../components/bottomBorderComp.dart';
 import '../components/customTextFeild.dart';
-import '../components/globalnavigatorkey.dart';
 
-import '../components/globalnavigatorkey.dart';
-import '../models/petdetailsmodel.dart';
 import '../util/app_font.dart';
-import '../util/appstrings.dart';
 
 class ScannerScreen extends StatefulWidget {
   int? isNewTag;
@@ -33,8 +27,9 @@ class ScannerScreen extends StatefulWidget {
 }
 
 class _ScannerScreenState extends State<ScannerScreen> {
-  void initState(){
-    widget.isNewTag==1? print("*******new tag"): print("====***===== old tag0");
+  @override
+  void initState() {
+    widget.isNewTag == 1 ? print("*******new tag") : print("====***===== old tag0");
     super.initState();
   }
 
@@ -43,7 +38,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: QRViewScreen(isShowNewTag: widget.isNewTag==1 ? 1 : 0,));
+        body: QRViewScreen(
+          isShowNewTag: widget.isNewTag == 1 ? 1 : 0,
+        ));
   }
 }
 
@@ -52,19 +49,18 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
 class QRViewScreen extends StatefulWidget {
   int isShowNewTag;
-  QRViewScreen({Key? key,required this.isShowNewTag}) : super(key: key);
+  QRViewScreen({Key? key, required this.isShowNewTag}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _QRViewScreenState();
 }
 
-class _QRViewScreenState extends State<QRViewScreen>
-    with SingleTickerProviderStateMixin {
+class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderStateMixin {
   Barcode? result;
   bool scanned = false;
   bool scannedFailed = false;
   bool showScanner = true;
-  int validTg=0;
+  int validTg = 0;
   QRViewController? controllerQR;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -80,7 +76,7 @@ class _QRViewScreenState extends State<QRViewScreen>
     controllerQR?.resumeCamera();
   }
 
-  bool _animationStopped = false;
+  final bool _animationStopped = false;
   String scanText = "Scan";
   bool scanning = false;
   //for web
@@ -91,21 +87,18 @@ class _QRViewScreenState extends State<QRViewScreen>
   TextEditingController activationCodeController = TextEditingController();
   @override
   void initState() {
+    PetProvider petProvider = Provider.of(context, listen: false);
 
-    PetProvider petProvider=Provider.of(context,listen: false);
-
-    if (widget.isShowNewTag==1){
+    if (widget.isShowNewTag == 1) {
       print("*************------******");
-      showScanner=true;
-      print("===${showScanner}");
-      result=null;
+      showScanner = true;
+      print("===$showScanner");
+      result = null;
       tagNumberController.clear();
       activationCodeController.clear();
-    }
-    else{
-
-      tagNumberController.text=petProvider.selectedTag?.qrTagNumber??"";
-      activationCodeController.text=petProvider.selectedTag?.qrActivationCode??"";
+    } else {
+      tagNumberController.text = petProvider.selectedTag?.qrTagNumber ?? "";
+      activationCodeController.text = petProvider.selectedTag?.qrActivationCode ?? "";
     }
 
     // showScanner=true;
@@ -144,8 +137,6 @@ class _QRViewScreenState extends State<QRViewScreen>
   //   }
   // }
 
-
-
   @override
   Widget build(BuildContext context) {
     PetProvider petProvider = Provider.of(context, listen: false);
@@ -153,43 +144,57 @@ class _QRViewScreenState extends State<QRViewScreen>
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton:
+      floatingActionButton: widget.isShowNewTag == 0
+          // petDetail?.isQrAttached == 1
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 40.0, left: 30),
+              child: CustomButton(
+                  text: activationCodeController.text.isEmpty
+                      ? tr(LocaleKeys.additionText_activate)
+                      : tr(LocaleKeys.additionText_activate),
+                  onPressed: () {
+                    if (activationCodeController.text.isEmpty) {
+                      print("feild is empty......");
+                    } else {
+                      Map<String, dynamic> bodyyy = {
+                        "activationCode": activationCodeController.text,
+                        "tagName": tagNumberController.text,
+                        "petId": petProvider.selectedPetDetail?.id ?? "",
+                      };
+                      petProvider.qrCodeActivatinTag(bodyyy, context: context);
+                    }
+                  })
 
-      widget.isShowNewTag==0
-      // petDetail?.isQrAttached == 1
-          ? SizedBox()
-          :
-      Padding(
-        padding: const EdgeInsets.only(bottom: 40.0),
-        child: customBlueButton(
-            context: context,
-            text1: activationCodeController.text.isEmpty ?  tr(LocaleKeys.additionText_activate):  tr(LocaleKeys.additionText_activate),
-            onTap1: () {
+              // customBlueButton(
+              //     context: context,
+              //     text1: activationCodeController.text.isEmpty
+              //         ? tr(LocaleKeys.additionText_activate)
+              //         : tr(LocaleKeys.additionText_activate),
+              //     onTap1: () {
+              //       if (activationCodeController.text.isEmpty) {
+              //         print("feild is empty......");
+              //       } else {
+              //         Map<String, dynamic> bodyyy = {
+              //           "activationCode": activationCodeController.text,
+              //           "tagName": tagNumberController.text,
+              //           "petId": petProvider.selectedPetDetail?.id ?? "",
+              //         };
+              //         petProvider.qrCodeActivatinTag(bodyyy, context: context);
+              //       }
+              //     },
+              //     colour: activationCodeController.text.isEmpty ? const Color(0xffAEB4C6) : AppColor.newBlueGrey
 
-              if (activationCodeController.text.isEmpty) {
-                print("feild is empty......");
-
-              }
-              else {
-                Map<String, dynamic> bodyyy = {
-
-                  "activationCode": activationCodeController.text,
-                  "tagName": tagNumberController.text,
-                  "petId": petProvider.selectedPetDetail?.id ?? "",
-
-                };
-                petProvider.qrCodeActivatinTag(bodyyy, context: context);
-              }
-
-            },
-
-
-            colour: activationCodeController.text.isEmpty ?  Color(0xffAEB4C6): AppColor.newBlueGrey),
-      ),
+              //     ),
+              ),
       resizeToAvoidBottomInset: false,
-      appBar: customAppbar(titlename: tr(LocaleKeys.additionText_QrCode)),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_QrCode),
+        isTitleCenter: true,
+      ),
+      // customAppbar(titlename: tr(LocaleKeys.additionText_QrCode)),
       backgroundColor: Colors.white,
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -197,28 +202,27 @@ class _QRViewScreenState extends State<QRViewScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 // height: MediaQuery.of(context).size.height * .40,
                 // width: MediaQuery.of(context).size.width * .85,
                 child:
-                // petDetail?.isQrAttached == 1
-                widget.isShowNewTag==0
-                    ? Container(
-                    height: 250,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: ( Image.asset(
-                          AppImage.scanQR,
-                          fit: BoxFit.cover,
-                        )
-                        )))
-                    : Center(child: (_buildQrView(context))),
+                    // petDetail?.isQrAttached == 1
+                    widget.isShowNewTag == 0
+                        ? SizedBox(
+                            height: 250,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: (Image.asset(
+                                  AppImage.scanQR,
+                                  fit: BoxFit.cover,
+                                ))))
+                        : Center(child: (_buildQrView(context))),
                 // Padding(
                 //   padding: const EdgeInsets.only(top: 350),
                 //   child: Align(
@@ -253,36 +257,27 @@ class _QRViewScreenState extends State<QRViewScreen>
                 //   child: buildResult(),
                 // )
               ),
-
               buildResult(context),
-
               Text(
                 tr(LocaleKeys.additionText_tagNumber),
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: AppColor.textLightBlueBlack,
-                    fontFamily: AppFont.poppinsRegular),
+                style: const TextStyle(
+                    fontSize: 12.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-              CustomTextFeild(
-                  isEnabled: false,
-                  textInputType: TextInputType.none,
-                  textController: tagNumberController),
-              SizedBox(
+              CustomTextFeild(isEnabled: false, textInputType: TextInputType.none, textController: tagNumberController),
+              const SizedBox(
                 height: 10.0,
               ),
               Text(
                 tr(LocaleKeys.additionText_activationCode),
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 12.0,
-                    color: AppColor.textLightBlueBlack,
-                    fontFamily: AppFont.poppinsRegular),
+                style: const TextStyle(
+                    fontSize: 12.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               CustomTextFeild(
@@ -290,10 +285,10 @@ class _QRViewScreenState extends State<QRViewScreen>
                   //cursorColor: Colors.transparent,
                   textInputType: TextInputType.none,
                   textController: activationCodeController),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 80.0,
               )
             ],
@@ -358,72 +353,71 @@ class _QRViewScreenState extends State<QRViewScreen>
     //     : 300.0;
 
     return showScanner
-        ? Container(
-      height: 250,
-      child: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-        overlay: QrScannerOverlayShape(
-            borderColor: AppColor.textLightBlueBlack,
-            borderRadius: 10,
-            // borderLength: 120,
-            borderWidth: 10,
-            cutOutHeight: 200,
-            cutOutWidth: 200),
-        // onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-      ),
-    )
-        : Stack(children: [
-      Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
-          height: 250,
-          width: MediaQuery.of(context).size.width * .9,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.asset(
-              AppImage.scanQR,
-              fit: BoxFit.cover,
+        ? SizedBox(
+            height: 250,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                  borderColor: AppColor.textLightBlueBlack,
+                  borderRadius: 10,
+                  // borderLength: 120,
+                  borderWidth: 10,
+                  cutOutHeight: 200,
+                  cutOutWidth: 200),
+              // onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
             ),
-          )),
-      InkWell(
-          onTap: (){
-
-            setState((){
-              scanned = false;
-              scannedFailed = false;
-              showScanner=true;
-              result=null;
-              tagNumberController.clear();
-              activationCodeController.clear();
-              //  reassemble();
-
-            });
-          },
-          child:
-          activationCodeController.text.isEmpty ? Center(
-              child: Text(
-                // tr(LocaleKeys.additionText_tryAgn),
-                tr(LocaleKeys.additionText_scanAgain),
-                style: TextStyle(color: Colors.white,fontFamily:
-                AppFont.poppinSemibold,fontSize: 18),)) : SizedBox()
-      )
-    ],);
+          )
+        : Stack(
+            children: [
+              Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
+                  height: 250,
+                  width: MediaQuery.of(context).size.width * .9,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(6),
+                    child: Image.asset(
+                      AppImage.scanQR,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+              InkWell(
+                  onTap: () {
+                    setState(() {
+                      scanned = false;
+                      scannedFailed = false;
+                      showScanner = true;
+                      result = null;
+                      tagNumberController.clear();
+                      activationCodeController.clear();
+                      //  reassemble();
+                    });
+                  },
+                  child: activationCodeController.text.isEmpty
+                      ? Center(
+                          child: Text(
+                          // tr(LocaleKeys.additionText_tryAgn),
+                          tr(LocaleKeys.additionText_scanAgain),
+                          style: const TextStyle(color: Colors.white, fontFamily: AppFont.poppinSemibold, fontSize: 18),
+                        ))
+                      : const SizedBox())
+            ],
+          );
   }
 
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
-      this.controllerQR = controller;
+      controllerQR = controller;
       reassemble();
-
     });
 
     controller.scannedDataStream.listen((Barcode scanData) {
-      Future.delayed(Duration.zero,(){
+      Future.delayed(Duration.zero, () {
         setState(() {
           result = scanData;
           if (result != null && !scanned && scanData.code != null) {
             int lengths = result?.code?.length ?? 0;
-            showScanner=false;
+            showScanner = false;
             // if (lengths > 100) {
             //
             // }
@@ -472,11 +466,11 @@ class _QRViewScreenState extends State<QRViewScreen>
             // });
 
             scanned = true;
+
             ///
 //           PetProvider petProvider = Provider.of(context, listen: false);
 //           var petDetail = petProvider.selectedPetDetail;
             // petDetail?.isQrAttached=1;
-
 
             // showDialog(context: context, builder: (context1)=>AlertDialog(
             //
@@ -543,7 +537,6 @@ class _QRViewScreenState extends State<QRViewScreen>
           }
           print("here");
         });
-
       });
     });
     // controller.pauseCamera();
@@ -553,53 +546,39 @@ class _QRViewScreenState extends State<QRViewScreen>
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     print('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
-
-
-      showDialog(context: context, builder: (context)=>AlertDialog(
-        title: Text("Please enable camera permissions"
-            ""),
-        actions: <Widget>[
-          InkWell(
-            child: Text("Dismiss"
-
-              ,style: TextStyle(
-                  fontSize: 17.0,
-                  fontFamily: AppFont.poppinsMedium
-              ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, AppScreen.petDashboard);
-            },
-
-          ),
-          SizedBox(
-            width: 5.0,
-          ),
-
-          InkWell(
-            child: Text("Allow"
-
-              ,style: TextStyle(
-                  fontSize: 17.0,
-                  fontFamily: AppFont.poppinsMedium
-              ),
-            ),
-            onTap: () {
-              AppSettings.openAppSettings();
-              Future.delayed(Duration(milliseconds: 500), () => exit(0));
-              Navigator.pushNamed(context, AppScreen.petDashboard);
-              // Navigator.pop(context);
-            },
-          ),
-        ],
-      )
-      );
-
-
-
-
-
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Please enable camera permissions"
+                    ""),
+                actions: <Widget>[
+                  InkWell(
+                    child: const Text(
+                      "Dismiss",
+                      style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppScreen.petDashboard);
+                    },
+                  ),
+                  const SizedBox(
+                    width: 5.0,
+                  ),
+                  InkWell(
+                    child: const Text(
+                      "Allow",
+                      style: TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                    ),
+                    onTap: () {
+                      AppSettings.openAppSettings();
+                      Future.delayed(const Duration(milliseconds: 500), () => exit(0));
+                      Navigator.pushNamed(context, AppScreen.petDashboard);
+                      // Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ));
 
       // camPermissionDialog(context);
       // Navigator.pop(context1);
@@ -635,7 +614,6 @@ class _QRViewScreenState extends State<QRViewScreen>
 
   @override
   void dispose() {
-
     tagNumberController.clear();
     activationCodeController.clear();
     controllerQR?.dispose();
@@ -652,32 +630,29 @@ class _QRViewScreenState extends State<QRViewScreen>
         var staging = "find-me.uk";
         var prod = "dashboardstage.find-me.app";
         // var prod = "u-tags.uk/pet/:tagNumber";
-     //    https://dashboardstage.find-me.app/INGT000007/NXB1
-        //https://find-me.uk/pet/INGT000001/WKF7  
-        if (
-
-        result?.code?.split("/")[2] == staging  
-        // && result?.code?.split("/")[3] == "pet" 
-        )
-          // && (result?.code?.split("/")[4]=="missing") && (result?.code?.split("/")[5]=="pet") )
-            {
+        //    https://dashboardstage.find-me.app/INGT000007/NXB1
+        //https://find-me.uk/pet/INGT000001/WKF7
+        if (result?.code?.split("/")[2] == staging
+            // && result?.code?.split("/")[3] == "pet"
+            )
+        // && (result?.code?.split("/")[4]=="missing") && (result?.code?.split("/")[5]=="pet") )
+        {
           print("result  ${result?.code ?? ""}");
           print("resultlength  ${result?.code?.split("/")}");
           tagNumberController.text = result?.code?.split("/")[3] ?? "";
           activationCodeController.text = result?.code?.split("/")[4] ?? "";
 
-
-          if(tagNumberController.text.isEmpty||
-              activationCodeController.text.isEmpty){
-            setState((){showScanner=true;});
-          }else{
-            Future.delayed(Duration.zero,(){
-              setState((){showScanner=false;});
+          if (tagNumberController.text.isEmpty || activationCodeController.text.isEmpty) {
+            setState(() {
+              showScanner = true;
+            });
+          } else {
+            Future.delayed(Duration.zero, () {
+              setState(() {
+                showScanner = false;
+              });
             });
           }
-
-
-
 
           // controllerQR?.dispose();
           //  _animationController!.dispose();
@@ -709,7 +684,6 @@ class _QRViewScreenState extends State<QRViewScreen>
           //     ],
           //   );
           // });
-
         }
       }
     } else {
@@ -769,12 +743,11 @@ class _QRViewScreenState extends State<QRViewScreen>
     //
     // }
     return Container(
-      child: Text(
+      child: const Text(
         "",
         // result != null ? 'result :${result!.code}' : "",
         textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.green),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0, color: Colors.green),
       ),
     );
   }
@@ -786,15 +759,13 @@ class _QRViewScreenState extends State<QRViewScreen>
 }
 
 class AnimationButttonCustom extends StatefulWidget {
-  const AnimationButttonCustom({Key? key, required this.callBack})
-      : super(key: key);
+  const AnimationButttonCustom({Key? key, required this.callBack}) : super(key: key);
   final Function callBack;
   @override
   _AnimationButttonCustomState createState() => _AnimationButttonCustomState();
 }
 
-class _AnimationButttonCustomState extends State<AnimationButttonCustom>
-    with TickerProviderStateMixin {
+class _AnimationButttonCustomState extends State<AnimationButttonCustom> with TickerProviderStateMixin {
   AnimationController? animationController;
   Animation? _arrowAnimation;
   AnimationController? _arrowAnimationController;
@@ -807,8 +778,7 @@ class _AnimationButttonCustomState extends State<AnimationButttonCustom>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    _arrowAnimation =
-        Tween(begin: 0.0, end: pi).animate(_arrowAnimationController!);
+    _arrowAnimation = Tween(begin: 0.0, end: pi).animate(_arrowAnimationController!);
   }
 
   @override
@@ -835,7 +805,7 @@ class _AnimationButttonCustomState extends State<AnimationButttonCustom>
       },
       onTap: () {
         setState(
-              () {
+          () {
             _arrowAnimationController!.isCompleted
                 ? _arrowAnimationController!.reverse()
                 : _arrowAnimationController!.forward();

@@ -149,6 +149,18 @@ flutter:
     - family: poppins_medium
       fonts:
         - asset: assets/font/Poppins_Medium.ttf
+
+    - family: figtree_bold
+      fonts:
+        - asset: assets/font/Figtree_Bold.ttf
+
+    - family: figtree_medium
+      fonts:
+        - asset: assets/font/Figtree_Medium.ttf    
+    - family: figtree_regular
+      fonts:
+        - asset: assets/font/Figtree_Regular.ttf      
+
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf

@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/provider/purchase_provider.dart';
 import 'package:find_me/screen/addPet.dart';
-import 'package:find_me/screen/checkProtection.dart';
 import 'package:find_me/screen/protectionSheild.dart';
 import 'package:find_me/screen/splashScreen.dart';
 import 'package:find_me/screen/viewPremium.dart';
@@ -20,8 +18,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,19 +26,12 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import '../components/commingSoonAlert.dart';
-import '../components/greyContainer.dart';
+import '../components/custom_curved_appbar.dart';
 import '../components/homeLocPrem.dart';
-import '../components/upcommingEventCont.dart';
 import '../models/usermodel.dart';
 import '../monish/models/FcmToken.dart';
-import '../monish/provider/myProvider.dart';
-import '../monish/screen/buyPremium.dart';
-import '../monish/screen/newNote.dart';
 import '../monish/screen/ownerProfile.dart';
-import '../monish/screen/weightTrakrMain.dart';
 import '../provider/authprovider.dart';
-import 'getLocation.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -156,685 +145,529 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: AppColor.buttonPink,
       statusBarIconBrightness: Brightness.dark,
     ));
 
-    return SafeArea(
-      top: true,
-      bottom: true,
-      child: Scaffold(
-        appBar: customAppbar(isbackbutton: false),
-        body: Consumer<PetProvider>(builder: (context, petProvider, child) {
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          Consumer<AuthProvider>(
-                            builder: (context, authProvider, child) {
-                              var loginUser2 = HiveHandler.getUserHiveRefresher().value.values.first;
-                              return InkWell(
-                                onTap: () {
-                                  switchonNotification();
-                                  petProvider.updateLoader(true);
-                                  // bool v1= loginUser.phoneCode;
-                                  // bool v1=isString(loginUser.phoneCode);
+    return Scaffold(
+      appBar: CustomCurvedAppbar(
+        title: "Home",
+        isTitleCenter: true,
+        showBackIcon: false,
+        showIcon: true,
+        icn: Consumer<PetProvider>(builder: (context, child, petProvider) {
+          return InkWell(
+            onTap: () {
+              switchonNotification();
+              // petProvider.updateLoader(true);
 
-                                  if (loginUser.phoneCode!.isNotEmpty) {
-                                    print("====${checkString(loginUser.phoneCode)}");
-                                    if (!checkString(loginUser.phoneCode)) {
-                                      loginUser.phoneCode = phCodeFilter(loginUser.phoneCode!);
-                                    }
-                                    print("final user code====${loginUser.phoneCode}");
-                                  } else {
-                                    loginUser.phoneCode = "44";
-                                  }
+              if (loginUser.phoneCode!.isNotEmpty) {
+                print("====${checkString(loginUser.phoneCode)}");
+                if (!checkString(loginUser.phoneCode)) {
+                  loginUser.phoneCode = phCodeFilter(loginUser.phoneCode!);
+                }
+                print("final user code====${loginUser.phoneCode}");
+              } else {
+                loginUser.phoneCode = "44";
+              }
 
-                                  // print("====${checkString(loginUser.phoneCode)}");
-                                  // if(!checkString(loginUser.phoneCode)){
-                                  //   loginUser.phoneCode= phCodeFilter(loginUser.phoneCode!);
-                                  // }
-                                  // print("final user code====${loginUser.phoneCode}");
-                                  Future.delayed(const Duration(milliseconds: 200), () {
-                                    petProvider.updateLoader(false);
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
-                                  });
+              Future.delayed(const Duration(milliseconds: 200), () {
+                // petProvider.updateLoader(false);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
+              });
+            },
+            child: Container(
+              height: 24,
+              width: 24,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.black,
+              ),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: ValueListenableBuilder<Box<UserModel>>(
+                    valueListenable: HiveHandler.getUserHiveRefresher(),
+                    builder: (context, box, widget) {
+                      var user = box.get(HiveHandler.userDataBoxKey);
 
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => OwnerProfile()));
-                                },
-                                child: Container(
-                                  height: 80,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(40),
-                                    color: Colors.black,
-                                    // shape:BoxShape.circle,
-                                  ),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(40),
-                                      child: ValueListenableBuilder<Box<UserModel>>(
-                                        valueListenable: HiveHandler.getUserHiveRefresher(),
-                                        builder: (context, box, widget) {
-                                          var user = box.get(HiveHandler.userDataBoxKey);
-
-                                          return CachedNetworkImage(
-                                            imageUrl: user?.profileImage ?? "",
-                                            fit: BoxFit.cover,
-                                            placeholder: (context, url) => Image.asset(
-                                              AppImage.jamesImage,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            errorWidget: (context, url, error) => Image.asset(
-                                              AppImage.jamesImage,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          );
-                                        },
-                                      )),
-                                ),
-                              );
-                            },
-                          ),
-
-                          //      // Image.asset(
-                          //      //    AppImage.jamesImage,
-                          //      //    fit: BoxFit.cover,
-                          //      //  ),
-                          //
-                          Positioned(
-                            left: 55,
-                            top: 2,
-                            child: SizedBox(
-                              height: 30,
-                              width: 30,
-                              // decoration: BoxDecoration(
-                              //   shape: BoxShape.circle,
-                              //   border: Border.all(
-                              //     color: Colors.white,
-                              //   ),
-                              //   color: AppColor.newBlueGrey,
-                              // ),
-                              child: InkWell(
-                                onTap: () {
-                                  switchonNotification();
-                                  Navigator.push(
-                                      context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
-                                },
-                                child: ClipRRect(
-                                  child: Image.asset(
-                                    AppImage.pencil,
-                                    height: 30,
-                                    width: 30,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-
-                      const SizedBox(
-                        width: 15.0,
-                      ),
-
-                      Consumer<AuthProvider>(builder: (context, authProvider, child) {
-                        return Align(
-                            alignment: Alignment.bottomLeft,
-                            child: ValueListenableBuilder<Box<UserModel>>(
-                                valueListenable: HiveHandler.getUserHiveRefresher(),
-                                builder: (context, box, widget) {
-                                  user = box.get(HiveHandler.userDataBoxKey);
-                                  return Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: 180,
-                                        child: Text(
-                                          user?.name ?? "",
-                                          // loginUser.name ?? "",
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                            fontSize: 16.0,
-                                            color: AppColor.textLightBlueBlack,
-                                            fontFamily: AppFont.poppinSemibold,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 180,
-                                        child: Text(
-                                          user?.email ?? "",
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: const TextStyle(
-                                              fontSize: 9.0,
-                                              color: AppColor.textLightBlueBlack,
-                                              fontFamily: AppFont.poppinsRegular),
-                                        ),
-                                        // color: Colors.blue,
-                                      ),
-                                    ],
-                                  );
-                                }));
-                      }),
-
-                      // Align(
-                      //   alignment: Alignment.bottomLeft,
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text(
-                      //         loginUser.name ?? "",
-                      //         textAlign: TextAlign.left,
-                      //         style: TextStyle(
-                      //           fontSize: 16.0,
-                      //           color: AppColor.textLightBlueBlack,
-                      //           fontFamily: AppFont.poppinSemibold,
-                      //         ),
-                      //       ),
-                      //       Text(
-                      //         loginUser.email ?? "",
-                      //         textAlign: TextAlign.left,
-                      //         style: TextStyle(
-                      //             fontSize: 9.0,
-                      //             color: AppColor.textLightBlueBlack,
-                      //             fontFamily: AppFont.poppinsRegular),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
-
-                      const Spacer(),
-
-                      // Flag.fromCode(FlagsCode.AR,height: 15,width: 18,),
-                      //   Flag.fromString('AR',height: 15, width: 18, fit: BoxFit.fill),
-
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: CircleAvatar(
-                          radius: 30.0,
-                          backgroundColor: AppColor.textFieldGrey,
-                          child: Consumer<PetProvider>(builder: (context, petProvider, child) {
-                            return InkWell(
-                                onTap: () async {
-                                  switchonNotification();
-
-                                  if (petProvider.petDetailList2.isEmpty) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context1) {
-                                          return AlertDialog(
-                                            title: Text(tr(LocaleKeys.home_noPetFound)),
-                                            actions: [
-                                              InkWell(
-                                                child: Text(
-                                                  tr(LocaleKeys.additionText_dismiss),
-                                                  style: const TextStyle(
-                                                      fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                ),
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  } else {
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (context) => const ProtectionSheild()));
-                                  }
-                                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>BuyPremium()));
-                                },
-                                child: Image.asset(
-                                  AppImage.checkPetProf,
-                                  height: 60,
-                                  width: 60,
-                                ));
-                          }),
+                      return CachedNetworkImage(
+                        imageUrl: user?.profileImage ?? "",
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Image.asset(
+                          AppImage.jamesImage,
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    ],
+                        errorWidget: (context, url, error) => Image.asset(
+                          AppImage.jamesImage,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    },
+                  )),
+            ),
+          );
+        }),
+      ),
+      body: Consumer<PetProvider>(builder: (context, petProvider, child) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProtectionSheild()));
+                },
+                child: Container(
+                  color: const Color(0xffE4E3F1),
+                  width: double.infinity,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 14.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Check Pet Profile Date",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 16),
+                        ),
+                        Icon(
+                          Icons.arrow_circle_right_outlined,
+                          color: Colors.grey,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 250,
-                        child: Text(
-                          tr(LocaleKeys.home_myPets),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                              fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                        ),
+              ),
+              const SizedBox(
+                height: 15.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 250,
+                      child: Text(
+                        tr(LocaleKeys.home_myPets),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                        style: const TextStyle(
+                            fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                       ),
-                      InkWell(
-                          onTap: () {
-                            switchonNotification();
-                            Navigator.pushNamed(context, AppScreen.showallpetscreen);
-                          },
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColor.containerColor, borderRadius: BorderRadius.circular(12)),
-                                height: 24,
-                                width: 60,
-                                child: Center(
-                                  child: Text(
+                    ),
+                    InkWell(
+                        onTap: () {
+                          switchonNotification();
+                          Navigator.pushNamed(context, AppScreen.showallpetscreen);
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  Text(
                                     tr(LocaleKeys.home_seeAll),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        fontSize: 12.0,
-                                        color: AppColor.textLightBlueBlack,
-                                        fontFamily: AppFont.poppinsRegular),
+                                        fontSize: 12.0, color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold),
                                   ),
-                                ),
-                              )))
-                    ],
-                  ),
+                                  const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColor.buttonPink)
+                                ],
+                              ),
+                            )))
+                  ],
                 ),
-                Consumer<PetProvider>(
-                  builder: (context, petProvider, child) {
-                    var petList = petProvider.petDetailList;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: SizedBox(
-                        height: 110,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: petList.length + 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return index == petList.length
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                                      child: GestureDetector(
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: const Color(0xffCBC4A9),
-                                                  borderRadius: BorderRadius.circular(40)),
-                                              height: 80,
-                                              width: 80,
-                                              child: InkWell(
-                                                child: Image.asset(AppImage.addIcon),
-                                                onTap: () {
-                                                  // petProvider.callPetPremDetails();
-                                                  petProvider.callPetPremDetailsAddPet();
-                                                  switchonNotification();
-                                                  Navigator.push(
-                                                      context, MaterialPageRoute(builder: (context) => const AddPet()));
-                                                },
+              ),
+              Consumer<PetProvider>(
+                builder: (context, petProvider, child) {
+                  var petList = petProvider.petDetailList;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: SizedBox(
+                      height: 220,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: petList.length + 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return index == 0
+                                ? Padding(
+                                    padding: const EdgeInsets.only(left: 5, right: 5),
+                                    child: GestureDetector(
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xffF8EBED),
+                                                    borderRadius: BorderRadius.circular(8)),
+                                                height: 180,
+                                                width: 130,
+                                                child: InkWell(
+                                                  child: Image.asset(AppImage.petPaw),
+                                                  onTap: () {
+                                                    // petProvider.callPetPremDetails();
+                                                    petProvider.callPetPremDetailsAddPet();
+                                                    switchonNotification();
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context) => const AddPet()));
+                                                  },
+                                                ),
                                               ),
-                                            ),
-                                            const Text(
-                                              "",
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: Colors.black,
-                                                  fontFamily: AppFont.poppinSemibold),
-                                            )
-                                          ],
-                                        ),
-                                        onTap: () {},
+                                              const Positioned(
+                                                bottom: 2,
+                                                left: 40,
+                                                child: Text(
+                                                  "Add Pet",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 14.0,
+                                                      color: Colors.black,
+                                                      fontFamily: AppFont.poppinSemibold),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const Text(
+                                            "",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.black,
+                                                fontFamily: AppFont.poppinSemibold),
+                                          )
+                                        ],
                                       ),
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          petProvider.callPetPremDetailsAddPet();
-                                          switchonNotification();
-                                          petProvider.setSelectedPetDetails(petList[index]);
-                                          Navigator.pushNamed(context, AppScreen.petDashboard);
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(40),
-                                                      color: AppColor.textFieldGrey),
-                                                  height: 80,
-                                                  width: 80,
-                                                  child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(40),
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: petList[index].petPhoto ?? "",
-                                                      fit: BoxFit.cover,
-                                                      placeholder: (context, url) => Padding(
-                                                        padding: const EdgeInsets.all(15.0),
-                                                        child: Image.asset(
-                                                          AppImage.placeholderIcon,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      errorWidget: (context, url, error) => Padding(
-                                                        padding: const EdgeInsets.all(15.0),
-                                                        child: Image.asset(
-                                                          AppImage.placeholderIcon,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    ),
+                                      onTap: () {},
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        petProvider.callPetPremDetailsAddPet();
+                                        switchonNotification();
+                                        petProvider.setSelectedPetDetails(petList[index - 1]);
+                                        Navigator.pushNamed(context, AppScreen.petDashboard);
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(40), color: AppColor.textFieldGrey),
+                                            height: 180,
+                                            width: 130,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(8),
+                                              child: CachedNetworkImage(
+                                                imageUrl: petList[index - 1].petPhoto ?? "",
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) => Padding(
+                                                  padding: const EdgeInsets.all(15.0),
+                                                  child: Image.asset(
+                                                    AppImage.placeholderIcon,
+                                                    fit: BoxFit.cover,
                                                   ),
                                                 ),
-                                                Positioned(
-                                                    left: 55.0,
-                                                    top: 0,
-                                                    child: (petList[index].isPremium == 1 &&
-                                                            petProvider.isUserPremium == 1)
-                                                        // ||(petProvider.sharedPremIds.contains(petList[index].id))
-                                                        ? SizedBox(
-                                                            height: 20,
-                                                            child: Image.asset(AppImage.premiumIcon),
-                                                          )
-                                                        : const SizedBox())
-                                              ],
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                print("IMAGE PET  ${petList[index].petPhoto}");
-                                              },
-                                              child: Text(
-                                                petList[index].petName ?? "",
-                                                textAlign: TextAlign.left,
-                                                style: const TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.black,
-                                                    fontFamily: AppFont.poppinSemibold),
+                                                errorWidget: (context, url, error) => Padding(
+                                                  padding: const EdgeInsets.all(15.0),
+                                                  child: Image.asset(
+                                                    AppImage.placeholderIcon,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                          Positioned(
+                                            // bottom: 2,
+                                            top: 155,
+                                            left: 50.0,
+                                            child: Text(
+                                              petList[index - 1].petName ?? "",
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: Colors.white,
+                                                  fontFamily: AppFont.poppinSemibold),
+                                            ),
+                                          ),
+                                          Positioned(
+                                              left: 55.0,
+                                              top: 0,
+                                              child:
+                                                  (petList[index - 1].isPremium == 1 && petProvider.isUserPremium == 1)
+                                                      // ||(petProvider.sharedPremIds.contains(petList[index].id))
+                                                      ? SizedBox(
+                                                          height: 20,
+                                                          child: Image.asset(AppImage.premiumIcon),
+                                                        )
+                                                      : const SizedBox())
+                                        ],
                                       ),
-                                    );
-                            }),
-                      ),
-                    );
+                                    ),
+                                  );
+                          }),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: AppColor.newGrey,
+                  ),
+                  child: Row(children: [
+                    Image.asset(AppImage.redSheild),
+                    const Expanded(
+                        child: Text(
+                      "Check pets additional information or update here",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
+                    )),
+                  ]),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const ViewPremium();
+                      },
+                    ));
                   },
-                ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Container(
                     height: 120,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(28),
                       color: AppColor.newGrey,
                     ),
-                    child: Row(children: [
-                      Image.asset(AppImage.redSheild),
-                      const Expanded(
-                          child: Text(
-                        "Check pets additional information or update here",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
-                      )),
-                    ]),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const ViewPremium();
-                        },
-                      ));
-                    },
-                    child: Container(
-                      height: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        color: AppColor.newGrey,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(children: [
-                          Image.asset(AppImage.bigRibbon),
-                          const Expanded(
-                              child: Text(
-                            "Tap Now To Unlock All The PREMIUM BENIFITS",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
-                          )),
-                        ]),
-                      ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(children: [
+                        Image.asset(AppImage.bigRibbon),
+                        const Expanded(
+                            child: Text(
+                          "Tap Now To Unlock All The PREMIUM BENIFITS",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
+                        )),
+                      ]),
                     ),
                   ),
-                )
+                ),
+              )
 
-                // petProvider.isUserPremium == 1
-                //     ? const SizedBox()
-                //     : Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                //         child: Align(
-                //           alignment: Alignment.topLeft,
-                //           child: Text(
-                //             tr(LocaleKeys.home_premium),
-                //             textAlign: TextAlign.left,
-                //             style: const TextStyle(
-                //                 fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                //           ),
-                //         ),
-                //       ),
-                // petProvider.isUserPremium == 1
-                //     ? const SizedBox()
-                //     : const SizedBox(
-                //         height: 10.0,
-                //       ),
-                // petProvider.isUserPremium == 1
-                //     ? const SizedBox()
-                //     : Padding(
-                //         padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                //         child: InkWell(
-                //           onTap: () {
-                //             switchonNotification();
-                //             commingSoonDialog(context);
-                //           },
-                //           child: Container(
-                //             decoration: const BoxDecoration(
-                //               borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                //             ),
-                //             width: double.infinity,
-                //             child: ClipRRect(
-                //                 borderRadius: BorderRadius.circular(4),
-                //                 child: Image.asset(AppImage.banner1, fit: BoxFit.cover)),
-                //           ),
-                //         ),
-                //       ),
-                // petProvider.isUserPremium == 1
-                //     ? const SizedBox()
-                //     : const SizedBox(
-                //         height: 15.0,
-                //       ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                //   child: Align(
-                //     alignment: Alignment.topLeft,
-                //     child: Text(
-                //       tr(LocaleKeys.home_visiWebSite),
-                //       textAlign: TextAlign.left,
-                //       style: const TextStyle(
-                //           fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 10.0,
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                //   child: InkWell(
-                //     onTap: () async {
-                //       switchonNotification();
-                //       //
-                //       // String urll = "https://unique-tags.com/password";
-                //       // if (await canLaunch(urll)) {
-                //       //   await launch(
-                //       //     urll,
-                //       //   );
-                //       // }
-                //       // else{
-                //       //   print("0000****0000");
-                //       // }
-                //       //
+              // petProvider.isUserPremium == 1
+              //     ? const SizedBox()
+              //     : Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              //         child: Align(
+              //           alignment: Alignment.topLeft,
+              //           child: Text(
+              //             tr(LocaleKeys.home_premium),
+              //             textAlign: TextAlign.left,
+              //             style: const TextStyle(
+              //                 fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+              //           ),
+              //         ),
+              //       ),
+              // petProvider.isUserPremium == 1
+              //     ? const SizedBox()
+              //     : const SizedBox(
+              //         height: 10.0,
+              //       ),
+              // petProvider.isUserPremium == 1
+              //     ? const SizedBox()
+              //     : Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              //         child: InkWell(
+              //           onTap: () {
+              //             switchonNotification();
+              //             commingSoonDialog(context);
+              //           },
+              //           child: Container(
+              //             decoration: const BoxDecoration(
+              //               borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              //             ),
+              //             width: double.infinity,
+              //             child: ClipRRect(
+              //                 borderRadius: BorderRadius.circular(4),
+              //                 child: Image.asset(AppImage.banner1, fit: BoxFit.cover)),
+              //           ),
+              //         ),
+              //       ),
+              // petProvider.isUserPremium == 1
+              //     ? const SizedBox()
+              //     : const SizedBox(
+              //         height: 15.0,
+              //       ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              //   child: Align(
+              //     alignment: Alignment.topLeft,
+              //     child: Text(
+              //       tr(LocaleKeys.home_visiWebSite),
+              //       textAlign: TextAlign.left,
+              //       style: const TextStyle(
+              //           fontSize: 15.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10.0,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              //   child: InkWell(
+              //     onTap: () async {
+              //       switchonNotification();
+              //       //
+              //       // String urll = "https://unique-tags.com/password";
+              //       // if (await canLaunch(urll)) {
+              //       //   await launch(
+              //       //     urll,
+              //       //   );
+              //       // }
+              //       // else{
+              //       //   print("0000****0000");
+              //       // }
+              //       //
 
-                //       if (Platform.isIOS) {
-                //         print("/---------/");
-                //         String Iosurll = "https://unique-tags.com/password";
+              //       if (Platform.isIOS) {
+              //         print("/---------/");
+              //         String Iosurll = "https://unique-tags.com/password";
 
-                //         if (await canLaunchUrlString(Iosurll)) {
-                //           await launchUrlString(Iosurll, mode: LaunchMode.externalApplication);
-                //         }
-                //       } else if (Platform.isAndroid) {
-                //         String urll = "https://unique-tags.com/password";
-                //         if (await canLaunch(urll)) {
-                //           await launch(
-                //             urll,
-                //           );
-                //         }
-                //       } else {
-                //         print("0000****0000");
-                //       }
-                //     },
-                //     child: Container(
-                //       decoration: const BoxDecoration(
-                //         borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                //       ),
-                //       width: double.infinity,
-                //       child: ClipRRect(
-                //           borderRadius: BorderRadius.circular(4),
-                //           child: Image.asset(AppImage.banner2, fit: BoxFit.cover)),
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 15.0,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.start,
-                //   children: [
-                //     // GreyContainer(
-                //     //     context: context,
-                //     //     onTap1: () async{
+              //         if (await canLaunchUrlString(Iosurll)) {
+              //           await launchUrlString(Iosurll, mode: LaunchMode.externalApplication);
+              //         }
+              //       } else if (Platform.isAndroid) {
+              //         String urll = "https://unique-tags.com/password";
+              //         if (await canLaunch(urll)) {
+              //           await launch(
+              //             urll,
+              //           );
+              //         }
+              //       } else {
+              //         print("0000****0000");
+              //       }
+              //     },
+              //     child: Container(
+              //       decoration: const BoxDecoration(
+              //         borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              //       ),
+              //       width: double.infinity,
+              //       child: ClipRRect(
+              //           borderRadius: BorderRadius.circular(4),
+              //           child: Image.asset(AppImage.banner2, fit: BoxFit.cover)),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 15.0,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     // GreyContainer(
+              //     //     context: context,
+              //     //     onTap1: () async{
 
-                //     //       if(Platform.isIOS){
-                //     //         print("/---------/");
-                //     //         String Iosurll="https://unique-tags.com/password";
+              //     //       if(Platform.isIOS){
+              //     //         print("/---------/");
+              //     //         String Iosurll="https://unique-tags.com/password";
 
-                //     //         if (await canLaunchUrlString(Iosurll)){
-                //     //       await launchUrlString(Iosurll,mode:LaunchMode.externalApplication);
-                //     //       }
-                //     //       }
+              //     //         if (await canLaunchUrlString(Iosurll)){
+              //     //       await launchUrlString(Iosurll,mode:LaunchMode.externalApplication);
+              //     //       }
+              //     //       }
 
-                //     //       else if(Platform.isAndroid) {
-                //     //       String urll = "https://unique-tags.com/password";
-                //     //       if (await canLaunch(urll)) {
-                //     //       await launch(
-                //     //       urll,
-                //     //       );
-                //     //       }
-                //     //       }
-                //     //       else{
-                //     //       print("0000****0000");
-                //     //       }
+              //     //       else if(Platform.isAndroid) {
+              //     //       String urll = "https://unique-tags.com/password";
+              //     //       if (await canLaunch(urll)) {
+              //     //       await launch(
+              //     //       urll,
+              //     //       );
+              //     //       }
+              //     //       }
+              //     //       else{
+              //     //       print("0000****0000");
+              //     //       }
 
-                //     //     },
-                //     //     image1: AppImage.qrIcon,
-                //     //     text1: tr(LocaleKeys.home_buyQrPetTag)),
+              //     //     },
+              //     //     image1: AppImage.qrIcon,
+              //     //     text1: tr(LocaleKeys.home_buyQrPetTag)),
 
-                //     const SizedBox(
-                //       width: 8.0,
-                //     ),
+              //     const SizedBox(
+              //       width: 8.0,
+              //     ),
 
-                //     Consumer<PetProvider>(builder: (context, petProvider, child) {
-                //       return petProvider.isUserPremium == 1
-                //           ? GreyContainer(
-                //               context: context,
-                //               onTap1: () {
-                //                 switchonNotification();
+              //     Consumer<PetProvider>(builder: (context, petProvider, child) {
+              //       return petProvider.isUserPremium == 1
+              //           ? GreyContainer(
+              //               context: context,
+              //               onTap1: () {
+              //                 switchonNotification();
 
-                //                 PetProvider petProvider = Provider.of(context, listen: false);
+              //                 PetProvider petProvider = Provider.of(context, listen: false);
 
-                //                 if (petProvider.petDetailList.isEmpty) {
-                //                   showDialog(
-                //                       context: context,
-                //                       builder: (context1) {
-                //                         return AlertDialog(
-                //                           title: Text(tr(LocaleKeys.home_noPetFound)),
-                //                           actions: [
-                //                             InkWell(
-                //                               child: Text(
-                //                                 tr(LocaleKeys.additionText_dismiss),
-                //                                 style:
-                //                                     const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                //                               ),
-                //                               onTap: () {
-                //                                 Navigator.pop(context);
-                //                               },
-                //                             ),
-                //                           ],
-                //                         );
-                //                       });
-                //                 } else {
-                //                   Navigator.push(
-                //                       context,
-                //                       MaterialPageRoute(
-                //                           builder: (context) => CheckProtection(
-                //                                 UsrData: user,
-                //                               )));
-                //                 }
-                //               },
-                //               image1: AppImage.secureIcon,
-                //               text1: tr(LocaleKeys.home_checkProtection))
-                //           : const SizedBox();
-                //     })
-                //   ],
-                // ),
-                // const SizedBox(height: 20.0),
+              //                 if (petProvider.petDetailList.isEmpty) {
+              //                   showDialog(
+              //                       context: context,
+              //                       builder: (context1) {
+              //                         return AlertDialog(
+              //                           title: Text(tr(LocaleKeys.home_noPetFound)),
+              //                           actions: [
+              //                             InkWell(
+              //                               child: Text(
+              //                                 tr(LocaleKeys.additionText_dismiss),
+              //                                 style:
+              //                                     const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+              //                               ),
+              //                               onTap: () {
+              //                                 Navigator.pop(context);
+              //                               },
+              //                             ),
+              //                           ],
+              //                         );
+              //                       });
+              //                 } else {
+              //                   Navigator.push(
+              //                       context,
+              //                       MaterialPageRoute(
+              //                           builder: (context) => CheckProtection(
+              //                                 UsrData: user,
+              //                               )));
+              //                 }
+              //               },
+              //               image1: AppImage.secureIcon,
+              //               text1: tr(LocaleKeys.home_checkProtection))
+              //           : const SizedBox();
+              //     })
+              //   ],
+              // ),
+              // const SizedBox(height: 20.0),
 
-                ,
-              ],
-            ),
-          );
-        }),
-      ),
+              ,
+            ],
+          ),
+        );
+      }),
     );
   }
 
