@@ -293,17 +293,26 @@ class _SignInPageState extends State<SignInPage> {
 
   _buidldBG({required child}) {
     return Container(
-      width: double.infinity,
-      // height: context.height * .67,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Colors.white38,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
         ),
       ),
-      child: child,
+      child: Container(
+        width: double.infinity,
+        // height: context.height * .67,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: child,
+      ),
     );
   }
 

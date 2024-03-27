@@ -67,7 +67,7 @@ class _EventCalenderState extends State<EventCalender> with SingleTickerProvider
         // seticon: AppImage.filtericon,
       ),
 
-      bottomNavigationBar: widget.isBottomBorder ? BotttomBorder(context) : const SizedBox(),
+      // bottomNavigationBar: widget.isBottomBorder ? BotttomBorder(context) : const SizedBox(),
 
       // bottomNavigationBar: BotttomBorder(context),
       body: Padding(

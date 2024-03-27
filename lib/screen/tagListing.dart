@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/tagContainer.dart';
 import 'package:find_me/models/tagDetailModel.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/screen/sampleScreen.dart';
 import 'package:find_me/services/hive_handler.dart';
+import 'package:find_me/util/app_font.dart';
 import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -47,11 +49,15 @@ class _TagListState extends State<TagList> {
   Widget build(BuildContext context) {
     return Consumer<PurChaseProvider>(builder: (context, pur, child) {
       return Scaffold(
-          appBar: customAppbar(
-            isbackbutton: true,
-            titlename: tr(LocaleKeys.additionText_tgs),
+          appBar: CustomCurvedAppbar(
+            title: tr(LocaleKeys.additionText_tgs),
+            isTitleCenter: true,
           ),
-          bottomNavigationBar: BotttomBorder(context),
+          // appBar: customAppbar(
+          //   isbackbutton: true,
+          //   titlename: tr(LocaleKeys.additionText_tgs),
+          // ),
+          // bottomNavigationBar: BotttomBorder(context),
           backgroundColor: Colors.white,
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton:
@@ -64,7 +70,7 @@ class _TagListState extends State<TagList> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FloatingActionButton(
-                          backgroundColor: AppColor.newBlueGrey,
+                          backgroundColor: AppColor.buttonPink,
                           onPressed: () async {
                             PetProvider petProvider = Provider.of(context, listen: false);
 
@@ -113,25 +119,32 @@ class _TagListState extends State<TagList> {
             List<TagDetails> QrTagList = petProvider.qrTagList;
             return Padding(
               padding: const EdgeInsets.only(top: 15.0),
-              child: ListView.builder(
-                  // itemCount: 2,
-                  itemCount: QrTagList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 15.0),
-                      child: InkWell(
-                          onTap: () {
-                            petProvider.setSelectedQrTag(QrTagList[index]);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ScannerScreen(
-                                          isNewTag: 0,
-                                        )));
-                          },
-                          child: TagContainer(context, QrTagList[index])),
-                    );
-                  }),
+              child: QrTagList.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No Tags Available",
+                        style: TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 18, color: AppColor.buttonPink),
+                      ),
+                    )
+                  : ListView.builder(
+                      // itemCount: 2,
+                      itemCount: QrTagList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0, bottom: 15.0),
+                          child: InkWell(
+                              onTap: () {
+                                petProvider.setSelectedQrTag(QrTagList[index]);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ScannerScreen(
+                                              isNewTag: 0,
+                                            )));
+                              },
+                              child: TagContainer(context, QrTagList[index])),
+                        );
+                      }),
             );
           }));
     });

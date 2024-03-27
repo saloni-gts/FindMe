@@ -22,7 +22,7 @@ class AppColor {
   static const Color newTextColor = Color(0xff5A5358);
 
   static const Color newTextFeildGrey = Color(0xffCCCCCC);
-  static const Color buttonPink = Color(0xffB83446);
+  static const Color buttonPink = Color(0xffB83446); //B83446
 
   //#585357  #CBC4A9  #CBC4A9  #585357  #CBC4A9 #CBC4A9
 }

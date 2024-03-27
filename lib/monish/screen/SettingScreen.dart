@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/screen/langPikr.dart';
 import 'package:find_me/services/hive_handler.dart';
 import 'package:find_me/util/color.dart';
@@ -50,8 +51,9 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_settings),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_settings),
+        isTitleCenter: true,
       ),
 
       // bottomNavigationBar: BotttomBorder(context),
@@ -562,7 +564,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
               const Spacer(),
-              BotttomBorder(context),
+              // BotttomBorder(context),
             ],
           ),
         );

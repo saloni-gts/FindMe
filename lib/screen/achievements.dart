@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/models/achievement_model.dart';
 import 'package:find_me/provider/achievement_provider.dart';
 import 'package:find_me/provider/petprovider.dart';
@@ -70,7 +71,7 @@ class _AchievementState extends State<Achievement> {
                         width: 56,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColor.newBlueGrey,
+                          color: AppColor.buttonPink,
                         ),
                         child: Image.asset(
                           AppImage.plusIcon,
@@ -84,24 +85,28 @@ class _AchievementState extends State<Achievement> {
                 ],
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: BotttomBorder(context),
+              const Padding(
+                padding: EdgeInsets.only(left: 20.0),
+                // child: BotttomBorder(context),
               )
               // Text("Add \n Achievement"),
             ],
           ),
           backgroundColor: Colors.white,
           // bottomNavigationBar: BotttomBorder(context),
-          appBar: customAppbar(
-              customBack: (() {
-                if (widget.isNavigate) {
-                  Navigator.pop(context);
-                }
-                Navigator.pop(context);
-              }),
-              isbackbutton: true,
-              titlename: tr(LocaleKeys.additionText_achievements)),
+          appBar: CustomCurvedAppbar(
+            title: tr(LocaleKeys.additionText_achievements),
+            isTitleCenter: true,
+          ),
+          // customAppbar(
+          //     customBack: (() {
+          //       if (widget.isNavigate) {
+          //         Navigator.pop(context);
+          //       }
+          //       Navigator.pop(context);
+          //     }),
+          //     isbackbutton: true,
+          //     titlename: tr(LocaleKeys.additionText_achievements)) ,
           body: Consumer<AchievementProvider>(builder: (context, value, child) {
             print("list loader ${value.listLoader}");
             return value.listLoader
@@ -119,7 +124,7 @@ class _AchievementState extends State<Achievement> {
                         child: Text(
                           tr(LocaleKeys.additionText_noAcheveFnd),
                           style: const TextStyle(
-                              fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
+                              fontSize: 18.0, color: AppColor.buttonPink, fontFamily: AppFont.poppinSemibold),
                         ),
                       );
           })),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -45,116 +46,106 @@ class _PhotoGalleryState extends State<PhotoGallery> {
 
         return Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-            floatingActionButton: Column(
+            floatingActionButton: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                // imgList.length >=2 && petProvider.isUserPremium ==0 ?SizedBox():
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 0.0, left: 20),
-                      child: FloatingActionButton(
-                          backgroundColor: AppColor.newBlueGrey,
-                          onPressed: () {
-                            print("petProvider.isUserPremium:: ${petProvider.isUserPremium}");
-                            print(
-                                "petProvider.selectedPetDetail?.isPremium:: ${petProvider.selectedPetDetail?.isPremium}");
-                            print("imgList.length:: ${imgList.length}");
-                            if (petProvider.isUserPremium == 1 &&
-                                petProvider.selectedPetDetail?.isPremium == 0 &&
-                                imgList.length >= 2) {
-                              makePetPremDialog(context);
-                            } else if (imgList.length >= 2 && petProvider.isUserPremium == 0) {
-                              commingSoonDialog(context, isFullAccess: 1);
-                            } else if ((petProvider.isUserPremium == 1 &&
-                                    petProvider.selectedPetDetail?.isPremium == 1) ||
-                                petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id)) {
-                              showAlertForImage(
-                                headText: tr(LocaleKeys.additionText_petName),
-                                callBack: (val) {
-                                  Navigator.pop(context);
-                                  if (val) {
-                                    getImage(ImageSource.camera, circleCropStyle: false).then((value) {
-                                      print("value==$value");
-                                      if (value.toString() == "File: ''") {
-                                        print("value like this===");
-                                        value = null;
-                                      }
-
-                                      if (value != null) {
-                                        petProvider.uploadImagePet(f1: value, contxt: context);
-                                      }
-                                      print("********$val********-------+++++");
-                                    });
-                                  } else {
-                                    getImage(ImageSource.gallery, circleCropStyle: false).then((value) {
-                                      print("value==$value");
-                                      if (value.toString() == "File: ''") {
-                                        print("value like this===");
-                                        value = null;
-                                      }
-
-                                      if (value != null) {
-                                        petProvider.uploadImagePet(f1: value, contxt: context);
-                                      }
-                                    });
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0, right: 10),
+                  child: FloatingActionButton(
+                      backgroundColor: AppColor.buttonPink,
+                      onPressed: () {
+                        print("petProvider.isUserPremium:: ${petProvider.isUserPremium}");
+                        print("petProvider.selectedPetDetail?.isPremium:: ${petProvider.selectedPetDetail?.isPremium}");
+                        print("imgList.length:: ${imgList.length}");
+                        if (petProvider.isUserPremium == 1 &&
+                            petProvider.selectedPetDetail?.isPremium == 0 &&
+                            imgList.length >= 2) {
+                          makePetPremDialog(context);
+                        } else if (imgList.length >= 2 && petProvider.isUserPremium == 0) {
+                          commingSoonDialog(context, isFullAccess: 1);
+                        } else if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
+                            petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id)) {
+                          showAlertForImage(
+                            headText: tr(LocaleKeys.additionText_petName),
+                            callBack: (val) {
+                              Navigator.pop(context);
+                              if (val) {
+                                getImage(ImageSource.camera, circleCropStyle: false).then((value) {
+                                  print("value==$value");
+                                  if (value.toString() == "File: ''") {
+                                    print("value like this===");
+                                    value = null;
                                   }
-                                },
-                                context: context,
-                              );
-                            } else {
-                              showAlertForImage(
-                                headText: tr(LocaleKeys.additionText_petName),
-                                callBack: (val) {
-                                  Navigator.pop(context);
-                                  if (val) {
-                                    getImage(ImageSource.camera, circleCropStyle: false).then((value) {
-                                      print("value==$value");
-                                      if (value.toString() == "File: ''") {
-                                        print("value like this===");
-                                        value = null;
-                                      }
 
-                                      if (value != null) {
-                                        petProvider.uploadImagePet(f1: value, contxt: context);
-                                      }
-                                      print("********$val********-------+++++");
-                                    });
-                                  } else {
-                                    getImage(ImageSource.gallery, circleCropStyle: false).then((value) {
-                                      print("value==$value");
-                                      if (value.toString() == "File: ''") {
-                                        print("value like this===");   
-                                        value = null;  
-                                      }   
-
-                                      if (value != null) {    
-                                        petProvider.uploadImagePet(f1: value, contxt: context);  
-                                      }  
-                                    });  
+                                  if (value != null) {
+                                    petProvider.uploadImagePet(f1: value, contxt: context);
                                   }
-                                },
-                                context: context,
-                              );
-                            }
-                            //callUploadPetImage()
-                          },
-                          child: const Icon(Icons.add)),
-                    ),
-                  ],
-                ),
+                                  print("********$val********-------+++++");
+                                });
+                              } else {
+                                getImage(ImageSource.gallery, circleCropStyle: false).then((value) {
+                                  print("value==$value");
+                                  if (value.toString() == "File: ''") {
+                                    print("value like this===");
+                                    value = null;
+                                  }
 
-                const SizedBox(
-                  height: 10,
+                                  if (value != null) {
+                                    petProvider.uploadImagePet(f1: value, contxt: context);
+                                  }
+                                });
+                              }
+                            },
+                            context: context,
+                          );
+                        } else {
+                          showAlertForImage(
+                            headText: tr(LocaleKeys.additionText_petName),
+                            callBack: (val) {
+                              Navigator.pop(context);
+                              if (val) {
+                                getImage(ImageSource.camera, circleCropStyle: false).then((value) {
+                                  print("value==$value");
+                                  if (value.toString() == "File: ''") {
+                                    print("value like this===");
+                                    value = null;
+                                  }
+
+                                  if (value != null) {
+                                    petProvider.uploadImagePet(f1: value, contxt: context);
+                                  }
+                                  print("********$val********-------+++++");
+                                });
+                              } else {
+                                getImage(ImageSource.gallery, circleCropStyle: false).then((value) {
+                                  print("value==$value");
+                                  if (value.toString() == "File: ''") {
+                                    print("value like this===");
+                                    value = null;
+                                  }
+
+                                  if (value != null) {
+                                    petProvider.uploadImagePet(f1: value, contxt: context);
+                                  }
+                                });
+                              }
+                            },
+                            context: context,
+                          );
+                        }
+                        //callUploadPetImage()
+                      },
+                      child: const Icon(Icons.add)),
                 ),
-                BotttomBorder(context),
               ],
             ),
             backgroundColor: Colors.white,
             // bottomNavigationBar: BotttomBorder(context),
-            appBar: customAppbar(titlename: tr(LocaleKeys.additionText_photoGallery)),
+            appBar: CustomCurvedAppbar(
+              isTitleCenter: true,
+              title: tr(LocaleKeys.additionText_photoGallery),
+            ),
+            // customAppbar(titlename: tr(LocaleKeys.additionText_photoGallery)),
             body: imgList.isEmpty
                 ? Center(
                     child: Text(
@@ -169,10 +160,10 @@ class _PhotoGalleryState extends State<PhotoGallery> {
                     child: GridView.builder(
                         itemCount: imgList.length,
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,  
-                          mainAxisExtent: 160,   
-                          crossAxisSpacing: 0,    
-                          mainAxisSpacing: 9,  
+                          crossAxisCount: 2,
+                          mainAxisExtent: 160,
+                          crossAxisSpacing: 0,
+                          mainAxisSpacing: 9,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(

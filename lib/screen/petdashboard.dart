@@ -94,795 +94,1607 @@ class _PetDashboardState extends State<PetDashboard> {
     print("printing pet details===?/ ${petDetail?.isPetQrCount}");
 
     return Scaffold(
-        // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        // floatingActionButton: Padding(
-        //   padding: const EdgeInsets.only(bottom: 2.0),
-        //   child: BotttomBorder(context),
-        // ),
         backgroundColor: Colors.white,
-        // bottomNavigationBar: BotttomBorder(context),
-        appBar:
-            customAppbar(isbackbutton: true, titlename: context.watch<PetProvider>().selectedPetDetail?.petName ?? ""),
+
+        // appBar:
+        //     customAppbar(isbackbutton: true, titlename: context.watch<PetProvider>().selectedPetDetail?.petName ?? ""),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20.0,
-              ),
-              // petDetail?.isPetQrCount == 0?SizedBox(height: 20,):SizedBox(),
+          child: Consumer<PetProvider>(builder: (context, petProvider1, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                    // height: 20.0,
+                    ),
 
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Consumer<PetProvider>(
-                    builder: (context, petProvider1, child) {
-                      return Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              child: Image.asset(AppImage.petDash1),
-                              onTap: () async {
-                                if (petDetail?.isPetQrCount == 0) {
-                                  var status3 = await Permission.camera.status;
-
-                                  print("value of status===>>> $status3");
-                                  if (!status3.isGranted) {
-                                    print("iiiiii==>$i");
-                                    i = i + 1;
-
-                                    if (i > 1) {
-                                      scannerPermissionDialog(context);
-                                    }
-
-                                    if (i <= 1) {
-                                      await Permission.camera.request();
-                                    }
-                                  }
-                                  var status4 = await Permission.camera.status;
-                                  print("status 4 value-=====$status4");
-                                  if (status4.isGranted) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ScannerScreen(
-                                                  isNewTag: 1,
-                                                )));
-                                  }
-                                } else {
-                                  if (petProvider1.openOnce == 0) {
-                                    print("******inside this****");
-                                    petProvider1.openOnce = 1;
-                                    PurChaseProvider pur = Provider.of(context, listen: false);
-                                    await pur.getSubScriptionDetails();
-                                    petProvider1.callGetQrTag();
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const TagList()));
-                                  }
-                                }
-
-                                // petProvider1.callGetQrTag();
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => TagList()));
-                                // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen()));
-                              },
+                Stack(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 20),
+                      height: MediaQuery.of(context).size.height * .33,
+                      decoration: const BoxDecoration(
+                        // color: Colors.amber,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20.0),
+                          bottomRight: Radius.circular(20.0),
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * .40,
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: petProvider1.selectedPetDetail?.petPhoto ?? "",
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) => Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Image.asset(
+                                    AppImage.placeholderIcon,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) => Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Image.asset(
+                                    AppImage.placeholderIcon,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                             ),
-                            Center(
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 12.0),
-                                    child: Container(
-                                      height: 125,
-                                      width: 125,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(65),
-                                        color: AppColor.textFieldGrey,
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(65),
-                                        // radius: 50,
-                                        child: CachedNetworkImage(
-                                          imageUrl: petProvider1.selectedPetDetail?.petPhoto ?? "",
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) => Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child: Image.asset(
-                                              AppImage.placeholderIcon,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          errorWidget: (context, url, error) => Padding(
-                                            padding: const EdgeInsets.all(18.0),
-                                            child: Image.asset(
-                                              AppImage.placeholderIcon,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0, right: 12, top: 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    decoration:
+                                        BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(2.0),
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    left: 95,
-                                    child: SizedBox(
-                                      height: 40,
-                                      width: 40,
-                                      child: InkWell(
-                                        onTap: () async {
-                                          await petProvider1.callGetQrTag();
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    await petProvider1.callGetQrTag();
 
-                                          Future.delayed(const Duration(milliseconds: 100), () {
-                                            Navigator.push(
-                                                context, MaterialPageRoute(builder: (context) => const PetProfile()));
-                                          });
-
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) =>
-                                          //             PetProfile()));
-                                        },
-                                        child: ClipRRect(
-                                          child: Image.asset(AppImage.pencil, height: 40),
-                                        ),
+                                    Future.delayed(const Duration(milliseconds: 100), () {
+                                      Navigator.push(
+                                          context, MaterialPageRoute(builder: (context) => const PetProfile()));
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration:
+                                        BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(8)),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(2.0),
+                                      child: Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  )
-                                ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * .30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black12),
+                                borderRadius: BorderRadius.circular(18)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                petProvider1.selectedPetDetail?.petName ?? "",
+                                style: const TextStyle(
+                                    color: AppColor.buttonPink, fontSize: 16, fontFamily: AppFont.figTreeBold),
                               ),
                             ),
-                            Consumer<PetProvider>(builder: (context, petProvider, child) {
-                              return InkWell(
-                                  child: Image.asset(AppImage.petDash2),
-                                  onTap: () async {
-                                    if (petDetail?.isPetQrCount == 0) {
-                                      CoolAlert.show(
-                                        context: context,
-                                        type: CoolAlertType.warning,
-                                        text: tr(LocaleKeys.additionText_qrTgNotActivated),
-                                      );
-                                    } else {
-                                      PermissionStatus status3;
-                                      LocationPermission status4;
-
-                                      print("location locIocPer===>>${petProvider.locIocPer}");
-
-                                      if (Platform.isAndroid) {
-                                        status3 = await Permission.location.status;
-                                        print("location status===>>$status3");
-
-                                        // if(status3.isGranted)
-                                        if (status3 == PermissionStatus.granted) {
-                                          onNotification();
-
-                                          petProvider.updateLoader(true);
-
-                                          try {
-                                            petProvider.updateLoader(true);
-                                            Position posti = await _determineCurPosition();
-
-                                            petProvider1.lati = posti.latitude;
-                                            petProvider1.longi = posti.longitude;
-                                            petProvider.updateLoader(false);
-
-                                            petProvider.updateLoader(false);
-
-                                            petProvider.lati = posti.latitude;
-                                            petProvider.longi = posti.longitude;
-                                          } catch (e) {
-                                            petProvider.updateLoader(false);
-                                            // EasyLoading.showToast(
-                                            //     "Something went wrong! \nTry Again Later");
-                                            print("error========$e");
-
-                                            // petProvider.updateLoader(false);
-                                          }
-
-                                          if (petProvider1.selectedPetDetail?.isLost == 1) {
-                                            provider.petMarkAsLostP2(context: context);
-                                          } else {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) => AlertDialog(
-                                                      title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
-                                                      actions: <Widget>[
-                                                        InkWell(
-                                                          child: Text(
-                                                            tr(LocaleKeys.additionText_cancel),
-                                                            style: const TextStyle(
-                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                          ),
-                                                          onTap: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                        ),
-                                                        const SizedBox(width: 5),
-                                                        InkWell(
-                                                          child: Text(
-                                                            tr(LocaleKeys.additionText_yes),
-                                                            style: const TextStyle(
-                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                          ),
-                                                          onTap: () async {
-                                                            Navigator.pop(context);
-                                                            await petProvider1.petMarkAsLostP2(
-                                                                context: GlobalVariable.navState.currentContext!);
-                                                            petProvider.calleditProfileP2Api(context: context);
-                                                          },
-                                                        )
-                                                      ],
-                                                    ));
-                                          }
-                                        }
-
-                                        // if(!status3.isGranted)
-                                        if (status3 != PermissionStatus.granted) {
-                                          locPermissionDialog(context);
-                                        }
-                                      }
-
-                                      if (Platform.isIOS) {
-                                        status4 = await Geolocator.checkPermission();
-                                        print(
-                                            "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
-
-                                        print("location status ios===>>$status4");
-
-                                        if (status4 == LocationPermission.whileInUse ||
-                                            status4 == LocationPermission.always) {
-                                          onNotification();
-
-                                          print("after loc func over");
-                                          petProvider.updateLoader(true);
-
-                                          try {
-                                            petProvider.updateLoader(true);
-                                            Position posti = await _determineCurPosition();
-
-                                            petProvider1.lati = posti.latitude;
-                                            petProvider1.longi = posti.longitude;
-                                            petProvider.updateLoader(false);
-
-                                            petProvider.updateLoader(false);
-
-                                            petProvider.lati = posti.latitude;
-                                            petProvider.longi = posti.longitude;
-                                          } catch (e) {
-                                            petProvider.updateLoader(false);
-
-                                            EasyLoading.showToast("Something went wrong! \nTry Again Later");
-                                            print("error========$e");
-
-                                            // petProvider.updateLoader(false);
-                                          }
-
-                                          if (petProvider1.selectedPetDetail?.isLost == 1) {
-                                            provider.petMarkAsLostP2(context: context);
-                                          } else if (petProvider1.selectedPetDetail?.isLost == 0) {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) => AlertDialog(
-                                                      title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
-                                                      actions: <Widget>[
-                                                        InkWell(
-                                                          child: Text(
-                                                            tr(LocaleKeys.additionText_cancel),
-                                                            style: const TextStyle(
-                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                          ),
-                                                          onTap: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                        ),
-                                                        const SizedBox(width: 5),
-                                                        InkWell(
-                                                          child: Text(
-                                                            tr(LocaleKeys.additionText_yes),
-                                                            style: const TextStyle(
-                                                                fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                                          ),
-                                                          onTap: () async {
-                                                            Navigator.pop(context);
-                                                            await petProvider1.petMarkAsLostP2(
-                                                                context: GlobalVariable.navState.currentContext!);
-
-                                                            petProvider.calleditProfileP2Api(context: context);
-                                                          },
-                                                        )
-                                                      ],
-                                                    ));
-                                          }
-                                        }
-
-                                        if (status4 == LocationPermission.denied ||
-                                            status4 == LocationPermission.deniedForever) {
-                                          iosLocPermiDialog(context);
-                                          petProvider.locIocPer = 1;
-                                        }
-                                      }
-                                    }
-                                  });
-                            })
-                          ],
-                        ),
-                      );
-                    },
-                  )),
-              const SizedBox(
-                height: 10.0,
-              ),
-
-              Center(
-                child: petDetail?.isPetQrCount != 0
-                    ? InkWell(
-                        onTap: () async {
-                          PetProvider petProvider = Provider.of(context, listen: false);
-
-                          print("print");
-                          var status3 = await Permission.camera.status;
-                          print("value of status===>>> $status3");
-
-                          if (status3 != PermissionStatus.granted) {
-                            // print("iiiiii==>${i}");
-                            i = i + 1;
-                            print("iiiiii==>$i");
-                            if (i > 2) {
-                              scannerPermissionDialog(context);
-                              // await Permission.camera.request();
-                            }
-
-                            if (i == 1) {
-                              await Permission.camera.request();
-                            }
-                          }
-                          var status4 = await Permission.camera.status;
-                          print("value of status===>>> $status4");
-
-                          if (status4 == PermissionStatus.granted) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ScannerScreen(
-                                          isNewTag: 1,
-                                        )));
-                          }
-                        },
-                        child: Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width * .55,
-                          decoration:
-                              BoxDecoration(borderRadius: BorderRadius.circular(28), color: AppColor.newBlueGrey),
-                          child: Center(
-                            child:
-                                // Text(
-                                //   tr(LocaleKeys.additionText_addMoreQR),
-                                //   textAlign: TextAlign.center,
-                                //   style: TextStyle(
-                                //     color: Colors.white,
-                                //     fontFamily: AppFont.poppinsMedium,
-                                //     fontSize: 13.0,
-                                //   ),
-                                // ),
-
-                                RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(children: <TextSpan>[
-                                TextSpan(
-                                  text: tr(LocaleKeys.additionText_addMoreQR),
-                                  style:
-                                      const TextStyle(color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w800),
-                                ),
-                              ]),
-                            ),
                           ),
-                        ),
-                      )
-                    : const SizedBox(height: 40),
-              ),
-
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 15.0),
-              //   child: Text(
-              //     tr(LocaleKeys.petProfile_protection),
-              //     textAlign: TextAlign.center,
-              //     style: const TextStyle(
-              //         fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
-              //   ),
-              // ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    GreyContainerWidCircle(
-                        context: context,
-                        crl: AppColor.newLightBlue,
-                        text1: tr(LocaleKeys.home_careDiary),
-                        image1: AppImage.newCal,
-                        onTap1: () {
-                          provider.mySelectedEvents = {};
-                          print("is map empty==>>${provider.mySelectedEvents}");
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      EventCalender(isShowBackIcon: true, isBottomBorder: true, isFromPet: true)));
-
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context)=>NewEvent()));
-                        }),
-                    const SizedBox(
-                      width: 12.0,
+                        ],
+                      ),
                     ),
-                    GreyContainerWidCircle(
-                        context: context,
-                        text1: tr(LocaleKeys.petProfile_documents),
-                        image1: AppImage.newDocs,
-                        crl: AppColor.newLightBlue,
-                        onTap1: () {
-                          // Navigator.pushNamed(context, AppScreen.documentList);
-                          PetProvider petProvider = Provider.of(context, listen: false);
-                          petProvider.cateId = "";
-                          petProvider.GetDocV2();
-                          Future.delayed(const Duration(milliseconds: 1000), () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const Categories()));
-                          });
-                        })
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 12.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    GreyContainerWidCircle(
-                        context: context,
-                        crl: AppColor.newLightBlue,
-                        text1: tr(LocaleKeys.petProfile_photos),
-                        image1: AppImage.newPics,
-                        onTap1: () {
-                          provider.getPetPhotoCall(context: context, isNavigate: true);
-                        }),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    GreyContainerWidCircle(
-                        context: context,
-                        text1: tr(LocaleKeys.petProfile_weightTraker),
-                        crl: AppColor.newLightBlue,
-                        image1: AppImage.newWeight,
-                        onTap1: () {
-                          PetProvider petProvider = Provider.of(context, listen: false);
 
-                          print("helth controler valsue==>> ${petProvider.petHealtweightCntrolr.text}");
-
-                          print("user.isPremium=${petProvider.isUserPremium}===");
-
-                          if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
-                              (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
-                            PetProvider petProvider = Provider.of(context, listen: false);
-                            petProvider.graphSpotData.clear();
-                            petProvider.callGetWeight();
-
-                            Future.delayed(const Duration(milliseconds: 1000), () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => WeightTrkrMain()));
-                            }).onError((error, stackTrace) {
-                              print("eroorroror===>>> $error");
-                            });
-                          } else if (petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 0) {
-                            makePetPremDialog(context);
-                          } else if (petProvider.isUserPremium == 0) {
-                            commingSoonDialog(context);
-                          }
-
-                          // commingSoonDialog(context);
-                        })
-                  ],
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 15.0),
-              //   child: Text(
-              //     tr(LocaleKeys.petProfile_moreOption),
-              //     textAlign: TextAlign.center,
-              //     style: const TextStyle(
-              //       fontSize: 16.0,
-              //       color: AppColor.textLightBlueBlack,
-              //       fontFamily: AppFont.poppinsBold,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 10.0,
-              // ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    GreyContainerWidCircle(
-                        context: context,
-                        crl: AppColor.newLightBlue,
-                        text1: tr(LocaleKeys.petProfile_qrScanned),
-                        image1: AppImage.newQR,
-                        onTap1: () {
-                          Navigator.pushNamed(context, AppScreen.googlemap);
-                        }),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    Consumer<PetProvider>(builder: (context, petProvider, child) {
-                      return GreyContainerWidCircle(
-                          context: context,
-                          text1: tr(LocaleKeys.petProfile_downloadpetProfile),
-                          crl: AppColor.newLightBlue,
-                          image1: AppImage.newDown,
-                          onTap1: () async {
-                            if (Platform.isIOS) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context1) {
-                                    return AlertDialog(
-                                      title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
-                                      actions: [
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.pop(context1);
-                                          },
-                                          child: Text(
-                                            tr(LocaleKeys.additionText_no),
-                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        InkWell(
-                                          onTap: () async {
-                                            Navigator.pop(context1);
-                                            EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
-                                                duration: const Duration(seconds: 7));
 
-                                            PetProvider petProvider = Provider.of(context, listen: false);
-
-                                            petProvider.updateLoader(true);
-                                            CallAPi apiii = CallAPi();
-                                            String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
-
-                                            petProvider.updateLoader(false);
-                                            print("apiii url===>>> ${apiii.pdfUrl}");
-
-                                            if (pdfurlfinal.isEmpty) {
-                                              petProvider.updateLoader(false);
-                                              EasyLoading.showToast("try again later");
-                                            }
-                                            if (pdfurlfinal.isNotEmpty) {
-                                              petProvider.updateLoader(false);
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) =>
-                                                      DownloadingDailog(uri: apiii.pdfUrl));
-                                            }
-
-                                            // Future.delayed(Duration(seconds: 8), () {
-
-                                            //   print("apiii url===>>> ${apiii.pdfUrl}");
-
-                                            // });
-                                          },
-                                          child: Text(
-                                            tr(LocaleKeys.additionText_yes),
-                                            style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                          ),
-                                        )
-                                      ],
-                                    );
-                                  });
-                            }
-                            if (Platform.isAndroid) {
-                              var status = await Permission.manageExternalStorage.request();
-                              print("storage statur====$status");
-                              // if (status==PermissionStatus.denied) {
-                              //   Permission.manageExternalStorage.request();
-                              // } else if (status.isPermanentlyDenied || status.isRestricted) {
-                              //   Permission.manageExternalStorage.request();
-                              //   //  openAppSettings();
-                              // } else if (status.isGranted)
-                              {
-                                showDialog(
-                                    context: context,
-                                    builder: (context1) {
-                                      return AlertDialog(
-                                        title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
-                                        actions: [
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.pop(context1);
-                                            },
-                                            child: Text(
-                                              tr(LocaleKeys.additionText_no),
-                                              style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          InkWell(
-                                            onTap: () async {
-                                              Navigator.pop(context1);
-                                              EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
-                                                  duration: const Duration(seconds: 7));
-
-                                              PetProvider petProvider = Provider.of(context, listen: false);
-
-                                              petProvider.updateLoader(true);
-                                              CallAPi apiii = CallAPi();
-                                              String pdfurlfinal =
-                                                  await apiii.login(petId: petProvider.setselectedPetId);
-
-                                              petProvider.updateLoader(false);
-                                              print("apiii url===>>> ${apiii.pdfUrl}");
-
-                                              if (pdfurlfinal.isEmpty) {
-                                                petProvider.updateLoader(false);
-                                                EasyLoading.showToast("try again later");
-                                              }
-                                              if (pdfurlfinal.isNotEmpty) {
-                                                petProvider.updateLoader(false);
-                                                print("apiii url===>>> ${apiii.pdfUrl}");
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context) =>
-                                                        DownloadingDailog(uri: apiii.pdfUrl));
-                                              }
-                                            },
-                                            child: Text(
-                                              tr(LocaleKeys.additionText_yes),
-                                              style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                            ),
-                                          )
-                                        ],
-                                      );
-                                    });
-                              }
-                            }
-                          });
-                    })
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    GreyContainerWidCircle(
-                        context: context,
-                        crl: AppColor.newLightBlue,
-                        text1: tr(LocaleKeys.additionText_hlthCard),
-                        // tr(LocaleKeys.petProfile_healthCare),
-                        image1: AppImage.newHCard,
-                        onTap1: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => HealthCard()));
-                          // commingSoonDialog(context);
-                        }),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    GreyContainerWidCircle(
-                        context: context,
-                        crl: AppColor.newLightBlue,
-                        text1: tr(LocaleKeys.additionText_achievements),
-                        image1: AppImage.newAchi,
-                        onTap1: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Achievement(
-                                        isNavigate: false,
-                                      )));
-                          // commingSoonDialog(context);
-                        }),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  height: 15,
-                  width: double.infinity,
-                  color: AppColor.newGrey,
-                ),
-              ),
-
-              const SizedBox(
-                height: 10.0,
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: InkWell(
-                  onTap: (){
-                       Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return ViewPremium();
-                },
-              ));
-                  },
-                  child: Container(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: SizedBox(
                     height: 100,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(children: [
-                        Image.asset(AppImage.bigRibbon, height: 80, width: 40),
-                        const Expanded(
-                          child: Text(
-                            "Tap Now To Unlock All The \nPREMIUM BENIFITS",
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Color(0xff585357),
-                              fontFamily: AppFont.poppinsBold,
-                              fontSize: 16,
+                    // color: Colors.amber,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              await petProvider1.callGetQrTag();
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const TagList()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImage.qrIcon),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "View Activated QR",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black, fontFamily: AppFont.figTreeBold),
+                                )
+                              ],
                             ),
                           ),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 80,
+                          color: Colors.grey,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              // if (petDetail?.isPetQrCount == 0)
+                              {
+                                var status3 = await Permission.camera.status;
+
+                                print("value of status===>>> $status3");
+                                if (!status3.isGranted) {
+                                  print("iiiiii==>$i");
+                                  i = i + 1;
+
+                                  if (i > 1) {
+                                    scannerPermissionDialog(context);
+                                  }
+
+                                  if (i <= 1) {
+                                    await Permission.camera.request();
+                                  }
+                                }
+                                var status4 = await Permission.camera.status;
+                                print("status 4 value-=====$status4");
+                                if (status4.isGranted) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ScannerScreen(
+                                                isNewTag: 1,
+                                              )));
+                                }
+                              }
+                              //else {
+                              //   if (petProvider1.openOnce == 0) {
+                              //     print("******inside this****");
+                              //     petProvider1.openOnce = 1;
+                              //     PurChaseProvider pur = Provider.of(context, listen: false);
+                              //     await pur.getSubScriptionDetails();
+                              //     // petProvider1.callGetQrTag();
+                              //     // Navigator.push(context, MaterialPageRoute(builder: (context) => const TagList()));
+                              //   }
+                              // }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImage.qrIcon),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Add A QR Code",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black, fontFamily: AppFont.figTreeBold),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 80,
+                          color: Colors.grey,
+                        ),
+                        Expanded(
+                          child: InkWell(
+                            onTap: () async {
+                              if (petDetail?.isPetQrCount == 0) {
+                                CoolAlert.show(
+                                  context: context,
+                                  type: CoolAlertType.warning,
+                                  text: tr(LocaleKeys.additionText_qrTgNotActivated),
+                                );
+                              } else {
+                                PermissionStatus status3;
+                                LocationPermission status4;
+
+                                print("location locIocPer===>>${petProvider1.locIocPer}");
+
+                                if (Platform.isAndroid) {
+                                  status3 = await Permission.location.status;
+                                  print("location status===>>$status3");
+
+                                  // if(status3.isGranted)
+                                  if (status3 == PermissionStatus.granted) {
+                                    onNotification();
+
+                                    petProvider1.updateLoader(true);
+
+                                    try {
+                                      petProvider1.updateLoader(true);
+                                      Position posti = await _determineCurPosition();
+
+                                      petProvider1.lati = posti.latitude;
+                                      petProvider1.longi = posti.longitude;
+                                      petProvider1.updateLoader(false);
+
+                                      petProvider1.updateLoader(false);
+
+                                      petProvider1.lati = posti.latitude;
+                                      petProvider1.longi = posti.longitude;
+                                    } catch (e) {
+                                      petProvider1.updateLoader(false);
+
+                                      print("error========$e");
+                                    }
+
+                                    if (petProvider1.selectedPetDetail?.isLost == 1) {
+                                      provider.petMarkAsLostP2(context: context);
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                                                actions: <Widget>[
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_cancel),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_yes),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () async {
+                                                      Navigator.pop(context);
+                                                      await petProvider1.petMarkAsLostP2(
+                                                          context: GlobalVariable.navState.currentContext!);
+                                                      petProvider1.calleditProfileP2Api(context: context);
+                                                    },
+                                                  )
+                                                ],
+                                              ));
+                                    }
+                                  }
+
+                                  if (status3 != PermissionStatus.granted) {
+                                    locPermissionDialog(context);
+                                  }
+                                }
+
+                                if (Platform.isIOS) {
+                                  status4 = await Geolocator.checkPermission();
+                                  print(
+                                      "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
+
+                                  print("location status ios===>>$status4");
+
+                                  if (status4 == LocationPermission.whileInUse ||
+                                      status4 == LocationPermission.always) {
+                                    onNotification();
+
+                                    print("after loc func over");
+                                    petProvider1.updateLoader(true);
+
+                                    try {
+                                      petProvider1.updateLoader(true);
+                                      Position posti = await _determineCurPosition();
+
+                                      petProvider1.lati = posti.latitude;
+                                      petProvider1.longi = posti.longitude;
+                                      petProvider1.updateLoader(false);
+
+                                      petProvider1.updateLoader(false);
+
+                                      petProvider1.lati = posti.latitude;
+                                      petProvider1.longi = posti.longitude;
+                                    } catch (e) {
+                                      petProvider1.updateLoader(false);
+
+                                      EasyLoading.showToast("Something went wrong! \nTry Again Later");
+                                      print("error========$e");
+
+                                      // petProvider.updateLoader(false);
+                                    }
+
+                                    if (petProvider1.selectedPetDetail?.isLost == 1) {
+                                      provider.petMarkAsLostP2(context: context);
+                                    } else if (petProvider1.selectedPetDetail?.isLost == 0) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                                                actions: <Widget>[
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_cancel),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                  const SizedBox(width: 5),
+                                                  InkWell(
+                                                    child: Text(
+                                                      tr(LocaleKeys.additionText_yes),
+                                                      style: const TextStyle(
+                                                          fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                                    ),
+                                                    onTap: () async {
+                                                      Navigator.pop(context);
+                                                      await petProvider1.petMarkAsLostP2(
+                                                          context: GlobalVariable.navState.currentContext!);
+
+                                                      petProvider1.calleditProfileP2Api(context: context);
+                                                    },
+                                                  )
+                                                ],
+                                              ));
+                                    }
+                                  }
+
+                                  if (status4 == LocationPermission.denied ||
+                                      status4 == LocationPermission.deniedForever) {
+                                    iosLocPermiDialog(context);
+                                    petProvider1.locIocPer = 1;
+                                  }
+                                }
+                              }
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(AppImage.qrIcon),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Mark Pet As Lost",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  style: TextStyle(color: Colors.black, fontFamily: AppFont.figTreeBold),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 40,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      provider.mySelectedEvents = {};
+                      print("is map empty==>>${provider.mySelectedEvents}");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  EventCalender(isShowBackIcon: true, isBottomBorder: true, isFromPet: true)));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkCal),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.home_careDiary),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
                         )
                       ]),
                     ),
                   ),
                 ),
-              ),
 
-              const SizedBox(
-                height: 20.0,
-              ),
+                const SizedBox(
+                  height: 12,
+                ),
 
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              //   child: Row(
-              //     children: [
-              //       GreyContainerWidCircle(
-              //           context: context,
-              //           text1: "Achievements",
-              //           image1: AppImage.achievements,
-              //           onTap1: () {
-              //             Navigator.push(
-              //                 context,
-              //                 MaterialPageRoute(
-              //                     builder: (context) => Achievement()));
-              //             // commingSoonDialog(context);
-              //           }),
-              //       SizedBox(
-              //         width: 12.0,
-              //       ),
-              //       // GreyContainerWidCircle(
-              //       //     context: context,
-              //       //     text1: "Joint management",
-              //       //     image1: AppImage.joiManagement,
-              //       //     onTap1: () {
-              //       //       //Navigator.push(context, MaterialPageRoute(builder: (context)=>WeightTracker()));
-              //       //       // commingSoonDialog(context);
-              //       //     })
-              //     ],
-              //   ),
-              // ),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      PetProvider petProvider = Provider.of(context, listen: false);
+                      petProvider.cateId = "";
+                      petProvider.GetDocV2();
+                      Future.delayed(const Duration(milliseconds: 1000), () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Categories()));
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkDoc),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.petProfile_documents),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      provider.getPetPhotoCall(context: context, isNavigate: true);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkPic),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.petProfile_photos),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      PetProvider petProvider = Provider.of(context, listen: false);
+
+                      print("helth controler valsue==>> ${petProvider.petHealtweightCntrolr.text}");
+
+                      print("user.isPremium=${petProvider.isUserPremium}===");
+
+                      if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
+                          (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
+                        PetProvider petProvider = Provider.of(context, listen: false);
+                        petProvider.graphSpotData.clear();
+                        petProvider.callGetWeight();
+
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => WeightTrkrMain()));
+                        }).onError((error, stackTrace) {
+                          print("eroorroror===>>> $error");
+                        });
+                      } else if (petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 0) {
+                        makePetPremDialog(context);
+                      } else if (petProvider.isUserPremium == 0) {
+                        commingSoonDialog(context);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkPic),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.petProfile_weightTraker),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppScreen.googlemap);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkQr),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.petProfile_qrScanned),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      if (Platform.isIOS) {
+                        showDialog(
+                            context: context,
+                            builder: (context1) {
+                              return AlertDialog(
+                                title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
+                                actions: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context1);
+                                    },
+                                    child: Text(
+                                      tr(LocaleKeys.additionText_no),
+                                      style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      Navigator.pop(context1);
+                                      EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
+                                          duration: const Duration(seconds: 7));
+
+                                      PetProvider petProvider = Provider.of(context, listen: false);
+
+                                      petProvider.updateLoader(true);
+                                      CallAPi apiii = CallAPi();
+                                      String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
+
+                                      petProvider.updateLoader(false);
+                                      print("apiii url===>>> ${apiii.pdfUrl}");
+
+                                      if (pdfurlfinal.isEmpty) {
+                                        petProvider.updateLoader(false);
+                                        EasyLoading.showToast("try again later");
+                                      }
+                                      if (pdfurlfinal.isNotEmpty) {
+                                        petProvider.updateLoader(false);
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) => DownloadingDailog(uri: apiii.pdfUrl));
+                                      }
+                                    },
+                                    child: Text(
+                                      tr(LocaleKeys.additionText_yes),
+                                      style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                    ),
+                                  )
+                                ],
+                              );
+                            });
+                      }
+                      if (Platform.isAndroid) {
+                        {
+                          showDialog(
+                              context: context,
+                              builder: (context1) {
+                                return AlertDialog(
+                                  title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
+                                  actions: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context1);
+                                      },
+                                      child: Text(
+                                        tr(LocaleKeys.additionText_no),
+                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        Navigator.pop(context1);
+                                        EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
+                                            duration: const Duration(seconds: 7));
+
+                                        PetProvider petProvider = Provider.of(context, listen: false);
+                                        petProvider.updateLoader(true);
+                                        CallAPi apiii = CallAPi();
+                                        String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
+
+                                        petProvider.updateLoader(false);
+                                        print("apiii url===>>> ${apiii.pdfUrl}");
+
+                                        if (pdfurlfinal.isEmpty) {
+                                          petProvider.updateLoader(false);
+                                          EasyLoading.showToast("try again later");
+                                        }
+                                        if (pdfurlfinal.isNotEmpty) {
+                                          petProvider.updateLoader(false);
+                                          print("apiii url===>>> ${apiii.pdfUrl}");
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) => DownloadingDailog(uri: apiii.pdfUrl));
+                                        }
+                                      },
+                                      child: Text(
+                                        tr(LocaleKeys.additionText_yes),
+                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              });
+                        }
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkDown),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.petProfile_downloadpetProfile),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HealthCard()));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkDown),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.additionText_hlthCard),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Achievement(
+                                    isNavigate: false,
+                                  )));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(22), color: const Color(0xffFBF5F6)),
+                      child: Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Image.asset(AppImage.pinkCal),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 6.0),
+                          child: Text(
+                            tr(LocaleKeys.additionText_achievements),
+                            style: const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 14),
+                          ),
+                        ),
+                        const Spacer(),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 6.0),
+                          child: Icon(Icons.arrow_forward),
+                        )
+                      ]),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                // Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                //     child: Consumer<PetProvider>(
+                //       builder: (context, petProvider1, child) {
+                //         return Center(
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //             crossAxisAlignment: CrossAxisAlignment.center,
+                //             children: [
+                //               InkWell(
+                //                 child: Image.asset(AppImage.petDash1),
+                //                 onTap: () async {
+                //                   if (petDetail?.isPetQrCount == 0) {
+                //                     var status3 = await Permission.camera.status;
+
+                //                     print("value of status===>>> $status3");
+                //                     if (!status3.isGranted) {
+                //                       print("iiiiii==>$i");
+                //                       i = i + 1;
+
+                //                       if (i > 1) {
+                //                         scannerPermissionDialog(context);
+                //                       }
+
+                //                       if (i <= 1) {
+                //                         await Permission.camera.request();
+                //                       }
+                //                     }
+                //                     var status4 = await Permission.camera.status;
+                //                     print("status 4 value-=====$status4");
+                //                     if (status4.isGranted) {
+                //                       Navigator.push(
+                //                           context,
+                //                           MaterialPageRoute(
+                //                               builder: (context) => ScannerScreen(
+                //                                     isNewTag: 1,
+                //                                   )));
+                //                     }
+                //                   } else {
+                //                     if (petProvider1.openOnce == 0) {
+                //                       print("******inside this****");
+                //                       petProvider1.openOnce = 1;
+                //                       PurChaseProvider pur = Provider.of(context, listen: false);
+                //                       await pur.getSubScriptionDetails();
+                //                       petProvider1.callGetQrTag();
+                //                       Navigator.push(context, MaterialPageRoute(builder: (context) => const TagList()));
+                //                     }
+                //                   }
+
+                //                   // petProvider1.callGetQrTag();
+                //                   // Navigator.push(context, MaterialPageRoute(builder: (context) => TagList()));
+                //                   // Navigator.push(context, MaterialPageRoute(builder: (context) => ScannerScreen()));
+                //                 },
+                //               ),
+                //               Center(
+                //                 child: Stack(
+                //                   children: [
+                //                     Padding(
+                //                       padding: const EdgeInsets.only(left: 12.0),
+                //                       child: Container(
+                //                         height: 125,
+                //                         width: 125,
+                //                         decoration: BoxDecoration(
+                //                           borderRadius: BorderRadius.circular(65),
+                //                           color: AppColor.textFieldGrey,
+                //                         ),
+                //                         child: ClipRRect(
+                //                           borderRadius: BorderRadius.circular(65),
+                //                           // radius: 50,
+                //                           child: CachedNetworkImage(
+                //                             imageUrl: petProvider1.selectedPetDetail?.petPhoto ?? "",
+                //                             fit: BoxFit.cover,
+                //                             placeholder: (context, url) => Padding(
+                //                               padding: const EdgeInsets.all(18.0),
+                //                               child: Image.asset(
+                //                                 AppImage.placeholderIcon,
+                //                                 fit: BoxFit.cover,
+                //                               ),
+                //                             ),
+                //                             errorWidget: (context, url, error) => Padding(
+                //                               padding: const EdgeInsets.all(18.0),
+                //                               child: Image.asset(
+                //                                 AppImage.placeholderIcon,
+                //                                 fit: BoxFit.cover,
+                //                               ),
+                //                             ),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     ),
+                //                     Positioned(
+                //                       left: 95,
+                //                       child: SizedBox(
+                //                         height: 40,
+                //                         width: 40,
+                //                         child: InkWell(
+                //                           onTap: () async {
+                //                             await petProvider1.callGetQrTag();
+
+                //                             Future.delayed(const Duration(milliseconds: 100), () {
+                //                               Navigator.push(
+                //                                   context, MaterialPageRoute(builder: (context) => const PetProfile()));
+                //                             });
+
+                //                             // Navigator.push(
+                //                             //     context,
+                //                             //     MaterialPageRoute(
+                //                             //         builder: (context) =>
+                //                             //             PetProfile()));
+                //                           },
+                //                           child: ClipRRect(
+                //                             child: Image.asset(AppImage.pencil, height: 40),
+                //                           ),
+                //                         ),
+                //                       ),
+                //                     )
+                //                   ],
+                //                 ),
+                //               ),
+                //               Consumer<PetProvider>(builder: (context, petProvider, child) {
+                //                 return InkWell(
+                //                     child: Image.asset(AppImage.petDash2),
+                //                     onTap: () async {
+                //                       if (petDetail?.isPetQrCount == 0) {
+                //                         CoolAlert.show(
+                //                           context: context,
+                //                           type: CoolAlertType.warning,
+                //                           text: tr(LocaleKeys.additionText_qrTgNotActivated),
+                //                         );
+                //                       } else {
+                //                         PermissionStatus status3;
+                //                         LocationPermission status4;
+
+                //                         print("location locIocPer===>>${petProvider.locIocPer}");
+
+                //                         if (Platform.isAndroid) {
+                //                           status3 = await Permission.location.status;
+                //                           print("location status===>>$status3");
+
+                //                           // if(status3.isGranted)
+                //                           if (status3 == PermissionStatus.granted) {
+                //                             onNotification();
+
+                //                             petProvider.updateLoader(true);
+
+                //                             try {
+                //                               petProvider.updateLoader(true);
+                //                               Position posti = await _determineCurPosition();
+
+                //                               petProvider1.lati = posti.latitude;
+                //                               petProvider1.longi = posti.longitude;
+                //                               petProvider.updateLoader(false);
+
+                //                               petProvider.updateLoader(false);
+
+                //                               petProvider.lati = posti.latitude;
+                //                               petProvider.longi = posti.longitude;
+                //                             } catch (e) {
+                //                               petProvider.updateLoader(false);
+
+                //                               print("error========$e");
+                //                             }
+
+                //                             if (petProvider1.selectedPetDetail?.isLost == 1) {
+                //                               provider.petMarkAsLostP2(context: context);
+                //                             } else {
+                //                               showDialog(
+                //                                   context: context,
+                //                                   builder: (context) => AlertDialog(
+                //                                         title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                //                                         actions: <Widget>[
+                //                                           InkWell(
+                //                                             child: Text(
+                //                                               tr(LocaleKeys.additionText_cancel),
+                //                                               style: const TextStyle(
+                //                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                                             ),
+                //                                             onTap: () {
+                //                                               Navigator.pop(context);
+                //                                             },
+                //                                           ),
+                //                                           const SizedBox(width: 5),
+                //                                           InkWell(
+                //                                             child: Text(
+                //                                               tr(LocaleKeys.additionText_yes),
+                //                                               style: const TextStyle(
+                //                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                                             ),
+                //                                             onTap: () async {
+                //                                               Navigator.pop(context);
+                //                                               await petProvider1.petMarkAsLostP2(
+                //                                                   context: GlobalVariable.navState.currentContext!);
+                //                                               petProvider.calleditProfileP2Api(context: context);
+                //                                             },
+                //                                           )
+                //                                         ],
+                //                                       ));
+                //                             }
+                //                           }
+
+                //                           if (status3 != PermissionStatus.granted) {
+                //                             locPermissionDialog(context);
+                //                           }
+                //                         }
+
+                //                         if (Platform.isIOS) {
+                //                           status4 = await Geolocator.checkPermission();
+                //                           print(
+                //                               "petProvider1.selectedPetDetail?.isLost ${petProvider1.selectedPetDetail?.isLost}");
+
+                //                           print("location status ios===>>$status4");
+
+                //                           if (status4 == LocationPermission.whileInUse ||
+                //                               status4 == LocationPermission.always) {
+                //                             onNotification();
+
+                //                             print("after loc func over");
+                //                             petProvider.updateLoader(true);
+
+                //                             try {
+                //                               petProvider.updateLoader(true);
+                //                               Position posti = await _determineCurPosition();
+
+                //                               petProvider1.lati = posti.latitude;
+                //                               petProvider1.longi = posti.longitude;
+                //                               petProvider.updateLoader(false);
+
+                //                               petProvider.updateLoader(false);
+
+                //                               petProvider.lati = posti.latitude;
+                //                               petProvider.longi = posti.longitude;
+                //                             } catch (e) {
+                //                               petProvider.updateLoader(false);
+
+                //                               EasyLoading.showToast("Something went wrong! \nTry Again Later");
+                //                               print("error========$e");
+
+                //                               // petProvider.updateLoader(false);
+                //                             }
+
+                //                             if (petProvider1.selectedPetDetail?.isLost == 1) {
+                //                               provider.petMarkAsLostP2(context: context);
+                //                             } else if (petProvider1.selectedPetDetail?.isLost == 0) {
+                //                               showDialog(
+                //                                   context: context,
+                //                                   builder: (context) => AlertDialog(
+                //                                         title: Text(tr(LocaleKeys.additionText_uSurePetLost)),
+                //                                         actions: <Widget>[
+                //                                           InkWell(
+                //                                             child: Text(
+                //                                               tr(LocaleKeys.additionText_cancel),
+                //                                               style: const TextStyle(
+                //                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                                             ),
+                //                                             onTap: () {
+                //                                               Navigator.pop(context);
+                //                                             },
+                //                                           ),
+                //                                           const SizedBox(width: 5),
+                //                                           InkWell(
+                //                                             child: Text(
+                //                                               tr(LocaleKeys.additionText_yes),
+                //                                               style: const TextStyle(
+                //                                                   fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                                             ),
+                //                                             onTap: () async {
+                //                                               Navigator.pop(context);
+                //                                               await petProvider1.petMarkAsLostP2(
+                //                                                   context: GlobalVariable.navState.currentContext!);
+
+                //                                               petProvider.calleditProfileP2Api(context: context);
+                //                                             },
+                //                                           )
+                //                                         ],
+                //                                       ));
+                //                             }
+                //                           }
+
+                //                           if (status4 == LocationPermission.denied ||
+                //                               status4 == LocationPermission.deniedForever) {
+                //                             iosLocPermiDialog(context);
+                //                             petProvider.locIocPer = 1;
+                //                           }
+                //                         }
+                //                       }
+                //                     });
+                //               })
+                //             ],
+                //           ),
+                //         );
+                //       },
+                //     )),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+
+                // Center(
+                //   child: petDetail?.isPetQrCount != 0
+                //       ? InkWell(
+                //           onTap: () async {
+                //             PetProvider petProvider = Provider.of(context, listen: false);
+
+                //             print("print");
+                //             var status3 = await Permission.camera.status;
+                //             print("value of status===>>> $status3");
+
+                //             if (status3 != PermissionStatus.granted) {
+                //               // print("iiiiii==>${i}");
+                //               i = i + 1;
+                //               print("iiiiii==>$i");
+                //               if (i > 2) {
+                //                 scannerPermissionDialog(context);
+                //                 // await Permission.camera.request();
+                //               }
+
+                //               if (i == 1) {
+                //                 await Permission.camera.request();
+                //               }
+                //             }
+                //             var status4 = await Permission.camera.status;
+                //             print("value of status===>>> $status4");
+
+                //             if (status4 == PermissionStatus.granted) {
+                //               Navigator.push(
+                //                   context,
+                //                   MaterialPageRoute(
+                //                       builder: (context) => ScannerScreen(
+                //                             isNewTag: 1,
+                //                           )));
+                //             }
+                //           },
+                //           child: Container(
+                //             height: 40,
+                //             width: MediaQuery.of(context).size.width * .55,
+                //             decoration:
+                //                 BoxDecoration(borderRadius: BorderRadius.circular(28), color: AppColor.newBlueGrey),
+                //             child: Center(
+                //               child:
+                //                   // Text(
+                //                   //   tr(LocaleKeys.additionText_addMoreQR),
+                //                   //   textAlign: TextAlign.center,
+                //                   //   style: TextStyle(
+                //                   //     color: Colors.white,
+                //                   //     fontFamily: AppFont.poppinsMedium,
+                //                   //     fontSize: 13.0,
+                //                   //   ),
+                //                   // ),
+
+                //                   RichText(
+                //                 textAlign: TextAlign.center,
+                //                 text: TextSpan(children: <TextSpan>[
+                //                   TextSpan(
+                //                     text: tr(LocaleKeys.additionText_addMoreQR),
+                //                     style: const TextStyle(
+                //                         color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.w800),
+                //                   ),
+                //                 ]),
+                //               ),
+                //             ),
+                //           ),
+                //         )
+                //       : const SizedBox(height: 40),
+                // ),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0),
+                //   child: Text(
+                //     tr(LocaleKeys.petProfile_protection),
+                //     textAlign: TextAlign.center,
+                //     style: const TextStyle(
+                //         fontSize: 16.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 12.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   child: Row(
+                //     children: [
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           crl: AppColor.newLightBlue,
+                //           text1: tr(LocaleKeys.home_careDiary),
+                //           image1: AppImage.newCal,
+                //           onTap1: () {
+                //             provider.mySelectedEvents = {};
+                //             print("is map empty==>>${provider.mySelectedEvents}");
+                //             Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) =>
+                //                         EventCalender(isShowBackIcon: true, isBottomBorder: true, isFromPet: true)));
+
+                //             //   Navigator.push(context, MaterialPageRoute(builder: (context)=>NewEvent()));
+                //           }),
+                //       const SizedBox(
+                //         width: 12.0,
+                //       ),
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           text1: tr(LocaleKeys.petProfile_documents),
+                //           image1: AppImage.newDocs,
+                //           crl: AppColor.newLightBlue,
+                //           onTap1: () {
+                //             // Navigator.pushNamed(context, AppScreen.documentList);
+                //             PetProvider petProvider = Provider.of(context, listen: false);
+                //             petProvider.cateId = "";
+                //             petProvider.GetDocV2();
+                //             Future.delayed(const Duration(milliseconds: 1000), () {
+                //               Navigator.push(context, MaterialPageRoute(builder: (context) => const Categories()));
+                //             });
+                //           })
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 12.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   child: Row(
+                //     children: [
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           crl: AppColor.newLightBlue,
+                //           text1: tr(LocaleKeys.petProfile_photos),
+                //           image1: AppImage.newPics,
+                //           onTap1: () {
+                //             provider.getPetPhotoCall(context: context, isNavigate: true);
+                //           }),
+                //       const SizedBox(
+                //         width: 12.0,
+                //       ),
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           text1: tr(LocaleKeys.petProfile_weightTraker),
+                //           crl: AppColor.newLightBlue,
+                //           image1: AppImage.newWeight,
+                //           onTap1: () {
+                //             PetProvider petProvider = Provider.of(context, listen: false);
+
+                //             print("helth controler valsue==>> ${petProvider.petHealtweightCntrolr.text}");
+
+                //             print("user.isPremium=${petProvider.isUserPremium}===");
+
+                //             if ((petProvider.isUserPremium == 1 && petProvider.selectedPetDetail?.isPremium == 1) ||
+                //                 (petProvider.sharedPremIds.contains(petProvider.selectedPetDetail?.id))) {
+                //               PetProvider petProvider = Provider.of(context, listen: false);
+                //               petProvider.graphSpotData.clear();
+                //               petProvider.callGetWeight();
+
+                //               Future.delayed(const Duration(milliseconds: 1000), () {
+                //                 Navigator.push(context, MaterialPageRoute(builder: (context) => WeightTrkrMain()));
+                //               }).onError((error, stackTrace) {
+                //                 print("eroorroror===>>> $error");
+                //               });
+                //             } else if (petProvider.isUserPremium == 1 &&
+                //                 petProvider.selectedPetDetail?.isPremium == 0) {
+                //               makePetPremDialog(context);
+                //             } else if (petProvider.isUserPremium == 0) {
+                //               commingSoonDialog(context);
+                //             }
+
+                //             // commingSoonDialog(context);
+                //           })
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 15.0),
+                //   child: Text(
+                //     tr(LocaleKeys.petProfile_moreOption),
+                //     textAlign: TextAlign.center,
+                //     style: const TextStyle(
+                //       fontSize: 16.0,
+                //       color: AppColor.textLightBlueBlack,
+                //       fontFamily: AppFont.poppinsBold,
+                //     ),
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   child: Row(
+                //     children: [
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           crl: AppColor.newLightBlue,
+                //           text1: tr(LocaleKeys.petProfile_qrScanned),
+                //           image1: AppImage.newQR,
+                //           onTap1: () {
+                //             Navigator.pushNamed(context, AppScreen.googlemap);
+                //           }),
+                //       const SizedBox(
+                //         width: 12.0,
+                //       ),
+                //       Consumer<PetProvider>(builder: (context, petProvider, child) {
+                //         return GreyContainerWidCircle(
+                //             context: context,
+                //             text1: tr(LocaleKeys.petProfile_downloadpetProfile),
+                //             crl: AppColor.newLightBlue,
+                //             image1: AppImage.newDown,
+                //             onTap1: () async {
+                //               if (Platform.isIOS) {
+                //                 showDialog(
+                //                     context: context,
+                //                     builder: (context1) {
+                //                       return AlertDialog(
+                //                         title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
+                //                         actions: [
+                //                           InkWell(
+                //                             onTap: () {
+                //                               Navigator.pop(context1);
+                //                             },
+                //                             child: Text(
+                //                               tr(LocaleKeys.additionText_no),
+                //                               style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                             ),
+                //                           ),
+                //                           const SizedBox(
+                //                             width: 5,
+                //                           ),
+                //                           InkWell(
+                //                             onTap: () async {
+                //                               Navigator.pop(context1);
+                //                               EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
+                //                                   duration: const Duration(seconds: 7));
+
+                //                               PetProvider petProvider = Provider.of(context, listen: false);
+
+                //                               petProvider.updateLoader(true);
+                //                               CallAPi apiii = CallAPi();
+                //                               String pdfurlfinal =
+                //                                   await apiii.login(petId: petProvider.setselectedPetId);
+
+                //                               petProvider.updateLoader(false);
+                //                               print("apiii url===>>> ${apiii.pdfUrl}");
+
+                //                               if (pdfurlfinal.isEmpty) {
+                //                                 petProvider.updateLoader(false);
+                //                                 EasyLoading.showToast("try again later");
+                //                               }
+                //                               if (pdfurlfinal.isNotEmpty) {
+                //                                 petProvider.updateLoader(false);
+                //                                 showDialog(
+                //                                     context: context,
+                //                                     builder: (BuildContext context) =>
+                //                                         DownloadingDailog(uri: apiii.pdfUrl));
+                //                               }
+                //                             },
+                //                             child: Text(
+                //                               tr(LocaleKeys.additionText_yes),
+                //                               style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                             ),
+                //                           )
+                //                         ],
+                //                       );
+                //                     });
+                //               }
+                //               if (Platform.isAndroid) {
+                //                 {
+                //                   showDialog(
+                //                       context: context,
+                //                       builder: (context1) {
+                //                         return AlertDialog(
+                //                           title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
+                //                           actions: [
+                //                             InkWell(
+                //                               onTap: () {
+                //                                 Navigator.pop(context1);
+                //                               },
+                //                               child: Text(
+                //                                 tr(LocaleKeys.additionText_no),
+                //                                 style:
+                //                                     const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                               ),
+                //                             ),
+                //                             const SizedBox(
+                //                               width: 5,
+                //                             ),
+                //                             InkWell(
+                //                               onTap: () async {
+                //                                 Navigator.pop(context1);
+                //                                 EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
+                //                                     duration: const Duration(seconds: 7));
+
+                //                                 PetProvider petProvider = Provider.of(context, listen: false);
+                //                                 petProvider.updateLoader(true);
+                //                                 CallAPi apiii = CallAPi();
+                //                                 String pdfurlfinal =
+                //                                     await apiii.login(petId: petProvider.setselectedPetId);
+
+                //                                 petProvider.updateLoader(false);
+                //                                 print("apiii url===>>> ${apiii.pdfUrl}");
+
+                //                                 if (pdfurlfinal.isEmpty) {
+                //                                   petProvider.updateLoader(false);
+                //                                   EasyLoading.showToast("try again later");
+                //                                 }
+                //                                 if (pdfurlfinal.isNotEmpty) {
+                //                                   petProvider.updateLoader(false);
+                //                                   print("apiii url===>>> ${apiii.pdfUrl}");
+                //                                   showDialog(
+                //                                       context: context,
+                //                                       builder: (BuildContext context) =>
+                //                                           DownloadingDailog(uri: apiii.pdfUrl));
+                //                                 }
+                //                               },
+                //                               child: Text(
+                //                                 tr(LocaleKeys.additionText_yes),
+                //                                 style:
+                //                                     const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                //                               ),
+                //                             )
+                //                           ],
+                //                         );
+                //                       });
+                //                 }
+                //               }
+                //             });
+                //       })
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   child: Row(
+                //     children: [
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           crl: AppColor.newLightBlue,
+                //           text1: tr(LocaleKeys.additionText_hlthCard),
+                //           // tr(LocaleKeys.petProfile_healthCare),
+                //           image1: AppImage.newHCard,
+                //           onTap1: () {
+                //             Navigator.push(context, MaterialPageRoute(builder: (context) => HealthCard()));
+                //             // commingSoonDialog(context);
+                //           }),
+                //       const SizedBox(
+                //         width: 12.0,
+                //       ),
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           crl: AppColor.newLightBlue,
+                //           text1: tr(LocaleKeys.additionText_achievements),
+                //           image1: AppImage.newAchi,
+                //           onTap1: () {
+                //             Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) => Achievement(
+                //                           isNavigate: false,
+                //                         )));
+                //             // commingSoonDialog(context);
+                //           }),
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 10.0,
+                // ),
+
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                //   child: Container(
+                //     height: 15,
+                //     width: double.infinity,
+                //     color: AppColor.newGrey,
+                //   ),
+                // ),
+
+                const SizedBox(
+                  height: 10.0,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const ViewPremium();
+                        },
+                      ));
+                    },
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(children: [
+                          Image.asset(AppImage.bigRibbon, height: 80, width: 40),
+                          const Expanded(
+                            child: Text(
+                              "Tap Now To Unlock All The \nPREMIUM BENIFITS",
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xff585357),
+                                fontFamily: AppFont.poppinsBold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          )
+                        ]),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 20.0,
+                ),
+
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   child: Row(
+                //     children: [
+                //       GreyContainerWidCircle(
+                //           context: context,
+                //           text1: "Achievements",
+                //           image1: AppImage.achievements,
+                //           onTap1: () {
+                //             Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) => Achievement()));
+                //             // commingSoonDialog(context);
+                //           }),
+                //       SizedBox(
+                //         width: 12.0,
+                //       ),
+                //       // GreyContainerWidCircle(
+                //       //     context: context,
+                //       //     text1: "Joint management",
+                //       //     image1: AppImage.joiManagement,
+                //       //     onTap1: () {
+                //       //       //Navigator.push(context, MaterialPageRoute(builder: (context)=>WeightTracker()));
+                //       //       // commingSoonDialog(context);
+                //       //     })
+                //     ],
+                //   ),
+                // ),
+              ],
+            );
+          }),
         ));
   }
 

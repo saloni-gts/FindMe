@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/globalnavigatorkey.dart';
 import 'package:find_me/monish/screen/familyPlan.dart';
 import 'package:find_me/screen/signUpScreen.dart';
@@ -142,16 +143,17 @@ class _MoreFeatureState extends State<MoreFeature> {
                 border1: false,
                 putheight: 56.0,
                 width: 220.0,
-                colour: AppColor.newBlueGrey),
+                colour: AppColor.buttonPink),
             const SizedBox(
               height: 10,
             )
           ],
         ),
       ),
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_morFechrs),
-        isbackbutton: false,
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_morFechrs),
+        isTitleCenter: true,
+        showBackIcon: false,
       ),
 
       // MycustomAppbar(

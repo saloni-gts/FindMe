@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/customdropdown.dart';
 import 'package:find_me/components/shortpage.dart';
 import 'package:find_me/extension/email_extension.dart';
@@ -191,7 +192,7 @@ class _PetProfileState extends State<PetProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        bottomNavigationBar: BotttomBorder(context),
+        // bottomNavigationBar: BotttomBorder(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         //extendBody: true,
         floatingActionButton: SizedBox(
@@ -347,7 +348,11 @@ class _PetProfileState extends State<PetProfile> {
           ),
         ),
         backgroundColor: Colors.white,
-        appBar: customAppbar(titlename: tr(LocaleKeys.additionText_petProfile), isbackbutton: true),
+        appBar: CustomCurvedAppbar(
+          title: tr(LocaleKeys.additionText_petProfile),
+          isTitleCenter: true,
+        ),
+        // customAppbar(titlename: tr(LocaleKeys.additionText_petProfile), isbackbutton: true),
         body: DraggableScrollableSheet(
             expand: false,
             initialChildSize: 0.87,

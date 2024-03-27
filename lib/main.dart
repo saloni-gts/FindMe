@@ -52,7 +52,7 @@ Future<void> main() async {
 // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 //   runApp(const MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 }
 
 class MyApp extends StatefulWidget {

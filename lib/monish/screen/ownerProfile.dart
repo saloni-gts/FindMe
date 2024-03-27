@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:find_me/services/hive_handler.dart';
 import 'package:flutter/cupertino.dart';
@@ -145,12 +147,13 @@ class _OwnerProfileState extends State<OwnerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       backgroundColor: Colors.white,
       // resizeToAvoidBottomInset: false,
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.ownerProfile_op),
-        isbackbutton: true,
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.ownerProfile_op),
+        isTitleCenter: true,
+        // isbackbutton: true,
         //icon: false,
       ),
       body: DraggableScrollableSheet(
@@ -649,71 +652,71 @@ class _OwnerProfileState extends State<OwnerProfile> {
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 35.0),
-        child: customBlueButton(
-            context: context,
-            text1: tr(LocaleKeys.ownerProfile_update),
-            onTap1: () {
-              if (phNoController.text.isEmpty && nameController.text.trim().isEmpty) {
+        padding: const EdgeInsets.only(bottom: 35.0, left: 30),
+        child: CustomButton(
+          // context: context,
+          text: tr(LocaleKeys.ownerProfile_update),
+          onPressed: () {
+            if (phNoController.text.isEmpty && nameController.text.trim().isEmpty) {
+              CoolAlert.show(
+                  context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
+            } else if (phNoController.text.isEmpty) {
+              CoolAlert.show(
+                  context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrMobNum));
+            } else if (nameController.text.trim().isEmpty) {
+              CoolAlert.show(
+                  context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
+            } else {
+              if (phNoController.text.isNotEmpty && !phNoController.text.ismobile(phNoController.text)) {
                 CoolAlert.show(
-                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
-              } else if (phNoController.text.isEmpty) {
-                CoolAlert.show(
-                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrMobNum));
-              } else if (nameController.text.trim().isEmpty) {
-                CoolAlert.show(
-                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrNameNum));
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrValidMobNum));
               } else {
-                if (phNoController.text.isNotEmpty && !phNoController.text.ismobile(phNoController.text)) {
-                  CoolAlert.show(
-                      context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrValidMobNum));
-                } else {
-                  AuthProvider auth = Provider.of(context, listen: false);
-                  print("auth.phonecode${auth.cntrycodeOnr}");
-                  print("auth.countryy${countryController.text}");
-                  print("auth.AddressController${AddressController.text}");
-                  if (countryController.text.isEmpty) {
-                    countryController.text = " ";
-                  }
-                  if (AddressController.text.isEmpty) {
-                    AddressController.text = " ";
-                  }
-
-                  auth.updateUserProfileApi(
-                    context: context,
-                    nameee: nameController.text.trim(),
-                    lastNameee: lastNameController.text.trim(),
-                    countryy: countryController.text.trim(),
-                    cityy: cityController.text.trim(),
-                    phonenum: phNoController.text,
-                    phoneCodee: auth.cntrycodeOnr,
-                    cntreShortCodee: auth.cntrycode,
-                    onrAddress: AddressController.text.trim(),
-                    // phoneCodee:auth.phncodeOnr,
-                    // cntreShortCodee: auth.cntrycodeOnr
-                  );
+                AuthProvider auth = Provider.of(context, listen: false);
+                print("auth.phonecode${auth.cntrycodeOnr}");
+                print("auth.countryy${countryController.text}");
+                print("auth.AddressController${AddressController.text}");
+                if (countryController.text.isEmpty) {
+                  countryController.text = " ";
                 }
-              }
+                if (AddressController.text.isEmpty) {
+                  AddressController.text = " ";
+                }
 
-              // else{
-              //   AuthProvider auth = Provider.of(context, listen: false);
-              //   print("auth.phonecode${auth.phncode}");
-              //   auth.updateUserProfileApi(
-              //       context: context,
-              //       nameee: nameController.text,
-              //       lastNameee: lastNameController.text,
-              //       countryy: countryController.text,
-              //       cityy: cityController.text,
-              //       phonenum:phNoController.text,
-              //      phoneCodee:auth.phncode,
-              //     cntreShortCodee: auth.cntrycode
-              //
-              //
-              //   );
-              //
-              // }
-            },
-            colour: AppColor.newBlueGrey),
+                auth.updateUserProfileApi(
+                  context: context,
+                  nameee: nameController.text.trim(),
+                  lastNameee: lastNameController.text.trim(),
+                  countryy: countryController.text.trim(),
+                  cityy: cityController.text.trim(),
+                  phonenum: phNoController.text,
+                  phoneCodee: auth.cntrycodeOnr,
+                  cntreShortCodee: auth.cntrycode,
+                  onrAddress: AddressController.text.trim(),
+                  // phoneCodee:auth.phncodeOnr,
+                  // cntreShortCodee: auth.cntrycodeOnr
+                );
+              }
+            }
+
+            // else{
+            //   AuthProvider auth = Provider.of(context, listen: false);
+            //   print("auth.phonecode${auth.phncode}");
+            //   auth.updateUserProfileApi(
+            //       context: context,
+            //       nameee: nameController.text,
+            //       lastNameee: lastNameController.text,
+            //       countryy: countryController.text,
+            //       cityy: cityController.text,
+            //       phonenum:phNoController.text,
+            //      phoneCodee:auth.phncode,
+            //     cntreShortCodee: auth.cntrycode
+            //
+            //
+            //   );
+            //
+            // }
+          },
+        ),
       ),
     );
   }

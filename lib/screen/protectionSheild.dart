@@ -39,6 +39,8 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
     // print("user email======${user.email}");
     // print("user gender======${user.gender}");
     // print("user country======${user.countryName}");
+
+    // if()
     pet.showGreenTickShield(pet.petDetailList[0].id ?? 0);
 
     pet.setSelectedPetDetails(pet.petDetailList[0]);
@@ -53,7 +55,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColor.newGrey,
+        backgroundColor: AppColor.buttonPink,
         elevation: 0,
         shadowColor: Colors.transparent,
         leading: BackButton(
@@ -63,7 +65,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
           },
         ),
       ),
-      backgroundColor: AppColor.newGrey,
+      backgroundColor: AppColor.buttonPink,
       body: Consumer<PetProvider>(builder: (context, petProvider, child) {
         return SingleChildScrollView(
           child: Column(
@@ -150,9 +152,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                       petList[index].petName ?? "",
                                       textAlign: TextAlign.left,
                                       style: const TextStyle(
-                                          fontSize: 15.0,
-                                          color: AppColor.newBlueGrey,
-                                          fontFamily: AppFont.poppinSemibold),
+                                          fontSize: 15.0, color: Colors.white, fontFamily: AppFont.poppinSemibold),
                                     ),
                                   ),
                                 ),
@@ -176,14 +176,14 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(28),
-                        color: AppColor.newBlueGrey,
+                        color: Colors.white,
                       ),
                       child: Center(
                         child: Text(
                           tr(LocaleKeys.additionText_Protection),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColor.buttonPink,
                             fontFamily: AppFont.poppinSemibold,
                             fontSize: 18.0,
                           ),
@@ -199,7 +199,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                       tr(LocaleKeys.additionText_provideBasicPetProt),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: AppColor.newBlueGrey,
+                        color: Colors.white,
                         fontFamily: AppFont.poppinSemibold,
                         fontSize: 15.0,
                       ),
@@ -307,11 +307,11 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                               ),
                             )
                           : Container(
-                              width: MediaQuery.of(context).size.width * .80,
+                              width: MediaQuery.of(context).size.width * .95,
                               // height: MediaQuery.of(context).size.height * .29,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
+                                color: Colors.transparent,
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,9 +326,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                           TextSpan(
                                             text: tr(LocaleKeys.additionText_fillYrPetInfo),
                                             style: const TextStyle(
-                                                color: AppColor.textLightBlueBlack,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w800),
+                                                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
                                           ),
                                         ]),
                                       ),
@@ -407,11 +405,11 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
 
                   petProvider.SheildList == 2
                       ? Container(
-                          width: MediaQuery.of(context).size.width * .80,
+                          width: MediaQuery.of(context).size.width * .95,
                           // height: MediaQuery.of(context).size.height * .25,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            color: Colors.white,
+                            color: Colors.transparent,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -426,9 +424,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                       TextSpan(
                                         text: tr(LocaleKeys.additionText_fillOnrInfo),
                                         style: const TextStyle(
-                                            color: AppColor.textLightBlueBlack,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w800),
+                                            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
                                       ),
                                     ]),
                                   ),
@@ -441,31 +437,36 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                   txt1: tr(LocaleKeys.additionText_fstName),
                                   isCheck: user.name == "" ? 0 : 1,
                                   onTap1: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   }),
                               SheildListPetInfo(
                                   txt1: tr(LocaleKeys.additionText_Gender),
                                   isCheck: user.gender == "1" || user.gender == "2" ? 1 : 0,
                                   onTap1: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   }),
                               SheildListPetInfo(
                                   txt1: tr(LocaleKeys.additionText_Email),
                                   isCheck: 1,
                                   onTap1: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   }),
                               SheildListPetInfo(
                                   txt1: tr(LocaleKeys.additionText_MainPhn),
                                   isCheck: 1,
                                   onTap1: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   }),
                               SheildListPetInfo(
                                   txt1: tr(LocaleKeys.additionText_Country),
                                   isCheck: user.country == " " ? 0 : 1,
                                   onTap1: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => OwnerProfile()));
+                                    Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => const OwnerProfile()));
                                   }),
                             ],
                           ),
@@ -497,9 +498,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                             ? tr(LocaleKeys.additionText_activateqr)
                                             : tr(LocaleKeys.additionText_qractivated),
                                         style: const TextStyle(
-                                            color: AppColor.textLightBlueBlack,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w800),
+                                            color: AppColor.buttonPink, fontSize: 16, fontWeight: FontWeight.w800),
                                       ),
                                     ]),
                                   ),
@@ -542,8 +541,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                           height: 40,
                                           width: MediaQuery.of(context).size.width * .55,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(28),
-                                              color: AppColor.textLightBlueBlack),
+                                              borderRadius: BorderRadius.circular(28), color: AppColor.buttonPink),
                                           child: Center(
                                             child:
                                                 // Text(
@@ -602,9 +600,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                               ? tr(LocaleKeys.additionText_registerpetmicrochip)
                                               : tr(LocaleKeys.additionText_microchipregisterd),
                                           style: const TextStyle(
-                                              color: AppColor.textLightBlueBlack,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w800),
+                                              color: AppColor.buttonPink, fontSize: 16, fontWeight: FontWeight.w800),
                                         ),
                                       ]),
                                     ),
@@ -621,7 +617,7 @@ class _ProtectionSheildState extends State<ProtectionSheild> {
                                                 width: MediaQuery.of(context).size.width * .55,
                                                 decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(28),
-                                                    color: AppColor.textLightBlueBlack),
+                                                    color: AppColor.buttonPink),
                                                 child: Center(
                                                   child:
 

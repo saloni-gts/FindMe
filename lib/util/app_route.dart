@@ -8,7 +8,6 @@ import 'package:find_me/screen/showallpet.dart';
 import 'package:find_me/screen/splashScreen.dart';
 import 'package:flutter/material.dart';
 
-
 import '../monish/screen/careDiaryNewEvent.dart';
 import '../monish/screen/customerCare.dart';
 import '../monish/screen/customerCareChat.dart';
@@ -39,11 +38,11 @@ class RouteGenrator {
       // case AppScreen.registername:
       //   return MaterialPageRoute(builder: (_) => const EnterNameForm());
       case AppScreen.dashboard:
-        return MaterialPageRoute(builder: (_) =>  DashBoard());
+        return MaterialPageRoute(builder: (_) => DashBoard());
       case AppScreen.enterName:
         return MaterialPageRoute(builder: (_) => const EnterNameForm());
       case AppScreen.petDashboard:
-        return MaterialPageRoute(builder: (_) => PetDashboard());
+        return MaterialPageRoute(builder: (_) => const PetDashboard());
       case AppScreen.forgetPass:
         return MaterialPageRoute(builder: (_) => const ForgetPassword());
       case AppScreen.showallpetscreen:
@@ -53,11 +52,8 @@ class RouteGenrator {
       case AppScreen.documentList:
         return MaterialPageRoute(builder: (_) => const DocumentCategory());
 
-        case AppScreen.newnote:
-        return MaterialPageRoute(builder: (_) =>  NewNote());
-
-
-
+      case AppScreen.newnote:
+        return MaterialPageRoute(builder: (_) => NewNote());
 
       case AppScreen.documentEdit:
         return MaterialPageRoute(
@@ -72,20 +68,20 @@ class RouteGenrator {
       case AppScreen.customercare:
         return MaterialPageRoute(builder: (_) => const CustomerCare());
 
-        // case AppScreen.newevent:
-        // return MaterialPageRoute(builder: (_) => const NewEvent());
+      // case AppScreen.newevent:
+      // return MaterialPageRoute(builder: (_) => const NewEvent());
 
-        case AppScreen.newevent:
-        return MaterialPageRoute(builder: (_) =>  EventCalender());
+      case AppScreen.newevent:
+        return MaterialPageRoute(builder: (_) => EventCalender());
 
       case AppScreen.ownerprofile:
-        return MaterialPageRoute(builder: (_) =>  OwnerProfile());
+        return MaterialPageRoute(builder: (_) => const OwnerProfile());
 
       case AppScreen.eventcalender:
-        return MaterialPageRoute(builder: (_) =>  EventCalender());
+        return MaterialPageRoute(builder: (_) => EventCalender());
 
-        // case AppScreen.newnote:
-        // return MaterialPageRoute(builder: (_) =>  NewNote());
+      // case AppScreen.newnote:
+      // return MaterialPageRoute(builder: (_) =>  NewNote());
       // case AppScreen.customerchat:
       //   return MaterialPageRoute(builder: (_) => const Customerchat());
 

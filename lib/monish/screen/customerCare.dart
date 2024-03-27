@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_font.dart';
 import 'package:find_me/util/app_images.dart';
@@ -52,10 +54,11 @@ class _CustomerCareState extends State<CustomerCare> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_cntactUs),
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_cntactUs),
+        isTitleCenter: true,
       ),
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       body: SizedBox(
         // color: Colors.amber,
         height: MediaQuery.of(context).size.height * .42,
@@ -138,15 +141,18 @@ class _CustomerCareState extends State<CustomerCare> {
                       colour: AppColor.newBlueGrey),
                 )
               : const SizedBox(),
-          customBlueButton(
-            context: context,
-            text1: tr(LocaleKeys.additionText_emailUs),
-            onTap1: () {
-              print("email button pressed....");
+          Padding(
+            padding: const EdgeInsets.only(left: 33.0),
+            child: CustomButton(
+              // context: context,
+              text: tr(LocaleKeys.additionText_emailUs),
+              onPressed: () {
+                print("email button pressed....");
 
-              Platform.isIOS ? sendIosMail() : sendEmail("", "support@find-me.app");
-            },
-            colour: AppColor.newBlueGrey,
+                Platform.isIOS ? sendIosMail() : sendEmail("", "support@find-me.app");
+              },
+              // colour: AppColor.newBlueGrey,
+            ),
           ),
         ],
       ),

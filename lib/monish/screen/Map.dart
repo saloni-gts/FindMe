@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/monish/models/Locationlist.dart';
 import 'package:find_me/monish/provider/mapProvider.dart';
 import 'package:find_me/provider/petprovider.dart';
@@ -23,7 +24,6 @@ import '../reUseClass/Upcoming list.dart';
 import '../reUseClass/myappbar.dart';
 
 class Googlemap extends StatefulWidget {
-  
   const Googlemap({
     Key? key,
   }) : super(key: key);
@@ -50,8 +50,8 @@ class _GooglemapState extends State<Googlemap> {
     // print("------------>>>>>  ${petProvider1.locationList[0].longitude}");
     // lati=petProvider1.locationList[0].latitude??"";
     // longi=petProvider1.locationList[0].longitude??"";
-    print("********** latitiude ${lati}");
-    print("********** longitude ${longi}");
+    print("********** latitiude $lati");
+    print("********** longitude $longi");
     getLocation();
 
     loader();
@@ -71,20 +71,19 @@ class _GooglemapState extends State<Googlemap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.additionText_QrtgRec),
-
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.additionText_QrtgRec),
+        isTitleCenter: true,
       ),
-       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: BotttomBorder(context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      // floatingActionButton: BotttomBorder(context),
 
       // bottomNavigationBar: BotttomBorder(context),
-      body: Consumer2<PetProvider, MapProvider>(
-          builder: (context, petProvider, value, child) {
+      body: Consumer2<PetProvider, MapProvider>(builder: (context, petProvider, value, child) {
         List<LocationListDetails> LocList = petProvider.locationList;
-        Set<Marker> _markers = value.markers;
+        Set<Marker> markers = value.markers;
         print("C${LocList.length}");
-        print("mmmm${_markers.length}");
+        print("mmmm${markers.length}");
         return Padding(
           padding: const EdgeInsets.all(13),
           child: value.kGooglePlex != null
@@ -95,7 +94,7 @@ class _GooglemapState extends State<Googlemap> {
                         child: Stack(
                           children: [
                             GoogleMap(
-                             // compassEnabled: true,
+                              // compassEnabled: true,
                               markers: value.markers,
                               mapType: MapType.normal,
                               initialCameraPosition: value.kGooglePlex!,
@@ -106,43 +105,30 @@ class _GooglemapState extends State<Googlemap> {
 
                                 setState(() {});
                               },
-                               myLocationEnabled: false,
-                             myLocationButtonEnabled: false,
-
+                              myLocationEnabled: false,
+                              myLocationButtonEnabled: false,
                             ),
-
                             Positioned(
                                 bottom: 10,
                                 right: 10,
-                                child:
-                            InkWell(
-                              onTap: (){
-                                if(lati==null && longi==null){
-                                  print("--------null--------");
-                                  lati=petProvider.locationList[0].latitude;
-                                  longi=petProvider.locationList[0].longitude;
-                                  print("--------${lati}--------");
-                                  print("--------${longi}--------");
-                                }
-                                openMap(lati,longi);
-                              },
-                              child:
-                                CircleAvatar(
-                                  backgroundColor:AppColor.textRed,
-                                  child: Image.asset(AppImage.groupIcon)
-                                )
-                            )
-                            )
-
+                                child: InkWell(
+                                    onTap: () {
+                                      if (lati == null && longi == null) {
+                                        print("--------null--------");
+                                        lati = petProvider.locationList[0].latitude;
+                                        longi = petProvider.locationList[0].longitude;
+                                        print("--------$lati--------");
+                                        print("--------$longi--------");
+                                      }
+                                      openMap(lati, longi);
+                                    },
+                                    child: CircleAvatar(
+                                        backgroundColor: AppColor.textRed, child: Image.asset(AppImage.groupIcon))))
                           ],
-                        )
-                    ),
-
-
-                    SizedBox(
+                        )),
+                    const SizedBox(
                       height: 20.0,
                     ),
-
                     Expanded(
                       flex: 0,
                       child: Align(
@@ -150,53 +136,46 @@ class _GooglemapState extends State<Googlemap> {
                         child: Text(
                           tr(LocaleKeys.additionText_scanHis),
                           textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontFamily: AppFont.poppinsMedium,
-                              fontSize: 12,
-                              color: Color(0xffBFBFBF)),
+                          style: const TextStyle(
+                              fontFamily: AppFont.poppinsMedium, fontSize: 12, color: Color(0xffBFBFBF)),
                         ),
                       ),
                     ),
-
-                    SizedBox(
-                      height:5.0,
+                    const SizedBox(
+                      height: 5.0,
                     ),
-
                     Expanded(
                       flex: 5,
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 15.0),
-                          child: ListView.builder(
-                     //     reverse: true,
-                              shrinkWrap: true,
-                              itemCount: LocList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
+                          child: LocList.isEmpty
+                              ? const Center(child: Text("No Record Found"))
+                              : ListView.builder(
+                                  //     reverse: true,
+                                  shrinkWrap: true,
+                                  itemCount: LocList.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        lati = LocList[index].latitude;
+                                        longi = LocList[index].longitude;
 
-                                    lati=LocList[index].latitude;
-                                    longi=LocList[index].longitude;
+                                        print(" lati==== ${LocList[index].latitude}");
+                                        print(" longi==== ${LocList[index].longitude}");
 
-
-                                    print(" lati==== ${LocList[index].latitude}");
-                                    print(" longi==== ${LocList[index].longitude}");
-
-                                    showPin(
-                                      double.parse(
-                                          LocList[index].latitude.toString()),
-                                      double.parse(
-                                          LocList[index].longitude.toString()),
+                                        showPin(
+                                          double.parse(LocList[index].latitude.toString()),
+                                          double.parse(LocList[index].longitude.toString()),
+                                        );
+                                      },
+                                      child: upcommingListContainer(
+                                        context,
+                                        LocList[index],
+                                      ),
                                     );
-                                  },
-                                  child: upcommingListContainer(
-                                    context,
-                                    LocList[index],
-                                  ),
-                                );
-                              }
-                              ),
+                                  }),
                         ),
                       ),
                     ),
@@ -212,35 +191,23 @@ class _GooglemapState extends State<Googlemap> {
     GoogleMapController controller = await _conroller.future;
 
     controller.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-          target: LatLng(lat, long), zoom: 15, bearing: 45.0, tilt: 45.0),
+      CameraPosition(target: LatLng(lat, long), zoom: 15, bearing: 45.0, tilt: 45.0),
     ));
   }
 
-  void openMap(lati, longi) async{
-
-
+  void openMap(lati, longi) async {
     String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$lati,$longi';
 
-    if(Platform.isIOS){
-      if (await canLaunchUrlString(googleUrl)){
-        await launchUrlString(googleUrl,mode:LaunchMode.externalApplication);
+    if (Platform.isIOS) {
+      if (await canLaunchUrlString(googleUrl)) {
+        await launchUrlString(googleUrl, mode: LaunchMode.externalApplication);
       }
-    }
-    else if(Platform.isAndroid){
+    } else if (Platform.isAndroid) {
       if (await canLaunch(googleUrl)) {
         await launch(googleUrl);
       }
+    } else {
+      print('Could not open the map.');
     }
-
-
-    else {
-   print('Could not open the map.');
-    }
-
-
   }
-
-
-
 }

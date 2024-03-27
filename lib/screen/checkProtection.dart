@@ -5,6 +5,8 @@ import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/cntryPikrprot.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/screen/blur_background.dart';
@@ -59,6 +61,9 @@ class _CheckProtectionState extends State<CheckProtection> {
       pet.selectedPetIdForProtction = pet.petDetailList[0].id ?? 0;
 
       pet.callGetProt();
+      print("widget.UsrData.phoneCode---${widget.UsrData.phoneCode}");
+      print("widget.UsrData.mobileNumber---${widget.UsrData.mobileNumber}");
+
       mnPhNum = "+${widget.UsrData.phoneCode} ${widget.UsrData.mobileNumber}";
 
       mainphoneController.text = mnPhNum!;
@@ -71,39 +76,26 @@ class _CheckProtectionState extends State<CheckProtection> {
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      bottomNavigationBar: BotttomBorder(context),
-      appBar: customAppbar(isbackbutton: true, titlename: tr(LocaleKeys.additionText_checktheProtection)),
+      // bottomNavigationBar: BotttomBorder(context),
+      appBar: CustomCurvedAppbar(title: tr(LocaleKeys.additionText_checktheProtection), isTitleCenter: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 35.0),
-        child: customBlueButton(
-            context: context,
-            text1: tr(LocaleKeys.addPet_save),
-            onTap1: () {
-              PetProvider petProvider = Provider.of(context, listen: false);
+        padding: const EdgeInsets.only(bottom: 35.0, left: 30),
+        child: CustomButton(
+          // context: context,
+          text: tr(LocaleKeys.addPet_save),
+          onPressed: () {
+            PetProvider petProvider = Provider.of(context, listen: false);
 
-              petProvider.addToList();
-              petProvider.addToPhNumList(context);
-              petProvider.addToMsngrList();
+            petProvider.addToList();
+            petProvider.addToPhNumList(context);
+            petProvider.addToMsngrList();
 
-              if (petProvider.xtraPhNumlist.isNotEmpty) {
-                String s1 = petProvider.xtraPhNumlist[0].controller?.text ?? "";
-                if (s1.isNotEmpty && !s1.ismobile(s1)) {
-                  CoolAlert.show(
-                      context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrValidMobNum));
-                } else {
-                  petProvider.selectedPetDetail?.microchip = petProvider.petProtMchip.text;
-                  print("====microchip=${petProvider.selectedPetDetail?.microchip}");
-                  Future.delayed(const Duration(milliseconds: 200), () {
-                    petProvider.callEditProtection(
-                      context: context,
-                      petMicrochip: petProvider.petProtMchip.text,
-                      PetIdentfies: petProvider.featureMap,
-                      messengers: petProvider.mesngrMap,
-                      mobNumLst: petProvider.PhNumMap,
-                    );
-                  });
-                }
+            if (petProvider.xtraPhNumlist.isNotEmpty) {
+              String s1 = petProvider.xtraPhNumlist[0].controller?.text ?? "";
+              if (s1.isNotEmpty && !s1.ismobile(s1)) {
+                CoolAlert.show(
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrValidMobNum));
               } else {
                 petProvider.selectedPetDetail?.microchip = petProvider.petProtMchip.text;
                 print("====microchip=${petProvider.selectedPetDetail?.microchip}");
@@ -117,8 +109,22 @@ class _CheckProtectionState extends State<CheckProtection> {
                   );
                 });
               }
-            },
-            colour: AppColor.newBlueGrey),
+            } else {
+              petProvider.selectedPetDetail?.microchip = petProvider.petProtMchip.text;
+              print("====microchip=${petProvider.selectedPetDetail?.microchip}");
+              Future.delayed(const Duration(milliseconds: 200), () {
+                petProvider.callEditProtection(
+                  context: context,
+                  petMicrochip: petProvider.petProtMchip.text,
+                  PetIdentfies: petProvider.featureMap,
+                  messengers: petProvider.mesngrMap,
+                  mobNumLst: petProvider.PhNumMap,
+                );
+              });
+            }
+          },
+          // colour: AppColor.newBlueGrey
+        ),
       ),
       body: DraggableScrollableSheet(
           expand: false,
@@ -139,16 +145,16 @@ class _CheckProtectionState extends State<CheckProtection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(
-                        height: 5.0,
+                        height: 25.0,
                       ),
 
                       ///------------
 
-                      Text(
-                        tr(LocaleKeys.additionText_xtraPtId),
-                        style: const TextStyle(
-                            fontFamily: AppFont.poppinsBold, fontSize: 16, color: AppColor.textLightBlueBlack),
-                      ),
+                      // Text(
+                      //   tr(LocaleKeys.additionText_xtraPtId),
+                      //   style: const TextStyle(
+                      //       fontFamily: AppFont.poppinsBold, fontSize: 16, color: AppColor.textLightBlueBlack),
+                      // ),
 
                       Consumer<PetProvider>(
                         builder: (context, petProvider, child) {
@@ -270,9 +276,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                               Text(
                                 tr(LocaleKeys.additionText_microchip),
                                 style: const TextStyle(
-                                    fontFamily: AppFont.poppinsRegular,
-                                    fontSize: 12,
-                                    color: AppColor.textLightBlueBlack),
+                                    fontFamily: AppFont.figTreeBold, fontSize: 12, color: AppColor.textLightBlueBlack),
                               ),
                               const SizedBox(
                                 height: 7,
@@ -285,10 +289,473 @@ class _CheckProtectionState extends State<CheckProtection> {
                               const SizedBox(
                                 height: 20.0,
                               ),
-                              Text(
-                                tr(LocaleKeys.additionText_xtraPtId),
-                                style: const TextStyle(
-                                    fontFamily: AppFont.poppinsBold, fontSize: 16, color: AppColor.textLightBlueBlack),
+                              Row(
+                                children: [
+                                  const Expanded(
+                                    child: Text(
+                                      "Extra Pet ID",
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          fontFamily: AppFont.poppinsBold,
+                                          fontSize: 16,
+                                          color: AppColor.textLightBlueBlack),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            backgroundColor: Colors.white,
+                                            context: context,
+                                            builder: (context) {
+                                              return blurView(
+                                                child: SingleChildScrollView(
+                                                  child: Container(
+                                                    color: Colors.white,
+                                                    // height: 370,
+                                                    child: Column(
+                                                      children: [
+                                                        const SizedBox(
+                                                          height: 10.0,
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            const Text(
+                                                              " sdsdsd",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontFamily: AppFont.figTreeBold,
+                                                                  color: Colors.transparent),
+                                                            ),
+                                                            const Text(
+                                                              "Pet Extra ID",
+                                                              style: TextStyle(
+                                                                  fontSize: 14, fontFamily: AppFont.figTreeBold),
+                                                            ),
+                                                            Align(
+                                                              alignment: Alignment.topRight,
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.only(right: 8.0),
+                                                                child: InkWell(
+                                                                    onTap: () {
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    child: Image.asset(
+                                                                      AppImage.closeIcon,
+                                                                    )),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 30.0,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(1);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_specialfeatures),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(2);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_tattoos),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(1);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_specialfeatures),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(2);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_tattoos),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(3);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_clip),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(4);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_ringnumber),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(3);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_clip),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(4);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_ringnumber),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(5);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys
+                                                                          .additionText_internalOrgniztionnumber),
+                                                                      textAlign: TextAlign.center,
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(6);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_accountnumber),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(5);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_internalOrgniztionnumber),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(6);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_accountnumber),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(7);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_breedingbooknumber),
+                                                                      textAlign: TextAlign.center,
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: InkWell(
+                                                                onTap: () {
+                                                                  petProvider.FechrNums();
+                                                                  petProvider.incrementController(8);
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Column(
+                                                                  children: [
+                                                                    Container(
+                                                                      height: 80,
+                                                                      width: 80,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(40),
+                                                                          color: const Color(0xffFAF1F2)),
+                                                                    ),
+                                                                    Text(
+                                                                      tr(LocaleKeys.additionText_otherid),
+                                                                      style: const TextStyle(
+                                                                          fontFamily: AppFont.poppinsMedium,
+                                                                          fontSize: 16,
+                                                                          color: AppColor.textLightBlueBlack),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(7);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_breedingbooknumber),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                        // InkWell(
+                                                        //   onTap: () {
+                                                        //     petProvider.FechrNums();
+                                                        //     petProvider.incrementController(8);
+                                                        //     Navigator.pop(context);
+                                                        //   },
+                                                        //   child: Text(
+                                                        //     tr(LocaleKeys.additionText_otherid),
+                                                        //     style: const TextStyle(
+                                                        //         fontFamily: AppFont.poppinsMedium,
+                                                        //         fontSize: 16,
+                                                        //         color: AppColor.textLightBlueBlack),
+                                                        //   ),
+                                                        // ),
+                                                        const SizedBox(
+                                                          height: 0.0,
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 15.0,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Icon(
+                                            Icons.add_circle_outlined,
+                                            color: AppColor.buttonPink,
+                                          ),
+                                          Text(
+                                            "Add",
+                                            style:
+                                                TextStyle(color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
 
                               const SizedBox(height: 20),
@@ -344,197 +811,187 @@ class _CheckProtectionState extends State<CheckProtection> {
 
                               ///
 
-                              customBlueButton(
-                                  context: context,
-                                  text1: tr(LocaleKeys.additionText_add),
-                                  onTap1: () {
-                                    showModalBottomSheet(
-                                        backgroundColor: AppColor.newGrey,
-                                        context: context,
-                                        builder: (context) {
-                                          return blurView(
-                                            child: Container(
-                                              color: AppColor.newGrey,
-                                              height: 370,
-                                              child: Column(
-                                                children: [
-                                                  const SizedBox(
-                                                    height: 10.0,
-                                                  ),
-                                                  Align(
-                                                    alignment: Alignment.topRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(right: 8.0),
-                                                      child: InkWell(
-                                                          onTap: () {
-                                                            Navigator.pop(context);
-                                                          },
-                                                          child: Image.asset(
-                                                            AppImage.closeIcon,
-                                                          )),
-                                                    ),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(1);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_specialfeatures),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(2);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_tattoos),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color:AppColor.textLightBlueBlack ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(3);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_clip),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(4);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_ringnumber),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(5);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_internalOrgniztionnumber),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(6);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_accountnumber),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(7);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_breedingbooknumber),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      petProvider.FechrNums();
-                                                      petProvider.incrementController(8);
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Text(
-                                                      tr(LocaleKeys.additionText_otherid),
-                                                      style: const TextStyle(
-                                                          fontFamily: AppFont.poppinsMedium,
-                                                          fontSize: 16,
-                                                          color: AppColor.textLightBlueBlack),
-                                                    ),
-                                                  ),
-                                                  // Text(
-                                                  //   tr(LocaleKeys
-                                                  //       .additionText_xtraContct),
-                                                  //   style: TextStyle(
-                                                  //       fontFamily:
-                                                  //           AppFont.poppinsBold,
-                                                  //       fontSize: 16,
-                                                  //       color: AppColor
-                                                  //           .textLightBlueBlack),
-                                                  // ),
-                                                  const SizedBox(
-                                                    height: 0.0,
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 15.0,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        });
+                              // customBlueButton(
+                              //     context: context,
+                              //     text1: tr(LocaleKeys.additionText_add),
+                              //     onTap1: () {
+                              //       showModalBottomSheet(
+                              //           backgroundColor: AppColor.newGrey,
+                              //           context: context,
+                              //           builder: (context) {
+                              //             return blurView(
+                              //               child: Container(
+                              //                 color: AppColor.newGrey,
+                              //                 height: 370,
+                              //                 child: Column(
+                              //                   children: [
+                              //                     const SizedBox(
+                              //                       height: 10.0,
+                              //                     ),
+                              //                     Align(
+                              //                       alignment: Alignment.topRight,
+                              //                       child: Padding(
+                              //                         padding: const EdgeInsets.only(right: 8.0),
+                              //                         child: InkWell(
+                              //                             onTap: () {
+                              //                               Navigator.pop(context);
+                              //                             },
+                              //                             child: Image.asset(
+                              //                               AppImage.closeIcon,
+                              //                             )),
+                              //                       ),
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(1);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_specialfeatures),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(2);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_tattoos),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(3);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_clip),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(4);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_ringnumber),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(5);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_internalOrgniztionnumber),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(6);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_accountnumber),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(7);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_breedingbooknumber),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                     InkWell(
+                              //                       onTap: () {
+                              //                         petProvider.FechrNums();
+                              //                         petProvider.incrementController(8);
+                              //                         Navigator.pop(context);
+                              //                       },
+                              //                       child: Text(
+                              //                         tr(LocaleKeys.additionText_otherid),
+                              //                         style: const TextStyle(
+                              //                             fontFamily: AppFont.poppinsMedium,
+                              //                             fontSize: 16,
+                              //                             color: AppColor.textLightBlueBlack),
+                              //                       ),
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 0.0,
+                              //                     ),
+                              //                     const SizedBox(
+                              //                       height: 15.0,
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             );
+                              //           });
 
-                                    // petProvider.PetFraturelist.add
-                                    //   (
-                                    //
-                                    // );
-                                  },
-                                  colour: AppColor.newBlueGrey),
+                              //       // petProvider.PetFraturelist.add
+                              //       //   (
+                              //       //
+                              //       // );
+                              //     },
+                              //     colour: AppColor.newBlueGrey),
 
                               const SizedBox(
                                 height: 20.0,
@@ -603,22 +1060,60 @@ class _CheckProtectionState extends State<CheckProtection> {
                                 height: 20.0,
                               ),
 
-                              mycustomBlueButton(
-                                  context: context,
-                                  colour: AppColor.neon,
-                                  onTap1: () {},
-                                  text1: tr(LocaleKeys.additionText_ACTIVATED),
-                                  // tr(LocaleKeys.additionText_activate),
-                                  border1: false),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * .4,
+                                child: CustomButton(
+                                  // context: context,
+                                  // colour: AppColor.neon,
+                                  onPressed: () {},
+                                  text: tr(LocaleKeys.additionText_ACTIVATED),
+
+                                  // border1: false
+                                ),
+                              ),
 
                               const SizedBox(
                                 height: 20.0,
                               ),
 
-                              Text(
-                                tr(LocaleKeys.additionText_xtraContct),
-                                style: const TextStyle(
-                                    fontFamily: AppFont.poppinsBold, fontSize: 16, color: AppColor.textLightBlueBlack),
+                              Row(
+                                children: [
+                                  Text(
+                                    tr(LocaleKeys.additionText_xtraContct),
+                                    style: const TextStyle(
+                                        fontFamily: AppFont.poppinsBold,
+                                        fontSize: 16,
+                                        color: AppColor.textLightBlueBlack),
+                                  ),
+                                  const Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      if (petProvider.xtraPhNumlist.length >= 3) {
+                                      } else {
+                                        petProvider.incrementController3();
+                                        petProvider.xtraNums();
+
+                                        if (petProvider.xtraPhNumlist.length == 2) {
+                                          setHeight = 150;
+                                        } else if (petProvider.xtraPhNumlist.length > 2) {
+                                          setHeight = 200;
+                                        }
+                                      }
+                                    },
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.add_circle_outline_outlined,
+                                          color: AppColor.buttonPink,
+                                        ),
+                                        Text(
+                                          "Add",
+                                          style: TextStyle(color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                               const SizedBox(
                                 height: 0.0,
@@ -679,23 +1174,23 @@ class _CheckProtectionState extends State<CheckProtection> {
                                 height: 15.0,
                               ),
 
-                              customBlueButton(
-                                  context: context,
-                                  text1: tr(LocaleKeys.additionText_add),
-                                  onTap1: () {
-                                    if (petProvider.xtraPhNumlist.length >= 3) {
-                                    } else {
-                                      petProvider.incrementController3();
-                                      petProvider.xtraNums();
+                              // customBlueButton(
+                              //     context: context,
+                              //     text1: tr(LocaleKeys.additionText_add),
+                              //     onTap1: () {
+                              //       if (petProvider.xtraPhNumlist.length >= 3) {
+                              //       } else {
+                              //         petProvider.incrementController3();
+                              //         petProvider.xtraNums();
 
-                                      if (petProvider.xtraPhNumlist.length == 2) {
-                                        setHeight = 150;
-                                      } else if (petProvider.xtraPhNumlist.length > 2) {
-                                        setHeight = 200;
-                                      }
-                                    }
-                                  },
-                                  colour: AppColor.newBlueGrey),
+                              //         if (petProvider.xtraPhNumlist.length == 2) {
+                              //           setHeight = 150;
+                              //         } else if (petProvider.xtraPhNumlist.length > 2) {
+                              //           setHeight = 200;
+                              //         }
+                              //       }
+                              //     },
+                              //     colour: AppColor.newBlueGrey),
 
                               const SizedBox(
                                 height: 22.0,

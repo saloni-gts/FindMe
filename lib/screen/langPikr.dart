@@ -1,5 +1,6 @@
 import 'package:find_me/common/change_lang.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/langContainer.dart';
 import 'package:find_me/extension/app_language.dart';
 import 'package:find_me/util/app_images.dart';
@@ -23,103 +24,103 @@ class _LangPickerState extends State<LangPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: customAppbar(
-        titlename: "",
-        isbackbutton: false,
-        //icon: false,
-      ),
-      bottomNavigationBar: BotttomBorder(context),
+
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 15.0,
+              height: 85.0,
             ),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Center(
                 child: widget.isFromStart
-                    ? const Text("PLEASE CHOOSE YOUR APP LANGUAGE",
+                    ? const Text("APP LANGUAGE",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinsBold))
-                    : const Text("You Can Change Your App Language",
+                        style: TextStyle(fontSize: 22, color: Colors.black, fontFamily: AppFont.poppinsBold))
+                    : const Text("Choose a language for your want to continue",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinsBold)),
+                        style: TextStyle(fontSize: 14, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinsBold)),
               ),
             ),
-
             const SizedBox(
               height: 15.0,
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                      onTap: () async {
+                        await changeLanguage(AppLanguage.english, context: context, isFromStart: widget.isFromStart);
 
-            Center(
-              child: SizedBox(
-                height: 250,
-                child: Image.asset(
-                  AppImage.dogcat,
-                  fit: BoxFit.cover,
+                        if (widget.isFromStart) {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
+                        }
+                      },
+                      child: LangContainer(context, AppImage.unitedKingdom, "English")),
                 ),
-              ),
+                Expanded(
+                  child: InkWell(
+                      onTap: () async {
+                        await changeLanguage(AppLanguage.french, context: context, isFromStart: widget.isFromStart);
+                        if (widget.isFromStart) {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
+                        }
+                      },
+                      child: LangContainer(context, AppImage.france, "Français")),
+                ),
+              ],
             ),
-            InkWell(
-                onTap: () async {
-                  await changeLanguage(AppLanguage.english, context: context, isFromStart: widget.isFromStart);
-
-                  if (widget.isFromStart) {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
-                  }
-                },
-                child: LangContainer(context, AppImage.unitedKingdom, "Continue in English")),
-
-            InkWell(
-                onTap: () async {
-                  await changeLanguage(AppLanguage.french, context: context, isFromStart: widget.isFromStart);
-                  if (widget.isFromStart) {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
-                  }
-                },
-                child: LangContainer(context, AppImage.france, "Continuer en français")),
-            // InkWell(
-            //     onTap: () {},
-            //     child: LangContainer(
-            //         context, AppImage.greece, "Συνέχεια στα ελληνικά")),
-            InkWell(
-                onTap: () async {
-                  await changeLanguage(AppLanguage.spanish, context: context, isFromStart: widget.isFromStart);
-                  if (widget.isFromStart) {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
-                  }
-                },
-                child: LangContainer(context, AppImage.spain, "Continuar en español")),
-            InkWell(
-                onTap: () async {
-                  await changeLanguage(AppLanguage.ukraninian, context: context, isFromStart: widget.isFromStart);
-                  if (widget.isFromStart) {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
-                  }
-                },
-                child: LangContainer(context, AppImage.ukraine, "Weiter auf Deutsch")),
-            InkWell(
-                onTap: () async {
-                  await changeLanguage(AppLanguage.german, context: context, isFromStart: widget.isFromStart);
-                  if (widget.isFromStart) {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
-                  }
-                },
-                child: LangContainer(context, AppImage.germany, "Продовжте українською"))
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                      onTap: () async {
+                        await changeLanguage(AppLanguage.spanish, context: context, isFromStart: widget.isFromStart);
+                        if (widget.isFromStart) {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
+                        }
+                      },
+                      child: LangContainer(context, AppImage.spain, "Español")),
+                ),
+                Expanded(
+                  child: InkWell(
+                      onTap: () async {
+                        await changeLanguage(AppLanguage.ukraninian, context: context, isFromStart: widget.isFromStart);
+                        if (widget.isFromStart) {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
+                        }
+                      },
+                      child: LangContainer(context, AppImage.ukraine, "Deutsch")),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                      onTap: () async {
+                        await changeLanguage(AppLanguage.german, context: context, isFromStart: widget.isFromStart);
+                        if (widget.isFromStart) {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.signUpScreen, (r) => false);
+                        } else {
+                          Navigator.pushNamedAndRemoveUntil(context, AppScreen.dashboard, (r) => false);
+                        }
+                      },
+                      child: LangContainer(context, AppImage.germany, "Українською")),
+                ),
+              ],
+            )
           ],
         ),
       ),

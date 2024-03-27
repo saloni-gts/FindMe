@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-
 import '../components/bottomBorderComp.dart';
 import '../services/hive_handler.dart';
 import '../util/app_font.dart';
@@ -31,20 +30,17 @@ class _SignUpSuccessPageState extends State<SignUpSuccessPage> {
   }
 
   Future<void> callAndNavigate() async {
-    Future.delayed(Duration(seconds: 4)).then((value) async {
-AuthProvider auth=Provider.of(context,listen: false);
-     print("auth.usrName===${auth.usrName}");
-      if(auth.usrName=="" || auth.usrNameEmpty==1){
-        Navigator.pushNamedAndRemoveUntil(
-            context, AppScreen.enterName, (r) => false);
-      }else {
-        String str=auth.usrName??"";
-        var str2=str.trim();
+    Future.delayed(const Duration(seconds: 4)).then((value) async {
+      AuthProvider auth = Provider.of(context, listen: false);
+      print("auth.usrName===${auth.usrName}");
+      if (auth.usrName == "" || auth.usrNameEmpty == 1) {
+        Navigator.pushNamedAndRemoveUntil(context, AppScreen.enterName, (r) => false);
+      } else {
+        String str = auth.usrName ?? "";
+        var str2 = str.trim();
         HiveHandler.updateUserName(str2);
         // Navigator.pushNamedAndRemoveUntil(
         //     context, AppScreen.enterName, (r) => false);
-
-        Navigator.push( context,MaterialPageRoute(builder: (context)=>DashBoard(type: 0,webUrl: "",)));
       }
     });
   }
@@ -52,48 +48,78 @@ AuthProvider auth=Provider.of(context,listen: false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:BotttomBorder(context),
-
+      // bottomNavigationBar: BotttomBorder(context),
+      backgroundColor: AppColor.buttonPink,
       resizeToAvoidBottomInset: false,
-      appBar: customAppbar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 30.0,
-            ),
-            Container(
-              height: 200,
-              width: 200,
-              child: Lottie.asset(AppImage.successLottie),
-            ),
-            SizedBox(
-              height: 70.0,
-            ),
-            Text(
-              tr(LocaleKeys.successSignUp_success),
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 36.0,
-                color: AppColor.newBlueGrey,
-                fontFamily: AppFont.poppinsBold,
+      // appBar: customAppbar(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 150.0,
               ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "${tr(LocaleKeys.additionText_welcome)}"+AppStrings.welUTag,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
-                fontFamily: AppFont.poppinsRegular,
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Lottie.asset(AppImage.successLottie),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 70.0,
+              ),
+              const Text(
+                "Account Created",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 30.0,
+                  color: Colors.white,
+                  fontFamily: AppFont.figTreeBold,
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  "Your account has been successfully created. You can now log in by clicking the button below.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.white,
+                    fontFamily: AppFont.poppinsRegular,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DashBoard(
+                                type: 0,
+                                webUrl: "",
+                              )));
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  child: const Text(
+                    "Login Now",
+                    style: TextStyle(fontSize: 16, color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

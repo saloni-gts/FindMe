@@ -6,6 +6,7 @@ import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/provider/purchase_provider.dart';
 import 'package:find_me/screen/addPet.dart';
+import 'package:find_me/screen/checkProtection.dart';
 import 'package:find_me/screen/protectionSheild.dart';
 import 'package:find_me/screen/splashScreen.dart';
 import 'package:find_me/screen/viewPremium.dart';
@@ -18,6 +19,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -144,10 +146,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: AppColor.buttonPink,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent
+        // statusBarIconBrightness: Brightness.dark,
+        ));
 
     return Scaffold(
       appBar: CustomCurvedAppbar(
@@ -216,7 +217,11 @@ class _HomeState extends State<Home> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProtectionSheild()));
+                  if (petProvider.petDetailList.isEmpty) {
+                    EasyLoading.showToast("No Pets Available");
+                  } else {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProtectionSheild()));
+                  }
                 },
                 child: Container(
                   color: const Color(0xffE4E3F1),
@@ -288,7 +293,7 @@ class _HomeState extends State<Home> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: SizedBox(
-                      height: 220,
+                      height: 180,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: petList.length + 1,
@@ -305,8 +310,8 @@ class _HomeState extends State<Home> {
                                                 decoration: BoxDecoration(
                                                     color: const Color(0xffF8EBED),
                                                     borderRadius: BorderRadius.circular(8)),
-                                                height: 180,
-                                                width: 130,
+                                                height: 150,
+                                                width: 100,
                                                 child: InkWell(
                                                   child: Image.asset(AppImage.petPaw),
                                                   onTap: () {
@@ -320,7 +325,7 @@ class _HomeState extends State<Home> {
                                               ),
                                               const Positioned(
                                                 bottom: 2,
-                                                left: 40,
+                                                left: 22,
                                                 child: Text(
                                                   "Add Pet",
                                                   textAlign: TextAlign.center,
@@ -359,8 +364,8 @@ class _HomeState extends State<Home> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(40), color: AppColor.textFieldGrey),
-                                            height: 180,
-                                            width: 130,
+                                            height: 150,
+                                            width: 100,
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(8),
                                               child: CachedNetworkImage(
@@ -385,8 +390,8 @@ class _HomeState extends State<Home> {
                                           ),
                                           Positioned(
                                             // bottom: 2,
-                                            top: 155,
-                                            left: 50.0,
+                                            top: 127,
+                                            left: 35.0,
                                             child: Text(
                                               petList[index - 1].petName ?? "",
                                               textAlign: TextAlign.center,
@@ -419,28 +424,7 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 10.0,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Container(
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    color: AppColor.newGrey,
-                  ),
-                  child: Row(children: [
-                    Image.asset(AppImage.redSheild),
-                    const Expanded(
-                        child: Text(
-                      "Check pets additional information or update here",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
-                    )),
-                  ]),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: InkWell(
@@ -452,26 +436,46 @@ class _HomeState extends State<Home> {
                     ));
                   },
                   child: Container(
-                    height: 120,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      color: AppColor.newGrey,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(children: [
-                        Image.asset(AppImage.bigRibbon),
-                        const Expanded(
-                            child: Text(
-                          "Tap Now To Unlock All The PREMIUM BENIFITS",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: AppColor.newBlueGrey, fontSize: 16, fontFamily: AppFont.poppinsBold),
-                        )),
-                      ]),
+                    height: MediaQuery.of(context).size.height * .2,
+                    // padding: const EdgeInsets.symmetric(vertical: 85),
+                    width: double.infinity,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(18), color: const Color(0xffFEF393)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                          child: Text(
+                            "Tap Now To Unlock All The PREMIUM BENIFITS ",
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xff5B5200), fontFamily: AppFont.figTreeBold, fontSize: 18),
+                          ),
+                        ),
+                        Image.asset(AppImage.buyPrem)
+                      ],
                     ),
                   ),
                 ),
-              )
+              ),
+
+              // InkWell(
+              //   onTap: () {
+              //     var user = HiveHandler.getUser();
+              //     print("user$user");
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => CheckProtection(
+              //                   UsrData: user,
+              //                 )));
+              //   },
+              //   child: Container(
+              //     height: 40,
+              //     width: 40,
+              //     color: Colors.green,
+              //   ),
+              // )
 
               // petProvider.isUserPremium == 1
               //     ? const SizedBox()
@@ -663,7 +667,7 @@ class _HomeState extends State<Home> {
               // ),
               // const SizedBox(height: 20.0),
 
-              ,
+              // ,
             ],
           ),
         );

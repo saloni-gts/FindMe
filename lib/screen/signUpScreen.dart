@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:flutter/gestures.dart';
@@ -45,429 +46,359 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: BotttomBorder(context),
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      appBar: customAppbar(
-        isbackbutton: false,
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // SizedBox(height: 15.0),
-                  Text(
-                    tr(LocaleKeys.signUp_createAccount),
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 22.0,
-                      color: AppColor.newBlueGrey,
-                      fontFamily: AppFont.poppinsBold,
-                    ),
-                  ),
-
-                  // Text(
-                  //   tr(LocaleKeys.signUp_createAccount),
-                  //   textAlign: TextAlign.center,
-                  //   style: TextStyle(
-                  //     fontSize: 12.0,
-                  //     color: AppColor.textBlueBlack,
-                  //     fontFamily: AppFont.poppinsLight,
-                  //   ),
-                  // ),
-
-                  Text(
-                    tr(LocaleKeys
-                        .additionText_entrYrRegData), //entrYrRegData      tr(LocaleKeys.additionText_entrYrRegData),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 12.0,
-                      color: AppColor.textBlueBlack,
-                      fontFamily: AppFont.poppinsLight,
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        tr(LocaleKeys.additionText_email),
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: AppColor.textLightBlueBlack,
-                          fontFamily: AppFont.figTreeMedium,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  CustomTextFeild(
-                    textController: emailController,
-                    textInputType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        tr(LocaleKeys.signUp_mobileNumber),
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 14.0,
-                          color: AppColor.textLightBlueBlack,
-                          fontFamily: AppFont.figTreeMedium,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  CntrePikr(phoneNumController: phoneController),
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0.0),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        tr(LocaleKeys.signUp_password),
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: AppColor.textLightBlueBlack,
-                          fontFamily: AppFont.poppinsRegular,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7.0,
-                  ),
-                  CustomTextFieldWithLeading(
-                    textController: passwordController,
-                    onChanged: (v) {},
-                    isPassword: true,
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-
-                  CustomButton(
-                    text: tr(LocaleKeys.signUp_createAccount),
-                    onPressed: () {
-                      if (emailController.text.isEmpty ||
-                          phoneController.text.isEmpty ||
-                          passwordController.text.isEmpty) {
-                        if (emailController.text.isEmpty) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_enterEmail));
-                        } else if (phoneController.text.isEmpty) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_enterMobile));
-                        } else if (passwordController.text.isEmpty) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_passwordError));
-                        } else if (emailController.text.isEmpty &&
-                            phoneController.text.isEmpty &&
-                            passwordController.text.isEmpty) {
-                          CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.warning,
-                              text: tr(LocaleKeys.additionText_entrAllFeilds));
-                        }
-
-                        // else if(){
-                        //
-                        // }
-                      } else if (!emailController.text.trim().isValidEmail()) {
-                        CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
-                      } else if (!phoneController.text.ismobile(phoneController.text)) {
-                        CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.warning,
-                            text: tr(LocaleKeys.additionText_entrValidMobNum));
-                      } else if (!passwordController.text.isValidPassword()) {
-                        CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.warning,
-                            text: tr(LocaleKeys.additionText_passShouldContain));
-                      } else {
-                        authProvider.normalLogin({
-                          "phoneCode": authProvider.phncode1,
-                          "mobileNumber": phoneController.text.trim(),
-                          "email": emailController.text,
-                          "password": passwordController.text,
-                          "countryCode": authProvider.cntrycode1
-                        }, context);
-                        emailController.clear();
-                        phoneController.clear();
-                        passwordController.clear();
-                      }
-                    },
-                  ),
-
-                  // customBlueButton(
-                  //     context: context,
-                  //     text1: tr(LocaleKeys.signUp_createAccount),
-                  //     onTap1: () {
-                  //       if (emailController.text.isEmpty ||
-                  //           phoneController.text.isEmpty ||
-                  //           passwordController.text.isEmpty) {
-                  //         if (emailController.text.isEmpty) {
-                  //           CoolAlert.show(
-                  //               context: context,
-                  //               type: CoolAlertType.warning,
-                  //               text: tr(LocaleKeys.additionText_enterEmail));
-                  //         } else if (phoneController.text.isEmpty) {
-                  //           CoolAlert.show(
-                  //               context: context,
-                  //               type: CoolAlertType.warning,
-                  //               text: tr(LocaleKeys.additionText_enterMobile));
-                  //         } else if (passwordController.text.isEmpty) {
-                  //           CoolAlert.show(
-                  //               context: context,
-                  //               type: CoolAlertType.warning,
-                  //               text: tr(LocaleKeys.additionText_passwordError));
-                  //         } else if (emailController.text.isEmpty &&
-                  //             phoneController.text.isEmpty &&
-                  //             passwordController.text.isEmpty) {
-                  //           CoolAlert.show(
-                  //               context: context,
-                  //               type: CoolAlertType.warning,
-                  //               text: tr(LocaleKeys.additionText_entrAllFeilds));
-                  //         }
-
-                  //         // else if(){
-                  //         //
-                  //         // }
-                  //       } else if (!emailController.text.trim().isValidEmail()) {
-                  //         CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
-                  //       } else if (!phoneController.text.ismobile(phoneController.text)) {
-                  //         CoolAlert.show(
-                  //             context: context,
-                  //             type: CoolAlertType.warning,
-                  //             text: tr(LocaleKeys.additionText_entrValidMobNum));
-                  //       } else if (!passwordController.text.isValidPassword()) {
-                  //         CoolAlert.show(
-                  //             context: context,
-                  //             type: CoolAlertType.warning,
-                  //             text: tr(LocaleKeys.additionText_passShouldContain));
-                  //       } else {
-                  //         authProvider.normalLogin({
-                  //           "phoneCode": authProvider.phncode1,
-                  //           "mobileNumber": phoneController.text.trim(),
-                  //           "email": emailController.text,
-                  //           "password": passwordController.text,
-                  //           "countryCode": authProvider.cntrycode1
-                  //         }, context);
-                  //         emailController.clear();
-                  //         phoneController.clear();
-                  //         passwordController.clear();
-                  //       }
-                  //     },
-                  //     colour: AppColor.newBlueGrey),
-                  const SizedBox(
-                    height: 20,
-                  ),
-
-                  _linktoWebsiteText(context),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+        bottomNavigationBar: BotttomBorder(context),
+        backgroundColor: AppColor.buttonPink,
+        resizeToAvoidBottomInset: true,
+        // appBar: customAppbar(
+        //   isbackbutton: false,
+        // ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 0.0),
+                  child: Stack(
                     children: [
-                      _socialIcon(AppImage.fbIcon, () {
-                        authProvider.facebookLogin(context);
-                      }),
-                      _socialIcon(AppImage.googleIcon, () {
-                        authProvider.googleLogin(context);
-                      }),
-                      Platform.isIOS
-                          ? _socialIcon(AppImage.appleIcon, () {
-                              authProvider.appleLogin(context);
-                            })
-                          : const SizedBox()
+                      Container(
+                        // width: MediaQuery.of(context).size.width * 0.99,
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.21,
+                        decoration: const BoxDecoration(
+                          color: AppColor.buttonPink,
+                          // borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                        child: Image.asset(AppImage.topImage, fit: BoxFit.cover),
+                      ),
+                      Column(
+                        children: [
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                tr(LocaleKeys.signUp_createAccount),
+                                style:
+                                    const TextStyle(fontFamily: AppFont.figTreeBold, fontSize: 22, color: Colors.white),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                tr(LocaleKeys.additionText_entrYrRegData),
+                                style: const TextStyle(
+                                    fontFamily: AppFont.figTreeRegular, fontSize: 19, color: Colors.white70),
+                              )
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+              ),
+              _buidldBG(child: _buildBody())
+            ],
+          ),
+        ));
+  }
+
+  _buildBody() {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // SizedBox(height: 15.0),
+
+                const SizedBox(
+                  height: 27.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      tr(LocaleKeys.additionText_email),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: AppColor.textLightBlueBlack,
+                        fontFamily: AppFont.figTreeMedium,
+                      ),
+                    ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0.0),
-                    child: Container(
-                      // color: Colors.blue,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            tr(LocaleKeys.signUp_alreadyHaveAcc),
+                ),
+                const SizedBox(
+                  height: 7.0,
+                ),
+                CustomTextFeild(
+                  textController: emailController,
+                  textInputType: TextInputType.emailAddress,
+                ),
+                const SizedBox(
+                  height: 7.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      tr(LocaleKeys.signUp_mobileNumber),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: AppColor.textLightBlueBlack,
+                        fontFamily: AppFont.figTreeMedium,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 7.0,
+                ),
+                CntrePikr(phoneNumController: phoneController),
+                const SizedBox(
+                  height: 7.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0),
+                  child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      tr(LocaleKeys.signUp_password),
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: AppColor.textLightBlueBlack,
+                        fontFamily: AppFont.figTreeMedium,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 7.0,
+                ),
+                CustomTextFieldWithLeading(
+                  textController: passwordController,
+                  onChanged: (v) {},
+                  isPassword: true,
+                ),
+                const SizedBox(
+                  height: 30.0,
+                ),
+
+                CustomButton(
+                  text: tr(LocaleKeys.signUp_createAccount),
+                  onPressed: () {
+                    if (emailController.text.isEmpty ||
+                        phoneController.text.isEmpty ||
+                        passwordController.text.isEmpty) {
+                      if (emailController.text.isEmpty) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_enterEmail));
+                      } else if (phoneController.text.isEmpty) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_enterMobile));
+                      } else if (passwordController.text.isEmpty) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_passwordError));
+                      } else if (emailController.text.isEmpty &&
+                          phoneController.text.isEmpty &&
+                          passwordController.text.isEmpty) {
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.warning,
+                            text: tr(LocaleKeys.additionText_entrAllFeilds));
+                      }
+
+                      // else if(){
+                      //
+                      // }
+                    } else if (!emailController.text.trim().isValidEmail()) {
+                      CoolAlert.show(context: context, type: CoolAlertType.warning, text: "Invalid Email Address");
+                    } else if (!phoneController.text.ismobile(phoneController.text)) {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.warning,
+                          text: tr(LocaleKeys.additionText_entrValidMobNum));
+                    } else if (!passwordController.text.isValidPassword()) {
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.warning,
+                          text: tr(LocaleKeys.additionText_passShouldContain));
+                    } else {
+                      authProvider.normalLogin({
+                        "phoneCode": authProvider.phncode1,
+                        "mobileNumber": phoneController.text.trim(),
+                        "email": emailController.text,
+                        "password": passwordController.text,
+                        "countryCode": authProvider.cntrycode1
+                      }, context);
+                      emailController.clear();
+                      phoneController.clear();
+                      passwordController.clear();
+                    }
+                  },
+                ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                _linktoWebsiteText(context),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _socialIcon(AppImage.fbIcon, () {
+                      authProvider.facebookLogin(context);
+                    }),
+                    _socialIcon(AppImage.googleIcon, () {
+                      authProvider.googleLogin(context);
+                    }),
+                    Platform.isIOS
+                        ? _socialIcon(AppImage.appleIcon, () {
+                            authProvider.appleLogin(context);
+                          })
+                        : const SizedBox()
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 0.0),
+                  child: Container(
+                    // color: Colors.blue,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          tr(LocaleKeys.signUp_alreadyHaveAcc),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: AppColor.newBlueGrey,
+                            fontSize: 14,
+                            fontFamily: AppFont.poppinsRegular,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, AppScreen.signIn);
+                          },
+                          child: Text(
+                            " ${tr(LocaleKeys.signUp_signIn)}",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                              color: AppColor.newBlueGrey,
+                              color: AppColor.buttonPink,
                               fontSize: 14,
                               fontFamily: AppFont.poppinsRegular,
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, AppScreen.signIn);
-                            },
-                            child: Text(
-                              " ${tr(LocaleKeys.signUp_signIn)}",
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: AppColor.buttonPink,
-                                fontSize: 14,
-                                fontFamily: AppFont.poppinsRegular,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(children: <TextSpan>[
-                          TextSpan(
-                              text: tr(LocaleKeys.signUp_termsHint),
-                              style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
-                              recognizer: TapGestureRecognizer()..onTap = () {}),
-                          TextSpan(
-                              text: tr(LocaleKeys.signUp_privacyPolicy),
-                              style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: AppColor.buttonPink,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UrlViewer(
-                                                webViewType: 1,
-                                              )));
-                                }),
-                          TextSpan(
-                              text: tr(LocaleKeys.signUp_terms),
-                              style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: AppColor.buttonPink,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.normal),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UrlViewer(
-                                                webViewType: 2,
-                                              )));
-                                }),
-                        ])),
-                  ),
-
-                  // Container(
-                  //   // color: Colors.blue,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.only(right: 3.0),
-                  //     child: Row(
-                  //       // mainAxisAlignment: MainAxisAlignment,
-                  //         children: [
-                  //         Expanded(
-                  //           child: Text(
-                  //             tr(LocaleKeys.signUp_termsHint),
-                  //             maxLines: 2,
-                  //             style: TextStyle(
-                  //                 color: Colors.grey,
-                  //                 fontSize: 12,
-                  //                 fontWeight: FontWeight.normal),
-                  //           ),
-                  //         ),
-                  //         InkWell(
-                  //           onTap: () {
-                  //             Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                     builder: (context) => UrlViewer(
-                  //                       webViewType: 1,
-                  //                     )));
-                  //           },
-                  //           child: Container(
-                  //             child: Text(
-                  //               "" + tr(LocaleKeys.signUp_privacyPolicy),
-                  //               maxLines: 2,
-                  //               style: TextStyle(
-                  //                   decoration: TextDecoration.underline,
-                  //                   color: Colors.black,
-                  //                   fontSize: 12,
-                  //                   fontWeight: FontWeight.normal),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         InkWell(
-                  //           onTap: () {
-                  //             Navigator.push(
-                  //                 context,
-                  //                 MaterialPageRoute(
-                  //                     builder: (context) => UrlViewer(
-                  //                       webViewType: 2,
-                  //                     )));
-                  //           },
-                  //           child: Container(
-                  //             child: Text(
-                  //               "" + tr(LocaleKeys.signUp_terms),
-                  //               maxLines: 2,
-                  //               style: TextStyle(
-                  //                   decoration: TextDecoration.underline,
-                  //                   color: Colors.black,
-                  //                   fontSize: 12,
-                  //                   fontWeight: FontWeight.normal),
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                            text: tr(LocaleKeys.signUp_termsHint),
+                            style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.normal),
+                            recognizer: TapGestureRecognizer()..onTap = () {}),
+                        TextSpan(
+                            text: tr(LocaleKeys.signUp_privacyPolicy),
+                            style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: AppColor.buttonPink,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UrlViewer(
+                                              webViewType: 1,
+                                            )));
+                              }),
+                        TextSpan(
+                            text: tr(LocaleKeys.signUp_terms),
+                            style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: AppColor.buttonPink,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UrlViewer(
+                                              webViewType: 2,
+                                            )));
+                              }),
+                      ])),
+                ),
+              ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _buidldBG({required child}) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white38,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+      ),
+      child: Container(
+        width: double.infinity,
+        // height: context.height * .67,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: child,
       ),
     );
   }

@@ -155,12 +155,15 @@ class _ShowAllPetState extends State<ShowAllPet> {
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(11),
-                                            color: AppColor.textLightBlueBlack,
+                                            borderRadius: BorderRadius.circular(12),
+                                            color: AppColor.buttonPink,
                                           ),
-                                          height: 22,
-                                          width: 22,
-                                          child: Image.asset(AppImage.home_iconsmall),
+                                          // height: 22,
+                                          // width: 22,
+                                          child: const Icon(
+                                            Icons.home_outlined,
+                                            color: Colors.white54,
+                                          ),
                                         ),
                                       ))
                                 ],
