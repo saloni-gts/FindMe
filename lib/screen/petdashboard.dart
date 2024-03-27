@@ -726,7 +726,6 @@ class _PetDashboardState extends State<PetDashboard> {
                                               CallAPi apiii = CallAPi();
                                               String pdfurlfinal =
                                                   await apiii.login(petId: petProvider.setselectedPetId);
-
                                               petProvider.updateLoader(false);
                                               print("apiii url===>>> ${apiii.pdfUrl}");
 

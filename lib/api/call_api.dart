@@ -909,8 +909,8 @@ class ApiUrl {
 //sample screen production and staging url
 
   static const getAllPets = baseUrlP2 + "/account/getPetUserId";
-  static const baseUrl = "https://api-stage.find-me.app/api/v1/";       // staging
-  // static const baseUrl = "https://api.find-me.app/api/v1/";      // Production Url
+  // static const baseUrl = "https://api-stage.find-me.app/api/v1/";       // staging
+  static const baseUrl = "https://api.find-me.app/api/v1/";      // Production Url
 
   static const normalLogin = baseUrl + "account/signUp";
   static const simplogin = baseUrl + "/account/login";
@@ -947,8 +947,8 @@ class ApiUrl {
  static const privacyUpdate = baseUrl + "/account/isPrivacyUpdate";
   ///phase 2
 
-  static const baseUrlP2 = "https://api-stage.find-me.app/api/v2/"; //staging
-  // static const baseUrlP2 = "https://api.find-me.app/api/v2/";          //Production
+  // static const baseUrlP2 = "https://api-stage.find-me.app/api/v2/"; //staging
+  static const baseUrlP2 = "https://api.find-me.app/api/v2/";          //Production
 
   static const masterList = baseUrlP2 + "/common/masterList";
   static const addNotes = baseUrlP2 + "/account/addNotes";
@@ -1038,19 +1038,19 @@ class ApiUrl {
 
   /// Production
 
-  // static const aboutUSPAGE = "https://utagsuk.s3.amazonaws.com/Pages/about.html";
-  // static const faqPAGE = "https://utagsuk.s3.amazonaws.com/Pages/faq.html";
-  // static const privacyPloicyPAGE = "https://utagsuk.s3.amazonaws.com/Pages/privacy-policy.html";
-  // static const termsPAGE = "https://utagsuk.s3.amazonaws.com/Pages/terms-conditions.html";
-  // static const howItWorks = "https://utagsuk.s3.amazonaws.com/Pages/How_its_Work.html";
-  // static const visitWbsite = "https://unique-tags.com/password";
+  static const aboutUSPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711447470366.html";
+  static const faqPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711447511921.html";
+  static const privacyPloicyPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711447570640.html";
+  static const termsPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711447591711.html";
+  static const howItWorks = "https://find-me-content.s3.amazonaws.com/Others/Others_1711447544343.html";
+  static const visitWbsite = "https://unique-tags.com/password";
 
   ///staging      
 
-  static const aboutUSPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029477521.html";
-  static const faqPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711029514252.html";
-  static const privacyPloicyPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029570729.html";
-  static const termsPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029601948.html";
-  static const howItWorks ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029546150.html";
-  static const visitWbsite = "https://find-me.app";
+  // static const aboutUSPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029477521.html";
+  // static const faqPAGE = "https://find-me-content.s3.amazonaws.com/Others/Others_1711029514252.html";
+  // static const privacyPloicyPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029570729.html";
+  // static const termsPAGE ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029601948.html";
+  // static const howItWorks ="https://find-me-content.s3.amazonaws.com/Others/Others_1711029546150.html";
+  // static const visitWbsite = "https://find-me.app";
 }
