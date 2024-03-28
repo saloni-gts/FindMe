@@ -231,4 +231,35 @@ class AppImage {
   static const String pinkDoc = "${base}pinkDoc.png";
   static const String pinkPic = "${base}pinkPic.png";
   static const String buyPrem = "${base}buyPrem.png";
+
+  static const String alertIcon = "${base}alertIcon.png";
+
+  static const String viewQR = "${base}viewQr.png";
+  static const String addQR = "${base}addQr.png";
+  static const String loudSpeaker = "${base}loudSpeaker.png";
+
+  static const String tatoo = "${base}tatoo.png";
+  static const String clip = "${base}clip.png";
+  static const String spFe = "${base}spFe.png";
+  static const String ringNo = "${base}ringNo.png";
+
+  static const String otherId = "${base}otherId.png";
+  static const String bbNo = "${base}bbNo.png";
+  static const String actNo = "${base}actNo.png";
+
+
+
+  static const String whatsapp = "${base}whatsapp.png";
+  static const String messenger = "${base}messenger.png";
+  static const String telegram = "${base}telegram.png";
+  static const String viber = "${base}viber.png";
+  static const String settingGrey = "${base}settingGrey.png";
+  static const String findmeQR = "${base}findmeQR.png";
+
+
+
+
+    static const String multipleDog = "${base}multipleDog.png";
+        static const String whiteQR = "${base}whiteQR.png";
+
 }

@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 // import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:provider/provider.dart';
-
 
 import '../../components/appbarComp.dart';
 import '../../components/bottomBorderComp.dart';
@@ -34,18 +35,12 @@ import '../monish/reUseClass/myappbar.dart';
 // import '../reUseClass/dropdown.dart';
 // import '../reUseClass/myappbar.dart';
 
-
 class EditEvent extends StatefulWidget {
   int? petIdEvent;
   int? idEvent;
   bool isfrompet;
 
-  EditEvent(
-      {Key? key,
-      required this.petIdEvent,
-      required this.idEvent,
-      required this.isfrompet})
-      : super(key: key);
+  EditEvent({Key? key, required this.petIdEvent, required this.idEvent, required this.isfrompet}) : super(key: key);
 
   @override
   State<EditEvent> createState() => _EditEventState();
@@ -63,8 +58,6 @@ class _EditEventState extends State<EditEvent> {
   var month2;
   var year2;
 
-
-
   @override
   void initState() {
     PetProvider petProvider = Provider.of(context, listen: false);
@@ -78,24 +71,19 @@ class _EditEventState extends State<EditEvent> {
     timestampGmt = editEventData?.eventDate ?? "";
     timestampGmt2 = editEventData?.recring ?? "";
 
-
-
-    print("timestamp==>>${timestampGmt}");
+    print("timestamp==>>$timestampGmt");
 
     int mn1 = getMonth(timestampGmt);
     int yr1 = getYear(timestampGmt);
     int dt1 = getDatee(timestampGmt);
 
+    date2 = dt1 + 1;
+    month2 = mn1;
+    year2 = yr1;
 
-    date2=dt1+1;
-    month2=mn1;
-    year2=yr1;
-
-    print("date2=====${date2}");
-    print("month2=====${month2}");
-    print("year2=====${year2}");
-
-
+    print("date2=====$date2");
+    print("month2=====$month2");
+    print("year2=====$year2");
 
     petProvider.callgetPetEventP2(mn1, yr1, widget.isfrompet);
 
@@ -108,16 +96,13 @@ class _EditEventState extends State<EditEvent> {
     var v1 = dateConverter(int.parse(editEventData?.eventDate ?? ""));
     var v2 = timeConverter(int.parse(editEventData?.eventDate ?? ""));
 
-
     if (editEventData?.recring == editEventData?.eventDate) {
       editrecurringController.text = "";
     } else {
-
-           print("editEventData?.eventEndDate========${editEventData?.eventEndDate}");
-           if(editEventData!.eventEndDate!.isNotEmpty){
-    editrecurringController.text =formatDateTym2(editEventData.eventEndDate ?? "");
-           }
-  
+      print("editEventData?.eventEndDate========${editEventData?.eventEndDate}");
+      if (editEventData!.eventEndDate!.isNotEmpty) {
+        editrecurringController.text = formatDateTym2(editEventData.eventEndDate ?? "");
+      }
     }
     // var v5=editEventData?.eventEndDate?.millisecondsSinceEpoch;
 
@@ -132,20 +117,18 @@ class _EditEventState extends State<EditEvent> {
 
 // var v4=dateConverter(int.parse(v3!));
 
-    print("v4=======>${v3}");
-    print("v4=======>${v4}");
+    print("v4=======>$v3");
+    print("v4=======>$v4");
     eventNameController.text = editEventData?.eventName ?? "";
-    eventDateController.text = v1 + " " + v2;
+    eventDateController.text = "$v1 $v2";
 
     petProvider.selectedPetIdForEvent = petProvider.seleectedEvnt?.petId ?? 0;
 
     var remndrNum = petProvider.seleectedEvnt?.EventRemendirBefore;
     var setReTime = petProvider.seleectedEvnt?.isRepeat;
 
-    print(
-        "petProvider.seleectedEvnt?.EventRemendirBefore===${petProvider.seleectedEvnt?.EventRemendirBefore}");
-    print(
-        "petProvider.isRepeat?.isRepeat===${petProvider.seleectedEvnt?.isRepeat}");
+    print("petProvider.seleectedEvnt?.EventRemendirBefore===${petProvider.seleectedEvnt?.EventRemendirBefore}");
+    print("petProvider.isRepeat?.isRepeat===${petProvider.seleectedEvnt?.isRepeat}");
 
     petProvider.getSetRemName(remndrNum!);
     petProvider.getSetRepetNme(setReTime!);
@@ -169,45 +152,46 @@ class _EditEventState extends State<EditEvent> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MycustomAppbar(
-        tap2: () {},
-        titlename: tr(LocaleKeys.additionText_editEvent),
-        isbackbutton: true,
-        icon: false,
+      appBar: CustomCurvedAppbar(
+        // tap2: () {},
+        title: tr(LocaleKeys.additionText_editEvent),
+        isTitleCenter: true,
+        // isbackbutton: true,
+        // icon: false,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 40.0),
-        child: customBlueButton(
-            context: context,
-            text1:   tr(LocaleKeys.ownerProfile_update),
-            onTap1: () {
-              // provider.callEditEvent(
-              //   context: context,
-              //   time: timestampGmt,
-              //   name: eventNameController.text.trim(),
-              //   petId: provider.petIdForEdit,
-              //   idddd: widget.idEvent ?? 0,
-              //
-              // );
+        padding: const EdgeInsets.only(bottom: 40.0, left: 30),
+        child: CustomButton(
+          // context: context,
+          text: tr(LocaleKeys.ownerProfile_update),
+          onPressed: () {
+            // provider.callEditEvent(
+            //   context: context,
+            //   time: timestampGmt,
+            //   name: eventNameController.text.trim(),
+            //   petId: provider.petIdForEdit,
+            //   idddd: widget.idEvent ?? 0,
+            //
+            // );
 
-              print("event date api==>>${timestampGmt}");
-              print("event date end api==>>${timestampGmt2}");
-              PetProvider petProvider = Provider.of(context, listen: false);
+            print("event date api==>>$timestampGmt");
+            print("event date end api==>>$timestampGmt2");
+            PetProvider petProvider = Provider.of(context, listen: false);
 
-              provider.editEventP2ApiCall(
-                  context: context,
-                  idd: petProvider.seleectedEvnt?.id ?? 0,
-                  name: eventNameController.text.trim(),
-                  pettidd: provider.petIdForEdit,
-                  evntCateType: petProvider.selectedSubEvnt?.id ?? 0,
-                  end: timestampGmt2,
-                  start: timestampGmt,
-                  evntCateid:
-                      petProvider.selectedSubEvnt?.EventCatgoriesId ?? 0,
-                  frompet: widget.isfrompet);
-            },
-            colour: AppColor.newBlueGrey),
+            provider.editEventP2ApiCall(
+                context: context,
+                idd: petProvider.seleectedEvnt?.id ?? 0,
+                name: eventNameController.text.trim(),
+                pettidd: provider.petIdForEdit,
+                evntCateType: petProvider.selectedSubEvnt?.id ?? 0,
+                end: timestampGmt2,
+                start: timestampGmt,
+                evntCateid: petProvider.selectedSubEvnt?.EventCatgoriesId ?? 0,
+                frompet: widget.isfrompet);
+          },
+          // colour: AppColor.newBlueGrey
+        ),
       ),
       body: DraggableScrollableSheet(
           expand: false,
@@ -219,8 +203,7 @@ class _EditEventState extends State<EditEvent> {
               onTap: () {
                 FocusScope.of(context).unfocus();
               },
-              child: Consumer2<PetProvider, Myprovider>(
-                  builder: (context, petProvider, myprovider, child) {
+              child: Consumer2<PetProvider, Myprovider>(builder: (context, petProvider, myprovider, child) {
                 // String petGenderbool = petProvider.selectedPetGender?.title ?? "";
                 return SingleChildScrollView(
                     child: Padding(
@@ -229,13 +212,13 @@ class _EditEventState extends State<EditEvent> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 15.0,
                               ),
                               Consumer<PetProvider>(
                                 builder: (context, petProvider, child) {
                                   var petList = petProvider.petDetailList;
-                                  return Container(
+                                  return SizedBox(
                                     height: 110.0,
                                     child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
@@ -243,125 +226,76 @@ class _EditEventState extends State<EditEvent> {
                                         itemBuilder: (context, index) {
                                           return GestureDetector(
                                             onTap: () {
-                                              PetProvider provider =
-                                                  Provider.of(context,
-                                                      listen: false);
+                                              PetProvider provider = Provider.of(context, listen: false);
 
-                                              provider.showGreenTick(petProvider
-                                                      .petDetailList[index]
-                                                      .id ??
-                                                  0);
+                                              provider.showGreenTick(petProvider.petDetailList[index].id ?? 0);
                                               print(
                                                   "finally selected pet id::::::::::${petProvider.petDetailList[index].id}");
-                                              print(
-                                                  "comming pet  selected pet id::::::::::${widget.petIdEvent}");
-                                              var cngPetId = petProvider
-                                                  .petDetailList[index].id;
-                                              provider.setPetIdFroEditEvent(
-                                                  cngPetId!);
-                                              print(
-                                                  "pet id from provider${provider.petIdForEdit}");
+                                              print("comming pet  selected pet id::::::::::${widget.petIdEvent}");
+                                              var cngPetId = petProvider.petDetailList[index].id;
+                                              provider.setPetIdFroEditEvent(cngPetId!);
+                                              print("pet id from provider${provider.petIdForEdit}");
                                             },
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10.0),
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                                   child: Stack(
                                                     children: [
                                                       Container(
                                                         decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40),
-                                                            color: AppColor
-                                                                .textFieldGrey),
+                                                            borderRadius: BorderRadius.circular(40),
+                                                            color: AppColor.textFieldGrey),
                                                         height: 80,
                                                         width: 80,
                                                         child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(40),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl: petList[
-                                                                        index]
-                                                                    .petPhoto ??
-                                                                "",
+                                                          borderRadius: BorderRadius.circular(40),
+                                                          child: CachedNetworkImage(
+                                                            imageUrl: petList[index].petPhoto ?? "",
                                                             fit: BoxFit.cover,
-                                                            placeholder:
-                                                                (context,
-                                                                        url) =>
-                                                                    Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      15.0),
-                                                              child:
-                                                                  Image.asset(
-                                                                AppImage
-                                                                    .placeholderIcon,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                            placeholder: (context, url) => Padding(
+                                                              padding: const EdgeInsets.all(15.0),
+                                                              child: Image.asset(
+                                                                AppImage.placeholderIcon,
+                                                                fit: BoxFit.cover,
                                                               ),
                                                             ),
-                                                            errorWidget:
-                                                                (context, url,
-                                                                        error) =>
-                                                                    Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .all(
-                                                                      15.0),
-                                                              child:
-                                                                  Image.asset(
-                                                                AppImage
-                                                                    .placeholderIcon,
-                                                                fit: BoxFit
-                                                                    .cover,
+                                                            errorWidget: (context, url, error) => Padding(
+                                                              padding: const EdgeInsets.all(15.0),
+                                                              child: Image.asset(
+                                                                AppImage.placeholderIcon,
+                                                                fit: BoxFit.cover,
                                                               ),
                                                             ),
                                                           ),
                                                         ),
                                                       ),
-                                                      petProvider
-                                                                  .petDetailList[
-                                                                      index]
-                                                                  .id ==
-                                                              petProvider
-                                                                  .selectedPetIdForEvent
+                                                      petProvider.petDetailList[index].id ==
+                                                              petProvider.selectedPetIdForEvent
                                                           ? Positioned(
                                                               left: 55.0,
                                                               top: 0,
                                                               child: InkWell(
-                                                                child:
-                                                                    ClipRRect(
-                                                                  child: Image.asset(
-                                                                      AppImage
-                                                                          .greenCheckIcon),
+                                                                child: ClipRRect(
+                                                                  child: Image.asset(AppImage.greenCheckIcon),
                                                                 ),
                                                               ),
                                                             )
-                                                          : SizedBox()
+                                                          : const SizedBox()
                                                     ],
                                                   ),
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    print(
-                                                        "IMAGE PET  ${petList[index].petPhoto}");
+                                                    print("IMAGE PET  ${petList[index].petPhoto}");
                                                   },
                                                   child: Text(
-                                                    petList[index].petName ??
-                                                        "",
+                                                    petList[index].petName ?? "",
                                                     textAlign: TextAlign.left,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 15.0,
                                                         color: Colors.black,
-                                                        fontFamily: AppFont
-                                                            .poppinSemibold),
+                                                        fontFamily: AppFont.poppinSemibold),
                                                   ),
                                                 ),
                                               ],
@@ -371,10 +305,10 @@ class _EditEventState extends State<EditEvent> {
                                   );
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5.0,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Padding(
@@ -385,86 +319,62 @@ class _EditEventState extends State<EditEvent> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Consumer<PetProvider>(
-                                        builder: (context, petProvider, child) {
+                                    Consumer<PetProvider>(builder: (context, petProvider, child) {
                                       return Wrap(
                                         direction: Axis.horizontal,
                                         children: [
-                                          for (int i = 0;
-                                              i <
-                                                  petProvider
-                                                      .masterEventlList.length;
-                                              i++)
+                                          for (int i = 0; i < petProvider.masterEventlList.length; i++)
                                             SizedBox(
                                               height: 32,
                                               width: 105,
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 5.0, bottom: 5),
+                                                padding: const EdgeInsets.only(right: 5.0, bottom: 5),
                                                 child: ElevatedButton(
                                                   style: ButtonStyle(
-                                                      shape: MaterialStateProperty.all<
-                                                              RoundedRectangleBorder>(
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                           RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(4),
+                                                        borderRadius: BorderRadius.circular(4),
                                                       )),
-                                                      backgroundColor:
-                                                          MaterialStateProperty.all<
-                                                              Color>(petProvider
-                                                                          .masterEventlList[
-                                                                      i] ==
-                                                                  petProvider
-                                                                      .seletedMaterEvnt
-                                                              ? Color(
-                                                                  0xff2A3C6A)
-                                                              : AppColor
-                                                                  .textFieldGrey)),
+                                                      backgroundColor: MaterialStateProperty.all<Color>(
+                                                          petProvider.masterEventlList[i] ==
+                                                                  petProvider.seletedMaterEvnt
+                                                              ? AppColor.buttonPink
+                                                              : AppColor.textFieldGrey)),
                                                   onPressed: () {
-                                                    petProvider
-                                                        .updateSelectedEvntCate(
-                                                            petProvider
-                                                                .masterEventlList[i]);
+                                                    petProvider.updateSelectedEvntCate(petProvider.masterEventlList[i]);
 
-                                                    petProvider.selectedSubEvnt
-                                                        ?.name =tr(LocaleKeys.additionText_select);
+                                                    petProvider.selectedSubEvnt?.name =
+                                                        tr(LocaleKeys.additionText_select);
 
                                                     // print("event cate==> ${petProvider.updateSelectedEvntCate(detail)}");
                                                   },
                                                   child:
-                                                  // Text(
-                                                  //   petProvider.masterEventlList[i].categoryName ?? "",
-                                                  //   style: TextStyle(
-                                                  //       color: petProvider.masterEventlList[i] == petProvider.seletedMaterEvnt
-                                                  //           ? Colors.white
-                                                  //           : Colors.black,
-                                                  //       fontFamily: AppFont
-                                                  //           .poppinsMedium,
-                                                  //       fontSize: 10),
-                                                  // ),
+                                                      // Text(
+                                                      //   petProvider.masterEventlList[i].categoryName ?? "",
+                                                      //   style: TextStyle(
+                                                      //       color: petProvider.masterEventlList[i] == petProvider.seletedMaterEvnt
+                                                      //           ? Colors.white
+                                                      //           : Colors.black,
+                                                      //       fontFamily: AppFont
+                                                      //           .poppinsMedium,
+                                                      //       fontSize: 10),
+                                                      // ),
 
-                                                  RichText(
+                                                      RichText(
                                                     textAlign: TextAlign.center,
                                                     text: TextSpan(children: <TextSpan>[
                                                       TextSpan(
-                                                        text:
-                                                        petProvider.masterEventlList[i].categoryName ?? "",
+                                                        text: petProvider.masterEventlList[i].categoryName ?? "",
                                                         style: TextStyle(
-                                                            color:  petProvider.masterEventlList[i] == petProvider.seletedMaterEvnt ? Colors.white
+                                                            color: petProvider.masterEventlList[i] ==
+                                                                    petProvider.seletedMaterEvnt
+                                                                ? Colors.white
                                                                 : Colors.black,
                                                             fontSize: 10.0,
                                                             fontWeight: FontWeight.w800),
                                                       ),
                                                     ]),
                                                   ),
-
-
-
-
-
-
-
                                                 ),
                                               ),
                                             ),
@@ -472,25 +382,20 @@ class _EditEventState extends State<EditEvent> {
                                       );
                                     }),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-                                    Consumer<PetProvider>(
-                                        builder: (context, petProvider, child) {
+                                    Consumer<PetProvider>(builder: (context, petProvider, child) {
                                       // return
-                                      var handle = petProvider.seletedMaterEvnt
-                                              ?.evtCatagoryList ??
-                                          [];
+                                      var handle = petProvider.seletedMaterEvnt?.evtCatagoryList ?? [];
                                       return handle.isEmpty
-                                          ? SizedBox()
+                                          ? const SizedBox()
                                           : Text(
                                               tr(LocaleKeys.additionText_type),
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color: AppColor
-                                                .textLightBlueBlack,
-                                            fontFamily:
-                                            AppFont.poppinsBold),
+                                              style: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColor.textLightBlueBlack,
+                                                  fontFamily: AppFont.poppinsBold),
                                             );
                                     }),
 
@@ -500,23 +405,17 @@ class _EditEventState extends State<EditEvent> {
 
                                     Consumer<PetProvider>(
                                       builder: (context, value, child) {
-                                        var handle = petProvider
-                                                .seletedMaterEvnt
-                                                ?.evtCatagoryList ??
-                                            [];
+                                        var handle = petProvider.seletedMaterEvnt?.evtCatagoryList ?? [];
                                         return handle.isEmpty
-                                            ? SizedBox()
+                                            ? const SizedBox()
                                             : CustomDropDown<EvntCatagoryList>(
                                                 // isGrey: pettypebool.isEmpty,
-                                                selectText: petProvider.selectedSubEvnt?.name ??tr(LocaleKeys.additionText_select),
-                                                itemList: petProvider
-                                                        .seletedMaterEvnt
-                                                        ?.evtCatagoryList ??
-                                                    [],
+                                                selectText: petProvider.selectedSubEvnt?.name ??
+                                                    tr(LocaleKeys.additionText_select),
+                                                itemList: petProvider.seletedMaterEvnt?.evtCatagoryList ?? [],
                                                 isEnable: true,
                                                 onChange: (val) {
-                                                  petProvider
-                                                      .onselectEventType(val);
+                                                  petProvider.onselectEventType(val);
                                                 },
                                                 title: "",
                                                 value: null,
@@ -524,40 +423,33 @@ class _EditEventState extends State<EditEvent> {
                                       },
                                     ),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 19,
                                     ),
                                     Row(
                                       children: [
                                         Text(
                                           tr(LocaleKeys.newEvent_eventName),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
-                                              color: AppColor
-                                                  .textLightBlueBlack,
-                                              fontFamily:
-                                              AppFont.poppinsBold),
+                                              color: AppColor.textLightBlueBlack,
+                                              fontFamily: AppFont.poppinsBold),
                                         ),
-                                        Text(
-                                            "(" +
-                                                tr(LocaleKeys
-                                                    .newEvent_required) +
-                                                "+)",
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    AppFont.poppinsRegular,
+                                        Text("(${tr(LocaleKeys.newEvent_required)}+)",
+                                            style: const TextStyle(
+                                                fontFamily: AppFont.poppinsRegular,
                                                 fontSize: 12,
                                                 color: Color(0xffFF0000)))
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 7,
                                     ),
                                     CustomTextFeild(
                                       textController: eventNameController,
                                       textInputType: TextInputType.text,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
 
@@ -628,90 +520,60 @@ class _EditEventState extends State<EditEvent> {
                                     //   ],
                                     // ),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
 
                                     Container(
                                       // color: Colors.blue,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Text(
                                               // "Start",
                                               // tr(LocaleKeys.newEvent_selectDate),
-                                              tr(LocaleKeys
-                                                  .additionText_reminderTime),
+                                              tr(LocaleKeys.additionText_reminderTime),
                                               maxLines: 2,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 13,
-                                                  color: AppColor
-                                                      .textLightBlueBlack,
-                                                  fontFamily:
-                                                      AppFont.poppinsBold),
+                                                  color: AppColor.textLightBlueBlack,
+                                                  fontFamily: AppFont.poppinsBold),
                                             ),
                                           ),
-                                          StatefulBuilder(builder:
-                                              (BuildContext context,
-                                                  StateSetter setState) {
+                                          StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                             return Row(
                                               children: [
                                                 InkWell(
                                                   onTap: () {
+                                                    showDatePicker(
+                                                            context: context,
+                                                            firstDate: DateTime.now(),
+                                                            initialDate: DateTime.now(),
+                                                            lastDate: DateTime(2050))
+                                                        .then((value) {
+                                                      var date = DateTime.parse(value.toString());
 
-                                                    showDatePicker(context:context,
-                                                    firstDate: DateTime.now(),
-                                                    initialDate: DateTime.now(),
-                                                    lastDate:   DateTime(  2050)
+                                                      month2 = value?.month;
+                                                      year2 = value?.year;
 
-                                                     ).then((value)  {
+                                                      date2 = value?.day;
+                                                      date2 = date2 + 1;
 
-                                                          var date = DateTime.parse(
-                                                          value.toString());
+                                                      String newdate = date.toString();
+                                                      print("***-----//////${dateeConverter(newdate)}");
 
-                                                      month2=value?.month;
-                                                      year2=value?.year;
-
-
-                                                      date2=value?.day;
-                                                      date2=date2+1;
-
-
-
-                                                      String newdate =
-                                                          date.toString();
-                                                      print(
-                                                          "***-----//////${dateeConverter(newdate)}");
-
-                                                      timestampGmt = date
-                                                          .millisecondsSinceEpoch
-                                                          .toString();
-                                                      print(
-                                                          ">>>>><<<<<${timestampGmt}");
+                                                      timestampGmt = date.millisecondsSinceEpoch.toString();
+                                                      print(">>>>><<<<<$timestampGmt");
                                                       // print("=======${dateConverter(timestampGmt)} ");
-                                                      print(
-                                                          "======*****${timeConverter(int.parse(timestampGmt))} ");
-                                                      String str = timeConverter(
-                                                          int.parse(
-                                                              timestampGmt));
+                                                      print("======*****${timeConverter(int.parse(timestampGmt))} ");
+                                                      String str = timeConverter(int.parse(timestampGmt));
 
                                                       setState(() {
-                                                        eventDateController
-                                                                .text =
-                                                            dateeConverter(
-                                                                        newdate)
-                                                                    .toString() +
-                                                                " " +
-                                                                str;
-                                                        print(
-                                                            ">>>><<<<${eventDateController.text}");
+                                                        eventDateController.text = "${dateeConverter(newdate)} $str";
+                                                        print(">>>><<<<${eventDateController.text}");
                                                       });
-
-
-                                                     });
-
+                                                    });
 
                                                     // DatePicker
                                                     //         .showDateTimePicker(
@@ -729,11 +591,8 @@ class _EditEventState extends State<EditEvent> {
                                                     //   month2=value?.month;
                                                     //   year2=value?.year;
 
-
                                                     //   date2=value?.day;
                                                     //   date2=date2+1;
-
-
 
                                                     //   String newdate =
                                                     //       date.toString();
@@ -766,30 +625,23 @@ class _EditEventState extends State<EditEvent> {
                                                     //   //  eventDateController.text=value.toString();
                                                     // });
                                                   },
-                                                  child: eventDateController
-                                                          .text.isEmpty
+                                                  child: eventDateController.text.isEmpty
                                                       ? Text(
-                                                          tr(LocaleKeys
-                                                              .newEvent_selectDate),
+                                                          tr(LocaleKeys.newEvent_selectDate),
                                                           maxLines: 2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         )
                                                       : Text(
-                                                          eventDateController
-                                                              .text,
+                                                          eventDateController.text,
                                                           maxLines: 2,
                                                           // maxlines:2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         ),
                                                 )
                                               ],
@@ -799,72 +651,54 @@ class _EditEventState extends State<EditEvent> {
                                       ),
                                     ),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
 
                                     Container(
                                       // color: Colors.blue,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Text(
                                               // "Start",
                                               // tr(LocaleKeys.newEvent_selectDate),
-                                              tr(LocaleKeys
-                                                  .additionText_repeat),
+                                              tr(LocaleKeys.additionText_repeat),
                                               maxLines: 2,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 13,
-                                                  color: AppColor
-                                                      .textLightBlueBlack,
-                                                  fontFamily:
-                                                      AppFont.poppinsBold),
+                                                  color: AppColor.textLightBlueBlack,
+                                                  fontFamily: AppFont.poppinsBold),
                                             ),
                                           ),
-                                          StatefulBuilder(builder:
-                                              (BuildContext context,
-                                                  StateSetter setState) {
+                                          StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                             return Row(
                                               children: [
                                                 InkWell(
                                                   onTap: () {
-                                                    petProvider
-                                                        .isShowRadioList(1);
+                                                    petProvider.isShowRadioList(1);
                                                   },
-                                                  child: petProvider
-                                                          .editpetRepeatEvent
-                                                          .text
-                                                          .isEmpty
+                                                  child: petProvider.editpetRepeatEvent.text.isEmpty
                                                       // editevtRepeatController.text.isEmpty
                                                       ? Text(
                                                           // tr(LocaleKeys.newEvent_selectDate),
                                                           // petProvider.petRepeatEvent.text,
-                                                          petProvider
-                                                              .editpetRepeatEvent
-                                                              .text,
+                                                          petProvider.editpetRepeatEvent.text,
                                                           maxLines: 2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         )
                                                       : Text(
-                                                          petProvider
-                                                              .editpetRepeatEvent
-                                                              .text,
+                                                          petProvider.editpetRepeatEvent.text,
                                                           // eventDateController.text,
                                                           maxLines: 2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         ),
                                                 )
                                               ],
@@ -874,8 +708,7 @@ class _EditEventState extends State<EditEvent> {
                                       ),
                                     ),
 
-                                    Consumer<PetProvider>(
-                                        builder: (context, petProvider, child) {
+                                    Consumer<PetProvider>(builder: (context, petProvider, child) {
                                       return
                                           // petProvider.showRadioList==1?
                                           Column(
@@ -894,11 +727,11 @@ class _EditEventState extends State<EditEvent> {
                                               repeeet: Repeat.everyweek),
                                           RadioContainer(
                                               context: context,
-                                              Rname:  tr(LocaleKeys.additionText_everymonth),
+                                              Rname: tr(LocaleKeys.additionText_everymonth),
                                               repeeet: Repeat.everymonth),
                                           RadioContainer(
                                               context: context,
-                                              Rname:tr(LocaleKeys.additionText_everyyear),
+                                              Rname: tr(LocaleKeys.additionText_everyyear),
                                               repeeet: Repeat.everyyear),
                                         ],
                                       );
@@ -909,8 +742,7 @@ class _EditEventState extends State<EditEvent> {
                                         ? Container(
                                             // color: Colors.blue,
                                             child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
                                               children: [
                                                 Expanded(
                                                   child: Row(
@@ -920,76 +752,47 @@ class _EditEventState extends State<EditEvent> {
                                                         // tr(LocaleKeys.newEvent_selectDate),
                                                         tr(LocaleKeys.additionText_recuringend),
                                                         maxLines: 2,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 13,
-                                                            color: AppColor
-                                                                .textLightBlueBlack,
-                                                            fontFamily: AppFont
-                                                                .poppinsBold),
+                                                            color: AppColor.textLightBlueBlack,
+                                                            fontFamily: AppFont.poppinsBold),
                                                       ),
-
-                                                      Text(
-                                                          "${tr(LocaleKeys.additionText_required)}",
-                                                          style: TextStyle(
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular,
+                                                      Text(tr(LocaleKeys.additionText_required),
+                                                          style: const TextStyle(
+                                                              fontFamily: AppFont.poppinsRegular,
                                                               fontSize: 12,
-                                                              color: Color(
-                                                                  0xffFF0000)))
-
+                                                              color: Color(0xffFF0000)))
                                                     ],
                                                   ),
                                                 ),
-                                                StatefulBuilder(builder:
-                                                    (BuildContext context,
-                                                        StateSetter setState) {
+                                                StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                                   return Row(
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
+                                                          showDatePicker(
+                                                                  context: context,
+                                                                  firstDate: DateTime(year2, month2, date2),
+                                                                  initialDate: DateTime(year2, month2, date2),
+                                                                  lastDate: DateTime(2050))
+                                                              .then((value) {
+                                                            var date = DateTime.parse(value.toString());
+                                                            String newdate = date.toString();
+                                                            print("***-----//////${dateeConverter(newdate)}");
 
-                                                           showDatePicker(
-                                                            context: context,
-                                                            firstDate: DateTime(year2,month2,date2),
-                                                            initialDate: DateTime(year2,month2,date2),
-                                                            lastDate: DateTime(2050)
-                                                           ).then((value) {
-
-                                                               var date = DateTime
-                                                                .parse(value
-                                                                    .toString());
-                                                            String newdate =
-                                                                date.toString();
-                                                            print(
-                                                                "***-----//////${dateeConverter(newdate)}");
-
-                                                            timestampGmt2 = date
-                                                                .millisecondsSinceEpoch
-                                                                .toString();
-                                                            print(
-                                                                ">>>>>recurring<<<<<${timestampGmt2}");
+                                                            timestampGmt2 = date.millisecondsSinceEpoch.toString();
+                                                            print(">>>>>recurring<<<<<$timestampGmt2");
                                                             // print("=======${dateConverter(timestampGmt)} ");
                                                             print(
                                                                 "======*****${timeConverter(int.parse(timestampGmt2))} ");
-                                                            String str =
-                                                                timeConverter(
-                                                                    int.parse(
-                                                                        timestampGmt2));
+                                                            String str = timeConverter(int.parse(timestampGmt2));
 
                                                             setState(() {
-                                                              editrecurringController
-                                                                      .text =
-                                                                  dateeConverter(
-                                                                          newdate)
-                                                                      .toString();
-                                                              print(
-                                                                  ">>>><<<<${editrecurringController.text}");
+                                                              editrecurringController.text =
+                                                                  dateeConverter(newdate).toString();
+                                                              print(">>>><<<<${editrecurringController.text}");
                                                             });
-
-                                                           });
-
-
-         
+                                                          });
 
                                                           // DatePicker.showDatePicker(
                                                           //         context,
@@ -1032,34 +835,25 @@ class _EditEventState extends State<EditEvent> {
                                                           //   //  eventDateController.text=value.toString();
                                                           // });
                                                         },
-                                                        child:
-                                                            editrecurringController
-                                                                    .text
-                                                                    .isEmpty
-                                                                ? Text(
-                                                                    // "Select Date ",
-                                                                    tr(LocaleKeys.newEvent_selectDate),
-                                                                    maxLines: 2,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color: AppColor
-                                                                            .textLightBlueBlack,
-                                                                        fontFamily:
-                                                                            AppFont.poppinsRegular),
-                                                                  )
-                                                                : Text(
-                                                                    editrecurringController.text,
-                                                                    maxLines: 2,
-                                                                    // maxlines:2,
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color: AppColor
-                                                                            .textLightBlueBlack,
-                                                                        fontFamily:
-                                                                            AppFont.poppinsRegular),
-                                                                  ),
+                                                        child: editrecurringController.text.isEmpty
+                                                            ? Text(
+                                                                // "Select Date ",
+                                                                tr(LocaleKeys.newEvent_selectDate),
+                                                                maxLines: 2,
+                                                                style: const TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: AppColor.textLightBlueBlack,
+                                                                    fontFamily: AppFont.poppinsRegular),
+                                                              )
+                                                            : Text(
+                                                                editrecurringController.text,
+                                                                maxLines: 2,
+                                                                // maxlines:2,
+                                                                style: const TextStyle(
+                                                                    fontSize: 12,
+                                                                    color: AppColor.textLightBlueBlack,
+                                                                    fontFamily: AppFont.poppinsRegular),
+                                                              ),
                                                       )
                                                     ],
                                                   );
@@ -1067,17 +861,16 @@ class _EditEventState extends State<EditEvent> {
                                               ],
                                             ),
                                           )
-                                        : SizedBox(),
+                                        : const SizedBox(),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
 
                                     Container(
                                       // color: Colors.blue,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -1085,45 +878,36 @@ class _EditEventState extends State<EditEvent> {
                                               // tr(LocaleKeys.newEvent_selectDate),
                                               tr(LocaleKeys.additionText_reminderBefore),
                                               maxLines: 2,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 13,
-                                                  color: AppColor
-                                                      .textLightBlueBlack,
-                                                  fontFamily:
-                                                      AppFont.poppinsBold),
+                                                  color: AppColor.textLightBlueBlack,
+                                                  fontFamily: AppFont.poppinsBold),
                                             ),
                                           ),
-                                          StatefulBuilder(builder:
-                                              (BuildContext context,
-                                                  StateSetter setState) {
+                                          StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                             return Row(
                                               children: [
                                                 InkWell(
                                                   onTap: () {},
-                                                  child: eventRepeatController
-                                                          .text.isEmpty
+                                                  child: eventRepeatController.text.isEmpty
                                                       ? Text(
-                                                          "${petProvider.editRemindBefor.text}",
+                                                          petProvider.editRemindBefor.text,
                                                           // tr(LocaleKeys.newEvent_selectDate),
                                                           // petProvider.petRepeatEvent.text,
                                                           maxLines: 2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         )
                                                       : Text(
-                                                          "${petProvider.editRemindBefor.text}",
+                                                          petProvider.editRemindBefor.text,
                                                           // eventDateController.text,
                                                           maxLines: 2,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 12,
-                                                              color: AppColor
-                                                                  .textLightBlueBlack,
-                                                              fontFamily: AppFont
-                                                                  .poppinsRegular),
+                                                              color: AppColor.textLightBlueBlack,
+                                                              fontFamily: AppFont.poppinsRegular),
                                                         ),
                                                 )
                                               ],
@@ -1133,19 +917,18 @@ class _EditEventState extends State<EditEvent> {
                                       ),
                                     ),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
 
-                                    Consumer<PetProvider>(
-                                        builder: (context, petProvider, child) {
+                                    Consumer<PetProvider>(builder: (context, petProvider, child) {
                                       return
                                           //petProvider.showRadioList==1?
                                           Column(
                                         children: [
                                           RemindTimeCont(
                                               context: context,
-                                              Rname:  tr(LocaleKeys.additionText_off),
+                                              Rname: tr(LocaleKeys.additionText_off),
                                               remindTime: RemindTime.never),
                                           RemindTimeCont(
                                               context: context,
@@ -1161,7 +944,7 @@ class _EditEventState extends State<EditEvent> {
                                               remindTime: RemindTime.Hour1),
                                           RemindTimeCont(
                                               context: context,
-                                              Rname:  tr(LocaleKeys.additionText_12hour),
+                                              Rname: tr(LocaleKeys.additionText_12hour),
                                               remindTime: RemindTime.Hour12),
                                           RemindTimeCont(
                                               context: context,
@@ -1172,7 +955,7 @@ class _EditEventState extends State<EditEvent> {
                                       //:SizedBox();
                                     }),
 
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
 
@@ -1219,7 +1002,7 @@ class _EditEventState extends State<EditEvent> {
               }),
             );
           }),
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
     );
   }
 
@@ -1244,7 +1027,7 @@ class _EditEventState extends State<EditEvent> {
 
 String dateeConverter(String date) {
   String value = "";
-  print("dateeee select >>>  ${date}");
+  print("dateeee select >>>  $date");
 
   DateTime now = DateTime.now();
   try {
@@ -1254,18 +1037,18 @@ String dateeConverter(String date) {
     value = Jiffy(date).format("EEE, dd-MMM-yyyy");
   }
 
-  return "${value}";
+  return value;
 }
 
 String dateConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
-  return "${Jiffy(d).format("d-MMM-yyyy ")}".toUpperCase();
+  return Jiffy(d).format("d-MMM-yyyy ").toUpperCase();
 }
 
 String formatDateTym2(String str) {
-  print("formatDateTym2===${str}");
-  var v1=int.parse(str);
-  print("int parse str===${v1}");
+  print("formatDateTym2===$str");
+  var v1 = int.parse(str);
+  print("int parse str===$v1");
   var d = DateTime.fromMillisecondsSinceEpoch(v1);
   print("dte time convert====${Jiffy(d).format("d-MMM-yyyy ")}");
 
@@ -1285,11 +1068,11 @@ String formatDateTym2(String str) {
 String timeConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
 
-  return "${Jiffy(d).format("HH:mm a")}".toUpperCase();
+  return Jiffy(d).format("HH:mm a").toUpperCase();
 }
 
 String monthConverter(int date) {
   var d = DateTime.fromMillisecondsSinceEpoch(date);
 
-  return "${Jiffy(d).format("MM")}".toUpperCase();
+  return Jiffy(d).format("MM").toUpperCase();
 }

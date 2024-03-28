@@ -332,7 +332,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                             const Text(
                                                               "Pet Extra ID",
                                                               style: TextStyle(
-                                                                  fontSize: 14, fontFamily: AppFont.figTreeBold),
+                                                                  fontSize: 18, fontFamily: AppFont.figTreeBold),
                                                             ),
                                                             Align(
                                                               alignment: Alignment.topRight,
@@ -369,6 +369,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.spFe),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_specialfeatures),
@@ -396,6 +399,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.tatoo),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_tattoos),
@@ -410,37 +416,10 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                             ),
                                                           ],
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(1);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_specialfeatures),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
+
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(2);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_tattoos),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
 
                                                         Row(
                                                           children: [
@@ -459,6 +438,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.clip),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_clip),
@@ -486,6 +468,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.ringNo),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_ringnumber),
@@ -504,37 +489,11 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(3);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_clip),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
+
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(4);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_ringnumber),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
+
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
@@ -556,6 +515,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.clip),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys
@@ -585,6 +547,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.actNo),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_accountnumber),
@@ -617,20 +582,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(6);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_accountnumber),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
+
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
@@ -652,6 +604,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.bbNo),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_breedingbooknumber),
@@ -680,6 +635,9 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                                       decoration: BoxDecoration(
                                                                           borderRadius: BorderRadius.circular(40),
                                                                           color: const Color(0xffFAF1F2)),
+                                                                      child: Center(
+                                                                        child: Image.asset(AppImage.otherId),
+                                                                      ),
                                                                     ),
                                                                     Text(
                                                                       tr(LocaleKeys.additionText_otherid),
@@ -695,37 +653,10 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                           ],
                                                         ),
 
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(7);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_breedingbooknumber),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
                                                         const SizedBox(
                                                           height: 15.0,
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: () {
-                                                        //     petProvider.FechrNums();
-                                                        //     petProvider.incrementController(8);
-                                                        //     Navigator.pop(context);
-                                                        //   },
-                                                        //   child: Text(
-                                                        //     tr(LocaleKeys.additionText_otherid),
-                                                        //     style: const TextStyle(
-                                                        //         fontFamily: AppFont.poppinsMedium,
-                                                        //         fontSize: 16,
-                                                        //         color: AppColor.textLightBlueBlack),
-                                                        //   ),
-                                                        // ),
+
                                                         const SizedBox(
                                                           height: 0.0,
                                                         ),
@@ -809,190 +740,6 @@ class _CheckProtectionState extends State<CheckProtection> {
                                     })
                                   : const SizedBox(),
 
-                              ///
-
-                              // customBlueButton(
-                              //     context: context,
-                              //     text1: tr(LocaleKeys.additionText_add),
-                              //     onTap1: () {
-                              //       showModalBottomSheet(
-                              //           backgroundColor: AppColor.newGrey,
-                              //           context: context,
-                              //           builder: (context) {
-                              //             return blurView(
-                              //               child: Container(
-                              //                 color: AppColor.newGrey,
-                              //                 height: 370,
-                              //                 child: Column(
-                              //                   children: [
-                              //                     const SizedBox(
-                              //                       height: 10.0,
-                              //                     ),
-                              //                     Align(
-                              //                       alignment: Alignment.topRight,
-                              //                       child: Padding(
-                              //                         padding: const EdgeInsets.only(right: 8.0),
-                              //                         child: InkWell(
-                              //                             onTap: () {
-                              //                               Navigator.pop(context);
-                              //                             },
-                              //                             child: Image.asset(
-                              //                               AppImage.closeIcon,
-                              //                             )),
-                              //                       ),
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(1);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_specialfeatures),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(2);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_tattoos),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(3);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_clip),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(4);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_ringnumber),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(5);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_internalOrgniztionnumber),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(6);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_accountnumber),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(7);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_breedingbooknumber),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                     InkWell(
-                              //                       onTap: () {
-                              //                         petProvider.FechrNums();
-                              //                         petProvider.incrementController(8);
-                              //                         Navigator.pop(context);
-                              //                       },
-                              //                       child: Text(
-                              //                         tr(LocaleKeys.additionText_otherid),
-                              //                         style: const TextStyle(
-                              //                             fontFamily: AppFont.poppinsMedium,
-                              //                             fontSize: 16,
-                              //                             color: AppColor.textLightBlueBlack),
-                              //                       ),
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 0.0,
-                              //                     ),
-                              //                     const SizedBox(
-                              //                       height: 15.0,
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //             );
-                              //           });
-
-                              //       // petProvider.PetFraturelist.add
-                              //       //   (
-                              //       //
-                              //       // );
-                              //     },
-                              //     colour: AppColor.newBlueGrey),
-
                               const SizedBox(
                                 height: 20.0,
                               ),
@@ -1049,7 +796,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                               const SizedBox(
                                 height: 22.0,
                               ),
-                              // tr(LocaleKeys.additionText_smsTgScn),
+
                               Text(
                                 tr(LocaleKeys.additionText_smsTgScn),
                                 style: const TextStyle(
@@ -1103,7 +850,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                                     child: const Row(
                                       children: [
                                         Icon(
-                                          Icons.add_circle_outline_outlined,
+                                          Icons.add_circle,
                                           color: AppColor.buttonPink,
                                         ),
                                         Text(
@@ -1148,13 +895,10 @@ class _CheckProtectionState extends State<CheckProtection> {
 
                                       return SizedBox(
                                         height: setHeight,
-
-                                        // height: petProvider.addNum==1 ,
                                         child: ListView.builder(
                                             reverse: true,
                                             itemCount: petProvider.xtraPhNumlist.length,
                                             itemBuilder: (BuildContext, int index) {
-                                              // petProvider.setPetProtFlag(petProvider.xtraPhNumlist[index].cntyflag ?? "");
                                               print("======>${petProvider.xtraPhNumlist[index].cntyflag ?? ""}");
                                               return Padding(
                                                 padding: const EdgeInsets.only(top: 15.0),
@@ -1174,39 +918,213 @@ class _CheckProtectionState extends State<CheckProtection> {
                                 height: 15.0,
                               ),
 
-                              // customBlueButton(
-                              //     context: context,
-                              //     text1: tr(LocaleKeys.additionText_add),
-                              //     onTap1: () {
-                              //       if (petProvider.xtraPhNumlist.length >= 3) {
-                              //       } else {
-                              //         petProvider.incrementController3();
-                              //         petProvider.xtraNums();
-
-                              //         if (petProvider.xtraPhNumlist.length == 2) {
-                              //           setHeight = 150;
-                              //         } else if (petProvider.xtraPhNumlist.length > 2) {
-                              //           setHeight = 200;
-                              //         }
-                              //       }
-                              //     },
-                              //     colour: AppColor.newBlueGrey),
-
                               const SizedBox(
                                 height: 22.0,
                               ),
 
-                              Text(
-                                tr(LocaleKeys.additionText_msngrNum),
-                                style: const TextStyle(
-                                    fontFamily: AppFont.poppinsBold, fontSize: 16, color: AppColor.textLightBlueBlack),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      tr(LocaleKeys.additionText_msngrNum),
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                          fontFamily: AppFont.poppinsBold,
+                                          fontSize: 16,
+                                          color: AppColor.textLightBlueBlack),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(right: 15.0),
+                                                    child: InkWell(
+                                                        onTap: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Image.asset(
+                                                          AppImage.closeIcon,
+                                                        )),
+                                                  ),
+                                                ),
+                                                const Align(
+                                                  alignment: Alignment.topCenter,
+                                                  child: Text(
+                                                    "Add Messenger",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontFamily: AppFont.figTreeBold,
+                                                        fontSize: 16),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          petProvider.MsngrNums();
+                                                          petProvider.incrementController2(1);
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 80,
+                                                              width: 80,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(40),
+                                                                  color: const Color(0xffFAF1F2)),
+                                                              child: Center(child: Image.asset(AppImage.telegram)),
+                                                            ),
+                                                            const Text(
+                                                              "Telegram",
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                  fontFamily: AppFont.poppinsMedium,
+                                                                  fontSize: 16,
+                                                                  color: AppColor.textLightBlueBlack),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          petProvider.MsngrNums();
+
+                                                          petProvider.incrementController2(2);
+
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 80,
+                                                              width: 80,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(40),
+                                                                  color: const Color(0xffFAF1F2)),
+                                                              child: Center(child: Image.asset(AppImage.whatsapp)),
+                                                            ),
+                                                            const Text(
+                                                              "Whatsapp",
+                                                              style: TextStyle(
+                                                                  fontFamily: AppFont.poppinsMedium,
+                                                                  fontSize: 16,
+                                                                  color: AppColor.textLightBlueBlack),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          petProvider.MsngrNums();
+
+                                                          petProvider.incrementController2(3);
+
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            Container(
+                                                                height: 80,
+                                                                width: 80,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(40),
+                                                                    color: const Color(0xffFAF1F2)),
+                                                                child: Center(child: Image.asset(AppImage.messenger))),
+                                                            const Text(
+                                                              "Facebook Messenger",
+                                                              textAlign: TextAlign.center,
+                                                              style: TextStyle(
+                                                                  fontFamily: AppFont.poppinsMedium,
+                                                                  fontSize: 16,
+                                                                  color: AppColor.textLightBlueBlack),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          petProvider.MsngrNums();
+
+                                                          petProvider.incrementController2(4);
+
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            Container(
+                                                                height: 80,
+                                                                width: 80,
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius: BorderRadius.circular(40),
+                                                                    color: const Color(0xffFAF1F2)),
+                                                                child: Center(child: Image.asset(AppImage.viber))),
+                                                            const Text(
+                                                              "Viber",
+                                                              style: TextStyle(
+                                                                  fontFamily: AppFont.poppinsMedium,
+                                                                  fontSize: 16,
+                                                                  color: AppColor.textLightBlueBlack),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    child: const Row(
+                                      children: [
+                                        Icon(
+                                          Icons.add_circle,
+                                          color: AppColor.buttonPink,
+                                        ),
+                                        Text(
+                                          "Add",
+                                          style: TextStyle(
+                                              color: AppColor.buttonPink,
+                                              fontFamily: AppFont.poppinSemibold,
+                                              fontSize: 14),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
 
                               const SizedBox(
                                 height: 25.0,
                               ),
-
-                              ///-------------
 
                               petProvider.addMsngrNum >= 1
                                   ? Consumer<PetProvider>(builder: (context, petProvider, child) {
@@ -1219,6 +1137,7 @@ class _CheckProtectionState extends State<CheckProtection> {
                                         height: setMsgHeight,
                                         child: ListView.builder(
                                             reverse: true,
+                                            physics: const BouncingScrollPhysics(),
                                             itemCount: petProvider.xtraContactlist.length,
                                             itemBuilder: (BuildContext, int index) {
                                               return Padding(
@@ -1226,16 +1145,13 @@ class _CheckProtectionState extends State<CheckProtection> {
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
-                                                    // petProvider.xtraContactlist[index].xtraContact==petProvider.title2 && index>=1 ? SizedBox():
                                                     Text(
                                                       "${petProvider.xtraContactlist[index].xtraContact}",
-                                                      // petProvider.MesngrTxt??"",
                                                       style: const TextStyle(
                                                           fontFamily: AppFont.poppinsRegular,
                                                           fontSize: 12,
                                                           color: AppColor.textLightBlueBlack),
                                                     ),
-
                                                     const SizedBox(
                                                       height: 15.0,
                                                     ),
@@ -1254,147 +1170,147 @@ class _CheckProtectionState extends State<CheckProtection> {
 
                               ///-------------
 
-                              Consumer<PetProvider>(builder: (context, petProvider, child) {
-                                return customBlueButton(
-                                    context: context,
-                                    text1: tr(LocaleKeys.additionText_add),
-                                    onTap1: () {
-                                      showModalBottomSheet(
-                                          backgroundColor: AppColor.newGrey,
-                                          context: context,
-                                          builder: (context) {
-                                            return blurView(
-                                              child: Container(
-                                                color: AppColor.newGrey,
-                                                height: 270,
-                                                child: Column(
-                                                  children: [
-                                                    const SizedBox(
-                                                      height: 10.0,
-                                                    ),
-                                                    Align(
-                                                      alignment: Alignment.topRight,
-                                                      child: Padding(
-                                                        padding: const EdgeInsets.only(right: 8.0),
-                                                        child: InkWell(
-                                                            onTap: () {
-                                                              Navigator.pop(context);
-                                                            },
-                                                            child: Image.asset(
-                                                              AppImage.closeIcon,
-                                                            )),
-                                                      ),
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        petProvider.MsngrNums();
-                                                        petProvider.incrementController2(1);
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Telegram",
-                                                        style: TextStyle(
-                                                            fontFamily: AppFont.poppinsMedium,
-                                                            fontSize: 16,
-                                                            color: AppColor.textLightBlueBlack),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 15.0,
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        petProvider.MsngrNums();
+                              // Consumer<PetProvider>(builder: (context, petProvider, child) {
+                              //   return customBlueButton(
+                              //       context: context,
+                              //       text1: tr(LocaleKeys.additionText_add),
+                              //       onTap1: () {
+                              //         showModalBottomSheet(
+                              //             backgroundColor: AppColor.newGrey,
+                              //             context: context,
+                              //             builder: (context) {
+                              //               return blurView(
+                              //                 child: Container(
+                              //                   color: AppColor.newGrey,
+                              //                   height: 270,
+                              //                   child: Column(
+                              //                     children: [
+                              //                       const SizedBox(
+                              //                         height: 10.0,
+                              //                       ),
+                              //                       Align(
+                              //                         alignment: Alignment.topRight,
+                              //                         child: Padding(
+                              //                           padding: const EdgeInsets.only(right: 8.0),
+                              //                           child: InkWell(
+                              //                               onTap: () {
+                              //                                 Navigator.pop(context);
+                              //                               },
+                              //                               child: Image.asset(
+                              //                                 AppImage.closeIcon,
+                              //                               )),
+                              //                         ),
+                              //                       ),
+                              //                       InkWell(
+                              //                         onTap: () {
+                              //                           petProvider.MsngrNums();
+                              //                           petProvider.incrementController2(1);
+                              //                           Navigator.pop(context);
+                              //                         },
+                              //                         child: const Text(
+                              //                           "Telegram",
+                              //                           style: TextStyle(
+                              //                               fontFamily: AppFont.poppinsMedium,
+                              //                               fontSize: 16,
+                              //                               color: AppColor.textLightBlueBlack),
+                              //                         ),
+                              //                       ),
+                              //                       const SizedBox(
+                              //                         height: 15.0,
+                              //                       ),
+                              //                       InkWell(
+                              //                         onTap: () {
+                              //                           petProvider.MsngrNums();
 
-                                                        petProvider.incrementController2(2);
+                              //                           petProvider.incrementController2(2);
 
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Whatsapp",
-                                                        style: TextStyle(
-                                                            fontFamily: AppFont.poppinsMedium,
-                                                            fontSize: 16,
-                                                            color: AppColor.textLightBlueBlack),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 15.0,
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        petProvider.MsngrNums();
+                              //                           Navigator.pop(context);
+                              //                         },
+                              //                         child: const Text(
+                              //                           "Whatsapp",
+                              //                           style: TextStyle(
+                              //                               fontFamily: AppFont.poppinsMedium,
+                              //                               fontSize: 16,
+                              //                               color: AppColor.textLightBlueBlack),
+                              //                         ),
+                              //                       ),
+                              //                       const SizedBox(
+                              //                         height: 15.0,
+                              //                       ),
+                              //                       InkWell(
+                              //                         onTap: () {
+                              //                           petProvider.MsngrNums();
 
-                                                        petProvider.incrementController2(3);
+                              //                           petProvider.incrementController2(3);
 
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Facebook Messenger",
-                                                        style: TextStyle(
-                                                            fontFamily: AppFont.poppinsMedium,
-                                                            fontSize: 16,
-                                                            color: AppColor.textLightBlueBlack),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 15.0,
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        petProvider.MsngrNums();
+                              //                           Navigator.pop(context);
+                              //                         },
+                              //                         child: const Text(
+                              //                           "Facebook Messenger",
+                              //                           style: TextStyle(
+                              //                               fontFamily: AppFont.poppinsMedium,
+                              //                               fontSize: 16,
+                              //                               color: AppColor.textLightBlueBlack),
+                              //                         ),
+                              //                       ),
+                              //                       const SizedBox(
+                              //                         height: 15.0,
+                              //                       ),
+                              //                       InkWell(
+                              //                         onTap: () {
+                              //                           petProvider.MsngrNums();
 
-                                                        petProvider.incrementController2(4);
+                              //                           petProvider.incrementController2(4);
 
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Viber",
-                                                        style: TextStyle(
-                                                            fontFamily: AppFont.poppinsMedium,
-                                                            fontSize: 16,
-                                                            color: AppColor.textLightBlueBlack),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 15.0,
-                                                    ),
-                                                    // InkWell(
-                                                    //   onTap: () {
-                                                    //     petProvider
-                                                    //         .MsngrNums();
-                                                    //     petProvider
-                                                    //         .incrementController2(
-                                                    //             5);
-                                                    //     Navigator.pop(
-                                                    //         context);
-                                                    //   },
-                                                    //   child: Text(
-                                                    //     tr(LocaleKeys
-                                                    //         .additionText_othernumer),
-                                                    //     style: TextStyle(
-                                                    //         fontFamily: AppFont
-                                                    //             .poppinsMedium,
-                                                    //         fontSize: 16,
-                                                    //         color: AppColor
-                                                    //             .textLightBlueBlack),
-                                                    //   ),
-                                                    // ),
-                                                    const SizedBox(
-                                                      height: 15.0,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          });
+                              //                           Navigator.pop(context);
+                              //                         },
+                              //                         child: const Text(
+                              //                           "Viber",
+                              //                           style: TextStyle(
+                              //                               fontFamily: AppFont.poppinsMedium,
+                              //                               fontSize: 16,
+                              //                               color: AppColor.textLightBlueBlack),
+                              //                         ),
+                              //                       ),
+                              //                       const SizedBox(
+                              //                         height: 15.0,
+                              //                       ),
+                              //                       // InkWell(
+                              //                       //   onTap: () {
+                              //                       //     petProvider
+                              //                       //         .MsngrNums();
+                              //                       //     petProvider
+                              //                       //         .incrementController2(
+                              //                       //             5);
+                              //                       //     Navigator.pop(
+                              //                       //         context);
+                              //                       //   },
+                              //                       //   child: Text(
+                              //                       //     tr(LocaleKeys
+                              //                       //         .additionText_othernumer),
+                              //                       //     style: TextStyle(
+                              //                       //         fontFamily: AppFont
+                              //                       //             .poppinsMedium,
+                              //                       //         fontSize: 16,
+                              //                       //         color: AppColor
+                              //                       //             .textLightBlueBlack),
+                              //                       //   ),
+                              //                       // ),
+                              //                       const SizedBox(
+                              //                         height: 15.0,
+                              //                       ),
+                              //                     ],
+                              //                   ),
+                              //                 ),
+                              //               );
+                              //             });
 
-                                      // if(petProvider.msgList.length==2){
-                                      //   setMsgHeight=220;
-                                      // }
-                                    },
-                                    colour: AppColor.newBlueGrey);
-                              }),
+                              //         // if(petProvider.msgList.length==2){
+                              //         //   setMsgHeight=220;
+                              //         // }
+                              //       },
+                              //       colour: AppColor.newBlueGrey);
+                              // }),
 
                               const SizedBox(
                                 height: 30.0,

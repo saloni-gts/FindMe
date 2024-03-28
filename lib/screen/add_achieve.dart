@@ -5,6 +5,8 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/customTextFeild.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/models/achievement_model.dart';
 import 'package:find_me/provider/achievement_provider.dart';
@@ -63,68 +65,62 @@ class _AddAchievenState extends State<AddAchieven> {
         children: [
           widget.achievementModel != null
               ? Padding(
-                  padding: const EdgeInsets.only(left: 22.0),
-                  child: customBlueButton(
-                      context: context,
-                      text1: tr(LocaleKeys.additionText_capDel),
-                      onTap1: () {
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: CustomButton(
+                      // context: context,
+                      text: tr(LocaleKeys.additionText_capDel),
+                      onPressed: () {
                         provider.callDeleteAchievement(widget.achievementModel?.id ?? 0, context);
                       },
-                      colour: AppColor.newGrey),
+                      clr: AppColor.newGrey),
                 )
               : const SizedBox(),
           const SizedBox(
             height: 20,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 22.0),
-            child: customBlueButton(
-                context: context,
-                text1: widget.achievementModel != null
-                    ? tr(LocaleKeys.additionText_capUpdte)
-                    : tr(LocaleKeys.additionText_capSave),
-                onTap1: () {
-                  if (widget.achievementModel != null) {
-                    provider.updateAchieveMent(widget.achievementModel?.id ?? 0, nameController.text,
-                        desciptionController.text, widget.achievementModel?.halfUrl ?? "", context);
+            padding: const EdgeInsets.only(left: 30.0),
+            child: CustomButton(
+              // context: context,
+              text: widget.achievementModel != null
+                  ? tr(LocaleKeys.additionText_capUpdte)
+                  : tr(LocaleKeys.additionText_capSave),
+              onPressed: () {
+                if (widget.achievementModel != null) {
+                  provider.updateAchieveMent(widget.achievementModel?.id ?? 0, nameController.text,
+                      desciptionController.text, widget.achievementModel?.halfUrl ?? "", context);
+                } else {
+                  if (nameController.text.trim().isEmpty) {
+                    CoolAlert.show(
+                        context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrName));
+                  } else if (desciptionController.text.trim().isEmpty) {
+                    CoolAlert.show(
+                        context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrDesc));
+                  } else if (provider.achievementImage == null) {
+                    CoolAlert.show(
+                        context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsAdImg));
                   } else {
-                    if (nameController.text.trim().isEmpty) {
-                      CoolAlert.show(
-                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrName));
-                    } else if (desciptionController.text.trim().isEmpty) {
-                      CoolAlert.show(
-                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsNtrDesc));
-                    } else if (provider.achievementImage == null) {
-                      CoolAlert.show(
-                          context: context, type: CoolAlertType.error, text: tr(LocaleKeys.additionText_plsAdImg));
-                    } else {
-                      provider.callAddAchieve(
-                        widget.achievementModel != null
-                            ? widget.achievementModel?.id ?? 0
-                            : petProvider.selectedPetDetail?.id ?? 0,
-                        nameController.text,
-                        desciptionController.text,
-                        context,
-                        isForEdit: widget.achievementModel != null,
-                      );
-                    }
+                    provider.callAddAchieve(
+                      widget.achievementModel != null
+                          ? widget.achievementModel?.id ?? 0
+                          : petProvider.selectedPetDetail?.id ?? 0,
+                      nameController.text,
+                      desciptionController.text,
+                      context,
+                      isForEdit: widget.achievementModel != null,
+                    );
                   }
-                },
-                colour: AppColor.newGrey),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 22.0),
-            child: BotttomBorder(context),
+                }
+              },
+            ),
           ),
         ],
       ),
       // bottomNavigationBar: BotttomBorder(context),
-      appBar: customAppbar(
-          isbackbutton: true,
-          titlename: widget.achievementModel == null
+      appBar: CustomCurvedAppbar(
+          isTitleCenter: true,
+          // isbackbutton: true,
+          title: widget.achievementModel == null
               ? tr(LocaleKeys.additionText_addAcheve)
               : tr(LocaleKeys.additionText_editAcheve)),
       body: GestureDetector(
@@ -248,7 +244,7 @@ class _AddAchievenState extends State<AddAchieven> {
                                 border: Border.all(
                                   color: Colors.white,
                                 ),
-                                color: AppColor.textLightBlueBlack,
+                                color: AppColor.buttonPink,
                               ),
                               child: InkWell(
                                 child: ClipRRect(

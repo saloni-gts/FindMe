@@ -68,7 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Container(
                   // height: 280,
-                  color: AppColor.newGrey,
+                  color: Colors.grey.shade200,
                   child: Column(
                     children: [
                       // Expanded(
@@ -245,7 +245,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             const Spacer(),
                             Consumer<Myprovider>(builder: (context, myprovider, child) {
                               return Radio(
-                                  activeColor: AppColor.textLightBlueBlack,
+                                  activeColor: AppColor.buttonPink,
                                   toggleable: true,
                                   value: true,
                                   groupValue: myprovider.radioVal,
@@ -355,7 +355,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
                               Consumer<Myprovider>(builder: (context, myprovider, child) {
                                 return Radio(
-                                  activeColor: AppColor.textLightBlueBlack,
+                                  activeColor: AppColor.buttonPink,
                                   toggleable: true,
                                   value: true,
                                   groupValue: myprovider.setButtonOn,
@@ -465,7 +465,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             const Spacer(),
                             Consumer<PetProvider>(builder: (context, petprovider, child) {
                               return Radio(
-                                  activeColor: AppColor.textLightBlueBlack,
+                                  activeColor: AppColor.buttonPink,
                                   toggleable: true,
                                   value: true,
                                   groupValue: petprovider.privacyRadioVal,

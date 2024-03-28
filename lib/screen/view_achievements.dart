@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/provider/achievement_provider.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_font.dart';
@@ -53,12 +55,18 @@ class _ViewAchievementsState extends State<ViewAchievements> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BotttomBorder(context),
-      appBar: customAppbar(
-          isbackbutton: true,
-          titlename: tr(LocaleKeys.additionText_achievements),
-          isEditIcon: true,
-          tap2: () {
+      // bottomNavigationBar: BotttomBorder(context),
+      appBar: CustomCurvedAppbar(
+          // isbackbutton: true,
+          title: tr(LocaleKeys.additionText_achievements),
+          icn: const Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+          showBackIcon: true,
+          showIcon: true,
+          // isEditIcon: true,
+          onTap1: () {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -163,13 +171,14 @@ class _ViewAchievementsState extends State<ViewAchievements> {
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          child: customBlueButton(
-                              context: context,
-                              text1: tr(LocaleKeys.additionText_capShare),
-                              onTap1: () async {
-                                await urlFileShare(imgUrl, description);
-                              },
-                              colour: AppColor.newGrey),
+                          child: CustomButton(
+                            // context: context,
+                            text: tr(LocaleKeys.additionText_capShare),
+                            onPressed: () async {
+                              await urlFileShare(imgUrl, description);
+                            },
+                            // colour: AppColor.newGrey
+                          ),
                         ),
                         const SizedBox(
                           height: 20,

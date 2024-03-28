@@ -58,7 +58,8 @@ class _CntrePikrState extends State<CntrePikr> {
               height: 40,
               width: 125,
               decoration: BoxDecoration(
-                  // color: Colors.blue,
+                  // borderRadius: BorderRadius.circular(20),
+                  // color: Colors.blue,?
                   // borderRadius: ,
                   border: Border.all(color: Colors.transparent)),
               child: Row(
@@ -66,7 +67,9 @@ class _CntrePikrState extends State<CntrePikr> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(flag, style: const TextStyle(fontSize: 20.0)),
+                    child: Container(
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        child: Text(flag, style: const TextStyle(fontSize: 20.0))),
                   ),
                   // const VerticalDivider(
                   //   color: AppColor.textLightBlueBlack,

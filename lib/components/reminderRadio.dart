@@ -27,7 +27,7 @@ Widget RemindTimeCont({required BuildContext context, required String Rname, req
           Padding(
             padding: const EdgeInsets.only(right: 0.0),
             child: Radio(
-                activeColor: AppColor.newBlueGrey,
+                activeColor: AppColor.buttonPink,
                 toggleable: true,
                 value: remindTime,
                 groupValue: petProvider.reTime,

@@ -1,16 +1,15 @@
 import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 
-
 import '../util/app_font.dart';
 
-Widget WeightContainer(BuildContext context,String weight,String text1){
+Widget WeightContainer(BuildContext context, String weight, String text1) {
   return Container(
     height: 90,
     width: MediaQuery.of(context).size.width * .43,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(4),
-      color: AppColor.textFieldGrey,
+      color: const Color(0xffF8EBED),
     ),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -19,18 +18,12 @@ Widget WeightContainer(BuildContext context,String weight,String text1){
         Text(
           weight,
           textAlign: TextAlign.left,
-          style: TextStyle(
-              fontSize: 22.0,
-              color: AppColor.textLightBlueBlack,
-              fontFamily: AppFont.poppinsBold),
+          style: const TextStyle(fontSize: 22.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
         ),
         Text(
-         text1,
+          text1,
           textAlign: TextAlign.left,
-          style: TextStyle(
-              fontSize: 10.0,
-              color: Colors.black,
-              fontFamily: AppFont.poppinsMedium),
+          style: const TextStyle(fontSize: 10.0, color: Colors.black, fontFamily: AppFont.poppinsMedium),
         ),
       ],
     ),

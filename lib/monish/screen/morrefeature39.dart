@@ -113,7 +113,7 @@ class _MoreFeatureState extends State<MoreFeature> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 15.0, top: 10.0),
+        padding: const EdgeInsets.only(bottom: 25.0, top: 10.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -125,20 +125,6 @@ class _MoreFeatureState extends State<MoreFeature> {
                     tr(LocaleKeys.additionText_logout),
                 onTap1: () {
                   logoutAlert(context);
-                  //  print("object......${ConnectivityResult}");
-                  // if( !await InternetConnectionChecker().hasConnection)
-                  // {
-                  //
-                  // }
-                  // else {
-                  //
-                  //   print("api calling");
-                  //   authprovider.logoutApiCall(context);
-                  //   print("api called");
-                  //   // HiveHandler.clearUser();
-                  //   // Navigator.pushNamedAndRemoveUntil(
-                  //   //     context, AppScreen.signIn, (r) => false);
-                  // }
                 },
                 border1: false,
                 putheight: 56.0,
@@ -168,6 +154,7 @@ class _MoreFeatureState extends State<MoreFeature> {
           builder: (context, petProvider, myprovider, purc, child) {
         print("choices choices.length ${choices.length}");
         return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               Padding(
@@ -176,10 +163,11 @@ class _MoreFeatureState extends State<MoreFeature> {
                   height: MediaQuery.of(context).size.height * 0.62,
                   width: MediaQuery.of(context).size.width,
                   margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       // color: Color(0xffF7F7F7),
-                      color: AppColor.newGrey),
+                      color: Colors.grey.shade200),
                   child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     itemCount: purc.choices.length,
                     itemBuilder: (context, index) {
                       final item = purc.choices[index];

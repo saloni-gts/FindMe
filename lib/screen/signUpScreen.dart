@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -389,6 +390,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       child: Container(
         width: double.infinity,
+        margin: const EdgeInsets.only(top: 10),
         // height: context.height * .67,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: const BoxDecoration(
@@ -560,7 +562,7 @@ class _UrlViewerState extends State<UrlViewer> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        appBar: customAppbar(),
+        appBar: CustomCurvedAppbar(),
         body:
             // isLoad?Center(child: CircularProgressIndicator(),):
             Stack(

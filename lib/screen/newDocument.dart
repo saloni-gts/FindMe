@@ -8,6 +8,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/customdropdown.dart';
 import 'package:find_me/components/previewFullImage.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
@@ -125,9 +127,12 @@ class _NewDocumentState extends State<NewDocument> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: customAppbar(
-          isbackbutton: true,
-          titlename: widget.isNewDoc ? tr(LocaleKeys.additionText_newDoc) : tr(LocaleKeys.additionText_editDoc)),
+      appBar: CustomCurvedAppbar(
+        // isbackbutton: true,
+        title: widget.isNewDoc ? tr(LocaleKeys.additionText_newDoc) : tr(LocaleKeys.additionText_editDoc),
+        isTitleCenter: true,
+      ),
+
       backgroundColor: Colors.white,
       // bottomNavigationBar: BotttomBorder(context),
       body: GestureDetector(
@@ -156,7 +161,8 @@ class _NewDocumentState extends State<NewDocument> {
                   Text(
                     tr(LocaleKeys.additionText_choseCate),
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(
+                        fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -206,7 +212,8 @@ class _NewDocumentState extends State<NewDocument> {
                   Text(
                     tr(LocaleKeys.additionText_newDocumentTitle),
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(
+                        fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
 
                   const SizedBox(
@@ -226,7 +233,8 @@ class _NewDocumentState extends State<NewDocument> {
                   Text(
                     tr(LocaleKeys.additionText_addDocs),
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(
+                        fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
 
                   const SizedBox(
@@ -266,7 +274,7 @@ class _NewDocumentState extends State<NewDocument> {
                                 }
 
                                 if (Platform.isAndroid) {
-                                  var status = await Permission.manageExternalStorage.request();  
+                                  var status = await Permission.manageExternalStorage.request();
                                   print("storage statur====$status");
                                   // if (status.isDenied) {
                                   //   Permission.manageExternalStorage.request();
@@ -274,8 +282,7 @@ class _NewDocumentState extends State<NewDocument> {
                                   //   Permission.manageExternalStorage.request();
                                   //   //  openAppSettings();
                                   // } else if (status.isGranted)
-                                   {
-
+                                  {
                                     fil = await getFile().then((value) {
                                       if (value != null) {
                                         return File(value.files.single.path ?? "");
@@ -484,7 +491,8 @@ class _NewDocumentState extends State<NewDocument> {
                   Text(
                     tr(LocaleKeys.additionText_issued),
                     textAlign: TextAlign.left,
-                    style: const TextStyle(fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
+                    style: const TextStyle(
+                        fontSize: 13, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsBold),
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -562,54 +570,39 @@ class _NewDocumentState extends State<NewDocument> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 22.0),
-              child: customBlueButton(
-                  context: context,
-                  text1: !widget.isNewDoc ? tr(LocaleKeys.ownerProfile_update) : tr(LocaleKeys.additionText_save),
-                  onTap1: () {
-                    PetProvider p = Provider.of(context, listen: false);
+        padding: const EdgeInsets.only(bottom: 20.0, left: 28),
+        child: CustomButton(
+          // context: context,
+          text: !widget.isNewDoc ? tr(LocaleKeys.ownerProfile_update) : tr(LocaleKeys.additionText_save),
+          onPressed: () {
+            PetProvider p = Provider.of(context, listen: false);
 
-                    print("switch output========${Switchcontroller.value}");
-                    Switchcontroller.value ? print("value is 1  ") : print("value is 0");
-                    Switchcontroller.value ? v1 = 1 : v1 = 2;
-                    print("vale of v1========= $v1");
-                    print("print to check");
-                    if (!widget.isNewDoc) {
-                      if (timestampGmt.isEmpty) {
-                        timestampGmt = "";
-                      }
-                      if (documentTitle.text.trim().isEmpty) {
-                        documentTitle.text = "";
-                      }
+            print("switch output========${Switchcontroller.value}");
+            Switchcontroller.value ? print("value is 1  ") : print("value is 0");
+            Switchcontroller.value ? v1 = 1 : v1 = 2;
+            print("vale of v1========= $v1");
+            print("print to check");
+            if (!widget.isNewDoc) {
+              if (timestampGmt.isEmpty) {
+                timestampGmt = "";
+              }
+              if (documentTitle.text.trim().isEmpty) {
+                documentTitle.text = "";
+              }
 
-                      p.petDocumentEdit(
-                          context: context, time: timestampGmt, name: documentTitle.text.trim(), filetype: v1);
-                    } else {
-                      if (issueDate.text.isNotEmpty && p.docFile != null && documentTitle.text.trim().isNotEmpty) {
-                        p.callAddDocumentV2
-                            // p.callAddDocument
-                            (
-                                docDate: timestampGmt,
-                                doctitle: documentTitle.text.trim(),
-                                context: context,
-                                filetype: v1);
-                      } else {
-                        CoolAlert.show(
-                            context: context,
-                            type: CoolAlertType.warning,
-                            text: tr(LocaleKeys.additionText_entrAllFeilds));
-                      }
-                    }
-                  },
-                  colour: AppColor.newBlueGrey),
-            ),
-            BotttomBorder(context)
-          ],
+              p.petDocumentEdit(context: context, time: timestampGmt, name: documentTitle.text.trim(), filetype: v1);
+            } else {
+              if (issueDate.text.isNotEmpty && p.docFile != null && documentTitle.text.trim().isNotEmpty) {
+                p.callAddDocumentV2
+                    // p.callAddDocument
+                    (docDate: timestampGmt, doctitle: documentTitle.text.trim(), context: context, filetype: v1);
+              } else {
+                CoolAlert.show(
+                    context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrAllFeilds));
+              }
+            }
+          },
+          // colour: AppColor.newBlueGrey
         ),
       ),
     );
@@ -633,8 +626,8 @@ Future bottomSheetFile(
               Text(
                 tr(LocaleKeys.additionText_chooseDocumentFile),
                 textAlign: TextAlign.left,
-                style:
-                    const TextStyle(fontSize: 20.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
+                style: const TextStyle(
+                    fontSize: 20.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinsRegular),
               ),
               const SizedBox(
                 height: 10,

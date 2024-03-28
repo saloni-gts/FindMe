@@ -253,7 +253,7 @@ class _PetProfileState extends State<PetProfile> {
                 Expanded(
                     flex: 40,
                     child: customSmallBlueButton(
-                        colour: AppColor.newBlueGrey,
+                        colour: AppColor.buttonPink,
                         context: context,
                         onTap1: () {
                           print("petProvider.permPetCountAddPet:::::${petProvider.permPetCountAddPet}");

@@ -105,40 +105,43 @@ class _CustomerCareState extends State<CustomerCare> {
           showImsg == 1 && Platform.isIOS
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
-                  child: customBlueButton(
-                      context: context,
-                      text1: "iMessages ",
-                      onTap1: () {
+                  child: CustomButton(
+                      // context: context,
+                      text: "iMessages ",
+                      onPressed: () {
                         PetProvider petProvider = Provider.of(context, listen: false);
                         // _sendSMS(["${petProvider.iMsgNo}"]);
                       },
-                      colour: AppColor.newBlueGrey),
+                      // colour: AppColor.newBlueGrey
+                      ),
                 )
               : const SizedBox(),
           showWhatsapp == 1
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
-                  child: customBlueButton(
-                      context: context,
-                      text1: "WhatsApp ",
-                      onTap1: () {
+                  child: CustomButton(
+                      // context: context,
+                      text: "WhatsApp ",
+                      onPressed: () {
                         PetProvider petProvider = Provider.of(context, listen: false);
                         sendWhatsappMsg(petProvider.finalNum);
                       },
-                      colour: AppColor.newBlueGrey),
+                      // colour: AppColor.newBlueGrey
+                      ),
                 )
               : const SizedBox(),
           showinsta == 1
               ? Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
-                  child: customBlueButton(
-                      context: context,
-                      text1: "Instagram ",
-                      onTap1: () {
+                  child: CustomButton(
+                      // context: context,
+                      text: "Instagram ",
+                      onPressed: () {
                         PetProvider petProvider = Provider.of(context, listen: false);
                         launchInsta(petProvider.insta);
                       },
-                      colour: AppColor.newBlueGrey),
+                      // colour: AppColor.newBlueGrey
+                      ),
                 )
               : const SizedBox(),
           Padding(

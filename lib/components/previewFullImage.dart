@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/models/getPhotosModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
@@ -192,7 +193,7 @@ class _PreviewFullImage2State extends State<PreviewFullImage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:customAppbar(isbackbutton: true),
+      appBar:CustomCurvedAppbar(),
 
       // AppBar(
       //   centerTitle: true,

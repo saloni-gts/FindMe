@@ -144,7 +144,7 @@ class _LogoutState extends State<Logout> {
           ),
         );
       }),
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
 
 
 

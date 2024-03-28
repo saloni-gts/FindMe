@@ -2,15 +2,18 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:app_settings/app_settings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
+import 'package:find_me/screen/addPet.dart';
 import 'package:find_me/util/app_images.dart';
 import 'package:find_me/util/app_route.dart';
 import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -63,7 +66,7 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
   int validTg = 0;
   QRViewController? controllerQR;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
+  int petIdSelect = -1;
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
@@ -101,41 +104,10 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
       activationCodeController.text = petProvider.selectedTag?.qrActivationCode ?? "";
     }
 
-    // showScanner=true;
-    // result=null;
-    // tagNumberController.clear();
-    // activationCodeController.clear();
-
-    // PetProvider petProvider = Provider.of(context, listen: false);
     var petDetail = petProvider.selectedPetDetail;
-
-    // if (petDetail?.isQrAttached == 1) {
-    //   activationCodeController.text = petDetail?.qrActivationCode ?? "";
-    //   tagNumberController.text = petDetail?.qrTagNumber ?? "";
-    // }
-
-    //
-    // _animationController = AnimationController(
-    //     duration: const Duration(milliseconds: 700), vsync: this);
-    // _animationController!.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     animateScanAnimation(true);
-    //   } else if (status == AnimationStatus.dismissed) {
-    //     animateScanAnimation(false);
-    //   }
-    // });
-    // startAimation();
 
     super.initState();
   }
-
-  // void animateScanAnimation(bool reverse) {
-  //   if (reverse) {
-  //     _animationController!.reverse(from: 1.0);
-  //   } else {
-  //     _animationController!.forward(from: 0.0);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -154,15 +126,19 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
                       ? tr(LocaleKeys.additionText_activate)
                       : tr(LocaleKeys.additionText_activate),
                   onPressed: () {
-                    if (activationCodeController.text.isEmpty) {
-                      print("feild is empty......");
+                    if (petIdSelect == -1) {
+                      EasyLoading.showToast("Select Pet To Continue ");
                     } else {
-                      Map<String, dynamic> bodyyy = {
-                        "activationCode": activationCodeController.text,
-                        "tagName": tagNumberController.text,
-                        "petId": petProvider.selectedPetDetail?.id ?? "",
-                      };
-                      petProvider.qrCodeActivatinTag(bodyyy, context: context);
+                      if (activationCodeController.text.isEmpty) {
+                        print("feild is empty......");
+                      } else {
+                        Map<String, dynamic> bodyyy = {
+                          "activationCode": activationCodeController.text,
+                          "tagName": tagNumberController.text,
+                          "petId": petProvider.selectedPetDetail?.id ?? "",
+                        };
+                        petProvider.qrCodeActivatinTag(bodyyy, context: context);
+                      }
                     }
                   })
 
@@ -219,8 +195,8 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
                                 child: (Image.asset(
-                                  AppImage.scanQR,
-                                  fit: BoxFit.cover,
+                                  AppImage.findmeQR,
+                                  fit: BoxFit.fitHeight,
                                 ))))
                         : Center(child: (_buildQrView(context))),
                 // Padding(
@@ -288,6 +264,43 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
               const SizedBox(
                 height: 20.0,
               ),
+              petProvider.petDetailList.isEmpty
+                  ? InkWell(
+                      onTap: () {
+                        petProvider.callPetPremDetailsAddPet();
+                        // switchonNotification();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPet()));
+                      },
+                      child: const Text(
+                        "Add Pet",
+                        style: TextStyle(color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold, fontSize: 15),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                          // barrierColor: Colors.amber,
+                          builder: (context) {
+                            return SelectPetBottomSheet();
+                          },
+                        );
+                      },
+                      child: Text(
+                        petIdSelect != -1 ? "Pet Seleted" : "Select Pet",
+                        style:
+                            const TextStyle(color: AppColor.buttonPink, fontFamily: AppFont.figTreeBold, fontSize: 15),
+                      ),
+                    ),
               const SizedBox(
                 height: 80.0,
               )
@@ -327,31 +340,7 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
     );
   }
 
-  // startAimation() {
-  //   if (!scanning) {
-  //     // animateScanAnimation(false);
-  //     setState(() {
-  //       _animationStopped = false;
-  //       scanning = true;
-  //       scanText = "Stop";
-  //     });
-  //   } else {
-  //     animateScanAnimation(true);
-  //     setState(() {
-  //       _animationStopped = true;
-  //       scanning = false;
-  //       scanText = "Stop";
-  //     });
-  //   }
-  // }
-
   Widget _buildQrView(BuildContext context) {
-    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    // var scanArea = (MediaQuery.of(context).size.width < 400 ||
-    //         MediaQuery.of(context).size.height < 400)
-    //     ? 150.0
-    //     : 300.0;
-
     return showScanner
         ? SizedBox(
             height: 250,
@@ -371,14 +360,17 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
         : Stack(
             children: [
               Container(
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: Colors.grey.shade300),
                   height: 250,
                   width: MediaQuery.of(context).size.width * .9,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Image.asset(
-                      AppImage.scanQR,
-                      fit: BoxFit.cover,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 58.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: Image.asset(
+                        AppImage.findmeQR,
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
                   )),
               InkWell(
@@ -390,15 +382,18 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
                       result = null;
                       tagNumberController.clear();
                       activationCodeController.clear();
-                      //  reassemble();
                     });
                   },
                   child: activationCodeController.text.isEmpty
                       ? Center(
                           child: Text(
-                          // tr(LocaleKeys.additionText_tryAgn),
                           tr(LocaleKeys.additionText_scanAgain),
-                          style: const TextStyle(color: Colors.white, fontFamily: AppFont.poppinSemibold, fontSize: 18),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: AppColor.buttonPink,
+                              fontFamily: AppFont.poppinSemibold,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900),
                         ))
                       : const SizedBox())
             ],
@@ -418,129 +413,15 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
           if (result != null && !scanned && scanData.code != null) {
             int lengths = result?.code?.length ?? 0;
             showScanner = false;
-            // if (lengths > 100) {
-            //
-            // }
-
-            // else {
-            //   showToast("False QR Code");
-            // }
-            //
-            // showDialog(context: GlobalVariable.navState.currentContext!, builder: (context){
-            //   return  AlertDialog(
-            //     title: Center(child: const Text('WARNING:')),
-            //     content:Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         Center(
-            //             child:
-            //             Text("Wrong QR Code ...\n Click on try again and start scaning",
-            //               textAlign: TextAlign.center,)),],),
-            //     actions: [
-            //       ElevatedButton(
-            //         onPressed: () {
-            //
-            //
-            //           // controllerQR?.dispose();
-            //
-            //
-            //
-            //           // controllerQR?.resumeCamera();
-            //            Navigator.pop(GlobalVariable.navState.currentContext!);
-            //
-            //            // reassemble();
-            //           // Navigator.pop(GlobalVariable.navState.currentContext!);
-            //           // Navigator.push(GlobalVariable.navState.currentContext!, MaterialPageRoute(builder: (context)=>ScannerScreen()));
-            //           // setState((){
-            //           //   showScanner=true;
-            //           //   // _buildQrView;
-            //           //   // Navigator.of(context).pop();
-            //           // });
-            //
-            //         },
-            //         child: const Text('TRY AGAIN!'),
-            //       ),
-            //
-            //     ],
-            //   );
-            // });
 
             scanned = true;
 
-            ///
-//           PetProvider petProvider = Provider.of(context, listen: false);
-//           var petDetail = petProvider.selectedPetDetail;
-            // petDetail?.isQrAttached=1;
-
-            // showDialog(context: context, builder: (context1)=>AlertDialog(
-            //
-            //   title: Text("SCAN AGAIN...."),
-            //   actions: <Widget>[
-            //     FlatButton(
-            //       child:  Text(AppStrings.cancel),
-            //       onPressed: () {
-            //
-            //         Navigator.pop(context);
-            //         petDetail?.isQrAttached=1;
-            //
-            //       },
-            //     ),
-            //     FlatButton(
-            //       child: const Text(AppStrings.yes),
-            //       onPressed: ()  {
-            //         Navigator.pop(context1);
-            //         petDetail?.isQrAttached=0;
-            //         tagNumber.clear();
-            //         activationCode.clear();
-            //         initState();
-            //        // _buildQrView(context);
-            //
-            //
-            //
-            //
-            //       },
-            //     )
-            //   ],
-            // )
-            // );
-
             print(">>>>>>>>> scan >>>>>>> 1");
-          } else {
-            //
-            // showDialog(context: GlobalVariable.navState.currentContext!, builder: (context){
-            //   return  AlertDialog(
-            //     title: Center(child: const Text('WARNING:')),
-            //     content:Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         Center(
-            //             child:
-            //             Text("Wrong QR Code ...\n Click on try again and start scaning",
-            //               textAlign: TextAlign.center,)),],),
-            //     actions: [
-            //       ElevatedButton(
-            //         onPressed: () {
-            //           Navigator.pop(GlobalVariable.navState.currentContext!);
-            //           setState((){
-            //             showScanner=true;
-            //             // _buildQrView;
-            //             // Navigator.of(context).pop();
-            //           });
-            //
-            //         },
-            //         child: const Text('TRY AGAIN!'),
-            //       ),
-            //
-            //     ],
-            //   );
-            // });
-          }
+          } else {}
           print("here");
         });
       });
     });
-    // controller.pauseCamera();
-    // controller.resumeCamera();
   }
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
@@ -627,20 +508,16 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
       print("resultlength  ${result?.code?.split("/")}");
       int length = result?.code?.split("/").length ?? 0;
       if (length > 4) {
-        var staging = "find-me.uk";
+        var staging = "u.find-me.app";
         var prod = "dashboardstage.find-me.app";
         // var prod = "u-tags.uk/pet/:tagNumber";
         //    https://dashboardstage.find-me.app/INGT000007/NXB1
         //https://find-me.uk/pet/INGT000001/WKF7
-        if (result?.code?.split("/")[2] == staging
-            // && result?.code?.split("/")[3] == "pet"
-            )
-        // && (result?.code?.split("/")[4]=="missing") && (result?.code?.split("/")[5]=="pet") )
-        {
+        if (result?.code?.split("/")[2] == staging && result?.code?.split("/")[3] == "pet") {
           print("result  ${result?.code ?? ""}");
           print("resultlength  ${result?.code?.split("/")}");
-          tagNumberController.text = result?.code?.split("/")[3] ?? "";
-          activationCodeController.text = result?.code?.split("/")[4] ?? "";
+          tagNumberController.text = result?.code?.split("/")[4] ?? "";
+          activationCodeController.text = result?.code?.split("/")[5] ?? "";
 
           if (tagNumberController.text.isEmpty || activationCodeController.text.isEmpty) {
             setState(() {
@@ -744,6 +621,8 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
     // }
     return Container(
       child: const Text(
+
+        
         "",
         // result != null ? 'result :${result!.code}' : "",
         textAlign: TextAlign.center,
@@ -755,6 +634,72 @@ class _QRViewScreenState extends State<QRViewScreen> with SingleTickerProviderSt
   getSubstring(Barcode? str) {
     String str1 = str.toString();
     print("${str1.split('/')}*************************************");
+  }
+
+  Widget SelectPetBottomSheet() {
+    return SingleChildScrollView(
+      child: SizedBox(
+        // height: MediaQuery.of(context).size.height * .45,
+        child: Card(
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Consumer<PetProvider>(builder: (context, petProvider, child) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        mainAxisExtent: 120, crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 10),
+                    itemCount: petProvider.petDetailList.length,
+                    itemBuilder: ((context, index) {
+                      return InkWell(
+                        onTap: () {
+                          petProvider.setSelectedPetDetails(petProvider.petDetailList[index]);
+                          petIdSelect = petProvider.petDetailList[index].id ?? 0;
+                          Navigator.pop(context);
+                          setState(() {});
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(40), border: Border.all(color: Colors.black26)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(40),
+                                child: CachedNetworkImage(
+                                  imageUrl: petProvider.petDetailList[index].petPhoto ?? "",
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Image.asset(
+                                      AppImage.placeholderIcon,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) => Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Image.asset(
+                                      AppImage.placeholderIcon,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              petProvider.petDetailList[index].petName ?? "",
+                              style: const TextStyle(
+                                  fontFamily: AppFont.figTreeBold, fontSize: 16, color: AppColor.buttonPink),
+                            )
+                          ],
+                        ),
+                      );
+                    })),
+              );
+            })),
+      ),
+    );
   }
 }
 

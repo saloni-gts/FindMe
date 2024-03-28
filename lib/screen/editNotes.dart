@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/customTextFeild.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/customdropdown.dart';
 import 'package:find_me/components/shortpage.dart';
 import 'package:find_me/models/masterDetailModel.dart';
@@ -100,43 +102,36 @@ class _EditNotesState extends State<EditNotes> {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         // bottomNavigationBar: BotttomBorder(context),
-        appBar: customAppbar(
-          titlename: tr(LocaleKeys.additionText_editNote),
-          isbackbutton: true,
+        appBar: CustomCurvedAppbar(
+          title: tr(LocaleKeys.additionText_editNote),
+          showBackIcon: true,
+          isTitleCenter: true,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 22.0),
-                child: customBlueButton(
+          padding: const EdgeInsets.only(bottom: 20.0, left: 30),
+          child: CustomButton(
+            // context: context,
+            text: tr(LocaleKeys.additionText_capUpdte),
+            // tr(LocaleKeys.addPet_save),
+            onPressed: () {
+              PetProvider petProvider = Provider.of(context, listen: false);
+              if (editNotesTitleController.text.isEmpty) {
+                print("feild is empty......");
+              } else {
+                print("pet id after change===>> ${petProvider.selectedPetIdForNotes ?? 0}");
+                petProvider.callEditNotes(
                     context: context,
-                    text1: tr(LocaleKeys.additionText_capUpdte),
-                    // tr(LocaleKeys.addPet_save),
-                    onTap1: () {
-                      PetProvider petProvider = Provider.of(context, listen: false);
-                      if (editNotesTitleController.text.isEmpty) {
-                        print("feild is empty......");
-                      } else {
-                        print("pet id after change===>> ${petProvider.selectedPetIdForNotes ?? 0}");
-                        petProvider.callEditNotes(
-                            context: context,
-                            cateId: petProvider.selectedSubCategory?.categoriesId ?? 0,
-                            cateTypeId: petProvider.selectedSubCategory?.id ?? 0,
-                            drug: editDrugController.text,
-                            idd: petProvider.selectedNotes?.id ?? 0,
-                            pettidd: petProvider.selectedPetIdForNotes ?? 0,
-                            reaction: reaction,
-                            title: editNotesTitleController.text);
-                      }
-                    },
-                    colour: editNotesTitleController.text.isEmpty ? const Color(0xffAEB4C6) : AppColor.newBlueGrey),
-              ),
-              BotttomBorder(context)
-            ],
+                    cateId: petProvider.selectedSubCategory?.categoriesId ?? 0,
+                    cateTypeId: petProvider.selectedSubCategory?.id ?? 0,
+                    drug: editDrugController.text,
+                    idd: petProvider.selectedNotes?.id ?? 0,
+                    pettidd: petProvider.selectedPetIdForNotes ?? 0,
+                    reaction: reaction,
+                    title: editNotesTitleController.text);
+              }
+            },
+            // colour: editNotesTitleController.text.isEmpty ? const Color(0xffAEB4C6) : AppColor.buttonPink
           ),
         ),
         body: DraggableScrollableSheet(
@@ -158,7 +153,7 @@ class _EditNotesState extends State<EditNotes> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const SizedBox(
-                                  height: 5.0,
+                                  height: 18.0,
                                 ),
 
                                 ///*******************************
@@ -290,7 +285,7 @@ class _EditNotesState extends State<EditNotes> {
                                                         backgroundColor: MaterialStateProperty.all<Color>(
                                                             petProvider.masterDetailList[i].id ==
                                                                     petProvider.selectedMasterCategory?.id
-                                                                ? const Color(0xff2A3C6A)
+                                                                ? AppColor.buttonPink
                                                                 : AppColor.textFieldGrey)),
                                                     onPressed: () {
                                                       petProvider

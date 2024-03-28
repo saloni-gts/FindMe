@@ -9,7 +9,7 @@ Widget GreyContainerWidCircle(
     required String text1,
     required String image1,
     required VoidCallback onTap1,
-    Color? crl = AppColor.newGrey}) {
+    Color? crl = const Color(0xffF8EBED)}) {
   return GestureDetector(
     onTap: () {
       onTap1();

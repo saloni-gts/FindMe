@@ -1,6 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/provider/authprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ void deleteUserDialog({required BuildContext context}) {
                   width: 296,
                   // width: MediaQuery.of(context).size.width*.95,
                   decoration: BoxDecoration(
-                    color: AppColor.newGrey,
+                    color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(8),
                   ),
 
@@ -45,7 +46,7 @@ void deleteUserDialog({required BuildContext context}) {
                         SizedBox(
                           height: 104,
                           width: 104,
-                          child: Image.asset(AppImage.largedelete),
+                          child: Image.asset(AppImage.largedelete, color: AppColor.buttonPink),
                         ),
                         const SizedBox(
                           height: 9,
@@ -72,14 +73,14 @@ void deleteUserDialog({required BuildContext context}) {
                           ),
                         ),
                         const SizedBox(height: 21),
-                        customBlueButton(
-                          context: context,
-                          text1: tr(LocaleKeys.additionText_Delete),
-                          onTap1: () {
+                        CustomButton(
+                          // context: context,
+                          text: tr(LocaleKeys.additionText_Delete),
+                          onPressed: () {
                             AuthProvider authProvider = Provider.of(context, listen: false);
                             authProvider.deleteAccountApi(context);
                           },
-                          colour: AppColor.newBlueGrey,
+                          // colour: AppColor.newBlueGrey,
                           // height: true,
                           // putheight: 48,
                           // width:236 ),
@@ -87,13 +88,13 @@ void deleteUserDialog({required BuildContext context}) {
                         const SizedBox(
                           height: 10,
                         ),
-                        customBlueButton(
-                          context: context,
-                          text1: tr(LocaleKeys.additionText_cancel),
-                          onTap1: () {
+                        CustomButton(
+                          // context: context,
+                          text: tr(LocaleKeys.additionText_cancel),
+                          onPressed: () {
                             Navigator.pop(context);
                           },
-                          colour: AppColor.newGrey,
+                          // colour: AppColor.newGrey,
                           //   height: true,putheight: 48,width:236
                         )
                       ],

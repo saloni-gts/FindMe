@@ -224,7 +224,7 @@ class _PetShortPageState extends State<PetShortPage> {
                                   child: Container(
                                       decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: AppColor.newGrey,
+                                        color: Color(0xffF8EBED),
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(65),

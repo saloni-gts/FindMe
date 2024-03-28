@@ -24,19 +24,7 @@ Future<void> locPermissionDialog(BuildContext context) async {
         fontSize: 18
     )),
     actions: <Widget>[
-      // InkWell(
-      //   child: Text("Cancel"
-      //
-      //     ,style: TextStyle(
-      //         fontSize: 17.0,
-      //         fontFamily: AppFont.poppinsMedium
-      //     ),
-      //   ),
-      //   onTap: () {
-      //     Navigator.pop(context);
-      //   },
-      // ),
-      // SizedBox(width: 5,),
+     
 
       Consumer<PetProvider>(
         builder: (context,petProvider,child) {
@@ -67,81 +55,10 @@ Future<void> locPermissionDialog(BuildContext context) async {
               var status3 = await Permission.location.status;
               petProvider.updateLoader(false);
               print("location status===>>${status3}");
-              // if(status3.isGranted) {
-              //   petProvider.updateLoader(true);
-              //   Position? posti = await _determineCurPosition();
-              //   petProvider.updateLoader(false);
-              //
-              //   petProvider.lati = posti.latitude;
-              //   petProvider.longi = posti.longitude;
-              //
-              //   if (petProvider
-              //       .selectedPetDetail
-              //       ?.isLost == 1) {
-              //     petProvider.petMarkAsLostP2(
-              //         context: context);
-              //   } else {
-              //     showDialog(
-              //         context: context,
-              //         builder: (context) =>
-              //             AlertDialog(
-              //               title: Text(tr(
-              //                   LocaleKeys
-              //                       .additionText_uSurePetLost)),
-              //               actions: <
-              //                   Widget>[
-              //                 InkWell(
-              //                   child: Text(
-              //                     tr(
-              //                         LocaleKeys
-              //                             .additionText_cancel),
-              //                     style: TextStyle(
-              //                         fontSize: 17.0,
-              //                         fontFamily: AppFont
-              //                             .poppinsMedium),
-              //                   ),
-              //                   onTap: () {
-              //                     Navigator
-              //                         .pop(
-              //                         context);
-              //                   },
-              //                 ),
-              //
-              //                 SizedBox(width: 5),
-              //
-              //                 InkWell(
-              //                   child: Text(
-              //                     tr(LocaleKeys.additionText_yes),
-              //                     style: TextStyle(
-              //                         fontSize: 17.0,
-              //                         fontFamily: AppFont
-              //                             .poppinsMedium),
-              //                   ),
-              //                   onTap: () async {
-              //                     Navigator
-              //                         .pop(
-              //                         context);
-              //                     await petProvider
-              //                         .petMarkAsLostP2(
-              //                         context: GlobalVariable
-              //                             .navState
-              //                             .currentContext!);
-              //
-              //                     petProvider.calleditProfileP2Api(context: context);
-              //
-              //
-              //                   },
-              //                 )
-              //               ],
-              //             ));
-              //   }
-              //
-              // }else{
-              //
-              // }
-              // AppSettings.openAppSettings();
-              // Navigator.pop(context);
-
+            
+          
+      
+     
               },
 
           );

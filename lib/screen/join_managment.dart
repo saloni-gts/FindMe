@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/models/verified_list_api_model.dart';
 import 'package:find_me/provider/achievement_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 
 import '../components/appbarComp.dart';
 import '../components/bottomBorderComp.dart';
@@ -17,16 +17,13 @@ import 'add_managment.dart';
 class JoinManagement extends StatefulWidget {
   bool navigateToSecondPage;
   bool isNavigate;
-  JoinManagement(
-      {Key? key, this.navigateToSecondPage = false, this.isNavigate = false})
-      : super(key: key);
+  JoinManagement({Key? key, this.navigateToSecondPage = false, this.isNavigate = false}) : super(key: key);
 
   @override
   State<JoinManagement> createState() => _JoinManagmentState();
 }
 
-class _JoinManagmentState extends State<JoinManagement>
-    with SingleTickerProviderStateMixin {
+class _JoinManagmentState extends State<JoinManagement> with SingleTickerProviderStateMixin {
   late AchievementProvider provide;
   late final _tabController = TabController(length: 2, vsync: this);
   @override
@@ -36,7 +33,6 @@ class _JoinManagmentState extends State<JoinManagement>
     if (widget.navigateToSecondPage) {
       _tabController.animateTo(1);
     }
-
 
     // provide.setTabContAch()
 
@@ -52,24 +48,25 @@ class _JoinManagmentState extends State<JoinManagement>
           Navigator.pop(context);
         }
         Navigator.pop(context);
-        return await true;
+        return true;
       },
       child: Scaffold(
-        bottomNavigationBar: BotttomBorder(context),
-        appBar: MycustomAppbar(
-          customBack: (() {
-            if (widget.isNavigate) {
-              Navigator.pop(context);
-            }
-            Navigator.pop(context);
-          }),
-          tap2: () {
-            print("tap called");
-          },
-          icon: false,
+        // bottomNavigationBar: BotttomBorder(context),
+        appBar: CustomCurvedAppbar(
+          // customBack: (() {
+          //   if (widget.isNavigate) {
+          //     Navigator.pop(context);
+          //   }
+          //   Navigator.pop(context);
+          // }),
+          // tap2: () {
+          //   print("tap called");
+          // },
+          // icon: false,
           //additionText_PndingReq
-          titlename: tr(LocaleKeys.additionText_PndingReq),
-          isbackbutton: true,
+          title: tr(LocaleKeys.additionText_PndingReq),
+          isTitleCenter: true,
+          // isbackbutton: true,
 
           // seticon: AppImage.filtericon,
         ),
@@ -104,15 +101,15 @@ class _JoinManagmentState extends State<JoinManagement>
           //   }
           // ),
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(80),
+            preferredSize: const Size.fromHeight(80),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     height: 56,
                     child: TabBar(
                       onTap: (vall) {
@@ -120,10 +117,8 @@ class _JoinManagmentState extends State<JoinManagement>
                         print("TAB INDEX Vallll ${_tabController.index}");
                       },
                       controller: _tabController,
-                      unselectedLabelStyle: TextStyle(
-                          fontSize: 16, fontFamily: AppFont.poppinsMedium),
-                      labelStyle: TextStyle(
-                          fontSize: 16, fontFamily: AppFont.poppinsMedium),
+                      unselectedLabelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium),
+                      labelStyle: const TextStyle(fontSize: 16, fontFamily: AppFont.poppinsMedium, color: Colors.black),
                       unselectedLabelColor: AppColor.textLightBlueBlack,
                       indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
@@ -150,7 +145,6 @@ class _JoinManagmentState extends State<JoinManagement>
                             child: Center(child: Text(tr(LocaleKeys.additionText_ppl))),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -189,32 +183,26 @@ class _JoinManagmentState extends State<JoinManagement>
                 itemBuilder: (context, index) {
                   String subTitle = "";
                   print("type values ${verifiedList[index].typeValues}");
-                  if (verifiedList[index].isPremium == 1 &&
-                      verifiedList[index].isNotJoint == "1") {
+                  if (verifiedList[index].isPremium == 1 && verifiedList[index].isNotJoint == "1") {
                     if (verifiedList[index].typeValues == 4) {
-                      subTitle =
-
-                         tr(LocaleKeys.additionText_UMngTrPetAddAsFamMem);
+                      subTitle = tr(LocaleKeys.additionText_UMngTrPetAddAsFamMem);
                     } else {
-                      subTitle =
-                          tr(LocaleKeys.additionText_CnMngYrPetShrPreReq);
+                      subTitle = tr(LocaleKeys.additionText_CnMngYrPetShrPreReq);
                     }
                   } else if (verifiedList[index].isPremium == 1) {
-                    subTitle =  tr(LocaleKeys.additionText_ShrPreReq);
+                    subTitle = tr(LocaleKeys.additionText_ShrPreReq);
                   } else if (verifiedList[index].isNotJoint == "1") {
                     if (verifiedList[index].typeValues == 4) {
-                      subTitle =tr(LocaleKeys.additionText_uMngTrePets);
+                      subTitle = tr(LocaleKeys.additionText_uMngTrePets);
                     } else {
                       subTitle = tr(LocaleKeys.additionText_cnMngYrPets);
                     }
                   }
                   return Container(
                     height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 3),
-                    margin: EdgeInsets.only(top: 15),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffF7F7F7)),
+                    padding: const EdgeInsets.symmetric(horizontal: 3),
+                    margin: const EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: const Color(0xffF7F7F7)),
                     child: Row(
                       children: [
                         Expanded(
@@ -222,9 +210,8 @@ class _JoinManagmentState extends State<JoinManagement>
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: AppColor.textFieldGrey),
+                              decoration:
+                                  BoxDecoration(borderRadius: BorderRadius.circular(40), color: AppColor.textFieldGrey),
                               // height: 42,
                               // width: 42,
                               height: 50,
@@ -232,16 +219,14 @@ class _JoinManagmentState extends State<JoinManagement>
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(40),
                                 child: CachedNetworkImage(
-                                  imageUrl:
-                                      verifiedList[index].profileImage ?? "",
+                                  imageUrl: verifiedList[index].profileImage ?? "",
                                   fit: BoxFit.cover,
-                                  placeholder: (context, url) => Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                  placeholder: (context, url) => const Padding(
+                                    padding: EdgeInsets.all(12.0),
                                     child: Icon(Icons.account_circle),
                                   ),
-                                  errorWidget: (context, url, error) => Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Icon(Icons.account_circle)),
+                                  errorWidget: (context, url, error) =>
+                                      const Padding(padding: EdgeInsets.all(12.0), child: Icon(Icons.account_circle)),
                                 ),
                               ),
                             ),
@@ -260,10 +245,8 @@ class _JoinManagmentState extends State<JoinManagement>
                                   child: Text(
                                     verifiedList[index].name ?? "",
                                     maxLines: 2,
-                                    style: TextStyle(
-                                        color: Color(0xff2A3C6A),
-                                        fontSize: 15,
-                                        fontFamily: AppFont.poppinsMedium),
+                                    style: const TextStyle(
+                                        color: Color(0xff2A3C6A), fontSize: 15, fontFamily: AppFont.poppinsMedium),
                                   ),
                                 ),
                                 Padding(
@@ -271,10 +254,8 @@ class _JoinManagmentState extends State<JoinManagement>
                                   child: Text(
                                     subTitle,
                                     maxLines: 2,
-                                    style: TextStyle(
-                                        color: Color(0xff2A3C6A),
-                                        fontSize: 10,
-                                        fontFamily: AppFont.poppinsMedium),
+                                    style: const TextStyle(
+                                        color: Color(0xff2A3C6A), fontSize: 10, fontFamily: AppFont.poppinsMedium),
                                   ),
                                 ),
                               ],
@@ -287,33 +268,25 @@ class _JoinManagmentState extends State<JoinManagement>
                             onTap: () async {
                               /// 1
                               await data.callRequestFunction(
-                                  verifiedList[index].id ?? 0,
-                                  verifiedList[index].typeValues == 4 ? 5 : 3,
-                                  index);
+                                  verifiedList[index].id ?? 0, verifiedList[index].typeValues == 4 ? 5 : 3, index);
                             },
                             child: Container(
                               height: 32,
-                              margin: EdgeInsets.only(right: 10),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: AppColor.textRed,
-                                  borderRadius: BorderRadius.circular(12)),
+                              margin: const EdgeInsets.only(right: 10),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration:
+                                  BoxDecoration(color: AppColor.textRed, borderRadius: BorderRadius.circular(12)),
                               child: Center(
                                 child: verifiedList[index].typeValues == 4
                                     ? Text(
-                                     tr(LocaleKeys.additionText_leave),
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                            fontFamily: AppFont.poppinSemibold),
+                                        tr(LocaleKeys.additionText_leave),
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.white, fontFamily: AppFont.poppinSemibold),
                                       )
                                     : Text(
-                                       tr(LocaleKeys.additionText_remove),
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.white,
-                                            fontFamily: AppFont.poppinSemibold),
+                                        tr(LocaleKeys.additionText_remove),
+                                        style: const TextStyle(
+                                            fontSize: 12, color: Colors.white, fontFamily: AppFont.poppinSemibold),
                                       ),
                               ),
                             ),
@@ -325,13 +298,11 @@ class _JoinManagmentState extends State<JoinManagement>
                 },
               )
             : Center(
-                child: Text(tr(LocaleKeys.additionText_noAccAttatch),
+                child: Text(
+                  tr(LocaleKeys.additionText_noAccAttatch),
                   maxLines: 2,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: AppColor.textLightBlueBlack,
-                      fontFamily: AppFont.poppinSemibold),
-
+                  style: const TextStyle(
+                      fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                 ),
               ),
       );
@@ -350,8 +321,7 @@ class _JoinManagmentState extends State<JoinManagement>
                   Verified verified = data.finalList[index];
                   print("type values ${verified.typeValues}");
                   if (verified.isPremium == 1 && verified.isNotJoint == "1") {
-                    subTitle =
-                        "Joint managment and share premium membership request";
+                    subTitle = "Joint managment and share premium membership request";
                   } else if (verified.isPremium == 1) {
                     subTitle = "Share premium membership request";
                   } else if (verified.isNotJoint == "1") {
@@ -359,11 +329,9 @@ class _JoinManagmentState extends State<JoinManagement>
                   }
                   return Container(
                     height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    margin: EdgeInsets.only(top: 15),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Color(0xffF7F7F7)),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    margin: const EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: const Color(0xffF7F7F7)),
                     child: Row(
                       children: [
                         Expanded(
@@ -372,8 +340,7 @@ class _JoinManagmentState extends State<JoinManagement>
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(40),
-                                      color: AppColor.textFieldGrey),
+                                      borderRadius: BorderRadius.circular(40), color: AppColor.textFieldGrey),
                                   // height: 42,
                                   // width: 42,
                                   //
@@ -385,51 +352,36 @@ class _JoinManagmentState extends State<JoinManagement>
                                     child: CachedNetworkImage(
                                       imageUrl: verified.profileImage ?? "",
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) => Padding(
-                                        padding: const EdgeInsets.all(12.0),
+                                      placeholder: (context, url) => const Padding(
+                                        padding: EdgeInsets.all(12.0),
                                         child: Icon(Icons.account_circle),
                                       ),
-                                      errorWidget: (context, url, error) =>
-                                          Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child:
-                                                  Icon(Icons.account_circle)),
+                                      errorWidget: (context, url, error) => const Padding(
+                                          padding: EdgeInsets.all(12.0), child: Icon(Icons.account_circle)),
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 15,
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         "${verified.name} ",
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
-                                        style: TextStyle(
-                                            color: Color(0xff2A3C6A),
-                                            fontSize: 15,
-                                            fontFamily: AppFont.poppinsMedium),
+                                        style: const TextStyle(
+                                            color: Color(0xff2A3C6A), fontSize: 15, fontFamily: AppFont.poppinsMedium),
                                       ),
                                       Text(
                                         "$subTitle ",
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
-                                        style: TextStyle(
-                                            color: Color(0xff2A3C6A),
-                                            fontSize: 10,
-                                            fontFamily: AppFont.poppinsMedium),
-
-
-
-
-
-
+                                        style: const TextStyle(
+                                            color: Color(0xff2A3C6A), fontSize: 10, fontFamily: AppFont.poppinsMedium),
                                       ),
                                     ],
                                   ),
@@ -444,17 +396,15 @@ class _JoinManagmentState extends State<JoinManagement>
                                 verified.typeValues != 3
                                     ? InkWell(
                                         onTap: () async {
-                                          await data.callRequestFunction(
-                                              verified.id ?? 0, 2, index,
+                                          await data.callRequestFunction(verified.id ?? 0, 2, index,
                                               isNavigateToPet: verified.isPremium == 1 && verified.isNotJoint == "0");
                                         },
                                         child: Container(
                                           height: 30,
                                           width: 30,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xff941C1B)),
-                                          child: Icon(
+                                          decoration:
+                                              const BoxDecoration(shape: BoxShape.circle, color: Color(0xff941C1B)),
+                                          child: const Icon(
                                             Icons.close,
                                             color: Colors.white,
                                           ),
@@ -462,54 +412,44 @@ class _JoinManagmentState extends State<JoinManagement>
                                       )
                                     : InkWell(
                                         onTap: () async {
-                                          await data.callRequestFunction(
-                                              verified.id ?? 0, 4, index,isNavigateToPet: verified.isPremium == 1 && verified.isNotJoint == "0");
+                                          await data.callRequestFunction(verified.id ?? 0, 4, index,
+                                              isNavigateToPet: verified.isPremium == 1 && verified.isNotJoint == "0");
                                         },
                                         child: Container(
                                             height: 32,
-                                            margin: EdgeInsets.only(right: 10),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 5),
+                                            margin: const EdgeInsets.only(right: 10),
+                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                             decoration: BoxDecoration(
-                                                color: AppColor.textRed,
-                                                borderRadius:
-                                                    BorderRadius.circular(12)),
+                                                color: AppColor.textRed, borderRadius: BorderRadius.circular(12)),
                                             child: Center(
                                               child: Text(
-                                         tr(LocaleKeys.additionText_cancel),
-                                                style: TextStyle(
+                                                tr(LocaleKeys.additionText_cancel),
+                                                style: const TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.white,
-                                                    fontFamily:
-                                                        AppFont.poppinSemibold),
+                                                    fontFamily: AppFont.poppinSemibold),
                                               ),
                                             )),
                                       ),
-                                SizedBox(
-                                    width: verified.typeValues == 1 &&
-                                            verified.typeValues != 3
-                                        ? 10
-                                        : 0),
-                                verified.typeValues == 1 &&
-                                        verified.typeValues != 3
+                                SizedBox(width: verified.typeValues == 1 && verified.typeValues != 3 ? 10 : 0),
+                                verified.typeValues == 1 && verified.typeValues != 3
                                     ? InkWell(
                                         onTap: () async {
-                                          await data.callRequestFunction(
-                                              verified.id ?? 0, 1, index,isNavigateToPet: verified.isPremium == 1 && verified.isNotJoint == "0");
+                                          await data.callRequestFunction(verified.id ?? 0, 1, index,
+                                              isNavigateToPet: verified.isPremium == 1 && verified.isNotJoint == "0");
                                         },
                                         child: Container(
                                           height: 30,
                                           width: 30,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Color(0xff2A3C6A)),
-                                          child: Icon(
+                                          decoration:
+                                              const BoxDecoration(shape: BoxShape.circle, color: Color(0xff2A3C6A)),
+                                          child: const Icon(
                                             Icons.check,
                                             color: Colors.white,
                                           ),
                                         ),
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                               ],
                             )),
                       ],
@@ -518,14 +458,12 @@ class _JoinManagmentState extends State<JoinManagement>
                 },
               )
             : Center(
-                child: Text( tr(LocaleKeys.additionText_noPendReqFnd),
+                child: Text(
+                  tr(LocaleKeys.additionText_noPendReqFnd),
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      color: AppColor.textLightBlueBlack,
-                      fontFamily: AppFont.poppinSemibold),
-
+                  style: const TextStyle(
+                      fontSize: 18.0, color: AppColor.textLightBlueBlack, fontFamily: AppFont.poppinSemibold),
                 ),
               );
       }),

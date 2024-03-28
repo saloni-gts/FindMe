@@ -171,6 +171,7 @@ class _OwnerProfileState extends State<OwnerProfile> {
                 String userGenderbool = authProvider.selectedUserGender?.title ?? "";
 
                 return SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
@@ -443,15 +444,14 @@ class _OwnerProfileState extends State<OwnerProfile> {
                                   const SizedBox(
                                     height: 17,
                                   ),
-                                  customBlueButton(
-                                      context: context,
-                                      text1: petProvider.isUserPremium == 1
+                                  CustomButton(
+                                      text: petProvider.isUserPremium == 1
                                           ? tr(LocaleKeys.additionText_ACTIVATED)
                                           : tr(LocaleKeys.ownerProfile_getAccess),
-                                      onTap1: () {
+                                      onPressed: () {
                                         petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                      clr: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.buttonPink),
                                   const SizedBox(
                                     height: 17,
                                   ),
@@ -467,15 +467,15 @@ class _OwnerProfileState extends State<OwnerProfile> {
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  customBlueButton(
-                                      context: context,
-                                      text1: petProvider.isUserPremium == 1
+                                  CustomButton(
+                                      // context: context,
+                                      text: petProvider.isUserPremium == 1
                                           ? tr(LocaleKeys.additionText_ACTIVATED)
                                           : tr(LocaleKeys.ownerProfile_getAccess),
-                                      onTap1: () {
+                                      onPressed: () {
                                         petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                      clr: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.buttonPink),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -499,15 +499,15 @@ class _OwnerProfileState extends State<OwnerProfile> {
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  customBlueButton(
-                                      context: context,
-                                      text1: petProvider.isUserPremium == 1
+                                  CustomButton(
+                                      // context: context,
+                                      text: petProvider.isUserPremium == 1
                                           ? tr(LocaleKeys.additionText_ACTIVATED)
                                           : tr(LocaleKeys.ownerProfile_getAccess),
-                                      onTap1: () {
+                                      onPressed: () {
                                         petProvider.isUserPremium == 1 ? {} : commingSoonDialog(context);
                                       },
-                                      colour: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.newBlueGrey),
+                                      clr: petProvider.isUserPremium == 1 ? AppColor.neon : AppColor.buttonPink),
                                   const SizedBox(
                                     height: 6,
                                   ),
@@ -589,13 +589,13 @@ class _OwnerProfileState extends State<OwnerProfile> {
                                           textController: AddressController,
                                           textInputType: TextInputType.text,
                                           hintText: tr(LocaleKeys.additionText_addYrAdrs))
-                                      : customBlueButton(
-                                          context: context,
-                                          text1: tr(LocaleKeys.ownerProfile_getAccess),
-                                          onTap1: () {
+                                      : CustomButton(
+                                          // context: context,
+                                          text: tr(LocaleKeys.ownerProfile_getAccess),
+                                          onPressed: () {
                                             commingSoonDialog(context);
                                           },
-                                          colour: AppColor.newGrey),
+                                          clr: const Color(0xff5B5200)),
 
                                   const SizedBox(
                                     height: 10,

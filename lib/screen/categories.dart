@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/greyContinerWidCircle.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/screen/documentCategory.dart';
@@ -38,9 +39,10 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppbar(
-          isbackbutton: true,
-          titlename: tr(LocaleKeys.additionText_categories),
+        appBar: CustomCurvedAppbar(
+          // isbackbutton: true,
+          title: tr(LocaleKeys.additionText_categories),
+          isTitleCenter: true,
         ),
         backgroundColor: Colors.white,
         // bottomNavigationBar: BotttomBorder(context),
@@ -225,7 +227,7 @@ class _CategoriesState extends State<Categories> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: FloatingActionButton(
-                            backgroundColor: AppColor.newBlueGrey,
+                            backgroundColor: AppColor.buttonPink,
                             onPressed: () {
                               print("*****");
                               print(petProvider.documentList.length);
@@ -266,7 +268,7 @@ class _CategoriesState extends State<Categories> {
                 const SizedBox(
                   height: 0,
                 ),
-                BotttomBorder(context)
+                // BotttomBorder(context)
               ],
             )));
   }

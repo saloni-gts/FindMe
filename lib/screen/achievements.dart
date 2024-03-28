@@ -143,7 +143,7 @@ class _AchievementState extends State<Achievement> {
       child: Container(
           height: 72,
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(36), color: const Color(0xffF7F7F7)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(36), color: const Color(0xffF8EBED)),
           child: Center(
             child: ListTile(
               horizontalTitleGap: 0.0,

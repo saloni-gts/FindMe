@@ -12,7 +12,7 @@ Widget SheildListPetInfo({
 }) {
   return Consumer<PetProvider>(builder: (context, petProvider, child) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 4.5),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
@@ -21,14 +21,17 @@ Widget SheildListPetInfo({
         ),
         child: Row(children: [
           const SizedBox(
-            width: 4,
+            width: 15,
           ),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(children: <TextSpan>[
               TextSpan(
                 text: txt1,
-                style: const TextStyle(color: AppColor.textLightBlueBlack, fontSize: 12, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                    color: AppColor.textLightBlueBlack,
+                    fontSize: 12,
+                    fontWeight: isCheck == 0 ? FontWeight.w500 : FontWeight.w800),
               ),
             ]),
           ),

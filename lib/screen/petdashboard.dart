@@ -19,6 +19,7 @@ import 'package:find_me/screen/tagListing.dart';
 import 'package:find_me/screen/viewPremium.dart';
 import 'package:find_me/util/app_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -88,6 +89,10 @@ class _PetDashboardState extends State<PetDashboard> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent
+        // statusBarIconBrightness: Brightness.dark,
+        ));
+
     PetProvider provider = Provider.of(context, listen: false);
     // print("CHECK IMG URL ${provider.selectedPetDetail?.petPhoto??""}");
     var petDetail = provider.selectedPetDetail;
@@ -244,7 +249,7 @@ class _PetDashboardState extends State<PetDashboard> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(AppImage.qrIcon),
+                                Image.asset(AppImage.viewQR),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -308,7 +313,7 @@ class _PetDashboardState extends State<PetDashboard> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(AppImage.qrIcon),
+                                Image.asset(AppImage.addQR),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -496,7 +501,7 @@ class _PetDashboardState extends State<PetDashboard> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(AppImage.qrIcon),
+                                Image.asset(AppImage.loudSpeaker),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -651,7 +656,7 @@ class _PetDashboardState extends State<PetDashboard> {
                         petProvider.callGetWeight();
 
                         Future.delayed(const Duration(milliseconds: 1000), () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => WeightTrkrMain()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const WeightTrkrMain()));
                         }).onError((error, stackTrace) {
                           print("eroorroror===>>> $error");
                         });
@@ -668,7 +673,7 @@ class _PetDashboardState extends State<PetDashboard> {
                       child: Row(children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
-                          child: Image.asset(AppImage.pinkPic),
+                          child: Image.asset(AppImage.pinkWgt),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
@@ -732,6 +737,9 @@ class _PetDashboardState extends State<PetDashboard> {
                             context: context,
                             builder: (context1) {
                               return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
                                 title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
                                 actions: [
                                   InkWell(
@@ -786,53 +794,59 @@ class _PetDashboardState extends State<PetDashboard> {
                           showDialog(
                               context: context,
                               builder: (context1) {
-                                return AlertDialog(
-                                  title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
-                                  actions: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context1);
-                                      },
-                                      child: Text(
-                                        tr(LocaleKeys.additionText_no),
-                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                return Container(
+                                  child: AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    title: Text(tr(LocaleKeys.additionText_uSureWannaDownlod)),
+                                    actions: [
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pop(context1);
+                                        },
+                                        child: Text(
+                                          tr(LocaleKeys.additionText_no),
+                                          style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        Navigator.pop(context1);
-                                        EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
-                                            duration: const Duration(seconds: 7));
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          Navigator.pop(context1);
+                                          EasyLoading.showToast(tr(LocaleKeys.additionText_downloadStarted),
+                                              duration: const Duration(seconds: 7));
 
-                                        PetProvider petProvider = Provider.of(context, listen: false);
-                                        petProvider.updateLoader(true);
-                                        CallAPi apiii = CallAPi();
-                                        String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
+                                          PetProvider petProvider = Provider.of(context, listen: false);
+                                          petProvider.updateLoader(true);
+                                          CallAPi apiii = CallAPi();
+                                          String pdfurlfinal = await apiii.login(petId: petProvider.setselectedPetId);
 
-                                        petProvider.updateLoader(false);
-                                        print("apiii url===>>> ${apiii.pdfUrl}");
-
-                                        if (pdfurlfinal.isEmpty) {
-                                          petProvider.updateLoader(false);
-                                          EasyLoading.showToast("try again later");
-                                        }
-                                        if (pdfurlfinal.isNotEmpty) {
                                           petProvider.updateLoader(false);
                                           print("apiii url===>>> ${apiii.pdfUrl}");
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) => DownloadingDailog(uri: apiii.pdfUrl));
-                                        }
-                                      },
-                                      child: Text(
-                                        tr(LocaleKeys.additionText_yes),
-                                        style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
-                                      ),
-                                    )
-                                  ],
+
+                                          if (pdfurlfinal.isEmpty) {
+                                            petProvider.updateLoader(false);
+                                            EasyLoading.showToast("try again later");
+                                          }
+                                          if (pdfurlfinal.isNotEmpty) {
+                                            petProvider.updateLoader(false);
+                                            print("apiii url===>>> ${apiii.pdfUrl}");
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) =>
+                                                    DownloadingDailog(uri: apiii.pdfUrl));
+                                          }
+                                        },
+                                        child: Text(
+                                          tr(LocaleKeys.additionText_yes),
+                                          style: const TextStyle(fontSize: 17.0, fontFamily: AppFont.poppinsMedium),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 );
                               });
                         }
@@ -879,7 +893,7 @@ class _PetDashboardState extends State<PetDashboard> {
                       child: Row(children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
-                          child: Image.asset(AppImage.pinkDown),
+                          child: Image.asset(AppImage.pinkHlth),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
@@ -918,7 +932,7 @@ class _PetDashboardState extends State<PetDashboard> {
                       child: Row(children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
-                          child: Image.asset(AppImage.pinkCal),
+                          child: Image.asset(AppImage.pinkAch),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 6.0),
@@ -1624,7 +1638,7 @@ class _PetDashboardState extends State<PetDashboard> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
@@ -1634,30 +1648,69 @@ class _PetDashboardState extends State<PetDashboard> {
                       ));
                     },
                     child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Row(children: [
-                          Image.asset(AppImage.bigRibbon, height: 80, width: 40),
-                          const Expanded(
+                      height: MediaQuery.of(context).size.height * .2,
+                      // padding: const EdgeInsets.symmetric(vertical: 85),
+                      width: double.infinity,
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(18), color: const Color(0xffFEF393)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Text(
-                              "Tap Now To Unlock All The \nPREMIUM BENIFITS",
-                              textAlign: TextAlign.center,
+                              "Tap Now To Unlock All The PREMIUM BENIFITS ",
                               maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Color(0xff585357),
-                                fontFamily: AppFont.poppinsBold,
-                                fontSize: 16,
-                              ),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Color(0xff5B5200), fontFamily: AppFont.figTreeBold, fontSize: 18),
                             ),
-                          )
-                        ]),
+                          ),
+                          Image.asset(AppImage.buyPrem)
+                        ],
                       ),
                     ),
                   ),
                 ),
+
+                const SizedBox(
+                  height: 20,
+                ),
+
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                //   child: InkWell(
+                //     onTap: () {
+                //       Navigator.push(context, MaterialPageRoute(
+                //         builder: (context) {
+                //           return const ViewPremium();
+                //         },
+                //       ));
+                //     },
+                //     child: Container(
+                //       height: 100,
+                //       decoration: BoxDecoration(borderRadius: BorderRadius.circular(22), color: AppColor.textFieldGrey),
+                //       child: Padding(
+                //         padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                //         child: Row(children: [
+                //           Image.asset(AppImage.bigRibbon, height: 80, width: 40),
+                //           const Expanded(
+                //             child: Text(
+                //               "Tap Now To Unlock All The \nPREMIUM BENIFITS",
+                //               textAlign: TextAlign.center,
+                //               maxLines: 2,
+                //               overflow: TextOverflow.ellipsis,
+                //               style: TextStyle(
+                //                 color: Color(0xff585357),
+                //                 fontFamily: AppFont.poppinsBold,
+                //                 fontSize: 16,
+                //               ),
+                //             ),
+                //           )
+                //         ]),
+                //       ),
+                //     ),
+                //   ),
+                // ),
 
                 const SizedBox(
                   height: 20.0,

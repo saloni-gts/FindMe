@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/monish/models/newModel.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/provider/purchase_provider.dart';
@@ -12,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
-
 
 import '../../components/premiumList.dart';
 import '../../generated/locale_keys.g.dart';
@@ -34,6 +35,7 @@ class _BuyPremiumState extends State<BuyPremium> {
 
   @override
   int isShowCurrentPlan = 0;
+  @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.top]);
     PurChaseProvider purChaseProvider = Provider.of(context, listen: false);
@@ -44,7 +46,7 @@ class _BuyPremiumState extends State<BuyPremium> {
     PetProvider petProvider = Provider.of(context, listen: false);
     purChaseProvider.updateIsCalledApi(0);
     purChaseProvider.isFromInit(false);
-    if(purChaseProvider.showPlan.isNotEmpty){
+    if (purChaseProvider.showPlan.isNotEmpty) {
       print("purChaseProvider.showPlan===${purChaseProvider.showPlan}");
     }
 
@@ -60,7 +62,6 @@ class _BuyPremiumState extends State<BuyPremium> {
     if (purChaseProvider.planList.length == 2) {
       selectedPlanList = petProvider.yearly;
     }
-
 
     if (purChaseProvider.showPlan.isEmpty) {
       selectedPlanList = petProvider.monthly;
@@ -80,11 +81,11 @@ class _BuyPremiumState extends State<BuyPremium> {
       purChaseProvider.setPlanVal(1);
     }
 
-    if(purChaseProvider.showYrlyList==1){
+    if (purChaseProvider.showYrlyList == 1) {
       selectedPlanList = petProvider.yearly;
     }
 
-    if(purChaseProvider.plan.isEmpty){
+    if (purChaseProvider.plan.isEmpty) {
       print("this this condition checking");
       selectedPlanList = petProvider.monthly;
       petProvider.updateSelectedContainer(0);
@@ -98,65 +99,16 @@ class _BuyPremiumState extends State<BuyPremium> {
   List<int> selectedPlanList = [];
 
   List<premiumPlans> premiumPlanLangList = [
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_premPet4),
-        id: 1,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_PicsDocs),
-        id: 2,
-        isSelected: true,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_WeitTrkr),
-        id: 3,
-        isSelected: false,
-        showTick: 1),
-    premiumPlans(
-        name:  tr(
-            LocaleKeys.additionText_chkPrt),
-        id: 4,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_freQRtgDilv),
-        id: 5,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_jntMgt),
-        id: 10,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_shrWitFamMem),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_smsNotiPtLst),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
-
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_AddiContacts),
-        id: 4,
-        isSelected: false,
-        showTick: 1),
-
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_cutmrPriSpt),
-        id: 15,
-        isSelected: true,
-        showTick: 1),
-
+    premiumPlans(name: tr(LocaleKeys.additionText_premPet4), id: 1, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_PicsDocs), id: 2, isSelected: true, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_WeitTrkr), id: 3, isSelected: false, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_chkPrt), id: 4, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_freQRtgDilv), id: 5, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_jntMgt), id: 10, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_shrWitFamMem), id: 3, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_smsNotiPtLst), id: 3, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_AddiContacts), id: 4, isSelected: false, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_cutmrPriSpt), id: 15, isSelected: true, showTick: 1),
   ];
 
   List<premiumPlans> premiumPlanLangList1 = [
@@ -231,127 +183,33 @@ class _BuyPremiumState extends State<BuyPremium> {
     // //     id: 12,
     // //     isSelected: false,
     // //     showTick: 1),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_premPet4),
-        id: 1,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_PicsDocs),
-        id: 2,
-        isSelected: true,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_WeitTrkr),
-        id: 3,
-        isSelected: false,
-        showTick: 1),
-    premiumPlans(
-        name:  tr(
-            LocaleKeys.additionText_chkPrt),
-        id: 4,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_freQRtgDilv),
-        id: 5,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_jntMgt),
-        id: 10,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name:tr(
-            LocaleKeys.additionText_shrWitFamMem),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_smsNotiPtLst),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_premPet4), id: 1, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_PicsDocs), id: 2, isSelected: true, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_WeitTrkr), id: 3, isSelected: false, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_chkPrt), id: 4, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_freQRtgDilv), id: 5, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_jntMgt), id: 10, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_shrWitFamMem), id: 3, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_smsNotiPtLst), id: 3, isSelected: true, showTick: 1),
 
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_AddiContacts),
-        id: 4,
-        isSelected: false,
-        showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_AddiContacts), id: 4, isSelected: false, showTick: 1),
 
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_cutmrPriSpt),
-        id: 15,
-        isSelected: true,
-        showTick: 1),
-
+    premiumPlans(name: tr(LocaleKeys.additionText_cutmrPriSpt), id: 15, isSelected: true, showTick: 1),
   ];
 
   List<premiumPlans> premiumPlanLangList3 = [
+    premiumPlans(name: tr(LocaleKeys.additionText_premPet4), id: 1, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_PicsDocs), id: 2, isSelected: true, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_WeitTrkr), id: 3, isSelected: false, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_chkPrt), id: 4, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_freQRtgDilv), id: 5, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_jntMgt), id: 10, isSelected: false, showTick: 0),
+    premiumPlans(name: tr(LocaleKeys.additionText_shrWitFamMem), id: 3, isSelected: true, showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_smsNotiPtLst), id: 3, isSelected: true, showTick: 1),
 
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_premPet4),
-        id: 1,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_PicsDocs),
-        id: 2,
-        isSelected: true,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_WeitTrkr),
-        id: 3,
-        isSelected: false,
-        showTick: 1),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_chkPrt),
-        id: 4,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_freQRtgDilv),
-        id: 5,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_jntMgt),
-        id: 10,
-        isSelected: false,
-        showTick: 0),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_shrWitFamMem),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
-    premiumPlans(
-        name: tr(
-            LocaleKeys.additionText_smsNotiPtLst),
-        id: 3,
-        isSelected: true,
-        showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_AddiContacts), id: 4, isSelected: false, showTick: 1),
 
-    premiumPlans(
-        name: tr(LocaleKeys.additionText_AddiContacts),
-        id: 4,
-        isSelected: false,
-        showTick: 1),
-
-    premiumPlans(
-        name:tr(
-            LocaleKeys.additionText_cutmrPriSpt),
-        id: 15,
-        isSelected: true,
-        showTick: 1),
+    premiumPlans(name: tr(LocaleKeys.additionText_cutmrPriSpt), id: 15, isSelected: true, showTick: 1),
 
     // premiumPlans(
     //     name: tr(LocaleKeys.additionText_ursUP21),
@@ -420,8 +278,6 @@ class _BuyPremiumState extends State<BuyPremium> {
     //     showTick: 1),
     ////
 
-
-
     // premiumPlans(
     //     name: tr(LocaleKeys.additionText_Multilingual),
     //     id: 12,
@@ -430,143 +286,150 @@ class _BuyPremiumState extends State<BuyPremium> {
   ];
 
   List<newButton> permiumbutton = [
-    newButton(
-        name: tr(LocaleKeys.additionText_monthlyplan), id: 1, amount: "£3.99 "),
-    newButton(
-        name: tr(LocaleKeys.additionText_yearlyplan), id: 2, amount: "£35.99"),
-    newButton(
-        name: tr(LocaleKeys.additionText_familyplan), id: 3, amount: "£69.99"),
+    newButton(name: tr(LocaleKeys.additionText_monthlyplan), id: 1, amount: "£3.99 "),
+    newButton(name: tr(LocaleKeys.additionText_yearlyplan), id: 2, amount: "£35.99"),
+    newButton(name: tr(LocaleKeys.additionText_familyplan), id: 3, amount: "£69.99"),
   ];
 
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
-     
-     child: Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: customAppbar(
-          isbackbutton: true,
-          titlename: tr(LocaleKeys.additionText_preminumplans),
+        appBar: CustomCurvedAppbar(
+          // isbackbutton: true,
+          title: tr(LocaleKeys.additionText_preminumplans),
+          isTitleCenter: true,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomSheet: Container(
+        bottomSheet: SizedBox(
           width: MediaQuery.of(context).size.width,
-         
           child: Consumer<PurChaseProvider>(builder: (context, data, child) {
             bool isBtnDisable = false;
             try {
               isBtnDisable = data.planList[0].isBtnDisable == 1;
             } catch (e) {}
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                data.showPlan.isNotEmpty && isBtnDisable
-                    ? SizedBox()
-                    : customBlueButton(
-                        context: context,
-                        text1: data.ShowCurrentPlan == 1
-                            ? tr(LocaleKeys.additionText_yrCurrentPln)
-                            : tr(LocaleKeys.additionText_buypremium),
-                        onTap1: () {
-                          int selectedValue = data.selectedPlan;
-                          print("selectedValue $selectedValue");
-                          if (selectedValue == 0) {
-                            CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.warning,
-                                text: tr(LocaleKeys.additionText_plsChosePlan));
-                            return;
-                          }
-                          data.updateIsRestor(false);
-                          print("selected value ${selectedValue}");
-                          switch (selectedValue) {
-                            case 1:
-                              manageSubScripion(context, planTypeEnum.month);
-                              break;
-                            case 2:
-                              manageSubScripion(context, planTypeEnum.year);
-                              break;
-                            case 3:
-                              manageSubScripion(context, planTypeEnum.family);
-                              break;
-                          }
-                        },
-                        colour: AppColor.newBlueGrey),
-                SizedBox(
-                  height: 10,
-                ),
-                Consumer2<PurChaseProvider,PetProvider>(
-                  builder: (context,data,data2,child) {
-                    return customBlueButton(
-                        context: context,
-                        text1: tr(LocaleKeys.additionText_restorePrem),
-                        onTap1: () async {
-                          EasyLoading.show();
-                          await data.getSubScriptionDetails().then((value) {
-                                EasyLoading.dismiss();
-                            if(data2.isUserPremium==1){
-                                CoolAlert.show(context: context, type:CoolAlertType.success,text: tr(LocaleKeys.additionText_planRestored), );
-                            }else{
-                              CoolAlert.show(context: context, type: CoolAlertType.warning,text: tr(LocaleKeys.additionText_noPlanByPlan),);
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  data.showPlan.isNotEmpty && isBtnDisable
+                      ? const SizedBox()
+                      : CustomButton(
+                          // context: context,
+                          text: data.ShowCurrentPlan == 1
+                              ? tr(LocaleKeys.additionText_yrCurrentPln)
+                              : tr(LocaleKeys.additionText_buypremium),
+                          onPressed: () {
+                            int selectedValue = data.selectedPlan;
+                            print("selectedValue $selectedValue");
+                            if (selectedValue == 0) {
+                              CoolAlert.show(
+                                  context: context,
+                                  type: CoolAlertType.warning,
+                                  text: tr(LocaleKeys.additionText_plsChosePlan));
+                              return;
                             }
-                          });
-                          
-                        },
-                        colour: AppColor.newBlueGrey);
-                  }
-                ),
-                     SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  // color: Colors.blue,
-                  child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                            text: "" + tr(LocaleKeys.signUp_privacyPolicy),
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UrlViewer(
-                                              webViewType: 1,
-                                            )));
-                              }),
-                        TextSpan(
-                            text: "" + tr(LocaleKeys.signUp_terms),
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.normal),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UrlViewer(
-                                              webViewType: 2,
-                                            )));
-                              }),
-                      ])),
-                ),
-               
-                //   SizedBox(
-                //   height: 20,
-                // ),
-                 ],
+                            data.updateIsRestor(false);
+                            print("selected value $selectedValue");
+                            switch (selectedValue) {
+                              case 1:
+                                manageSubScripion(context, planTypeEnum.month);
+                                break;
+                              case 2:
+                                manageSubScripion(context, planTypeEnum.year);
+                                break;
+                              case 3:
+                                manageSubScripion(context, planTypeEnum.family);
+                                break;
+                            }
+                          },
+                          // colour: AppColor.newBlueGrey
+                        ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Consumer2<PurChaseProvider, PetProvider>(builder: (context, data, data2, child) {
+                    return CustomButton(
+                      // context: context,
+                      text: tr(LocaleKeys.additionText_restorePrem),
+                      onPressed: () async {
+                        EasyLoading.show();
+                        await data.getSubScriptionDetails().then((value) {
+                          EasyLoading.dismiss();
+                          if (data2.isUserPremium == 1) {
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.success,
+                              text: tr(LocaleKeys.additionText_planRestored),
+                            );
+                          } else {
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.warning,
+                              text: tr(LocaleKeys.additionText_noPlanByPlan),
+                            );
+                          }
+                        });
+                      },
+                      // colour: AppColor.newBlueGrey
+                    );
+                  }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    // color: Colors.blue,
+                    child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(children: <TextSpan>[
+                          TextSpan(
+                              text: tr(LocaleKeys.signUp_privacyPolicy),
+                              style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UrlViewer(
+                                                webViewType: 1,
+                                              )));
+                                }),
+                          TextSpan(
+                              text: tr(LocaleKeys.signUp_terms),
+                              style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => UrlViewer(
+                                                webViewType: 2,
+                                              )));
+                                }),
+                        ])),
+                  ),
+
+                  //   SizedBox(
+                  //   height: 20,
+                  // ),
+                ],
+              ),
             );
           }),
         ),
-        bottomNavigationBar: BotttomBorder(context),
+        // bottomNavigationBar: BotttomBorder(context),
         body: DraggableScrollableSheet(
             expand: false,
             initialChildSize: 0.87,
@@ -578,11 +441,10 @@ class _BuyPremiumState extends State<BuyPremium> {
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                      Consumer2<PetProvider, PurChaseProvider>(
-                          builder: (context, petProvider, purchase, child) {
+                      Consumer2<PetProvider, PurChaseProvider>(builder: (context, petProvider, purchase, child) {
                         return Center(
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -590,31 +452,27 @@ class _BuyPremiumState extends State<BuyPremium> {
                               children: List.generate(permiumbutton.length, (i) {
                                 return Expanded(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8),
                                     child: InkWell(
                                       onTap: () {
-                                        print("value of i======${i}");
+                                        print("value of i======$i");
                                         petProvider.updateSelectedContainer(i);
                                         if (i == 0) {
                                           selectedPlanList = petProvider.monthly;
-                                          print("seklecered plan  list${selectedPlanList}");
+                                          print("seklecered plan  list$selectedPlanList");
 
-                                          purchase.setPlanVal(
-                                              purchase.plan.contains(i) ? 1 : 0);
+                                          purchase.setPlanVal(purchase.plan.contains(i) ? 1 : 0);
                                         }
                                         if (i == 1) {
                                           selectedPlanList = petProvider.yearly;
-                                          purchase.setPlanVal(
-                                              purchase.plan.contains(i) ? 1 : 0);
+                                          purchase.setPlanVal(purchase.plan.contains(i) ? 1 : 0);
                                         }
                                         if (i == 2) {
                                           selectedPlanList = petProvider.family;
-                                          purchase.setPlanVal(
-                                              purchase.plan.contains(i) ? 1 : 0);
+                                          purchase.setPlanVal(purchase.plan.contains(i) ? 1 : 0);
                                         }
-                                        print("selectedPlanList:::: ${selectedPlanList}");
-    
+                                        print("selectedPlanList:::: $selectedPlanList");
+
                                         petProvider.showPlan(i);
                                       },
                                       child: Align(
@@ -624,31 +482,23 @@ class _BuyPremiumState extends State<BuyPremium> {
                                             Container(
                                               decoration: BoxDecoration(
                                                   color:
-    
+
                                                       // purchase.plan.contains(i) ?
-                                                      purchase.showPlan
-                                                              .contains(i)
+                                                      purchase.showPlan.contains(i)
                                                           ?
                                                           // finPlanId==i?
-                                                          AppColor
-                                                              .textLightBlueBlack
-                                                          : AppColor
-                                                              .textFieldGrey,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
+                                                          AppColor.textLightBlueBlack
+                                                          : AppColor.textFieldGrey,
+                                                  borderRadius: BorderRadius.circular(10),
                                                   border: Border.all(
-                                                      color: petProvider
-                                                              .premiumbutton[i]
-                                                              .buttonisSelected
-                                                          ? AppColor
-                                                              .textLightBlueBlack
+                                                      color: petProvider.premiumbutton[i].buttonisSelected
+                                                          ? AppColor.textLightBlueBlack
                                                           : Colors.transparent,
                                                       width: 2)),
                                               height: 100,
                                               child: Center(
                                                 child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
+                                                  padding: const EdgeInsets.all(8.0),
                                                   child: Column(
                                                     children: [
                                                       // Text(permiumbutton[i].name,
@@ -658,42 +508,33 @@ class _BuyPremiumState extends State<BuyPremium> {
                                                       //         fontSize: 15,
                                                       //         fontFamily: AppFont.poppinSemibold,
                                                       //         fontWeight: FontWeight.w500)),
-    
-                                                      SizedBox(height: 10),
-    
+
+                                                      const SizedBox(height: 10),
+
                                                       RichText(
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                        textAlign: TextAlign.center,
                                                         maxLines: 2,
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        text: TextSpan(children: <
-                                                            TextSpan>[
+                                                        overflow: TextOverflow.ellipsis,
+                                                        text: TextSpan(children: <TextSpan>[
                                                           TextSpan(
                                                             text: permiumbutton[i].name,
                                                             style: TextStyle(
                                                                 color:
                                                                     // purchase.plan.contains(i)?
-                                                                    purchase.showPlan
-                                                                            .contains(
-                                                                                i)
+                                                                    purchase.showPlan.contains(i)
                                                                         ? // purchase.maxPlanId==i?
-                                                                        Colors
-                                                                            .white
-                                                                        : AppColor
-                                                                            .textLightBlueBlack,
+                                                                        Colors.white
+                                                                        : AppColor.textLightBlueBlack,
                                                                 fontSize: 14,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
+                                                                fontWeight: FontWeight.w700),
                                                           ),
                                                         ]),
                                                       ),
-    
-                                                      SizedBox(
+
+                                                      const SizedBox(
                                                         height: 7,
                                                       ),
-    
+
                                                       // Text(permiumbutton[i].amount??"",
                                                       //   textAlign: TextAlign.center,
                                                       //       style: TextStyle(
@@ -701,33 +542,23 @@ class _BuyPremiumState extends State<BuyPremium> {
                                                       //           fontSize: 15,
                                                       //           fontFamily: AppFont.poppinSemibold,
                                                       //           fontWeight: FontWeight.w500)),
-    
+
                                                       RichText(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        text: TextSpan(
-                                                            children: <TextSpan>[
-                                                              TextSpan(
-                                                                text: permiumbutton[
-                                                                            i]
-                                                                        .amount ??
-                                                                    "",
-                                                                style: TextStyle(
-                                                                    color:
-                                                                        // purchase.plan.contains(i)?
-                                                                        // purchase.maxPlanId==i?
-                                                                        purchase.showPlan.contains(
-                                                                                i)
-                                                                            ? Colors
-                                                                                .white
-                                                                            : AppColor
-                                                                            .textLightBlueBlack,
-                                                                    fontSize: 17,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700),
-                                                              ),
-                                                            ]),
+                                                        textAlign: TextAlign.center,
+                                                        text: TextSpan(children: <TextSpan>[
+                                                          TextSpan(
+                                                            text: permiumbutton[i].amount ?? "",
+                                                            style: TextStyle(
+                                                                color:
+                                                                    // purchase.plan.contains(i)?
+                                                                    // purchase.maxPlanId==i?
+                                                                    purchase.showPlan.contains(i)
+                                                                        ? Colors.white
+                                                                        : AppColor.textLightBlueBlack,
+                                                                fontSize: 17,
+                                                                fontWeight: FontWeight.w700),
+                                                          ),
+                                                        ]),
                                                       ),
                                                     ],
                                                   ),
@@ -740,9 +571,8 @@ class _BuyPremiumState extends State<BuyPremium> {
                                                     // purchase.plan.contains(i)?
                                                     // finPlanId==i?
                                                     purchase.showPlan.contains(i)
-                                                        ? Image.asset(
-                                                            AppImage.premiumIcon)
-                                                        : SizedBox())
+                                                        ? Image.asset(AppImage.premiumIcon)
+                                                        : const SizedBox())
                                           ],
                                         ),
                                       ),
@@ -752,12 +582,12 @@ class _BuyPremiumState extends State<BuyPremium> {
                               })),
                         );
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width * .90,
                           // color: Colors.yellow,
                           child: Row(
@@ -765,18 +595,17 @@ class _BuyPremiumState extends State<BuyPremium> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
-                                child: Container(
+                                child: SizedBox(
                                   width: MediaQuery.of(context).size.width * .45,
-    
+
                                   // color: Colors.yellowAccent,
-    
+
                                   child: RichText(
                                     textAlign: TextAlign.left,
                                     text: TextSpan(children: <TextSpan>[
                                       TextSpan(
-                                        text: tr(
-                                            LocaleKeys.additionText_compareplans),
-                                        style: TextStyle(
+                                        text: tr(LocaleKeys.additionText_compareplans),
+                                        style: const TextStyle(
                                           fontSize: 16.0,
                                           color: Colors.black,
                                           fontFamily: AppFont.poppinsBold,
@@ -784,7 +613,7 @@ class _BuyPremiumState extends State<BuyPremium> {
                                       ),
                                     ]),
                                   ),
-    
+
                                   // child: Text(
                                   //   tr(LocaleKeys.additionText_compareplans),
                                   //   maxLines: 2,
@@ -799,7 +628,7 @@ class _BuyPremiumState extends State<BuyPremium> {
                                   //
                                 ),
                               ),
-                              new Spacer(),
+                              const Spacer(),
                               // Padding(
                               //   padding: const EdgeInsets.only(right: 8.0),
                               //   child: Text(
@@ -812,16 +641,16 @@ class _BuyPremiumState extends State<BuyPremium> {
                               //     ),
                               //   ),
                               // ),
-                              Container(
+                              SizedBox(
                                 width: MediaQuery.of(context).size.width * .28,
                                 // color: Colors.purple,
-    
+
                                 child: RichText(
                                   textAlign: TextAlign.right,
                                   text: TextSpan(children: <TextSpan>[
                                     TextSpan(
                                       text: tr(LocaleKeys.additionText_premium),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 16.0,
                                         color: Colors.black,
                                         fontFamily: AppFont.poppinsBold,
@@ -829,7 +658,7 @@ class _BuyPremiumState extends State<BuyPremium> {
                                     ),
                                   ]),
                                 ),
-    
+
                                 // Text(
                                 //   tr(LocaleKeys.additionText_premium),
                                 //   textAlign: TextAlign.right,
@@ -846,12 +675,10 @@ class _BuyPremiumState extends State<BuyPremium> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Consumer<PetProvider>(
-                          builder: (context, petProvider, child) {
+                      const SizedBox(height: 10),
+                      Consumer<PetProvider>(builder: (context, petProvider, child) {
                         if (selectedPlanList == petProvider.monthly) {
                           showList = premiumPlanLangList;
-
                         }
                         if (selectedPlanList == petProvider.yearly) {
                           showList = premiumPlanLangList1;
@@ -859,11 +686,11 @@ class _BuyPremiumState extends State<BuyPremium> {
                         if (selectedPlanList == petProvider.family) {
                           showList = premiumPlanLangList3;
                         }
-    
+
                         List planList = showList;
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
-                          child: Container(
+                          child: SizedBox(
                             height: MediaQuery.of(context).size.height * .50,
                             // color: Colors.tealAccent,
                             child: ListView.builder(
@@ -871,23 +698,20 @@ class _BuyPremiumState extends State<BuyPremium> {
                                 itemBuilder: (context, int index) {
                                   return InkWell(
                                       onTap: () {
-                                        print("value of is selected+1===${index+1}");
+                                        print("value of is selected+1===${index + 1}");
                                       },
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 5.0),
+                                        padding: const EdgeInsets.only(bottom: 5.0),
                                         child: Column(
                                           children: [
                                             PremiumList(
                                                 context: context,
                                                 txt1: planList[index].name,
                                                 icon1: 1,
-                                                icon2: (selectedPlanList.contains(index + 1))
-                                                    ? 2: 1
-                                            ),
-                                                    SizedBox(
-                                                      height:index == planList.length-1 ?   100:0,
-                                                    )
+                                                icon2: (selectedPlanList.contains(index + 1)) ? 2 : 1),
+                                            SizedBox(
+                                              height: index == planList.length - 1 ? 100 : 0,
+                                            )
                                           ],
                                         ),
                                       ));

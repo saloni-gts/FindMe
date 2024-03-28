@@ -1,5 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/extension/email_extension.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/authprovider.dart';
@@ -33,14 +34,16 @@ void cngPasswordDialog({required BuildContext context}) {
               child: Container(
                 width: double.infinity,
                 //  width: MediaQuery.of(context).size.width*.95,
-                decoration: const BoxDecoration(color: AppColor.newGrey),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                ),
                 child: Column(
                   children: [
                     Container(
                       width: double.infinity,
                       // width: MediaQuery.of(context).size.width*.95,
                       decoration: BoxDecoration(
-                        color: AppColor.newGrey,
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(8),
                         // boxShadow: [
                         //   BoxShadow(
@@ -86,7 +89,7 @@ void cngPasswordDialog({required BuildContext context}) {
                               height: 125,
                               child: Image.asset(
                                 AppImage.lockIcon,
-                                color: AppColor.newBlueGrey,
+                                color: AppColor.buttonPink,
                               ),
                             ),
 
@@ -174,9 +177,11 @@ void cngPasswordDialog({required BuildContext context}) {
                               height: 20.0,
                             ),
 
-                            customSmallBlueButton(
-                                context: context,
-                                onTap1: () {
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: CustomButton(
+                                // context: context,
+                                onPressed: () {
                                   if (oldPassController.text.isEmpty || newPassController.text.isEmpty) {
                                     CoolAlert.show(
                                         context: context,
@@ -194,8 +199,10 @@ void cngPasswordDialog({required BuildContext context}) {
                                         context);
                                   }
                                 },
-                                text1: tr(LocaleKeys.additionText_confirm),
-                                colour: AppColor.newBlueGrey),
+                                text: tr(LocaleKeys.additionText_confirm),
+                                // colour: AppColor.newBlueGrey
+                              ),
+                            ),
 
                             const SizedBox(
                               height: 20.0,

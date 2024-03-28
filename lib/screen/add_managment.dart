@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/provider/achievement_provider.dart';
 import 'package:find_me/util/app_font.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _AddJoinManagementState extends State<AddJoinManagement> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: customAppbar(
         isbackbutton: true,
@@ -154,10 +155,10 @@ class _AddJoinManagementState extends State<AddJoinManagement> {
                   ),
                   Consumer<AuthProvider>(
                     builder: (context,authPro,child) {
-                      return customBlueButton(
-                          context: context,
-                          text1:   tr(LocaleKeys.additionText_capReq),
-                          onTap1: () {
+                      return CustomButton(
+                          // context: context,
+                          text:   tr(LocaleKeys.additionText_capReq),
+                          onPressed: () {
                             print("tab working");
                             // print("ph code val new ===>>${authProvider.jntMgtphncode}");
                             print("ph code val old ===>>${authProvider.jntMgtphncod}");
@@ -169,7 +170,7 @@ class _AddJoinManagementState extends State<AddJoinManagement> {
 
 
                           },
-                          colour: AppColor.newGrey);
+                         );
                     }
                   ),
                   SizedBox(

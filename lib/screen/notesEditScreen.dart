@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/customTextFeild.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/components/customdropdown.dart';
 import 'package:find_me/components/shortpage.dart';
 import 'package:find_me/models/masterDetailModel.dart';
@@ -46,10 +47,10 @@ class _NotesEditScreenState extends State<NotesEditScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: customBlueButton(
-              context: context,
-              text1: tr(LocaleKeys.addPet_save),
-              onTap1: () {
+          child: CustomButton(
+              // context: context,
+              text: tr(LocaleKeys.addPet_save),
+              onPressed: () {
                 // PetProvider petProvider =Provider.of(context,listen: false);
                 // if( editNotesTitleController.text.isEmpty){
                 //   print("feild is empty......");
@@ -67,7 +68,7 @@ class _NotesEditScreenState extends State<NotesEditScreen> {
                 //   );
                 // }
               },
-              colour: editNotesTitleController.text.isEmpty
+              clr: editNotesTitleController.text.isEmpty
                   ? Color(0xff2A3C6A).withOpacity(0.5)
                   : AppColor.newBlueGrey),
         ),

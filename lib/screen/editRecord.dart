@@ -6,6 +6,7 @@ import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/customTextFeild.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/models/weightDetailModel.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/util/app_font.dart';
@@ -78,10 +79,10 @@ class _EditRecordState extends State<EditRecord> {
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
-          child: customBlueButton(
-              context: context,
-              text1: tr(LocaleKeys.additionText_confirm),
-              onTap1: () {
+          child: CustomButton(
+              // context: context,
+              text: tr(LocaleKeys.additionText_confirm),
+              onPressed: () {
                 PetProvider petProvider = Provider.of(context, listen: false);
 
                 if(weightController.text.trim().isNotEmpty && weigtDescController.text.trim().isNotEmpty && dateOfWeightController.text.trim().isNotEmpty){
@@ -134,7 +135,7 @@ class _EditRecordState extends State<EditRecord> {
               },
 
 
-              colour: AppColor.newBlueGrey),
+            ),
         ),
         body: DraggableScrollableSheet(
             expand: false,

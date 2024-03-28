@@ -55,16 +55,34 @@ void petdeleteDailog({required BuildContext context, required GetPetPhotos imgDa
                                 showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                          ),
                                           title: Text(tr(LocaleKeys.additionText_sureWannaDel)),
                                           actions: <Widget>[
                                             InkWell(
-                                              child: Text(tr(LocaleKeys.additionText_cancel)),
+                                              child: Text(
+                                                tr(LocaleKeys.additionText_cancel),
+                                                style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: AppFont.figTreeMedium,
+                                                    fontSize: 16),
+                                              ),
                                               onTap: () {
                                                 Navigator.of(context).pop();
                                               },
                                             ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
                                             InkWell(
-                                              child: Text(tr(LocaleKeys.additionText_yes)),
+                                              child: Text(
+                                                tr(LocaleKeys.additionText_yes),
+                                                style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: AppFont.figTreeMedium,
+                                                    fontSize: 16),
+                                              ),
                                               onTap: () async {
                                                 PetProvider petProvider = Provider.of(context, listen: false);
                                                 Map<String, dynamic> bodyy = {"petId": imgData.petId, "id": imgData.id};

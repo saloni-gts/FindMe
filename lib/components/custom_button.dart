@@ -6,6 +6,7 @@ class CustomButton extends StatelessWidget {
   final double? width;
   final double? height;
   bool isLoading;
+  Color clr;
 
   CustomButton({
     super.key,
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
     this.width,
     this.height,
     this.isLoading = false,
+    this.clr=const Color(0xffB83446)
   });
 
   @override
@@ -24,7 +26,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           // shape:OutlinedBorder(side: BorderSide.) ,
-          backgroundColor: const Color(0xffB83446), // Background color
+          backgroundColor: clr, // Background color
           // Text Color (Foreground color)
         ),
         onPressed: isLoading ? () {} : onPressed,

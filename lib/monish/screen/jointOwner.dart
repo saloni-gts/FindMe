@@ -72,7 +72,7 @@ class _JointOwnerState extends State<JointOwner> {
       appBar: customAppbar(
           isbackbutton: true, titlename: tr(LocaleKeys.additionText_jntOnr)),
       backgroundColor: Colors.white,
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

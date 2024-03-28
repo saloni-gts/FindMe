@@ -303,6 +303,7 @@ class _SignInPageState extends State<SignInPage> {
       child: Container(
         width: double.infinity,
         // height: context.height * .67,
+        margin: const EdgeInsets.only(top: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: const BoxDecoration(
           color: Colors.white,

@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/provider/achievement_provider.dart';
 import 'package:find_me/screen/add_managment.dart';
 import 'package:find_me/util/color.dart';
@@ -39,19 +41,22 @@ class _FamilyPlanState extends State<FamilyPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
       backgroundColor: Colors.white,
-      appBar: customAppbar(
-        isbackbutton: true,
-        titlename: tr(LocaleKeys.additionText_famMember),
+      appBar: CustomCurvedAppbar(
+        // isbackbutton: true,
+        title: tr(LocaleKeys.additionText_famMember),
+        isTitleCenter: true,
+        
+        
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 40.0),
-        child: customBlueButton(
-            context: context,
-            text1: tr(LocaleKeys.additionText_viewPln),
-            onTap1: () {
+        child: CustomButton(
+            // context: context,
+            text: tr(LocaleKeys.additionText_viewPln),
+            onPressed: () {
 
               Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
@@ -59,7 +64,8 @@ class _FamilyPlanState extends State<FamilyPlan> {
                 },
               ));
             },
-            colour: AppColor.newBlueGrey),
+            // colour: AppColor.newBlueGrey
+            ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),

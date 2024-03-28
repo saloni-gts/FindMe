@@ -146,9 +146,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent
-        // statusBarIconBrightness: Brightness.dark,
-        ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: AppColor.buttonPink
+    //     // statusBarIconBrightness: Brightness.dark,
+    //     ));
 
     return Scaffold(
       appBar: CustomCurvedAppbar(
@@ -178,14 +178,14 @@ class _HomeState extends State<Home> {
               });
             },
             child: Container(
-              height: 24,
-              width: 24,
+              height: 36,
+              width: 36,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(18),
                 color: Colors.black,
               ),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(18),
                   child: ValueListenableBuilder<Box<UserModel>>(
                     valueListenable: HiveHandler.getUserHiveRefresher(),
                     builder: (context, box, widget) {
@@ -392,13 +392,18 @@ class _HomeState extends State<Home> {
                                             // bottom: 2,
                                             top: 127,
                                             left: 35.0,
-                                            child: Text(
-                                              petList[index - 1].petName ?? "",
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Colors.white,
-                                                  fontFamily: AppFont.poppinSemibold),
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                  // color: Colors.black26, borderRadius: BorderRadius.circular(12)
+                                                  ),
+                                              child: Text(
+                                                petList[index - 1].petName ?? "",
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    fontSize: 14.0,
+                                                    color: Colors.white,
+                                                    fontFamily: AppFont.poppinSemibold),
+                                              ),
                                             ),
                                           ),
                                           Positioned(
@@ -421,6 +426,41 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: InkWell(
+                  onTap: () {
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     return const ViewPremium();
+                    //   },
+                    // ));
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * .2,
+                    // padding: const EdgeInsets.symmetric(vertical: 85),
+                    width: double.infinity,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(18), color: const Color(0xffD4E6F4)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20.0, left: 5, right: 5),
+                          child: Text(
+                            "Check pets additional information or update here",
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xff083151), fontFamily: AppFont.figTreeBold, fontSize: 20),
+                          ),
+                        ),
+                        Image.asset(AppImage.multipleDog)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(
                 height: 10.0,
               ),
@@ -459,23 +499,9 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              // InkWell(
-              //   onTap: () {
-              //     var user = HiveHandler.getUser();
-              //     print("user$user");
-              //     Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => CheckProtection(
-              //                   UsrData: user,
-              //                 )));
-              //   },
-              //   child: Container(
-              //     height: 40,
-              //     width: 40,
-              //     color: Colors.green,
-              //   ),
-              // )
+              const SizedBox(
+                height: 20,
+              ),
 
               // petProvider.isUserPremium == 1
               //     ? const SizedBox()

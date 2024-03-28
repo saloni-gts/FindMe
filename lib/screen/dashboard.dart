@@ -117,12 +117,16 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/scannerPermission.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/screen/home.dart';
+import 'package:find_me/screen/sampleScreen.dart';
 import 'package:find_me/screen/splashScreen.dart';
+import 'package:find_me/util/app_font.dart';
 import 'package:find_me/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -152,6 +156,9 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   late AuthProvider auth;
   AppApi api = AppApi();
   late PurChaseProvider purchaseProvider;
+  Widget currentScreen = const Home();
+  int currentTab = 0;
+  var i = 0;
   final List<Widget> mainScreens = [
     const Home(),
     EventCalender(isShowBackIcon: false, isBottomBorder: false, isFromPet: false),
@@ -215,117 +222,272 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    //   statusBarColor: AppColor.buttonPink,
+    //   statusBarIconBrightness: Brightness.dark,
+    // ));
 
     if (widget.type == 1) {
       tabController.animateTo(1);
     }
     print('working or not');
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: UpgradeAlert(
-        upgrader: Upgrader(
-            shouldPopScope: () => auth.isDispose,
-            showIgnore: true,
-            showLater: true,
-            onUpdate: () {
-              print("work on not");
-              // Future.delayed(D)
-              Future.delayed(const Duration(seconds: 1), () {
-                setState(() {
-                  print("set state done");
-                });
-              });
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+            tooltip: "Scan QR Tag",
+            onPressed: () async {
+              {
+                var status3 = await Permission.camera.status;
 
-              return true;
+                print("value of status===>>> $status3");
+                if (!status3.isGranted) {
+                  print("iiiiii==>$i");
+                  i = i + 1;
+
+                  if (i > 1) {
+                    scannerPermissionDialog(context);
+                  }
+
+                  if (i <= 1) {
+                    await Permission.camera.request();
+                  }
+                }
+                var status4 = await Permission.camera.status;
+                print("status 4 value-=====$status4");
+                if (status4.isGranted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScannerScreen(
+                                isNewTag: 1,
+                              )));
+                }
+              }
             },
-            canDismissDialog: auth.isDispose,
-            durationUntilAlertAgain: const Duration(seconds: 2),
-            dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material),
-        child: SafeArea(
-          bottom: true,
-          top: true,
+            backgroundColor: AppColor.buttonPink,
+            child: Image.asset(AppImage.whiteQR)),
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.white,
+        body: UpgradeAlert(
+          upgrader: Upgrader(
+              shouldPopScope: () => auth.isDispose,
+              showIgnore: true,
+              showLater: true,
+              onUpdate: () {
+                print("work on not");
+                // Future.delayed(D)
+                Future.delayed(const Duration(seconds: 1), () {
+                  setState(() {
+                    print("set state done");
+                  });
+                });
+
+                return true;
+              },
+              canDismissDialog: auth.isDispose,
+              durationUntilAlertAgain: const Duration(seconds: 2),
+              dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material),
           child: PageStorage(
             bucket: bucket,
-            child: TabBarView(
-              controller: tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: mainScreens,
-            ),
+            child: currentScreen,
+            // child: TabBarView(
+            //   controller: tabController,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   children: mainScreens,
+            // ),
           ),
         ),
-      ),
-      bottomNavigationBar: Material(
-        color: Colors.transparent,
-        elevation: 0,
-        child: BottomAppBar(
-          // height: 80,
-          // notchMargin: 8,
-          //shape: CircularNotchedRectangle(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TabBar(
-              tabs: [
-                Tab(
-                    icon: Image.asset(
-                      AppImage.homeIcon,
-                      height: 40,
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 10,
+          child: SizedBox(
+            height: 70,
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen = const Home();
+                        currentTab = 0;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.home,
+                          color: currentTab == 0 ? AppColor.buttonPink : Colors.grey,
+                        ),
+                        Text(
+                          "Home",
+                          style: TextStyle(
+                            fontFamily: AppFont.figTreeMedium,
+                            fontSize: 12,
+                            color: currentTab == 0 ? AppColor.buttonPink : Colors.grey,
+                          ),
+                        )
+                      ],
                     ),
-                    // const ImageIcon(
-                    //   AssetImage(AppImage.homeDash
-                    //       // tabController.index == 1 ?
-                    //       // "assets/images/t_home_icon.png",
-                    //       ),
-                    // ),
-                    text: tr(LocaleKeys.home_homeText)),
-                Tab(
-                  icon: Image.asset(
-                    AppImage.small_Cal,
-                    height: 35,
                   ),
-                  // const ImageIcon(
-                  //   AssetImage(
-                  //     AppImage.newCal,
-                  //   ),
-                  // ),
-                  text: tr(LocaleKeys.home_petCare),
-                ),
-                Tab(
-                  icon: Image.asset(
-                    AppImage.setting1,
-                    height: 40,
-                  ),
-                  //  const ImageIcon(
-                  //   AssetImage(
-                  //       // AppImage.moreIcon,
-                  //       AppImage.moreDash),
-                  // ),
-                  text: tr(LocaleKeys.home_more),
-                ),
-              ],
-              labelStyle: const TextStyle(fontSize: 10),
-              labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-              labelColor: AppColor.textLightBlueBlack,
-
-              unselectedLabelColor: Colors.grey,
-              isScrollable: false,
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorPadding: const EdgeInsets.all(5.0),
-              // indicatorColor: AppColor.textLightBlueBlack,
-              controller: tabController,
-              indicator: const UnderlineTabIndicator(
-                insets: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 65.0),
-                borderSide: BorderSide(color: AppColor.textRed, width: 3),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen = EventCalender(isShowBackIcon: false, isBottomBorder: false, isFromPet: false);
+                        currentTab = 1;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AppImage.pinkCal,
+                          color: currentTab == 1 ? AppColor.buttonPink : Colors.grey,
+                        ),
+                        Text(
+                          "Care Diary",
+                          style: TextStyle(
+                            fontFamily: AppFont.figTreeMedium,
+                            fontSize: 12,
+                            color: currentTab == 1 ? AppColor.buttonPink : Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
-            ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentTab = 2;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AppImage.alertIcon,
+                          color: currentTab == 2 ? AppColor.buttonPink : Colors.grey,
+                        ),
+                        Text(
+                          "Pet Lost",
+                          style: TextStyle(
+                            fontFamily: AppFont.figTreeMedium,
+                            fontSize: 12,
+                            color: currentTab == 2 ? AppColor.buttonPink : Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  MaterialButton(
+                    minWidth: 40,
+                    onPressed: () {
+                      setState(() {
+                        currentScreen = const MoreFeature();
+                        currentTab = 3;
+                      });
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          AppImage.settingGrey,
+                          color: currentTab == 3 ? AppColor.buttonPink : Colors.grey,
+                        ),
+                        Text(
+                          "Settings",
+                          style: TextStyle(
+                            fontFamily: AppFont.figTreeMedium,
+                            fontSize: 12,
+                            color: currentTab == 3 ? AppColor.buttonPink : Colors.grey,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ]),
           ),
-        ),
-      ),
-    );
+        )
+
+        //  Material(
+        //   color: Colors.transparent,
+        //   elevation: 0,
+        //   child: BottomAppBar(
+        //     // height: 80,
+        //     // notchMargin: 8,
+        //     //shape: CircularNotchedRectangle(),
+        //     child: Padding(
+        //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        //       child: TabBar(
+
+        //         tabs: [
+        //           Tab(
+        //               icon: Image.asset(
+        //                 AppImage.homeIcon,
+        //                 height: 40,
+        //               ),
+        //               // const ImageIcon(
+        //               //   AssetImage(AppImage.homeDash
+        //               //       // tabController.index == 1 ?
+        //               //       // "assets/images/t_home_icon.png",
+        //               //       ),
+        //               // ),
+        //               text: tr(LocaleKeys.home_homeText)),
+        //           Tab(
+        //             icon: Image.asset(
+        //               AppImage.small_Cal,
+        //               height: 35,
+        //             ),
+        //             // const ImageIcon(
+        //             //   AssetImage(
+        //             //     AppImage.newCal,
+        //             //   ),
+        //             // ),
+        //             text: tr(LocaleKeys.home_petCare),
+        //           ),
+        //           Tab(
+        //             icon: Image.asset(
+        //               AppImage.setting1,
+        //               height: 40,
+        //             ),
+        //             //  const ImageIcon(
+        //             //   AssetImage(
+        //             //       // AppImage.moreIcon,
+        //             //       AppImage.moreDash),
+        //             // ),
+        //             text: tr(LocaleKeys.home_more),
+        //           ),
+        //         ],
+        //         labelStyle: const TextStyle(fontSize: 10),
+        //         labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+        //         labelColor: AppColor.textLightBlueBlack,
+
+        //         unselectedLabelColor: Colors.grey,
+        //         isScrollable: false,
+        //         indicatorSize: TabBarIndicatorSize.label,
+        //         indicatorPadding: const EdgeInsets.all(5.0),
+        //         // indicatorColor: AppColor.textLightBlueBlack,
+        //         controller: tabController,
+        //         indicator: const UnderlineTabIndicator(
+        //           insets: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 65.0),
+        //           borderSide: BorderSide(color: AppColor.textRed, width: 3),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        );
   }
 }
 

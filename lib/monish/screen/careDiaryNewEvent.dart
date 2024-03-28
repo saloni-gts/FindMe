@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/components/notesContainer.dart';
 import 'package:find_me/monish/screen/newNote.dart';
 import 'package:find_me/screen/deleteNotes.dart';
@@ -52,20 +53,19 @@ class _EventCalenderState extends State<EventCalender> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: MycustomAppbar(
-        tap2: () {
-          PetProvider petProvider = Provider.of(context, listen: false);
-
-          // petProvider.greenTickList.clear();
-
-          // petProvider.greenTickList=petProvider.petIdList;
-          // fliterPetDailog(context: context);
-        },
-        icon: false,
-        titlename: tr(LocaleKeys.home_careDiary),
-        isbackbutton: widget.isShowBackIcon ? true : false,
-        // seticon: AppImage.filtericon,
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.home_careDiary),
+        isTitleCenter: true,
+        showBackIcon: widget.isShowBackIcon ? true : false,
       ),
+      // MycustomAppbar(
+      //   tap2: () {
+      //     PetProvider petProvider = Provider.of(context, listen: false);
+      //   },
+      //   icon: false,
+      //   titlename: tr(LocaleKeys.home_careDiary),
+      //   isbackbutton: widget.isShowBackIcon ? true : false,
+      // ),
 
       // bottomNavigationBar: widget.isBottomBorder ? BotttomBorder(context) : const SizedBox(),
 
@@ -92,7 +92,7 @@ class _EventCalenderState extends State<EventCalender> with SingleTickerProvider
                 unselectedLabelColor: AppColor.textLightBlueBlack,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
-                  color: AppColor.newBlueGrey,
+                  color: AppColor.buttonPink,
                   borderRadius: BorderRadius.circular(28),
                 ),
                 tabs: [
@@ -159,7 +159,7 @@ class _NotesState extends State<Notes> {
             Padding(
                 padding: const EdgeInsets.only(bottom: 17.0, right: 2),
                 child: FloatingActionButton(
-                    backgroundColor: AppColor.newBlueGrey,
+                    backgroundColor: AppColor.buttonPink,
                     onPressed: () {
                       PetProvider petProvider = Provider.of(context, listen: false);
 

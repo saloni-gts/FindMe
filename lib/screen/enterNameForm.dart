@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/authprovider.dart';
 import 'package:find_me/util/app_route.dart';
@@ -41,50 +42,21 @@ class _EnterNameFormState extends State<EnterNameForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: SizedBox(
-          height: 220,
-          child: Column(
-            children: [
-              CustomButton(
-                text: tr(LocaleKeys.newPassword_continue),
-                onPressed: () {
-                  if (nameeController.text.trim().isEmpty) {
-                    CoolAlert.show(
-                        context: context, type: CoolAlertType.warning, text: tr(LocaleKeys.additionText_entrName));
-                  } else {
-                    AuthProvider auth1 = Provider.of(context, listen: false);
-                    auth1.updateNameApi({"name": nameeController.text.trim()}, context);
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 20.0,
-              ),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AppScreen.dashboard);
-                },
-                child: const Text(
-                  "I'll Do Later",
-                  style: TextStyle(color: AppColor.buttonPink, fontSize: 14, fontFamily: AppFont.poppinSemibold),
-                ),
-              ),
-
-              // customBlueButton(context: context,text1: tr(LocaleKeys.additionText_skip), onTap1: (){
-              //   Navigator.pushNamed(context, AppScreen.dashboard);
-              // }, colour: AppColor.textRed),
-              const SizedBox(
-                height: 25.0,
-              ),
-              // BotttomBorder(context),
-            ],
-          ),
-        ),
+        floatingActionButton: SizedBox(
+            width: MediaQuery.of(context).size.width * .99,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 22.0),
+              child: BotttomBorder(context),
+            )),
+        // bottomNavigationBar:
         backgroundColor: Colors.white,
         // resizeToAvoidBottomInset: false,
-        appBar: customAppbar(
-          isbackbutton: false,
+        appBar: CustomCurvedAppbar(
+          showBackIcon: false,
+          isTitleCenter: true,
+
+          title: "Enter Your Name",
+          // isbackbutton: false,
         ),
         body: GestureDetector(
           onTap: () {
@@ -95,7 +67,7 @@ class _EnterNameFormState extends State<EnterNameForm> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Container(
                 // height: 200,
                 // color: Colors.red,
@@ -129,13 +101,81 @@ class _EnterNameFormState extends State<EnterNameForm> {
 
                     Image.asset(AppImage.entrNameImg),
                     const SizedBox(
-                      height: 10,
+                      height: 25,
                     ),
                     const Text(
                       "Tell us a bit about yourself.",
-                      style: TextStyle(color: Colors.black, fontSize: 18),
+                      style: TextStyle(color: Color(0xff2A2A2A), fontSize: 18, fontFamily: AppFont.poppinsMedium),
                     ),
-                    Center(child: CustomTextFeild(textController: nameeController)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+
+                    const Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "Name",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: AppColor.textLightBlueBlack,
+                          fontFamily: AppFont.figTreeMedium,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 7.0,
+                    ),
+
+                    CustomTextFeild(textController: nameeController),
+
+                    const SizedBox(
+                      height: 50,
+                    ),
+
+                    SizedBox(
+                      height: 220,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: CustomButton(
+                              text: tr(LocaleKeys.newPassword_continue),
+                              onPressed: () {
+                                if (nameeController.text.trim().isEmpty) {
+                                  CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.warning,
+                                      text: tr(LocaleKeys.additionText_entrName));
+                                } else {
+                                  AuthProvider auth1 = Provider.of(context, listen: false);
+                                  auth1.updateNameApi({"name": nameeController.text.trim()}, context);
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppScreen.dashboard);
+                            },
+                            child: const Text(
+                              "I'll Do Later",
+                              style: TextStyle(
+                                  color: AppColor.buttonPink, fontSize: 14, fontFamily: AppFont.poppinSemibold),
+                            ),
+                          ),
+
+                          const SizedBox(
+                            height: 25.0,
+                          ),
+                          // BotttomBorder(context),
+                        ],
+                      ),
+                    ),
                     // ],),
 
                     // Column(

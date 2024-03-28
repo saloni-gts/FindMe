@@ -6,6 +6,7 @@ import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
 import 'package:find_me/components/customBlueButton.dart';
 import 'package:find_me/components/customTextFeild.dart';
+import 'package:find_me/components/custom_button.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/services/hive_handler.dart';
 import 'package:find_me/util/app_font.dart';
@@ -69,16 +70,16 @@ UserModel user = HiveHandler.getUserHiveRefresher().value.values.first;
         ),
         // bottomNavigationBar: BotttomBorder(context),
         backgroundColor: Colors.white,
-bottomNavigationBar:   BotttomBorder(context),
+// bottomNavigationBar:   BotttomBorder(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
           child: Padding(
             padding: const EdgeInsets.only(left: 22.0),
-            child: customBlueButton(
-                context: context,
-                text1: tr(LocaleKeys.additionText_confirm),
-                onTap1: () {
+            child: CustomButton(
+                // context: context,
+                text: tr(LocaleKeys.additionText_confirm),
+                onPressed: () {
                   PetProvider petProvider = Provider.of(context, listen: false);
 
                   if(weightController.text.trim().isNotEmpty && weigtDescController.text.trim().isNotEmpty && dateOfWeightController.text.trim().isNotEmpty){
@@ -129,7 +130,8 @@ bottomNavigationBar:   BotttomBorder(context),
                   },
 
 
-                colour: AppColor.newBlueGrey),
+                // colour: AppColor.newBlueGrey
+                ),
           ),
         ),
         body: DraggableScrollableSheet(

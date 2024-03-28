@@ -105,8 +105,14 @@ class _CalenderState extends State<Calender> {
 
                         return Center(
                           child: TableCalendar(
+                            pageAnimationCurve: Curves.bounceOut,
+                            pageJumpingEnabled: true,
+                            startingDayOfWeek: StartingDayOfWeek.sunday,
                             calendarFormat: CalendarFormat.month,
+                            availableGestures: AvailableGestures.horizontalSwipe,
                             shouldFillViewport: true,
+                            rowHeight: 5,
+                            dayHitTestBehavior: HitTestBehavior.deferToChild,
                             daysOfWeekHeight: 30.0,
                             onPageChanged: (d) {
                               value.mySelectedEvents = {};
@@ -120,27 +126,33 @@ class _CalenderState extends State<Calender> {
                             },
 
                             headerStyle: HeaderStyle(
+                                formatButtonDecoration: BoxDecoration(
+                                  color: Colors.brown,
+                                  borderRadius: BorderRadius.circular(22.0),
+                                ),
+                                formatButtonTextStyle: const TextStyle(color: Colors.white),
+                                formatButtonShowsNext: false,
                                 headerPadding: const EdgeInsets.symmetric(vertical: 2),
                                 headerMargin: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
                                 rightChevronIcon: const Icon(
                                   Icons.arrow_forward_ios,
-                                  color: AppColor.newBlueGrey,
+                                  color: AppColor.buttonPink,
                                 ),
                                 leftChevronIcon: const Icon(
                                   Icons.arrow_back_ios,
-                                  color: AppColor.newBlueGrey,
+                                  color: AppColor.buttonPink,
                                 ),
                                 formatButtonPadding: const EdgeInsets.all(10),
                                 rightChevronVisible: true,
                                 formatButtonVisible: false,
                                 titleCentered: true,
-                                formatButtonDecoration: const BoxDecoration(
-                                  color: AppColor.newBlueGrey,
-                                ),
+                                // formatButtonDecoration: const BoxDecoration(
+                                //   color: AppColor.newBlueGrey,
+                                // ),
                                 titleTextStyle: const TextStyle(
-                                    fontSize: 18, color: AppColor.newBlueGrey, fontWeight: FontWeight.bold),
-                                decoration:
-                                    BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.newGrey)),
+                                    fontSize: 18, color: AppColor.buttonPink, fontWeight: FontWeight.bold),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(1), color: const Color(0xffF8EBED))),
 
                             focusedDay: value.focusedDayyPP,
                             firstDay: DateTime(1990, 01, 01),
@@ -163,14 +175,14 @@ class _CalenderState extends State<Calender> {
                             calendarStyle: const CalendarStyle(
                               cellMargin: EdgeInsets.zero,
                               todayDecoration: BoxDecoration(
-                                color: AppColor.newGrey,
+                                color: AppColor.buttonPink,
                                 shape: BoxShape.rectangle,
                                 // borderRadius: BorderRadius.circular(4.0),
                               ),
                               canMarkersOverflow: true,
                               isTodayHighlighted: true,
                               selectedDecoration: BoxDecoration(
-                                color: AppColor.newBlueGrey,
+                                color: AppColor.textBlueBlack,
                                 shape: BoxShape.rectangle,
                                 // borderRadius: BorderRadius.circular(4.0),
                               ),
@@ -179,6 +191,7 @@ class _CalenderState extends State<Calender> {
                                 shape: BoxShape.circle,
                               ),
                             ),
+                            pageAnimationEnabled: true,
 
                             selectedDayPredicate: (DateTime date) {
                               return isSameDay(selectedDayy, date);
@@ -209,7 +222,7 @@ class _CalenderState extends State<Calender> {
                         child: Text(
                       tr(LocaleKeys.petCare_noEventsFound),
                       style: const TextStyle(
-                          fontSize: 18.0, color: AppColor.newBlueGrey, fontFamily: AppFont.poppinSemibold),
+                          fontSize: 18.0, color: AppColor.buttonPink, fontFamily: AppFont.poppinSemibold),
                     )),
                   )
                 : Padding(
@@ -244,7 +257,7 @@ class _CalenderState extends State<Calender> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 10.0, right: 0, top: 2),
         child: FloatingActionButton(
-            backgroundColor: AppColor.newBlueGrey,
+            backgroundColor: AppColor.buttonPink,
             onPressed: () {
               petProvider1.petDetailList.isEmpty
                   ? showDialog(

@@ -1,5 +1,6 @@
 import 'package:find_me/components/appbarComp.dart';
 import 'package:find_me/components/bottomBorderComp.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:find_me/provider/petprovider.dart';
 import 'package:find_me/screen/createHealthCard.dart';
@@ -37,11 +38,12 @@ class _HealthCardState extends State<HealthCard> with SingleTickerProviderStateM
       resizeToAvoidBottomInset: false,
 
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: BotttomBorder(context),
+      // floatingActionButton: BotttomBorder(context),
 
-      appBar: customAppbar(
-        isbackbutton: true,
-        titlename: tr(LocaleKeys.additionText_hlthCrd),
+      appBar: CustomCurvedAppbar(
+        // isbackbutton: true,
+        title: tr(LocaleKeys.additionText_hlthCrd),
+        isTitleCenter: true,
       ),
       // bottomNavigationBar: BotttomBorder(context),Create tr(LocaleKeys.additionText_View)
 

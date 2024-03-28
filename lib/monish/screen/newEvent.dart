@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me/api/staus_enum.dart';
+import 'package:find_me/components/custom_button.dart';
+import 'package:find_me/components/custom_curved_appbar.dart';
 import 'package:find_me/generated/locale_keys.g.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 // import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/appbarComp.dart';
@@ -105,20 +108,21 @@ class _NewEventState extends State<NewEvent> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      appBar: customAppbar(
-        titlename: tr(LocaleKeys.newEvent_newEvent),
-        isbackbutton: true,
+      appBar: CustomCurvedAppbar(
+        title: tr(LocaleKeys.newEvent_newEvent),
+        isTitleCenter: true,
+        // isbackbutton: true,
         // icon: false,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 35.0, left: 18),
+          padding: const EdgeInsets.only(bottom: 35.0, left: 30),
           // padding: const EdgeInsets.only(bottom: 35.0,left: 18),
           child: Consumer<PetProvider>(builder: (context, petProvider, child) {
-            return customBlueButton(
-                context: context,
-                text1: tr(LocaleKeys.addPet_save),
-                onTap1: () {
+            return CustomButton(
+                // context: context,
+                text: tr(LocaleKeys.addPet_save),
+                onPressed: () {
                   try {
                     print("whwew");
                     print("eventDateController.text====${eventNameController.text}");
@@ -187,9 +191,9 @@ class _NewEventState extends State<NewEvent> {
                     print("error>>>>   $error   stackTrace---$stackTrace");
                   }
                 },
-                colour: (eventNameController.text.trim().isEmpty || petProvider.eventButton == 0)
+                clr: (eventNameController.text.trim().isEmpty || petProvider.eventButton == 0)
                     ? AppColor.disableButton
-                    : AppColor.newBlueGrey);
+                    : AppColor.buttonPink);
           })),
       body: DraggableScrollableSheet(
           expand: false,
@@ -337,7 +341,7 @@ class _NewEventState extends State<NewEvent> {
                                                         backgroundColor: MaterialStateProperty.all<Color>(
                                                             petProvider.masterEventlList[i] ==
                                                                     petProvider.seletedMaterEvnt
-                                                                ? AppColor.newBlueGrey
+                                                                ? AppColor.buttonPink
                                                                 : AppColor.textFieldGrey)),
                                                     onPressed: () {
                                                       petProvider
@@ -514,8 +518,9 @@ class _NewEventState extends State<NewEvent> {
                                                       var v2 = DateTime.now().minute;
                                                       print("===mins to add===>>${60 - v2}");
                                                       var v4 = 60 - v2;
+                                                      // DatePicker.
 
-                                                      showDatePicker(
+                                                      showOmniDateTimePicker(
                                                         context: context,
                                                         firstDate: DateTime.now(),
                                                         initialDate: DateTime.now(),
@@ -1086,7 +1091,7 @@ class _NewEventState extends State<NewEvent> {
               ),
             );
           }),
-      bottomNavigationBar: BotttomBorder(context),
+      // bottomNavigationBar: BotttomBorder(context),
     );
   }
 }
